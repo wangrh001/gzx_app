@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>userList</title>
+    <title>customerList</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}"></link>
 </head>
 
 <body class="container">
 <br/>
-<h1>用户列表</h1>
+<h1>客户列表</h1>
 <br/><br/>
 
 <div class="with:80%">
@@ -16,21 +16,19 @@
         <thead>
         <tr>
             <th>NO.</th>
-            <th>User Name</th>
-            <th>Password</th>
+            <th>customer Name</th>
             <th>Age</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
         </thead>
         <tbody>
-        <tr  th:each="user : ${users}">
-            <th scope="row" th:text="${user.id}">1</th>
-            <td th:text="${user.userName}">neo</td>
-            <td th:text="${user.password}">Otto</td>
-            <td th:text="${user.age}">6</td>
-            <td><a th:href="@{/toEdit(id=${user.id})}">edit</a></td>
-            <td><a th:href="@{/delete(id=${user.id})}">delete</a></td>
+        <tr  th:each="customer : ${customers}">
+            <th scope="row" th:text="${customer.id}">1</th>
+            <td th:text="${customer.customerName}">neo</td>
+            <td th:text="${customer.age}">6</td>
+            <td><a th:href="@{/customer/toEdit(id=${customer.id})}">edit</a></td>
+            <td><a th:href="@{/customer/delete(id=${customer.id})}">delete</a></td>
         </tr>
         </tbody>
     </table>
@@ -38,7 +36,7 @@
 
 <div class="form-group">
     <div class="col-sm-2 control-label">
-        <a href="/toAdd" th:href="@{/toAdd}" class="btn btn-info">add</a>
+        <a href="/customer/toAdd" th:href="@{/customer/toAdd}" class="btn btn-info">add</a>
     </div>
 </div>
 
