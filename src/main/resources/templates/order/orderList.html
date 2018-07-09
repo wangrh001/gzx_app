@@ -1,10 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
 </head>
-<body>
+
+<body class="container">
+<br/>
+<h1>订单列表</h1>
+<br/><br/>
+
+<!--查询条件-->
+<div>
+<table>
+    <tr>
+        <td>客户姓名</td>
+        <td><input name="name" value = ""/></td>
+        <td>产品类型</td>
+        <td><input name = "productType" value=""/></td>
+        <td>开始日期</td>
+        <td><input name = "startDate" value=""/></td>
+        <td>结束日期</td>
+        <td><input name = "endDate" value=""/></td>
+    </tr>
+</table>
+</div>
+
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>客户姓名</th>
+            <th>产品类型</th>
+            <th>金额</th>
+            <th>申请日期</th>
+            <th>编辑</th>
+            <th>删除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr  th:each="orderListForm : ${orderListForms}">
+            <th scope="row" th:text="${orderListForm.orderId}">1</th>
+            <td th:text="${orderListForm.customerName}">neo</td>
+            <td th:text="${orderListForm.productTypeName}">neo</td>
+            <td th:text="${orderListForm.amount}">6</td>
+            <td th:text="${orderListForm.applyDate}">6</td>
+            <td><a th:href="@{/order/toEdit(id=${orderListForm.orderId})}">edit</a></td>
+            <td><a th:href="@{/order/delete(id=${orderListForm.orderId})}">delete</a></td>
+        </tr>
+
+        </tbody>
+    </table>
+    <!--<table>-->
+        <!--<tr>-->
+            <!--<td><a th:href="@{/order/list?pageNum=0}">首页</a></td>-->
+            <!--<td th:switch="${pageNum}">-->
+                <!--<p th:case="1"> <a th:href="@{/order/list?pageNum=1}">上一页</a></p>-->
+                <!--<p th:case="*"><a th:href="@{/order/list(pageNum=${pageNum-1})}">上一页</a></p>-->
+            <!--</td>-->
+            <!--<td th:switch="${pageNum}">-->
+                <!--<p th:case="${totalPages}"><a th:href="@{/order/list(pageNum=${totalPages})}">下一页</a></p>-->
+                <!--<p th:case="*"><a th:href="@{/order/list(pageNum=${pageNum+1})}">下一页</a></p>-->
+            <!--</td>-->
+            <!--<td><a th:href="@{/order/list(pageNum=${totalPages})}">尾页</a></td>-->
+        <!--</tr>-->
+    <!--</table>-->
+</div>
+
+<div class="form-group">
+    <div class="col-sm-2 control-label">
+        <a href="/order/toAdd" th:href="@{/order/toAdd}" class="btn btn-info">add</a>
+    </div>
+</div>
 
 </body>
 </html>

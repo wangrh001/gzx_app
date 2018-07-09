@@ -35,6 +35,7 @@ public class UserController {
 
     @RequestMapping("/add")
     public String add(User user) {
+        System.out.println("user.name"+user.getUserName());
         userService.save(user);
         return "redirect:/list";
     }

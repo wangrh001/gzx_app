@@ -1,18 +1,18 @@
 package com.bangnd.cbs.service;
 
-import com.bangnd.cbs.entity.TCustomer;
+import com.bangnd.cbs.entity.Customer;
 
 import java.util.List;
 
 public interface CustomerService {
 
-    public List<TCustomer> getCustomerList();
+    public List<Customer> getCustomerList();
 
-    public TCustomer findCustomerById(long id);
+    public Customer findCustomerById(long id);
 
-    public void save(TCustomer customer);
+    public void save(Customer customer);
 
-    public void edit(TCustomer customer);
+    public void edit(Customer customer);
 
-    public void delete(long id);
+    public void delete(Long id);
 }

@@ -1588,6 +1588,12 @@ pre code {
   margin-right: auto;
   margin-left: auto;
 }
+.area_segmentation {
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-right: auto;
+  margin-left: auto;
+}
 @media (min-width: 768px) {
   .container {
     width: 750px;
@@ -2550,7 +2556,7 @@ output {
 }
 .form-control {
   display: block;
-  width: 100%;
+  width: 75%;
   height: 34px;
   padding: 6px 12px;
   font-size: 14px;

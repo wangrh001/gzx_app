@@ -1,6 +1,6 @@
 package com.bangnd.cbs.service.impl;
 
-import com.bangnd.cbs.entity.TCustomer;
+import com.bangnd.cbs.entity.Customer;
 import com.bangnd.cbs.repository.CustomerRepository;
 import com.bangnd.cbs.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,28 +15,29 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
 
     @Override
-    public List<TCustomer> getCustomerList() {
+    public List<Customer> getCustomerList() {
         return customerRepository.findAll();
     }
 
     @Override
-    public TCustomer findCustomerById(long id) {
-        return customerRepository.findById(id);
+    public Customer findCustomerById(long id) {
+//        return customerRepository.findById(id);
+        return null;
     }
 
     @Override
-    public void save(TCustomer customer) {
+    public void save(Customer customer) {
         System.out.println("enter the serverImpl");
         customerRepository.save(customer);
     }
 
     @Override
-    public void edit(TCustomer customer) {
+    public void edit(Customer customer) {
         customerRepository.save(customer);
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         customerRepository.delete(id);
     }
 }

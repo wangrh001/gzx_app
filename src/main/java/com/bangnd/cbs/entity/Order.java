@@ -1,42 +1,53 @@
 package com.bangnd.cbs.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 @Entity
-public class TOrder {
+@Table(name="T_CBS_ORDER")
+public class Order {
     @Id
     @GeneratedValue
-    private long id;
-    //订单产品信息
-    //产品id
-    @Column(nullable = true, unique = false)
-    private Integer productId;
-    //产品类型  
-    @Column(nullable = true, unique = false)
-    private String productType;
-    //贷款金额
-    @Column(nullable = true, unique = false)
-    private BigDecimal amount;
-    //还款方式;1、等额本金；2、等额本息；3、月息年本
-    @Column(nullable = true, unique = false)
-    private String repayWay;
-    //利息
-    @Column(nullable = true, unique = false)
-    private BigDecimal interest;
+    private long orderId;
 
-    //借款人id
-    @Column(nullable = true, unique = false)
-    private Integer loanerId;
-    //抵押物id
-    @Column(nullable = true, unique = false)
-    private Integer mortgageObjId;
-    //抵押人id
-    @Column(nullable = true, unique = false)
-    private Integer mortgagerId;
+    @Column
+    private int borrowerId;
+
+    //抵押人
+    @Column
+    private int mortgagorId;
+
+    @Column
+    private BigDecimal demandAmount;
+
+    @Column
+    private Date usingDate;
+
+    @Column
+    private Date endingDate;
+
+    public Date getEndingDate() {
+        return endingDate;
+    }
+
+    public void setEndingDate(Date endingDate) {
+        this.endingDate = endingDate;
+    }
+
+    //支付方式
+    @Column
+    private int payWay;
+
+    @Column
+    private long productType;
+
+    //抵押物
+    @Column
+    private int mortgageId;
+
+
+    @Column
+    private int productId;
 
     //申请时间
     @Column(nullable = true, unique = false)
@@ -59,6 +70,9 @@ public class TOrder {
     //支付服务费
     @Column(nullable = true, unique = false)
     private BigDecimal fee;
+    //订单状态：0/建议书阶段；1/收集资料；2/审批通过；3/签订合同；4/支付完成；5/完结；6/订单取消
+    @Column(nullable = false, unique = false)
+    private int orderState;
 
     @Column(nullable = true, unique = false)
     private Date createTime;
@@ -69,84 +83,80 @@ public class TOrder {
     @Column(nullable = true, unique = false)
     private Integer updator;
 
-    //订单状态
-    @Column(nullable = true, unique = false)
-    private String orderState;
-
     //是否多个借款人（一般借款人年龄大需要子女共借）
     @Column(nullable = true, unique = false)
     private String isMutiLoaner;
 
-    public long getId() {
-        return id;
+    public long getOrderId() {
+        return orderId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public int getBorrowerId() {
+        return borrowerId;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setBorrowerId(int borrowerId) {
+        this.borrowerId = borrowerId;
     }
 
-    public String getProductType() {
+    public int getMortgagorId() {
+        return mortgagorId;
+    }
+
+    public void setMortgagorId(int mortgagorId) {
+        this.mortgagorId = mortgagorId;
+    }
+
+    public BigDecimal getDemandAmount() {
+        return demandAmount;
+    }
+
+    public void setDemandAmount(BigDecimal demandAmount) {
+        this.demandAmount = demandAmount;
+    }
+
+    public Date getUsingDate() {
+        return usingDate;
+    }
+
+    public void setUsingDate(Date usingDate) {
+        this.usingDate = usingDate;
+    }
+
+    public int getPayWay() {
+        return payWay;
+    }
+
+    public void setPayWay(int payWay) {
+        this.payWay = payWay;
+    }
+
+    public long getProductType(){
         return productType;
     }
 
-    public void setProductType(String productType) {
+    public void setProductType(long productType) {
         this.productType = productType;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public int getMortgageId() {
+        return mortgageId;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public void setMortgageId(int mortgageId) {
+        this.mortgageId = mortgageId;
     }
 
-    public String getRepayWay() {
-        return repayWay;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setRepayWay(String repayWay) {
-        this.repayWay = repayWay;
-    }
-
-    public BigDecimal getInterest() {
-        return interest;
-    }
-
-    public void setInterest(BigDecimal interest) {
-        this.interest = interest;
-    }
-
-    public Integer getLoanerId() {
-        return loanerId;
-    }
-
-    public void setLoanerId(Integer loanerId) {
-        this.loanerId = loanerId;
-    }
-
-    public Integer getMortgageObjId() {
-        return mortgageObjId;
-    }
-
-    public void setMortgageObjId(Integer mortgageObjId) {
-        this.mortgageObjId = mortgageObjId;
-    }
-
-    public Integer getMortgagerId() {
-        return mortgagerId;
-    }
-
-    public void setMortgagerId(Integer mortgagerId) {
-        this.mortgagerId = mortgagerId;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public Date getApplyTime() {
@@ -205,6 +215,14 @@ public class TOrder {
         this.fee = fee;
     }
 
+    public int getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(int orderState) {
+        this.orderState = orderState;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -245,11 +263,6 @@ public class TOrder {
         this.isMutiLoaner = isMutiLoaner;
     }
 
-    public String getOrderState() {
-        return orderState;
-    }
 
-    public void setOrderState(String orderState) {
-        this.orderState = orderState;
-    }
+
 }

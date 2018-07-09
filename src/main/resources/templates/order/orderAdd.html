@@ -1,10 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8"/>
+    <title>user</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"></link>
 </head>
-<body>
+<body class="container">
+<br/>
+<h1>添加客户</h1>
+<br/><br/>
+
+<form class="form-horizontal" th:action="@{/order/add}" method="post">
+
+<table style="border-collapse:separate; border-spacing:0px 10px;">
+
+    <!--客户基本信息 -->
+    <tr>
+        <td>姓名</td>
+        <td><input type="text" class="form-control" th:field="*{customer.name}" placeholder="姓名"/></td>
+        <td>年龄</td>
+        <td><input type="text" class="form-control" th:field="*{customer.age}" placeholder="年龄"/></td>
+    </tr>
+    <!--客户抵押物信息 -->
+    <tr>
+        <td>区域</td>
+        <td>
+            <select name="area" th:remove="all-but-first">
+                <option th:each="area : ${areaList}"
+                        th:value="${area.id}" th:text="${area.name}">Credit card</option>
+            </select>
+        </td>
+        <td>房龄</td>
+        <td><input type="text" class="form-control" th:field="*{mortgage.estateAge}" placeholder="房龄"/></td>
+        <td>类型</td>
+        <td>
+            <select name="estateType" th:remove="all-but-first">
+                <option th:each="estateType : ${estateType}"
+                        th:value="${estateType.id}" th:text="${estateType.name}">Credit card</option>
+            </select>
+        </td>
+        <td>评估金额(万元)</td>
+        <td><input type="text" class="form-control" th:field="*{mortgage.estatePrice}" placeholder="评估金额"/></td>
+    </tr>
+    <!--客户征信信息 -->
+    <tr>
+        <td>两年内连超(次)</td>
+        <td><input type="text" class="form-control" th:field="*{custCredit.continuousDelay}" placeholder="连超"/></td>
+        <td>两年内总超(次)</td>
+        <td><input type="text" class="form-control" th:field="*{custCredit.totalDelay}" placeholder="累超"/></td>
+        <td>最长逾期(天)</td>
+        <td><input type="text" class="form-control" th:field="*{custCredit.maxDelay}" placeholder="逾期"/></td>
+        <td>信用卡冻结余额(元)</td>
+        <td><input type="text" class="form-control" th:field="*{custCredit.freezeAmount}" placeholder="冻结金额"/></td>
+    </tr>
+    <!--客户诉求 -->
+    <tr>
+        <td>金额(万元)</td>
+        <td><input type="text" class="form-control" th:field="*{order.demandAmount}" placeholder="金额"/></td>
+        <!--<td>使用时间</td>-->
+        <!--<td><input type="text" class="form-control" th:field="*{order.usingDate}" placeholder="使用时间"/></td>-->
+        <td>还款选择</td>
+        <td>
+            <select name="payWay" th:remove="all-but-first">
+                <option th:each="payWay : ${payWays}"
+                        th:value="${payWay.id}" th:text="${payWay.name}">Credit card</option>
+            </select>
+        </td>
+        <td>贷款类型</td>
+        <td>
+            <select name="productType" th:remove="all-but-first">
+                <option th:each="productType : ${productType}"
+                        th:value="${productType.id}" th:text="${productType.name}">Credit card</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>是否需要多个借款人</td>
+        <td><input type="checkbox" name="isMutiLoaner" /></td>
+    </tr>
+
+    <tr>
+        <td><input type="submit" value="Submit" class="btn btn-info" /></td>
+        &nbsp; &nbsp; &nbsp;
+        <td><input type="reset" value="Reset" class="btn btn-info" /></td>
+    </tr>
+</table>
+
+</form>
 
 </body>
 </html>
