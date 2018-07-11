@@ -5,21 +5,15 @@ import com.bangnd.cbs.entity.CustomerCredit;
 import com.bangnd.cbs.entity.Mortgage;
 import com.bangnd.cbs.entity.Order;
 import com.bangnd.cbs.form.OrderListForm;
+import com.bangnd.cbs.form.OrderSearchForm;
 import com.bangnd.cbs.service.CustomerCreditService;
 import com.bangnd.cbs.service.CustomerService;
 import com.bangnd.cbs.service.MortgageService;
 import com.bangnd.cbs.service.OrderService;
-import com.bangnd.util.service.AreaConfService;
-import com.bangnd.util.service.PayWayService;
-import com.bangnd.util.service.ProductTypeService;
-import com.bangnd.util.service.StateTypeService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
+import com.bangnd.util.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.ArrayList;
@@ -42,8 +36,8 @@ public class OrderController {
     CustomerCreditService customerCreditService;
     @Resource
     OrderService orderService;
-
-    OrderListForm orderListForm;
+    @Resource
+    OrderStateService orderStateService;
 
 
     @RequestMapping("/order")
@@ -52,16 +46,16 @@ public class OrderController {
     }
 
     @RequestMapping("/order/list")
-    public String list(Model model) {
-        List<Customer> customers=customerService.getCustomerList();
-        List<Order> orders = orderService.getOrderList();
-        model.addAttribute("customers", customers);
+    public String list(Model model, OrderSearchForm orderSearchForm) {
+        List<Order> orders = orderService.getOrderList(orderSearchForm);
+        model.addAttribute("productType", productTypeService.getAll());
+        model.addAttribute("orderStates", orderStateService.getAll());
         model.addAttribute("orders",orders);
         List<OrderListForm> orderListForms = new ArrayList<OrderListForm>();
         for(int i=0;i<orders.size();i++){
             OrderListForm orderListForm = new OrderListForm();
             orderListForm.setOrderId(orders.get(i).getOrderId());
-            orderListForm.setCustomerName(customers.get(i).getName());
+            orderListForm.setCustomerName(orders.get(i).getBorrowerName());
             orderListForm.setProductTypeName(productTypeService.getObjById(orders.get(i).getProductType()).getName());
             orderListForm.setAmount(orders.get(i).getDemandAmount());
             orderListForm.setApplyDate(orders.get(i).getApplyTime());
@@ -126,6 +120,7 @@ public class OrderController {
         }else{
             order.setIsMutiLoaner("N");
         }
+        order.setBorrowerName(customer.getName());
         order.setProductType(new Integer(productType).intValue());
         order.setPayWay(new Integer(payWay).intValue());
         order.setBorrowerId(customer.getCustomerId());
@@ -137,14 +132,32 @@ public class OrderController {
 
     @RequestMapping("/order/toEdit")
     public String toEdit(Model model,Long id) {
-        Customer customer=customerService.findCustomerById(id);
+        Order order=orderService.findOrderById(id);
+        Customer customer = customerService.findCustomerById(order.getBorrowerId());
+        Mortgage mortgage = mortgageService.findMortgageById(order.getMortgageId());
+        System.out.println("mortgageType="+mortgage.getEstateType());
+        CustomerCredit customerCredit = customerCreditService.findCustCreditById(customer.getCreditId());
+
+        model.addAttribute("areaList", areaConfService.getAll());
+        model.addAttribute("estateType", stateTypeService.getAll());
+        model.addAttribute("payWays", payWayService.getAll());
+        model.addAttribute("productType", productTypeService.getAll());
+        model.addAttribute("order", order);
         model.addAttribute("customer", customer);
-        return "/order/orderEdit";
+        model.addAttribute("mortgage", mortgage);
+        model.addAttribute("custCredit", customerCredit);
+        return "/order/orderAdd";
     }
 
     @RequestMapping("/order/edit")
-    public String edit(Customer customer) {
-        customerService.edit(customer);
+    public String edit(Order order,
+                       Customer customer,
+                       Mortgage mortgage,
+                       CustomerCredit customerCredit) {
+        customerService.save(customer);
+        orderService.save(order);
+        mortgageService.save(mortgage);
+        customerCreditService.save(customerCredit);
         return "redirect:/order/list";
     }
 

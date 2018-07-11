@@ -11,7 +11,7 @@
 <br/><br/>
 
 <form class="form-horizontal" th:action="@{/order/add}" method="post">
-
+<input type="hidden" name="id" th:value="*{order.orderId}" />
 <table style="border-collapse:separate; border-spacing:0px 10px;">
 
     <!--客户基本信息 -->
@@ -27,7 +27,8 @@
         <td>
             <select name="area" th:remove="all-but-first">
                 <option th:each="area : ${areaList}"
-                        th:value="${area.id}" th:text="${area.name}">Credit card</option>
+                        th:value="${area.id}" th:text="${area.name}"
+                        th:selected="${area.id eq mortgage.estateArea}">Credit card</option>
             </select>
         </td>
         <td>房龄</td>
@@ -36,7 +37,8 @@
         <td>
             <select name="estateType" th:remove="all-but-first">
                 <option th:each="estateType : ${estateType}"
-                        th:value="${estateType.id}" th:text="${estateType.name}">Credit card</option>
+                        th:value="${estateType.id}" th:text="${estateType.name}"
+                        th:selected="${estateType.id eq mortgage.estateType}"  >Credit card</option>
             </select>
         </td>
         <td>评估金额(万元)</td>
@@ -63,14 +65,16 @@
         <td>
             <select name="payWay" th:remove="all-but-first">
                 <option th:each="payWay : ${payWays}"
-                        th:value="${payWay.id}" th:text="${payWay.name}">Credit card</option>
+                        th:value="${payWay.id}" th:text="${payWay.name}"
+                        th:selected="${payWay.id eq order.payWay}">Credit card</option>
             </select>
         </td>
         <td>贷款类型</td>
         <td>
             <select name="productType" th:remove="all-but-first">
                 <option th:each="productType : ${productType}"
-                        th:value="${productType.id}" th:text="${productType.name}">Credit card</option>
+                        th:value="${productType.id}" th:text="${productType.name}"
+                        th:selected="${productType.id eq order.productType}">Credit card</option>
             </select>
         </td>
     </tr>

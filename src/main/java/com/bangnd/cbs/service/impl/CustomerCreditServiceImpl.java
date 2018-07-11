@@ -14,6 +14,10 @@ public class CustomerCreditServiceImpl implements CustomerCreditService {
     @Override
     public void save(CustomerCredit customerCredit){
         customerCreditRepository.save(customerCredit);
-    };
+    }
 
+    @Override
+    public CustomerCredit findCustCreditById(long id) {
+        return customerCreditRepository.findById(id);
+    }
 }

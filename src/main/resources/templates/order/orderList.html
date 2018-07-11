@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8"/>
     <title>customerList</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]
+    <script type="text/javascript" src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script type="text/javascript" src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    -->
+    <link rel="stylesheet" type = "text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type = "text/css" th:href="@{/css/daterangepicker.css}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
 </head>
 
 <body class="container">
@@ -13,18 +23,42 @@
 
 <!--查询条件-->
 <div>
+<form class="form-horizontal" th:action="@{/order/list}" th:object="${orderSearchForm}" method="post">
 <table>
     <tr>
         <td>客户姓名</td>
-        <td><input name="name" value = ""/></td>
-        <td>产品类型</td>
-        <td><input name = "productType" value=""/></td>
-        <td>开始日期</td>
-        <td><input name = "startDate" value=""/></td>
-        <td>结束日期</td>
-        <td><input name = "endDate" value=""/></td>
+        <td><input th:field="*{name}"  value=""/></td>
+
+        <td>贷款类型</td>
+        <td>
+            <select th:field="*{type}" value="" th:remove="all-but-first">
+                <option th:each="productType : ${productType}"
+                        th:value="${productType.id}" th:text="${productType.name}">Credit card</option>
+            </select>
+        </td>
+
+        <td>订单状态</td>
+        <td>
+            <select th:field="*{orderState}" value="" th:remove="all-but-first">
+                <option th:each="orderStates : ${orderStates}"
+                        th:value="${orderStates.id}" th:text="${orderStates.name}">Credit card</option>
+            </select>
+        </td>
     </tr>
+
+    <tr>
+        <td>开始日期</td>
+        <td><input type="text" class="date-controll" th:field="*{startDate}"  value=""/></td>
+        <td>结束日期</td>
+        <td><input type="text" class="date-controll" th:field="*{endDate}" value=""/></td>
+    </tr>
+
+    <tr>
+        <td><input type="submit" value="Search" class="btn btn-info"/></td>
+    </tr>
+
 </table>
+</form>
 </div>
 
 <div class="with:80%">

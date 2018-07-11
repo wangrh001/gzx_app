@@ -281,6 +281,35 @@ th {
 .glyphicon-asterisk:before {
   content: "\002a";
 }
+.box {
+  display: block;
+  text-align: center;
+  margin: 20px auto;
+}
+
+input {
+  width: 150px;
+  height: 35px;
+}
+
+label {
+  display: inline-block;
+  width: 90px;
+  line-height: 40px;
+  height: 40px;
+  margin: 0;
+  font-weight: normal;
+  font-family: "宋体";
+  background-color: #ddd;
+}
+.divDateSelect{
+  width: 185px;
+  height: 50px;
+  line-height: 50px;
+  margin:10px auto;
+  border:2px solid #ddd;
+  border-radius: 5px;
+}
 .glyphicon-plus:before {
   content: "\002b";
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 public class CustomerCredit {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
 
     //两年内是否有连续两个月逾期
     @Column
@@ -78,11 +78,11 @@ public class CustomerCredit {
 
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -8,7 +8,7 @@ import java.util.Date;
 public class Customer {
     @Id
     @GeneratedValue
-    private int customerId;
+    private long customerId;
     @Column(nullable = false)
     private String name;
     @Column
@@ -23,7 +23,7 @@ public class Customer {
     private String phone;
 
     @Column
-    private int creditId;
+    private long creditId;
 
     @Column(nullable = true, unique = false)
     private Date createTime;
@@ -97,11 +97,11 @@ public class Customer {
     @Column
     private String identity;
 
-    public int getCreditId() {
+    public long getCreditId() {
         return creditId;
     }
 
-    public void setCreditId(int creditId) {
+    public void setCreditId(long creditId) {
         this.creditId = creditId;
     }
 
@@ -129,7 +129,7 @@ public class Customer {
         this.identity = identity;
     }
 
-    public int getCustomerId() {
+    public long getCustomerId() {
 
         return customerId;
     }
@@ -140,7 +140,7 @@ public class Customer {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(long customerId) {
         this.customerId = customerId;
     }
 

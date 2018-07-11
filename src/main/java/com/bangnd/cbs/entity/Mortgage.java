@@ -9,7 +9,7 @@ import java.util.Date;
 public class Mortgage {
     @Id
     @GeneratedValue
-    private int mortgageId;
+    private long mortgageId;
     @Column
     private int customerId;
     //抵押物类型：1/房；2/车；3/保单；
@@ -33,11 +33,11 @@ public class Mortgage {
     @Column
     private int updator;
 
-    public int getMortgageId() {
+    public long getMortgageId() {
         return mortgageId;
     }
 
-    public void setMortgageId(int mortgageId) {
+    public void setMortgageId(long mortgageId) {
         this.mortgageId = mortgageId;
     }
 

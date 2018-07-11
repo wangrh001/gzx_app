@@ -11,7 +11,10 @@ public class Order {
     private long orderId;
 
     @Column
-    private int borrowerId;
+    private long borrowerId;
+
+    @Column
+    private String borrowerName;
 
     //抵押人
     @Column
@@ -43,7 +46,7 @@ public class Order {
 
     //抵押物
     @Column
-    private int mortgageId;
+    private long mortgageId;
 
 
     @Column
@@ -95,11 +98,11 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public int getBorrowerId() {
+    public long getBorrowerId() {
         return borrowerId;
     }
 
-    public void setBorrowerId(int borrowerId) {
+    public void setBorrowerId(long borrowerId) {
         this.borrowerId = borrowerId;
     }
 
@@ -143,11 +146,11 @@ public class Order {
         this.productType = productType;
     }
 
-    public int getMortgageId() {
+    public long getMortgageId() {
         return mortgageId;
     }
 
-    public void setMortgageId(int mortgageId) {
+    public void setMortgageId(long mortgageId) {
         this.mortgageId = mortgageId;
     }
 
@@ -263,6 +266,11 @@ public class Order {
         this.isMutiLoaner = isMutiLoaner;
     }
 
+    public String getBorrowerName() {
+        return borrowerName;
+    }
 
-
+    public void setBorrowerName(String borrowerName) {
+        this.borrowerName = borrowerName;
+    }
 }

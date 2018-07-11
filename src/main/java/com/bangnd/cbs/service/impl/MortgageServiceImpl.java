@@ -15,4 +15,8 @@ public class MortgageServiceImpl implements MortgageService {
     public void save(Mortgage mortgage) {
         mortgageRepository.save(mortgage);
     }
+    @Override
+    public Mortgage findMortgageById(long id){
+        return mortgageRepository.findByMortgageId(id);
+    }
 }
