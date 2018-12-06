@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface CustomerService {
 
-    public List<Customer> getCustomerList();
-
     public Customer findCustomerById(long id);
+
+    public List<Customer> findCustomerByOrderId(long orderId);
 
     public void save(Customer customer);
 

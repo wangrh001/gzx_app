@@ -3,7 +3,7 @@ package com.bangnd.util.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="T_CBS_ESTATE_AREA")
+@Table(name="cfg_estate_area")
 public class EstateArea {
     @Id
     @GeneratedValue

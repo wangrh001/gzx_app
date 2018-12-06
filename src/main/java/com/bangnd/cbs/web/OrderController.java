@@ -1,20 +1,17 @@
 package com.bangnd.cbs.web;
 
-import com.bangnd.cbs.entity.Customer;
-import com.bangnd.cbs.entity.CustomerCredit;
-import com.bangnd.cbs.entity.Mortgage;
-import com.bangnd.cbs.entity.Order;
+import com.bangnd.cbs.entity.*;
 import com.bangnd.cbs.form.OrderListForm;
+import com.bangnd.cbs.form.OrderProductForm;
 import com.bangnd.cbs.form.OrderSearchForm;
-import com.bangnd.cbs.service.CustomerCreditService;
-import com.bangnd.cbs.service.CustomerService;
-import com.bangnd.cbs.service.MortgageService;
-import com.bangnd.cbs.service.OrderService;
+import com.bangnd.cbs.service.*;
 import com.bangnd.util.service.*;
+import com.bangnd.util.cfg.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -29,16 +26,23 @@ public class OrderController {
     @Resource
     PayWayService payWayService;
     @Resource
+    ProductService productService;
+    @Resource
     ProductTypeService productTypeService;
-    @Resource
-    MortgageService mortgageService;
-    @Resource
-    CustomerCreditService customerCreditService;
     @Resource
     OrderService orderService;
     @Resource
+    OrderProductService orderProductService;
+    @Resource
     OrderStateService orderStateService;
-
+    @Resource
+    BusinessTypeService businessTypeService;
+    @Resource
+    PeriodTypeService periodTypeService;
+    @Resource
+    IdentityTypeService identityTypeService;
+    @Resource
+    OrderProdCustRelationService orderProdCustRelationService;
 
     @RequestMapping("/order")
     public String index() {
@@ -48,18 +52,21 @@ public class OrderController {
     @RequestMapping("/order/list")
     public String list(Model model, OrderSearchForm orderSearchForm) {
         List<Order> orders = orderService.getOrderList(orderSearchForm);
-        model.addAttribute("productType", productTypeService.getAll());
+        System.out.println("orderListSize="+orders.size());
+        model.addAttribute("businessTypes", businessTypeService.getAll());
         model.addAttribute("orderStates", orderStateService.getAll());
         model.addAttribute("orders",orders);
         List<OrderListForm> orderListForms = new ArrayList<OrderListForm>();
-        for(int i=0;i<orders.size();i++){
-            OrderListForm orderListForm = new OrderListForm();
-            orderListForm.setOrderId(orders.get(i).getOrderId());
-            orderListForm.setCustomerName(orders.get(i).getBorrowerName());
-            orderListForm.setProductTypeName(productTypeService.getObjById(orders.get(i).getProductType()).getName());
-            orderListForm.setAmount(orders.get(i).getDemandAmount());
-            orderListForm.setApplyDate(orders.get(i).getApplyTime());
-            orderListForms.add(orderListForm);
+        if(orders!=null){
+            for(Order order:orders){
+                OrderListForm orderListForm = new OrderListForm();
+                orderListForm.setOrderId(order.getId());
+                orderListForm.setApplicantName(order.getApplicantName());
+                orderListForm.setAmount(order.getDemandAmount());
+                orderListForm.setApplyDate(order.getApplyTime());
+                orderListForm.setOrderState((orderStateService.getOrderState(order.getOrderState())).getName());
+                orderListForms.add(orderListForm);
+            }
         }
         model.addAttribute("orderListForms",orderListForms);
 //        Page<Goods> pages=goodsService.findGoodsNoCriteria(Integer.parseInt(pageNum),20,"commentNum");
@@ -75,92 +82,85 @@ public class OrderController {
         return "/order/orderList";
     }
 
+    //进入添加订单页面，orderId参数是为了反复进入该页面
     @RequestMapping("/order/toAdd")
-    public String toAdd(Model model) {
-        System.out.println("enter the toAdd method!");
-        Customer customer = new Customer();
+    public String toAdd(Model model,Long orderId) {
+        System.out.println("enter the toAdd method! orderId="+orderId);
         Order order = new Order();
-        Mortgage mortgage = new Mortgage();
-        CustomerCredit custCredit = new CustomerCredit();
+        OrderProduct orderProductInit = new OrderProduct();
+        Customer customer = new Customer();
+        CustMortgage custMortgage = new CustMortgage();
+        CustCredit custCredit = new CustCredit();
+        //不是第一次进入这个界面，比如添加完客户后，再进入该页面，会能查询出客户信息、产品信息
+        if(orderId!=null){
+            //显示订单下的产品列表
+            List<OrderProduct> orderProductList = orderProductService.getOrderProductList(orderId);
+            if(null!=orderProductList){
+                List<OrderProductForm> orderProductForms= new ArrayList<OrderProductForm>();
+                System.out.println("orderProductList size = "+orderProductList.size());
+                for (OrderProduct orderProduct:orderProductList) {
+                    OrderProductForm orderProductForm = new OrderProductForm();
+                    orderProductForm.setId(orderProduct.getId());
+                    orderProductForm.setProductName((productService.getProduct(orderProduct.getProductId()).getProductName()));
+                    orderProductForm.setBorrowerName((orderProdCustRelationService.findCustomerByOrderProductId(orderProduct.getId(),ConstantCfg.CUSTOMER_IDENTITY_TYPE_1)).getName());
+                    orderProductForm.setPlanAmount(orderProduct.getPlanAmount());
+                    orderProductForm.setRealAmount(orderProduct.getRealAmount());
+                    orderProductForm.setServiceName("");
+                    orderProductForm.setStateName((orderStateService.getOrderState(orderProduct.getOrderProdState())).getName());
+                    orderProductForm.setApproveTime(orderProduct.getApproveTime());
+                    orderProductForms.add(orderProductForm);
+                }
+                model.addAttribute("orderProductForms", orderProductForms);
+            }
+
+            //显示订单下所有客户信息
+            order = orderService.findOrderById(orderId);
+            model.addAttribute("products",productService.getProductsByType(order.getBusinessType()));
+            List<Customer> customerList= customerService.findCustomerByOrderId(orderId);
+            if(customerList!=null && customerList.size()>0){
+                model.addAttribute("customerList",customerList);
+            }
+        }
         model.addAttribute("areaList", areaConfService.getAll());
         model.addAttribute("estateType", stateTypeService.getAll());
         model.addAttribute("payWays", payWayService.getAll());
+        model.addAttribute("businessTypes", businessTypeService.getAll());
         model.addAttribute("productType", productTypeService.getAll());
+        model.addAttribute("periodTypes",periodTypeService.getAll());
+        model.addAttribute("identityTypes",identityTypeService.getAll());
+        model.addAttribute("order",order);
+        model.addAttribute("orderProduct",orderProductInit);
         model.addAttribute("customer", customer);
-        model.addAttribute("mortgage", mortgage);
-        model.addAttribute("order", order);
+        model.addAttribute("custMortgage", custMortgage);
         model.addAttribute("custCredit",custCredit);
         return "/order/orderAdd";
     }
 
+    //添加订单，只保存订单相关属性，客户相关属性在CustomerController中
     @RequestMapping("/order/add")
-    public String add(Customer customer,
-                      Mortgage mortgage,
-                      CustomerCredit custCredit,
-                      String payWay,
-                      String area,
-                      String estateType,
-                      String productType,
-                      String isMutiLoaner,
-                      Order order){
-        //保存客户征信信息
-        customerCreditService.save(custCredit);
-        //保存客户信息
-        customer.setStatus("0");
-        customer.setCreditId(custCredit.getId());
-        customerService.save(customer);
-        //保存抵押物信息
-        mortgage.setEstateArea(new Integer(area).intValue());
-        mortgage.setEstateType(new Integer(estateType).intValue());
-        mortgageService.save(mortgage);
-
-        //保存订单上的客户需求
-        if("on".equals(isMutiLoaner)){
-            order.setIsMutiLoaner("Y");
-        }else{
-            order.setIsMutiLoaner("N");
-        }
-        order.setBorrowerName(customer.getName());
-        order.setProductType(new Integer(productType).intValue());
-        order.setPayWay(new Integer(payWay).intValue());
-        order.setBorrowerId(customer.getCustomerId());
-        order.setMortgageId(mortgage.getMortgageId());
-        order.setOrderState(0);
+    public String saveOrder(Model model,
+                      Order order
+                      ){
+        order.setApplyTime(new Date());
+        //需要设置成用户的销售编号
+        order.setAgentId(0);
+        //需要设置成用户ID
+        order.setCreator(0);
+        order.setCreateTime(new Date());
+        order.setOrderState(ConstantCfg.ORDER_STATE_INITIAL);
         orderService.save(order);
-        return "redirect:/order/list";
+        return "redirect:/order/toAdd?orderId="+order.getId();
     }
 
-    @RequestMapping("/order/toEdit")
-    public String toEdit(Model model,Long id) {
-        Order order=orderService.findOrderById(id);
-        Customer customer = customerService.findCustomerById(order.getBorrowerId());
-        Mortgage mortgage = mortgageService.findMortgageById(order.getMortgageId());
-        System.out.println("mortgageType="+mortgage.getEstateType());
-        CustomerCredit customerCredit = customerCreditService.findCustCreditById(customer.getCreditId());
-
-        model.addAttribute("areaList", areaConfService.getAll());
-        model.addAttribute("estateType", stateTypeService.getAll());
+    //查看订单详情
+    @RequestMapping("/order/showOrderDetail")
+    public String showOrderDetail(Model model,Long id) {
+        Order order =orderService.findOrderById(id);
         model.addAttribute("payWays", payWayService.getAll());
-        model.addAttribute("productType", productTypeService.getAll());
+        model.addAttribute("businessTypes", businessTypeService.getAll());
         model.addAttribute("order", order);
-        model.addAttribute("customer", customer);
-        model.addAttribute("mortgage", mortgage);
-        model.addAttribute("custCredit", customerCredit);
-        return "/order/orderAdd";
+        return "/order/orderEdit";
     }
-
-    @RequestMapping("/order/edit")
-    public String edit(Order order,
-                       Customer customer,
-                       Mortgage mortgage,
-                       CustomerCredit customerCredit) {
-        customerService.save(customer);
-        orderService.save(order);
-        mortgageService.save(mortgage);
-        customerCreditService.save(customerCredit);
-        return "redirect:/order/list";
-    }
-
 
     @RequestMapping("/order/delete")
     public String delete(Long id) {

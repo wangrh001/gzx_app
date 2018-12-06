@@ -3,7 +3,7 @@ package com.bangnd.util.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="T_CBS_PAY_METHOD")
+@Table(name="cfg_pay_way")
 public class PayWay {
     @Id
     @GeneratedValue

@@ -4,12 +4,14 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="T_CBS_CUSTOMER")
+@Table(name="t_customer")
 public class Customer {
     @Id
     @GeneratedValue
-    private long customerId;
-    @Column(nullable = false)
+    private long id;
+    @Column
+    private long orderId;
+    @Column
     private String name;
     @Column
     private int age;
@@ -21,10 +23,18 @@ public class Customer {
     private String address;
     @Column
     private String phone;
-
     @Column
-    private long creditId;
-
+    private int gender;
+    @Column
+    private String job;
+    @Column
+    private long custState;
+    //是不是新加入股东;Y、是；N、否
+    @Column
+    private String isNewStockholder;
+    //成为新股东月数
+    @Column
+    private int beStockholderMonths;
     @Column(nullable = true, unique = false)
     private Date createTime;
     @Column(nullable = true, unique = false)
@@ -90,21 +100,6 @@ public class Customer {
         this.phone = phone;
     }
 
-    //客户类型：0/准客户；1/客户；2/完结客户
-    @Column
-    private String status;
-    //客户身份：0/借款人；1/抵押人；2/连带借款人
-    @Column
-    private String identity;
-
-    public long getCreditId() {
-        return creditId;
-    }
-
-    public void setCreditId(long creditId) {
-        this.creditId = creditId;
-    }
-
     public String getName() {
         return name;
     }
@@ -113,35 +108,20 @@ public class Customer {
         this.name = name;
     }
 
-    public String getStatus() {
-        return status;
+    public long getCustState() {
+        return custState;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCustState(long custState) {
+        this.custState = custState;
     }
 
-    public String getIdentity() {
-        return identity;
-    }
-
-    public void setIdentity(String identity) {
-        this.identity = identity;
-    }
-
-    public long getCustomerId() {
-
-        return customerId;
-    }
     public Date getBirthday() {
         return birthday;
     }
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
-    }
-    public void setCustomerId(long customerId) {
-        this.customerId = customerId;
     }
 
     public int getAge() {
@@ -152,11 +132,51 @@ public class Customer {
         this.age = age;
     }
 
-//    public Order getOrder() {
-//        return order;
-//    }
-//
-//    public void setOrder(Order order) {
-//        this.order = order;
-//    }
+    public int getGender() {
+        return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public String getIsNewStockholder() {
+        return isNewStockholder;
+    }
+
+    public void setIsNewStockholder(String isNewStockholder) {
+        this.isNewStockholder = isNewStockholder;
+    }
+
+    public int getBeStockholderMonths() {
+        return beStockholderMonths;
+    }
+
+    public void setBeStockholderMonths(int beStockholderMonths) {
+        this.beStockholderMonths = beStockholderMonths;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
+    }
 }

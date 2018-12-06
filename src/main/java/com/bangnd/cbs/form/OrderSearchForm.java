@@ -1,26 +1,35 @@
 package com.bangnd.cbs.form;
 
 public class OrderSearchForm {
-    private String name;
-    private String type;
+    private String applicantName;
+    private String cellPhone;
+    private String businessType;
     private String orderState;
     private String startDate;
     private String endDate;
 
-    public String getName() {
-        return name;
+    public String getApplicantName() {
+        return applicantName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setApplicantName(String applicantName) {
+        this.applicantName = applicantName;
     }
 
-    public String getType() {
-        return type;
+    public String getCellPhone() {
+        return cellPhone;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCellPhone(String cellPhone) {
+        this.cellPhone = cellPhone;
+    }
+
+    public String getBusinessType() {
+        return businessType;
+    }
+
+    public void setBusinessType(String businessType) {
+        this.businessType = businessType;
     }
 
     public String getOrderState() {

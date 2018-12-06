@@ -1,0 +1,28 @@
+table {
+    width: 100%;
+    font-size: .938em;
+    border-collapse: collapse;/*边框会合并为一个单一的边框*/
+    margin: 20px 10px;
+}
+caption {
+    margin: 1em 0 .7em 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 120%;
+    letter-spacing: .5px;
+    color: #fff;
+}
+
+th {
+    text-align: left;
+    padding: .5em .5em;
+    font-weight: bold;
+    background: #66677c;color: #fff;
+}
+
+td {
+    padding: .5em .5em;
+    border-bottom: solid 1px #ccc;
+}
+
+table,table tr th, table tr td { border:1px solid #0094ff; }/*设置边框的*/

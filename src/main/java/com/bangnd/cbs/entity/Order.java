@@ -4,115 +4,57 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 @Entity
-@Table(name="T_CBS_ORDER")
+@Table(name="t_cbs_order")
 public class Order {
     @Id
     @GeneratedValue
-    private long orderId;
+    private long id;
 
-    @Column
-    private long borrowerId;
-
-    @Column
-    private String borrowerName;
-
-    //抵押人
-    @Column
-    private int mortgagorId;
-
+    //需求金额
     @Column
     private BigDecimal demandAmount;
 
+    //可接受利率
     @Column
-    private Date usingDate;
+    private BigDecimal demandInterest;
 
+    //用款开始时间
     @Column
-    private Date endingDate;
+    private Date demandDate;
 
-    public Date getEndingDate() {
-        return endingDate;
-    }
-
-    public void setEndingDate(Date endingDate) {
-        this.endingDate = endingDate;
-    }
-
-    //支付方式
+    //支付方式，1、等额本息；2、等额本金；3、月息年本
     @Column
-    private int payWay;
+    private int demandPayWay;
+
+    //周期类型：1、天；2、周；3、月；4、年
+    @Column
+    private long periodType;
 
     @Column
-    private long productType;
+    private int periodNum;
 
-    //抵押物
+    //申请人
     @Column
-    private long mortgageId;
+    private String applicantName;
 
-
+    //申请人电话
     @Column
-    private int productId;
+    private String cellPhone;
+
+    //1、居间业务；2、抵押业务；3、垫资过桥；
+    //业务类型
+    private int businessType;
 
     //申请时间
-    @Column(nullable = true, unique = false)
+    @Column(nullable = false, unique = false)
     private Date applyTime;
     //销售人员
-    @Column(nullable = true, unique = false)
+    @Column(nullable = false, unique = false)
     private Integer agentId;
-    //服务人员（内勤的产品对接岗、风控岗）
-    @Column(nullable = true, unique = false)
-    private Integer serviceId;
+
     //服务合同签订时间
     @Column(nullable = true, unique = false)
     private Date signTime;
-    //批贷时间
-    @Column(nullable = true, unique = false)
-    private Date approveTime;
-    //客户给服务费时间
-    @Column(nullable = true, unique = false)
-    private Date paymentTime;
-    //支付服务费
-    @Column(nullable = true, unique = false)
-    private BigDecimal fee;
-    //订单状态：0/建议书阶段；1/收集资料；2/审批通过；3/签订合同；4/支付完成；5/完结；6/订单取消
-    @Column(nullable = false, unique = false)
-    private int orderState;
-
-    @Column(nullable = true, unique = false)
-    private Date createTime;
-    @Column(nullable = true, unique = false)
-    private Integer creator;
-    @Column(nullable = true, unique = false)
-    private Date updateTime;
-    @Column(nullable = true, unique = false)
-    private Integer updator;
-
-    //是否多个借款人（一般借款人年龄大需要子女共借）
-    @Column(nullable = true, unique = false)
-    private String isMutiLoaner;
-
-    public long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(long orderId) {
-        this.orderId = orderId;
-    }
-
-    public long getBorrowerId() {
-        return borrowerId;
-    }
-
-    public void setBorrowerId(long borrowerId) {
-        this.borrowerId = borrowerId;
-    }
-
-    public int getMortgagorId() {
-        return mortgagorId;
-    }
-
-    public void setMortgagorId(int mortgagorId) {
-        this.mortgagorId = mortgagorId;
-    }
 
     public BigDecimal getDemandAmount() {
         return demandAmount;
@@ -122,44 +64,73 @@ public class Order {
         this.demandAmount = demandAmount;
     }
 
-    public Date getUsingDate() {
-        return usingDate;
+    public BigDecimal getDemandInterest() {
+        return demandInterest;
     }
 
-    public void setUsingDate(Date usingDate) {
-        this.usingDate = usingDate;
+    public void setDemandInterest(BigDecimal demandInterest) {
+        this.demandInterest = demandInterest;
     }
 
-    public int getPayWay() {
-        return payWay;
+    public Date getDemandDate() {
+        return demandDate;
     }
 
-    public void setPayWay(int payWay) {
-        this.payWay = payWay;
+    public void setDemandDate(Date demandDate) {
+        this.demandDate = demandDate;
     }
 
-    public long getProductType(){
-        return productType;
+    public int getDemandPayWay() {
+        return demandPayWay;
     }
 
-    public void setProductType(long productType) {
-        this.productType = productType;
+    public void setDemandPayWay(int demandPayWay) {
+        this.demandPayWay = demandPayWay;
     }
 
-    public long getMortgageId() {
-        return mortgageId;
+    public long getPeriodType() {
+        return periodType;
     }
 
-    public void setMortgageId(long mortgageId) {
-        this.mortgageId = mortgageId;
+    public void setPeriodType(long periodType) {
+        this.periodType = periodType;
     }
 
-    public int getProductId() {
-        return productId;
+    public int getPeriodNum() {
+        return periodNum;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setPeriodNum(int periodNum) {
+        this.periodNum = periodNum;
+    }
+
+    //订单状态：0/建议书阶段；1/收集资料；2/审批通过；3/签订合同；4/支付完成；5/完结；6/订单取消
+    @Column(nullable = false, unique = false)
+    private int orderState;
+
+    @Column(nullable = true, unique = false)
+    private Date createTime;
+    @Column(nullable = true, unique = false)
+    private int creator;
+    @Column(nullable = true, unique = false)
+    private Date updateTime;
+    @Column(nullable = true, unique = false)
+    private int updator;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getApplicantName() {
+        return applicantName;
+    }
+
+    public void setApplicantName(String applicantName) {
+        this.applicantName = applicantName;
     }
 
     public Date getApplyTime() {
@@ -178,44 +149,12 @@ public class Order {
         this.agentId = agentId;
     }
 
-    public Integer getServiceId() {
-        return serviceId;
-    }
-
-    public void setServiceId(Integer serviceId) {
-        this.serviceId = serviceId;
-    }
-
     public Date getSignTime() {
         return signTime;
     }
 
     public void setSignTime(Date signTime) {
         this.signTime = signTime;
-    }
-
-    public Date getApproveTime() {
-        return approveTime;
-    }
-
-    public void setApproveTime(Date approveTime) {
-        this.approveTime = approveTime;
-    }
-
-    public Date getPaymentTime() {
-        return paymentTime;
-    }
-
-    public void setPaymentTime(Date paymentTime) {
-        this.paymentTime = paymentTime;
-    }
-
-    public BigDecimal getFee() {
-        return fee;
-    }
-
-    public void setFee(BigDecimal fee) {
-        this.fee = fee;
     }
 
     public int getOrderState() {
@@ -258,19 +197,27 @@ public class Order {
         this.updator = updator;
     }
 
-    public String getIsMutiLoaner() {
-        return isMutiLoaner;
+    public String getCellPhone() {
+        return cellPhone;
     }
 
-    public void setIsMutiLoaner(String isMutiLoaner) {
-        this.isMutiLoaner = isMutiLoaner;
+    public void setCellPhone(String cellPhone) {
+        this.cellPhone = cellPhone;
     }
 
-    public String getBorrowerName() {
-        return borrowerName;
+    public void setCreator(int creator) {
+        this.creator = creator;
     }
 
-    public void setBorrowerName(String borrowerName) {
-        this.borrowerName = borrowerName;
+    public void setUpdator(int updator) {
+        this.updator = updator;
+    }
+
+    public int getBusinessType() {
+        return businessType;
+    }
+
+    public void setBusinessType(int businessType) {
+        this.businessType = businessType;
     }
 }

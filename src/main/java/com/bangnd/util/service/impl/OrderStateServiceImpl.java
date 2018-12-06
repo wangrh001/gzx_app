@@ -15,4 +15,9 @@ public class OrderStateServiceImpl implements OrderStateService {
     public List<OrderState> getAll() {
         return orderStateRepository.findAll();
     }
+
+    @Override
+    public OrderState getOrderState(long id) {
+        return orderStateRepository.findOne(id);
+    }
 }

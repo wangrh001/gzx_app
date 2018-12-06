@@ -5,10 +5,10 @@ import java.util.Date;
 
 public class OrderListForm {
     private long orderId;
-    private String customerName;
-    private String productTypeName;
+    private String applicantName;
     private BigDecimal amount;
     private Date applyDate;
+    private String orderState;
 
     public long getOrderId() {
         return orderId;
@@ -18,20 +18,20 @@ public class OrderListForm {
         this.orderId = orderId;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getApplicantName() {
+        return applicantName;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public String getOrderState() {
+        return orderState;
     }
 
-    public String getProductTypeName() {
-        return productTypeName;
+    public void setOrderState(String orderState) {
+        this.orderState = orderState;
     }
 
-    public void setProductTypeName(String productTypeName) {
-        this.productTypeName = productTypeName;
+    public void setApplicantName(String applicantName) {
+        this.applicantName = applicantName;
     }
 
     public BigDecimal getAmount() {

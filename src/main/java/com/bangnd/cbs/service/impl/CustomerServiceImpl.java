@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Date;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -15,13 +16,13 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
 
     @Override
-    public List<Customer> getCustomerList() {
-        return customerRepository.findAll();
+    public Customer findCustomerById(long id) {
+        return customerRepository.findById(id);
     }
 
     @Override
-    public Customer findCustomerById(long id) {
-        return customerRepository.findByCustomerId(id);
+    public List<Customer> findCustomerByOrderId(long orderId) {
+        return customerRepository.findAllByorderId(orderId);
     }
 
     @Override
@@ -37,6 +38,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void delete(Long id) {
-        customerRepository.delete(id);
+        Customer custome = customerRepository.findById(id);
+        custome.setCustState(0);
+        custome.setUpdateTime(new Date());
+        customerRepository.saveAndFlush(custome);
     }
 }

@@ -3,19 +3,19 @@ package com.bangnd.util.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="T_CBS_PRODUCT_TYPE")
+@Table(name="cfg_prod_type")
 public class ProductType {
     @Id
     @GeneratedValue
-    private long id;
+    private int id;
     @Column(nullable = false)
     private String name;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
