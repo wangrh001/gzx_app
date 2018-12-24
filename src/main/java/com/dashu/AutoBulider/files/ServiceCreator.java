@@ -53,7 +53,7 @@ public class ServiceCreator {
     private String createGetEntityById(String entityName){
         StringBuffer stringBuffer = new StringBuffer();
         String UpEntityName=Character.toUpperCase(entityName.charAt(0))+entityName.substring(1);
-        stringBuffer.append("public "+UpEntityName+" get"+UpEntityName+"ById(long ind);");
+        stringBuffer.append("public "+UpEntityName+" get"+UpEntityName+"ById(long id);");
         return stringBuffer.toString();
     }
     private String createMerge(String entityName){

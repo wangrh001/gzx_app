@@ -39,7 +39,7 @@ public class SearchFormCreator {
                         dataModels1.add(dataModel2);
                     }else {
                         dataModel1.setColumnNameEn(dataModel.getColumnNameEn());
-                        dataModel1.setColumnType(dataModel.getColumnType());
+                        dataModel1.setColumnType(ConstantCfg.COLUMN_TYPE_STRING);
 
                     }
                     dataModels1.add(dataModel1);

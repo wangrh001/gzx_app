@@ -8,10 +8,9 @@ import java.util.List;
 
 public class HtmlAddCreator {
 
-    public String create(List<DataModel> dataModelList){
+    public String create(List<DataModel> dataModelList,String sys,String entityName){
         StringBuffer addHtml = new StringBuffer();
         if(dataModelList!=null){
-            String entityName=dataModelList.get(0).getTableNames();
             addHtml.append(ConstantCfg.HTML_HEAD);
             addHtml.append("<body class=\"container\">\n");
             addHtml.append("<br/>\n");
@@ -26,11 +25,11 @@ public class HtmlAddCreator {
                 }
             }
             //生成搜索区域
-            addHtml.append(HtmlListCreator.createInputArea(addDataModelList,"add"));
+            addHtml.append(HtmlListCreator.createInputArea(addDataModelList,sys,entityName,"add"));
 
             addHtml.append("<div class=\"form-group\">\n");
             addHtml.append("<div class=\"col-sm-2 control-label\">\n");
-            addHtml.append("<a href=\"/"+entityName+"/add\" th:href=\"@{/"+entityName+"/add}\" class=\"btn btn-info\">add</a>\n");
+            addHtml.append("<a href=\"/"+sys+"/"+entityName+"/add\" th:href=\"@{/"+sys+"/"+entityName+"/add}\" class=\"btn btn-info\">add</a>\n");
             addHtml.append("    </div>\n");
             addHtml.append("</div>\n");
             addHtml.append(    "</body>\n");
@@ -67,6 +66,6 @@ public class HtmlAddCreator {
 
 
         HtmlAddCreator entityCreator = new HtmlAddCreator();
-        System.out.println(entityCreator.create(dataModels));
+        System.out.println(entityCreator.create(dataModels,"test","test"));
     }
 }

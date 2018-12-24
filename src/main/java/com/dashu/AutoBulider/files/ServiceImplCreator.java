@@ -68,26 +68,28 @@ public class ServiceImplCreator {
         stringBuffer.append("public Predicate toPredicate(Root<"+UpEntityName+"> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {");
         stringBuffer.append("List<Predicate> predicates = new ArrayList<Predicate>();");
         for(DataModel dataModel:dataModels){
-            String columnName=dataModel.getColumnNameEn();
-            String UpColumnName=Character.toUpperCase(columnName.charAt(0))+columnName.substring(1);
-            //离散值要处理选择零和非零的问题
-            if(dataModel.getIfScatter()==1){
-                stringBuffer.append("if ("+entityName+"SearchForm.getBus"+UpColumnName+"()!=null && !\"\".equals("+entityName+"SearchForm.get"+UpColumnName+"())) {\n");
-                stringBuffer.append("   if(\"0\".equals("+entityName+"SearchForm.get"+UpColumnName+"())){\n" );
-                stringBuffer.append("        predicates.add(cb.notEqual(root.get(\""+columnName+"\"), "+entityName+"SearchForm.get"+UpColumnName+"()));\n" );
-                stringBuffer.append("   }else {\n" );
-                stringBuffer.append("        predicates.add(cb.equal(root.get(\""+columnName+"\"), "+entityName+"SearchForm.get"+UpColumnName+"()));\n" );
-                stringBuffer.append("   }\n" );
-                stringBuffer.append("}");
-            //日期要处理日期格式转换问题
-            }else if(dataModel.getIfBusinessDate()==1){
-                stringBuffer.append("predicates.add(cb.between(root.get(\""+columnName+"\").as(Date.class),"+entityName+"SearchForm.get"+UpColumnName+"Start(),"+entityName+"SearchForm.get"+UpColumnName+"End()));");
-            }else{
-                stringBuffer.append("if ("+entityName+"SearchForm.get"+UpColumnName+"()!=null && !\"\".equals("+entityName+"SearchForm.get"+UpColumnName+"())) {\n");
-                stringBuffer.append("predicates.add(cb.like(root.get(\""+columnName+"\").as(String.class), \"%\" + "+entityName+"SearchForm.get"+UpColumnName+"() + \"%\"));}\n");
+            if(dataModel.getIfSearchColumn()==1){
+                String columnName=dataModel.getColumnNameEn();
+                String UpColumnName=Character.toUpperCase(columnName.charAt(0))+columnName.substring(1);
+                //离散值要处理选择零和非零的问题
+                if(dataModel.getIfScatter()==1){
+                    stringBuffer.append("if ("+entityName+"SearchForm.get"+UpColumnName+"()!=null && !\"\".equals("+entityName+"SearchForm.get"+UpColumnName+"())) {\n");
+                    stringBuffer.append("   if(\"0\".equals("+entityName+"SearchForm.get"+UpColumnName+"())){\n" );
+                    stringBuffer.append("        predicates.add(cb.notEqual(root.get(\""+columnName+"\"), "+entityName+"SearchForm.get"+UpColumnName+"()));\n" );
+                    stringBuffer.append("   }else {\n" );
+                    stringBuffer.append("        predicates.add(cb.equal(root.get(\""+columnName+"\"), "+entityName+"SearchForm.get"+UpColumnName+"()));\n" );
+                    stringBuffer.append("   }\n" );
+                    stringBuffer.append("}");
+                    //日期要处理日期格式转换问题
+                }else if(dataModel.getIfBusinessDate()==1){
+                    stringBuffer.append("predicates.add(cb.between(root.get(\""+columnName+"\").as(Date.class),"+entityName+"SearchForm.get"+UpColumnName+"Start(),"+entityName+"SearchForm.get"+UpColumnName+"End()));");
+                }else{
+                    stringBuffer.append("if ("+entityName+"SearchForm.get"+UpColumnName+"()!=null && !\"\".equals("+entityName+"SearchForm.get"+UpColumnName+"())) {\n");
+                    stringBuffer.append("predicates.add(cb.like(root.get(\""+columnName+"\").as(String.class), \"%\" + "+entityName+"SearchForm.get"+UpColumnName+"() + \"%\"));}\n");
+                }
             }
         }
-        stringBuffer.append("predicates.add(cb.notEqual(root.get(\""+entityName+"State\").as(Integer.class), new Integer(100)));");
+        stringBuffer.append("predicates.add(cb.notEqual(root.get(\"state\").as(Integer.class), new Integer(100)));");
         stringBuffer.append("Predicate[] p = new Predicate[predicates.size()];\n");
         stringBuffer.append("return cb.and(predicates.toArray(p));");
         stringBuffer.append("}};");

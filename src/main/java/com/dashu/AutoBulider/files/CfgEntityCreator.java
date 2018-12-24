@@ -20,10 +20,12 @@ public class CfgEntityCreator {
     {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("package com."+company+"."+sys+".entity;\n");
+        stringBuffer.append("import javax.persistence.*;");
         stringBuffer.append("@Entity \n");
-        stringBuffer.append("@Table(name=\"t_cfg_"+tableName+"_"+columnName).append("\") \n");
+        stringBuffer.append("@Table(name=\"cfg_"+tableName+"_"+columnName).append("\") \n");
         String UpColumn=Character.toUpperCase(columnName.charAt(0))+columnName.substring(1);
-        stringBuffer.append("public class "+tableName+UpColumn+"{ \n");
+        String UpEntityName=Character.toUpperCase(tableName.charAt(0))+tableName.substring(1);
+        stringBuffer.append("public class "+UpEntityName+UpColumn+"{ \n");
         stringBuffer.append("@Id \n");
         stringBuffer.append("@GeneratedValue \n");
         stringBuffer.append("private int id;\n" );

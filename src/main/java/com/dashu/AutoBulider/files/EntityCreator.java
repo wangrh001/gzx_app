@@ -18,7 +18,7 @@ public class EntityCreator {
             javaCode.append("import java.math.BigDecimal;");
             javaCode.append("import java.util.Date;");
             javaCode.append("@Entity");
-            javaCode.append("@Table(name=\""+entityName+"\")");
+            javaCode.append("@Table(name=\"t_"+sys+"_"+entityName+"\")");
             javaCode.append("public class "+UpEntityName+"{");
             javaCode.append("@Id");
             javaCode.append("@GeneratedValue ");
@@ -33,7 +33,6 @@ public class EntityCreator {
             //添加类结束括号
             javaCode.append("}");
         }
-        System.out.println(javaCode.toString());
         return javaCode.toString();
     }
 
