@@ -10,4 +10,5 @@ public interface OrderService {
     public List<Order> getOrderList(OrderSearchForm orderSearchForm);
     public Order findOrderById(long ind);
     public void delete(Long id);
+    public void flush(Order order);
 }

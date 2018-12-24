@@ -15,7 +15,7 @@ public interface OrderRepository extends JpaRepository<Order, Long>,JpaSpecifica
     @Transactional
     @Modifying
     @Query("update Order o set o.orderState = 100 where o.id = :id")
-    public void deleteByIds(@Param(value = "id") long id);
+    public void deleteById(@Param(value = "id") long id);
     //查询非作废的订单
     List<Order> findByOrderStateNot(@Param(value="status") int status);
 

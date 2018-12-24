@@ -1,7 +1,7 @@
 package com.bangnd.hr.web;
 
-import com.bangnd.demo.entity.User;
-import com.bangnd.demo.service.UserService;
+import com.bangnd.hr.entity.Employee;
+import com.bangnd.hr.service.EmployeeService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,49 +10,49 @@ import java.util.List;
 
 public class EmployeeController {
     @Resource
-    UserService userService;
-
-
-    @RequestMapping("/")
+    EmployeeService employeeService;
+//
+//
+    @RequestMapping("/hr")
     public String index() {
-        return "redirect:/list";
+        return "redirect:/employee/list";
     }
 
-    @RequestMapping("/list")
+    @RequestMapping("/hr/list")
     public String list(Model model) {
-        List<User> users=userService.getUserList();
-        model.addAttribute("users", users);
-        return "user/list";
+        List<Employee> employees=employeeService.getEmployeeList();
+        model.addAttribute("employees", employees);
+        return "hr/list";
     }
 
-    @RequestMapping("/toAdd")
+    @RequestMapping("/hr/toAdd")
     public String toAdd() {
-        return "user/userAdd";
+        return "hr/EmployeeAdd";
     }
 
-    @RequestMapping("/add")
-    public String add(User user) {
-        userService.save(user);
-        return "redirect:/list";
+    @RequestMapping("/hr/add")
+    public String add(Employee employee) {
+        employeeService.save(employee);
+        return "redirect:/hr/list";
     }
 
-    @RequestMapping("/toEdit")
+    @RequestMapping("/hr/toEdit")
     public String toEdit(Model model,Long id) {
-        User user=userService.findUserById(id);
-        model.addAttribute("user", user);
-        return "user/userEdit";
+        Employee employees=employeeService.findEmployeeById(id);
+        model.addAttribute("employees", employees);
+        return "hr/EmployeeEdit";
     }
 
-    @RequestMapping("/edit")
-    public String edit(User user) {
-        userService.edit(user);
-        return "redirect:/list";
+    @RequestMapping("/hr/edit")
+    public String edit(Employee employees) {
+        employeeService.edit(employees);
+        return "redirect:/hr/list";
     }
 
 
-    @RequestMapping("/delete")
+    @RequestMapping("/hr/delete")
     public String delete(Long id) {
-        userService.delete(id);
-        return "redirect:/list";
+        employeeService.delete(id);
+        return "redirect:/hr/list";
     }
 }

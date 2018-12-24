@@ -113,9 +113,12 @@ public class OrderController {
                 model.addAttribute("orderProductForms", orderProductForms);
             }
 
-            //显示订单下所有客户信息
             order = orderService.findOrderById(orderId);
-            model.addAttribute("products",productService.getProductsByType(order.getBusinessType()));
+            if(order!=null){
+                model.addAttribute("products",productService.getProductsByType(order.getBusinessType()));
+            }
+
+            //显示订单下所有客户信息
             List<Customer> customerList= customerService.findCustomerByOrderId(orderId);
             if(customerList!=null && customerList.size()>0){
                 model.addAttribute("customerList",customerList);
@@ -139,32 +142,42 @@ public class OrderController {
     //添加订单，只保存订单相关属性，客户相关属性在CustomerController中
     @RequestMapping("/order/add")
     public String saveOrder(Model model,
-                      Order order
+                      Order order,
+                      String orderId
                       ){
-        order.setApplyTime(new Date());
-        //需要设置成用户的销售编号
-        order.setAgentId(0);
-        //需要设置成用户ID
-        order.setCreator(0);
-        order.setCreateTime(new Date());
-        order.setOrderState(ConstantCfg.ORDER_STATE_INITIAL);
-        orderService.save(order);
+        System.out.println(order.getId());
+        Order orderOld=null;
+        if(!"".equals(orderId)){
+            orderOld= orderService.findOrderById(new Long(orderId).longValue());
+        }
+        if(orderOld==null){
+            order.setApplyTime(new Date());
+            //需要设置成用户的销售编号
+            order.setAgentId(0);
+            //需要设置成用户ID
+            order.setCreator(0);
+            order.setCreateTime(new Date());
+            order.setOrderState(ConstantCfg.ORDER_STATE_INITIAL);
+            orderService.save(order);
+        }else {
+            orderOld.setApplicantName(order.getApplicantName());
+            orderOld.setCellPhone(order.getCellPhone());
+            orderOld.setBusinessType(order.getBusinessType());
+            orderOld.setDemandAmount(order.getDemandAmount());
+            orderOld.setDemandPayWay(order.getDemandPayWay());
+            orderOld.setDemandInterest(order.getDemandInterest());
+            orderOld.setPeriodType(order.getPeriodType());
+            orderOld.setPeriodNum(order.getPeriodNum());
+            orderOld.setDemandDate(order.getDemandDate());
+            orderOld.setUpdateTime(new Date());
+            orderService.flush(orderOld);
+        }
         return "redirect:/order/toAdd?orderId="+order.getId();
     }
 
-    //查看订单详情
-    @RequestMapping("/order/showOrderDetail")
-    public String showOrderDetail(Model model,Long id) {
-        Order order =orderService.findOrderById(id);
-        model.addAttribute("payWays", payWayService.getAll());
-        model.addAttribute("businessTypes", businessTypeService.getAll());
-        model.addAttribute("order", order);
-        return "/order/orderEdit";
-    }
-
     @RequestMapping("/order/delete")
-    public String delete(Long id) {
-        orderService.delete(id);
+    public String delete(Long orderId) {
+        orderService.delete(orderId);
         return "redirect:/order/list";
     }
 }

@@ -62,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
                         predicates.add(cb.equal(root.get("orderState").as(Integer.class), new Integer(orderSearchForm.getOrderState())));
                     }
                 }
-
+                predicates.add(cb.notEqual(root.get("orderState").as(Integer.class), new Integer(100)));
                 if (orderSearchForm.getCellPhone()!=null && !"".equals(orderSearchForm.getCellPhone())) {
                     System.out.println("cellPhone="+orderSearchForm.getCellPhone());
                     predicates.add(cb.equal(root.get("cellPhone"), orderSearchForm.getCellPhone()));
@@ -108,12 +108,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public void update(Order order){
-
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        orderRepository.deleteByIds(id);
+        Order order = orderRepository.findById(id.longValue());
+        order.setOrderState(100);
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void flush(Order order) {
+        orderRepository.saveAndFlush(order);
     }
 }

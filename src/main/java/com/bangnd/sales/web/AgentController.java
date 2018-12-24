@@ -21,64 +21,83 @@ import com.bangnd.sales.vo.*;
 public class AgentController {
     @Resource
     private AgentService agentService;
+    @Resource
+    AgentBusinessTypeService agentBusinessTypeService;
+    @Resource
+    AgentChannelTypeService agentChannelTypeService;
 
-    @RequestMapping("/agent/home")
+    @RequestMapping("/sales/agent")
     public String home(Model model, AgentSearchForm agentSearchForm) {
         List<Agent> agents = agentService.getAgentList(agentSearchForm);
+        model.addAttribute("businessTypes", agentBusinessTypeService.getAll());
+        model.addAttribute("channelTypes", agentChannelTypeService.getAll());
         List<AgentVO> agentVOs = new ArrayList<>();
         if (agents != null) {
             for (Agent agent : agents) {
                 AgentVO agentVO = new AgentVO();
                 agentVO.setName(agent.getName());
-                agentVO.setApplyDate(agent.getApplyDate());
+                agentVO.setBusinessTypeName((agentBusinessTypeService.getAgentBusinessTypeById(agent.getBusinessType())).getName());
+                agentVO.setPhoneNO(agent.getPhoneNO());
+                agentVO.setCompanyName(agent.getCompanyName());
                 agentVOs.add(agentVO);
             }
         }
         model.addAttribute("agentVOs", agentVOs);
-        return "/agent/agentList";
+        return "/sales/agentList";
     }
 
-    @RequestMapping("/agent/toAdd")
+    @RequestMapping("/sales/agent/toAdd")
     public String toAdd(Model model) {
         Agent agent = new Agent();
         model.addAttribute("agent", agent);
-        return "/agent/agentAdd";
+        model.addAttribute("businessTypes", agentBusinessTypeService.getAll());
+        model.addAttribute("channelTypes", agentChannelTypeService.getAll());
+        return "/sales/agentAdd";
     }
 
-    @RequestMapping("/agent/add")
+    @RequestMapping("/sales/agent/add")
     public String add(Agent agent) {
         agent.setState(ConstantCfg.ORDER_STATE_INITIAL);
         agent.setCreator(0);
         agent.setCreateTime(new Date());
         agentService.save(agent);
-        return "redirect:/agent/home";
+        return "redirect:/sales/agent/home";
     }
 
-    @RequestMapping("/agent/toModify")
+    @RequestMapping("/sales/agent/toModify")
     public String toModify(Model model, Long id) {
         Agent agent = agentService.getAgentById(id);
         model.addAttribute("agent", agent);
-        return "/agent/agentAdd";
+        return "/sales/agentAdd";
     }
 
-    @RequestMapping("/agent/modify")
+    @RequestMapping("/sales/agent/modify")
     public String modify(Agent agent, Long id) {
         Agent oldAgent = agentService.getAgentById(id);
         oldAgent.setName(agent.getName());
-        oldAgent.setApplyDate(agent.getApplyDate());
+        oldAgent.setBusinessType(agent.getBusinessType());
+        oldAgent.setChannelType(agent.getChannelType());
+        oldAgent.setBankCode(agent.getBankCode());
+        oldAgent.setCooperateBeginDate(agent.getCooperateBeginDate());
+        oldAgent.setCooperateEndDate(agent.getCooperateEndDate());
+        oldAgent.setCentiCode(agent.getCentiCode());
+        oldAgent.setPhoneNO(agent.getPhoneNO());
+        oldAgent.setCompanyName(agent.getCompanyName());
+        oldAgent.setUserName(agent.getUserName());
+        oldAgent.setJobYears(agent.getJobYears());
         oldAgent.setUpdator(0);
         oldAgent.setUpdateTime(new Date());
         agentService.merge(oldAgent);
-        return "redirect:/agent/toModify?id=" + id;
+        return "redirect:/sales/agent/toModify?id=" + id;
     }
 
-    @RequestMapping("/agent/delete")
+    @RequestMapping("/sales/agent/delete")
     public String delete(Long id) {
         Agent oldAgent = agentService.getAgentById(id);
         oldAgent.setState(0);
         oldAgent.setUpdator(0);
         oldAgent.setUpdateTime(new Date());
         agentService.merge(oldAgent);
-        return "redirect:/agent/home";
+        return "redirect:/sales/agent";
     }
 }

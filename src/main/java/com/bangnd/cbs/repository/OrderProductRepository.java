@@ -9,8 +9,9 @@ import java.util.List;
 public interface OrderProductRepository extends JpaRepository<OrderProduct,Long> {
     //public List<OrderProduct> getOrderProductList(@Param(value="orderId") long id);
 
-    @Query("select o from OrderProduct o where orderId = :orderId and o.orderProdState<>0")
-    public List<OrderProduct> findByOrderId(@Param(value="orderId") long id);
+    @Query("select o from OrderProduct o where orderId = :orderId and o.orderProdState<>:state")
+    public List<OrderProduct> findByOrderId(@Param(value="orderId") long id,
+                                            @Param(value="state") int state);
 
     public OrderProduct findById(@Param(value="id") long id);
 }
