@@ -19,8 +19,7 @@
 
 <body class="container">
 <br/>
-<h1>订单列表</h1>
-<br/><br/>
+<h4>订单列表</h4>
 
 <!--查询条件-->
 <div>
@@ -58,7 +57,6 @@
     <tr>
         <td><input type="submit" value="Search" class="btn btn-info"/></td>
     </tr>
-
 </table>
 </form>
 </div>
@@ -83,8 +81,8 @@
             <td th:text="${orderListForm.amount}">6</td>
             <td th:text="${orderListForm.applyDate}">6</td>
             <td th:text="${orderListForm.orderState}"></td>
-            <td><a th:href="@{/order/showOrderDetail(id=${orderListForm.orderId})}">edit</a></td>
-            <td><a th:href="@{/order/delete(id=${orderListForm.orderId})}">delete</a></td>
+            <td><a th:href="@{/order/toAdd(orderId=${orderListForm.orderId})}">edit</a></td>
+            <td><a th:href="@{/order/delete(orderId=${orderListForm.orderId})}">delete</a></td>
         </tr>
 
         </tbody>

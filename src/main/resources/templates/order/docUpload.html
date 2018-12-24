@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>所有文件</title>
+</head>
+
+<body>
+<form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data" th:action="@{/order/toAdd(orderId=${orderId})}">
+    <table>
+        <tr><td><input type="submit" value="返回上页" class="btn btn-info" /></td></tr>
+        <tr><td><input type="hidden" th:field="*{orderId}"/></td></tr>
+        <tr th:each="file : ${files}"><td><img th:src="${file}"/></td></tr>
+    </table>
+</form>
+</body>
+</html>

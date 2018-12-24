@@ -20,15 +20,29 @@
             var orderProduct = document.getElementById("orderProduct")
             orderProduct.style.display = orderProduct.style.display == 'none' ? "block" :"none"
         }
+        function formActionSetValue(actionType){
+            var orderId=document.getElementById("orderId").value
+            var order_form= document.getElementById("order_form")
+            //提交表单数据
+            if(actionType == 1){
+                order_form.action = "/order/add?orderId="+orderId
+            //单独提交文件
+            }else if(actionType==2){
+                order_form.action = "/doc/upload?orderId="+orderId
+            }else if(actionType == 3){
+                order_form.action = "/doc/showAllPic?orderId="+orderId
+            }
+            order_form.submit()
+        }
     </script>
 </head>
 
 <body class="container">
 <br/>
-<h1>添加订单</h1>
-<br/><br/>
+<h4>添加订单</h4>
+<!--th:action="@{/order/add(orderId=${order.id})}"-->
 
-<form class="form-horizontal" method="post" id="order_form" th:action="@{/order/add}">
+<form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data">
     <!--填写订单相关信息 -->
     <table>
         <th>申请人</th>
@@ -73,17 +87,20 @@
                             th:selected="${periodType.id eq order.periodType}">Credit card</option>
                 </select>
             </td>
-
             <td>周期数</td>
             <td><input type="text" class="form-control" th:field="*{order.periodNum}" placeholder="贷款月数"/></td>
             <td>用款日期</td>
             <td><input type="text" class="form-control" th:field="*{order.demandDate}"  value=""/></td>
         </tr>
         <tr>
-            <td><input type="submit" value="保存订单" class="btn btn-info" /></td>
+            <td><input type="submit" value="保存订单" onclick="formActionSetValue(1)" class="btn btn-info" /></td>
             <td><input type="button" value="添加客户" class="btn btn-info" onclick="showAddCustomerPage()" /></td>
             <td><input type="button" value="添加产品" class="btn btn-info" onclick="showAddProductPage()" /></td>
+            <td>上传客户资料<input name="files" type="file" multiple="true"/></td>
+            <td><button type="submit" class="btn btn-info" onclick="formActionSetValue(2)">确定上传</button></td>
+            <td><button type="submit" class="btn btn-info" onclick="formActionSetValue(3)">查看图片</button></td>
         </tr>
+        <input type="hidden" class="form-control" id="orderId" th:value="*{order.id}"/>
     </table>
     <!--显示订单下的客户信息 -->
     <table>
@@ -91,14 +108,17 @@
             <th>姓名</th>
             <th>电话</th>
             <th>地址</th>
+            <th>修改</th>
             <th>删除</th>
         </tr>
         <!--显示该订单下的所有客户，并可以点击进去修改客户详情 -->
         <tr  th:each="customer : ${customerList}">
-            <td th:text="${customer.name}">1</td>
+            <!--onclick="'javascript:showAddCustomerPage('+${customer.id}+')'"-->
+            <td th:text="${customer.name}"></td>
             <td th:text="${customer.phone}">neo</td>
             <td th:text="${customer.address}">6</td>
-            <td><a th:href="@{/customer/delete(id=${customer.id})}">delete</a></td>
+            <td><a th:href="@{/customer/toModify(id=${customer.id})}">修改</a></td>
+            <td><a th:href="@{/customer/delete(id=${customer.id})}">删除</a></td>
         </tr>
     </table>
     <!--显示订单下匹配的产品 -->
@@ -109,9 +129,10 @@
             <th>产品名称</th>
             <th>申请金额</th>
             <th>批贷金额</th>
-            <th>状态</th>
             <th>批贷时间</th>
             <th>服务人员</th>
+            <th>状态</th>
+            <th>修改</th>
             <th>删除</th>
         </tr>
         <tr  th:each="orderProductForm : ${orderProductForms}">
@@ -120,9 +141,10 @@
             <td th:text="${orderProductForm.productName}">neo</td>
             <td th:text="${orderProductForm.planAmount}">neo</td>
             <td th:text="${orderProductForm.realAmount}">neo</td>
-            <td th:text="${orderProductForm.stateName}">neo</td>
             <td th:text="${orderProductForm.approveTime}">neo</td>
             <td th:text="${orderProductForm.serviceName}">neo</td>
+            <td th:text="${orderProductForm.stateName}">neo</td>
+            <td><a th:href="@{/orderProduct/toModify(id=${orderProductForm.id})}">delete</a></td>
             <td><a th:href="@{/orderProduct/delete(id=${orderProductForm.id})}">delete</a></td>
         </tr>
     </table>
@@ -271,5 +293,6 @@
         <tr><td><input type="submit" value="保存方案" class="btn btn-info" /></td></tr>
     </table>
 </form>
+
 </body>
 </html>
