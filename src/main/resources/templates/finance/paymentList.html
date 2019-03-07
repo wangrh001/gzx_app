@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>列表</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/finance/payment}" th:object="${paymentSearchForm}" method="post">
+        <table>
+            <tr>
+                <td>费用类型</td>
+                <td><select th:field="*{payType}" th:remove="all-but-first">
+                    <option th:each="payType : ${payTypes}"
+                            th:value="${payType.id}" th:text="${payType.name}">Credit card
+                    </option>
+                </select></td>
+                <td>是否核销</td>
+                <td><select th:field="*{offset}" th:remove="all-but-first">
+                    <option th:each="offset : ${offsets}"
+                            th:value="${offset.id}" th:text="${offset.name}">Credit card
+                    </option>
+                </select></td>
+                <td>支付状态</td>
+                <td><select th:field="*{payState}" th:remove="all-but-first">
+                    <option th:each="payState : ${payStates}"
+                            th:value="${payState.id}" th:text="${payState.name}">Credit card
+                    </option>
+                </select></td>
+
+            </tr>
+            <tr>
+                <td>对方姓名</td>
+                <td><input th:field="*{accountName}" value="" class="form-control"/></td>
+                <td>收付</td>
+                <td><select th:field="*{inOut}" th:remove="all-but-first">
+                    <option th:each="inOut : ${inOuts}"
+                            th:value="${inOut.id}" th:text="${inOut.name}">Credit card
+                    </option>
+                </select></td>
+                <td>应实</td>
+                <td><select th:field="*{ifReal}" th:remove="all-but-first">
+                    <option th:each="paymentPayDateType : ${ifReals}"
+                            th:value="${paymentPayDateType.id}" th:text="${paymentPayDateType.name}">
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>支付日期开始</td>
+                <td><input id="payDateStart" name="payDateStart" th:value="${payDateStart ne null}?${#dates.format(payDateStart,'MM/dd/yyyy')}" value="" class="form-control"/></td>
+                <td>支付日期结束</td>
+                <td><input id="payDateEnd" name="payDateEnd" th:value="${payDateEnd ne null}?${#dates.format(payDateEnd,'MM/dd/yyyy')}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Search" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>对方姓名</th>
+            <th>费用类型</th>
+            <th>金额</th>
+            <th>支付日期</th>
+            <th>编辑</th>
+            <th>删除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="paymentVO : ${paymentVOs}">
+            <td th:text="${paymentVO.id}">1</td>
+            <td th:text="${paymentVO.accountName}">1</td>
+            <td th:text="${paymentVO.payTypeName}">1</td>
+            <td th:text="${paymentVO.amount}">1</td>
+            <td th:text="${paymentVO.payDate ne null}?${#dates.format(paymentVO.payDate,'yyyy-MM-dd')}">1</td>
+            <td><a th:href="@{/finance/payment/toAdd(id=${paymentVO.id})}">收付处理</a></td>
+            <td><a th:href="@{/finance/payment/delete(id=${paymentVO.id})}">删除</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="col-sm-2 control-label">
+        <a href="/finance/payment/toAddNoBusi" th:href="@{/finance/payment/toAddNoBusi}" class="btn btn-info">非业务收付费</a>
+    </div>
+</div>
+</body>
+</html>

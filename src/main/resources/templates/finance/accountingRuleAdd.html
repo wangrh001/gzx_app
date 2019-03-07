@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>新增</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/finance/accountingRule/add}" th:object="${accountingRule}"
+          method="post">
+        <table>
+            <tr>
+                <td>费用类型</td>
+                <td><select th:field="*{feeType}" th:remove="all-but-first">
+                    <option th:each="feeType : ${feeTypes}"
+                            th:value="${feeType.id}" th:text="${feeType.name}">Credit card
+                    </option>
+                </select></td>
+                <td>借方科目</td>
+                <td><select th:field="*{debitSide}" th:remove="all-but-first">
+                    <option th:each="debitSide : ${debitSides}"
+                            th:value="${debitSide.id}" th:text="${debitSide.name}">Credit card
+                    </option>
+                </select></td>
+                <td>贷方科目</td>
+                <td><select th:field="*{creditSide}" th:remove="all-but-first">
+                    <option th:each="creditSide : ${creditSides}"
+                            th:value="${creditSide.id}" th:text="${creditSide.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="保存" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="form-group">
+</div>
+</body>
+</html>

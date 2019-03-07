@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type = "text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type = "text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head><body class="container">
+<br/>
+<h4>新增</h4><div> 
+<form class="form-horizontal" th:action="@{/cs/workOrder/add}" th:object="${workOrder}" method="post"><table><tr><td>工单名称</td><td><input th:field="*{csName}"  value="" class="form-control"/></td><td>工单类型</td><td><select th:field="*{cstype}" th:remove="all-but-first">
+<option th:each="cstype : ${cstypes}"
+th:value="${cstype.id}" th:text="${cstype.name}">Credit card</option>
+</select></td><td>工单描述</td><td><input th:field="*{csDesc}"  value="" class="form-control"/></td></tr><tr><td>客户姓名</td><td><input th:field="*{customerName}"  value="" class="form-control"/></td><td>处理状态</td><td><select th:field="*{csState}" th:remove="all-but-first">
+<option th:each="csState : ${csStates}"
+th:value="${csState.id}" th:text="${csState.name}">Credit card</option>
+</select></td></tr><tr><td><input type="submit" value="保存" class="btn btn-info" /></td></tr></table></form></div><div class="form-group">
+</div>
+</body>
+</html>

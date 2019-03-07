@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>新增</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/hr/salary/add}" th:object="${salary}" method="post">
+        <table>
+            <tr>
+                <td>员工名称</td>
+                <td><input th:field="*{empName}" value="" class="form-control"/></td>
+                <td>年月</td>
+                <td><input th:field="*{month}" value="" class="form-control"/></td>
+                <td>基本薪酬</td>
+                <td><input th:field="*{basicSalary}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>当月薪酬</td>
+                <td><input th:field="*{currentSalary}" value="" class="form-control"/></td>
+                <td>发放状态</td>
+                <td><select th:field="*{extendState}" th:remove="all-but-first">
+                    <option th:each="extendState : ${extendStates}"
+                            th:value="${extendState.id}" th:text="${extendState.name}">Credit card
+                    </option>
+                </select></td>
+                <td>发放时间</td>
+                <td><input th:field="*{extendDate}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="保存" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="form-group">
+</div>
+</body>
+</html>

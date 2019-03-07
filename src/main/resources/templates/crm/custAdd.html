@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>新增</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/crm/cust/add}" th:object="${cust}" method="post">
+        <table>
+            <tr>
+                <td>姓名</td>
+                <td><input th:field="*{name}" value="" class="form-control"/></td>
+                <td>生日</td>
+                <td><input th:field="*{birthday}" value="" class="form-control"/></td>
+                <td>证件号码</td>
+                <td><input th:field="*{certiCode}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>电话</td>
+                <td><input th:field="*{phone}" value="" class="form-control"/></td>
+                <td>城市</td>
+                <td><select th:field="*{city}" th:remove="all-but-first">
+                    <option th:each="city : ${citys}"
+                            th:value="${city.id}" th:text="${city.name}">Credit card
+                    </option>
+                </select></td>
+                <td>家庭地址</td>
+                <td><input th:field="*{address}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>银行卡号</td>
+                <td><input th:field="*{cardNo}" value="" class="form-control"/></td>
+                <td>性别</td>
+                <td><select th:field="*{sex}" th:remove="all-but-first">
+                    <option th:each="sex : ${sexs}"
+                            th:value="${sex.id}" th:text="${sex.name}">Credit card
+                    </option>
+                </select></td>
+                <td>销售状态</td>
+                <td><select th:field="*{salesState}" th:remove="all-but-first">
+                    <option th:each="salesState : ${salesStates}"
+                            th:value="${salesState.id}" th:text="${salesState.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>信息来源</td>
+                <td><select th:field="*{infoOriginal}" th:remove="all-but-first">
+                    <option th:each="infoOriginal : ${infoOriginals}"
+                            th:value="${infoOriginal.id}" th:text="${infoOriginal.name}">Credit card
+                    </option>
+                </select></td>
+                <td>用钱目的</td>
+                <td><select th:field="*{whyBorrow}" th:remove="all-but-first">
+                    <option th:each="whyBorrow : ${whyBorrows}"
+                            th:value="${whyBorrow.id}" th:text="${whyBorrow.name}">Credit card
+                    </option>
+                </select></td>
+                <td>职业</td>
+                <td><select th:field="*{job}" th:remove="all-but-first">
+                    <option th:each="job : ${jobs}"
+                            th:value="${job.id}" th:text="${job.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>是否是新股东</td>
+                <td><select th:field="*{isNewStockholder}" th:remove="all-but-first">
+                    <option th:each="isNewStockholder : ${isNewStockholders}"
+                            th:value="${isNewStockholder.id}" th:text="${isNewStockholder.name}">Credit card
+                    </option>
+                </select></td>
+                <td>成为新股东月数</td>
+                <td><input th:field="*{beStockholderMonths}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="保存" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="form-group">
+</div>
+</body>
+</html>

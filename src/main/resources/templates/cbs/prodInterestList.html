@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>列表</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/cbs/prodInterest}" th:object="${prodInterestSearchForm}" method="post">
+        <table>
+            <tr>
+                <td>产品</td>
+                <td><select th:field="*{productId}" th:remove="all-but-first">
+                    <option th:each="product : ${products}"
+                            th:value="${product.id}" th:text="${product.productName}">Credit card
+                    </option>
+                </select></td>
+                <td>结算周期</td>
+                <td><select th:field="*{periodType}" th:remove="all-but-first">
+                    <option th:each="periodType : ${periodTypes}"
+                            th:value="${periodType.id}" th:text="${periodType.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Search" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>产品id</th>
+            <th>结算周期</th>
+            <th>结算利率</th>
+            <th>编辑</th>
+            <th>删除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="prodInterestVO : ${prodInterestVOs}">
+            <td th:text="${prodInterestVO.id}">1</td>
+            <td th:text="${prodInterestVO.productName}">1</td>
+            <td th:text="${prodInterestVO.periodTypeName}">1</td>
+            <td th:text="${prodInterestVO.interest}">1</td>
+            <td><a th:href="@{/cbs/prodInterest/toModify(id=${prodInterestVO.id})}">edit</a></td>
+            <td><a th:href="@{/cbs/prodInterest/delete(id=${prodInterestVO.id})}">delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="col-sm-2 control-label">
+        <a href="/cbs/prodInterest/toAdd" th:href="@{/cbs/prodInterest/toAdd}" class="btn btn-info">add</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>列表</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/mis/task}" th:object="${taskSearchForm}" method="post">
+        <table>
+            <tr>
+                <td>任务名</td>
+                <td><input th:field="*{taskName}" value="" class="form-control"/></td>
+                <td>任务类型</td>
+                <td><select th:field="*{type}" th:remove="all-but-first">
+                    <option th:each="type : ${types}"
+                            th:value="${type.id}" th:text="${type.name}">Credit card
+                    </option>
+                </select></td>
+                <td>任务周期</td>
+                <td><select th:field="*{taskPeriod}" th:remove="all-but-first">
+                    <option th:each="taskPeriod : ${taskPeriods}"
+                            th:value="${taskPeriod.id}" th:text="${taskPeriod.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>任务状态</td>
+                <td><select th:field="*{taskState}" th:remove="all-but-first">
+                    <option th:each="taskState : ${taskStates}"
+                            th:value="${taskState.id}" th:text="${taskState.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Search" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>任务名</th>
+            <th>结束时间</th>
+            <th>任务目标</th>
+            <th>任务状态</th>
+            <th>完成数量</th>
+            <th>编辑</th>
+            <th>删除</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="taskVO : ${taskVOs}">
+            <td th:text="${taskVO.id}">1</td>
+            <td th:text="${taskVO.taskName}">1</td>
+            <td th:text="${taskVO.endDateName}">1</td>
+            <td th:text="${taskVO.amount}">1</td>
+            <td th:text="${taskVO.taskStateName}">1</td>
+            <td th:text="${taskVO.completeAmount}">1</td>
+            <td><a th:href="@{/mis/task/toModify(id=${taskVO.id})}">edit</a></td>
+            <td><a th:href="@{/mis/task/delete(id=${taskVO.id})}">delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <div class="col-sm-2 control-label">
+        <a href="/mis/task/toAdd" th:href="@{/mis/task/toAdd}" class="btn btn-info">add</a>
+    </div>
+</div>
+</body>
+</html>

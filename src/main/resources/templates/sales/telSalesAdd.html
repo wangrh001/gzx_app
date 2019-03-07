@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>新增</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/sales/telSales/add}" th:object="${telSales}" method="post">
+        <table>
+            <tr>
+                <td>结果</td>
+                <td><select th:field="*{result}" th:remove="all-but-first">
+                    <option th:each="result : ${results}"
+                            th:value="${result.id}" th:text="${result.name}">Credit card
+                    </option>
+                </select></td>
+                <td>几天后再打</td>
+                <td><select th:field="*{taskDelay}" th:remove="all-but-first">
+                    <option th:each="taskDelay : ${taskDelays}"
+                            th:value="${taskDelay.id}" th:text="${taskDelay.name}">Credit card
+                    </option>
+                </select></td>
+                <td>备注</td>
+                <td><input th:field="*{markDesc}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>历史备注</td>
+                <td><input th:field="*{histDesc}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="保存" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="form-group">
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type = "text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type = "text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head><body class="container">
+<br/>
+<h4>列表</h4><div> 
+<form class="form-horizontal" th:action="@{/sales/commission}" th:object="${commissionSearchForm}" method="post"><table><tr><td>业务类型</td><td><select th:field="*{businessType}" th:remove="all-but-first">
+<option th:each="businessType : ${businessTypes}"
+th:value="${businessType.id}" th:text="${businessType.name}">Credit card</option>
+</select></td><td>产品类型</td><td><select th:field="*{productType}" th:remove="all-but-first">
+<option th:each="productType : ${productTypes}"
+th:value="${productType.id}" th:text="${productType.name}">Credit card</option>
+</select></td><td>产品</td><td><input th:field="*{productId}"  value="" class="form-control"/></td></tr><tr><td>渠道类型</td><td><select th:field="*{channelType}" th:remove="all-but-first">
+<option th:each="channelType : ${channelTypes}"
+th:value="${channelType.id}" th:text="${channelType.name}">Credit card</option>
+</select></td></tr><tr><td><input type="submit" value="Search" class="btn btn-info"/></td></tr></table></form></div><div class="with:80%"><table class="table table-hover"><thead><tr><th>序号</th><th>业务类型</th><th>产品类型</th><th>产品</th><th>编辑</th>
+<th>删除</th>
+</tr>
+</thead>
+<tbody><tr  th:each="commissionVO : ${commissionVOs}">
+<td th:text="${commissionVO.id}">1</td>
+<td th:text="${commissionVO.businessTypeName}">1</td>
+<td th:text="${commissionVO.productTypeName}">1</td>
+<td th:text="${commissionVO.productId}">1</td>
+<td><a th:href="@{/sales/commission/toModify(id=${commissionVO.id})}">edit</a></td>
+<td><a th:href="@{/sales/commission/delete(id=${commissionVO.id})}">delete</a></td></tr>
+</tbody>
+</table>
+</div>
+<div class="form-group">
+<div class="col-sm-2 control-label">
+<a href="/sales/commission/toAdd" th:href="@{/sales/commission/toAdd}" class="btn btn-info">add</a>
+    </div>
+</div>
+</body>
+</html>

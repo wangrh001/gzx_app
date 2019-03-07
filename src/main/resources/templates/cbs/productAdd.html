@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>新增</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/cbs/product/add}" th:object="${product}" method="post">
+        <table>
+            <tr>
+                <td>产品名称</td>
+                <td><input th:field="*{productName}" value="" class="form-control"/></td>
+                <td>机构</td>
+                <td><select th:field="*{bankId}" th:remove="all-but-first">
+                    <option th:each="bankId : ${bankIds}"
+                            th:value="${bankId.id}" th:text="${bankId.name}">Credit card
+                    </option>
+                </select></td>
+                <td>业务类型</td>
+                <td><select th:field="*{busiType}" th:remove="all-but-first">
+                    <option th:each="busiType : ${busiTypes}"
+                            th:value="${busiType.id}" th:text="${busiType.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>产品手续费</td>
+                <td><input th:field="*{brokerage}" value="" class="form-control"/></td>
+                <td>产品利息</td>
+                <td><input th:field="*{interest}" value="" class="form-control"/></td>
+                <td>产品类型</td>
+                <td><select th:field="*{productType}" th:remove="all-but-first">
+                    <option th:each="productType : ${productTypes}"
+                            th:value="${productType.id}" th:text="${productType.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>产品状态</td>
+                <td><select th:field="*{productState}" th:remove="all-but-first">
+                    <option th:each="productState : ${productStates}"
+                            th:value="${productState.id}" th:text="${productState.name}">Credit card
+                    </option>
+                </select></td>
+                <td>产品律师费</td>
+                <td><input th:field="*{lawFee}" value="" class="form-control"/></td>
+                <td>产品公正费</td>
+                <td><input th:field="*{fairFee}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>产品执照费</td>
+                <td><input th:field="*{licenseFee}" value="" class="form-control"/></td>
+                <td>开始时间</td>
+                <td><input th:field="*{beginDate}" value="" class="form-control"/></td>
+                <td>结束时间</td>
+                <td><input th:field="*{endDate}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="保存" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="form-group">
+</div>
+</body>
+</html>
