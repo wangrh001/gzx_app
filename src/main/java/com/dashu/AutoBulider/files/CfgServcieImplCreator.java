@@ -20,18 +20,18 @@ public class CfgServcieImplCreator {
         stringBuffer.append("import org.springframework.stereotype.Service;\n");
 
         stringBuffer.append("@Service\n");
-        stringBuffer.append("public class " + UpEntityName + UpColumn + "ServiceImpl implements "+ UpEntityName+UpColumn+"Service { \n");
+        stringBuffer.append("public class " + UpEntityName + UpColumn + "ServiceImpl implements " + UpEntityName + UpColumn + "Service { \n");
         stringBuffer.append("@Autowired\n");
-        stringBuffer.append("private "+UpEntityName + UpColumn+"Repository "+entity+UpColumn+"Repository;\n");
+        stringBuffer.append("private " + UpEntityName + UpColumn + "Repository " + entity + UpColumn + "Repository;\n");
 
         stringBuffer.append("@Override\n");
         stringBuffer.append("public List<" + UpEntityName + UpColumn + "> getAll(){");
-        stringBuffer.append("return "+entity+UpColumn+"Repository.findAll();");
+        stringBuffer.append("return " + entity + UpColumn + "Repository.findAll();");
         stringBuffer.append("}");
 
         stringBuffer.append("@Override\n");
-        stringBuffer.append("public "+UpEntityName+UpColumn+" get"+UpEntityName+UpColumn+"ById(long id){");
-        stringBuffer.append("return "+entity+UpColumn+"Repository.findOne(id);");
+        stringBuffer.append("public " + UpEntityName + UpColumn + " get" + UpEntityName + UpColumn + "ById(int id){");
+        stringBuffer.append("return " + entity + UpColumn + "Repository.findOne(id);");
         stringBuffer.append("}");
 
 

@@ -12,9 +12,12 @@ public class OrderProductForm {
     private BigDecimal realAmount;
     private long borrowerId;
     private String stateName;
+    //签约时间
+    private Date signTime;
     //批贷时间
     private Date approveTime;
     private String serviceName;
+    private String saleName;
 
     public long getId() {
         return id;
@@ -94,5 +97,21 @@ public class OrderProductForm {
 
     public void setRealAmount(BigDecimal realAmount) {
         this.realAmount = realAmount;
+    }
+
+    public Date getSignTime() {
+        return signTime;
+    }
+
+    public void setSignTime(Date signTime) {
+        this.signTime = signTime;
+    }
+
+    public String getSaleName() {
+        return saleName;
+    }
+
+    public void setSaleName(String saleName) {
+        this.saleName = saleName;
     }
 }

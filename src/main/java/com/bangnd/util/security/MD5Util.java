@@ -1,12 +1,13 @@
 package com.bangnd.util.security;
 
 import java.security.MessageDigest;
+
 import sun.misc.BASE64Encoder;
+
 import java.util.List;
 
 public class MD5Util {
     /**
-     *
      * @param pwd
      * @param isUpper 字母大小写(false为默认小写，true为大写)
      * @param bit
@@ -56,17 +57,17 @@ public class MD5Util {
         return md5;
     }
 
-    public void testForeach(){
-        List<Object> lo=null;
-        for(Object o:lo){
+    public void testForeach() {
+        List<Object> lo = null;
+        for (Object o : lo) {
             System.out.println(o.toString());
         }
 
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         MD5Util md5Util = new MD5Util();
-        System.out.println(md5Util.getMD5("1",true,32));
+        System.out.println(md5Util.getMD5("1", true, 32));
         md5Util.testForeach();
         //C4CA4238A0B923820DCC509A6F75849B
     }

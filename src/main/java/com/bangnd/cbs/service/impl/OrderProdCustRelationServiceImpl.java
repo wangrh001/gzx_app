@@ -28,9 +28,9 @@ public class OrderProdCustRelationServiceImpl implements OrderProdCustRelationSe
     @Override
     public List<Customer> findCustomersByOrderId(long orderId) {
         List<OrderProdCustRelation> orderProdCustRelations = orderProdCustRelationRepository.findAllByOrderId(orderId);
-        List<Customer> customers= new ArrayList<Customer>();
-        if(orderProdCustRelations!=null){
-            for(OrderProdCustRelation orderProdCustRelation:orderProdCustRelations){
+        List<Customer> customers = new ArrayList<Customer>();
+        if (orderProdCustRelations != null) {
+            for (OrderProdCustRelation orderProdCustRelation : orderProdCustRelations) {
                 Customer customer = customerService.findCustomerById(orderProdCustRelation.getCustomerId());
                 customers.add(customer);
             }
@@ -39,14 +39,24 @@ public class OrderProdCustRelationServiceImpl implements OrderProdCustRelationSe
     }
 
     @Override
-    public Customer findCustomerByOrderProductId(long orderProductId,long identityType) {
-        System.out.println("orderProdctId="+orderProductId);
-        System.out.println("identityType="+identityType);
-        OrderProdCustRelation orderProdCustRelation =orderProdCustRelationRepository.findByOrderProductId(orderProductId,identityType);
-        Customer customer=new Customer();
-        if(orderProdCustRelation!=null){
+    public Customer findCustomerByOrderProductId(long orderProductId, long identityType) {
+        System.out.println("orderProdctId=" + orderProductId);
+        System.out.println("identityType=" + identityType);
+        OrderProdCustRelation orderProdCustRelation = orderProdCustRelationRepository.findByOrderProductId(orderProductId, identityType);
+        Customer customer = new Customer();
+        if (orderProdCustRelation != null) {
             customer = customerService.findCustomerById(orderProdCustRelation.getCustomerId());
         }
         return customer;
+    }
+
+    @Override
+    public List<OrderProdCustRelation> getObjsByOrderProdId(long id) {
+        return orderProdCustRelationRepository.findAllByOrderProductId(id);
+    }
+
+    @Override
+    public OrderProdCustRelation findObjByOrderProductId(long orderProductId, long identityType) {
+        return orderProdCustRelationRepository.findByOrderProductId(orderProductId, identityType);
     }
 }

@@ -1,14 +1,20 @@
 package com.bangnd.cbs.service;
 
 import com.bangnd.cbs.entity.Product;
+import com.bangnd.cbs.form.ProductSearchForm;
 
 import java.util.List;
 
 public interface ProductService {
-    public Product getProduct(long id);
-    //获取全部产品
-    public List<Product> getAllProduct();
-    //获取这一类产品
-    public List<Product> getProductsByType(long productType);
+    public List<Product> getProductList(ProductSearchForm productSearchForm);
 
+    public void save(Product product);
+
+    public Product getProductById(int id);
+
+    public void merge(Product product);
+
+    List<Product> getProductsByType(int id);
+
+    List<Product> getInterestProduct();
 }

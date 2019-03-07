@@ -7,9 +7,12 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface OrderProdCustRelationRepository extends JpaRepository<OrderProdCustRelation,Long> {
+public interface OrderProdCustRelationRepository extends JpaRepository<OrderProdCustRelation, Long> {
     public List<OrderProdCustRelation> findAllByOrderId(long orderId);
+
     @Query("select o from OrderProdCustRelation o where orderProductId = :orderProductId and identityType =:identityType")
-    public OrderProdCustRelation findByOrderProductId(@Param(value="orderProductId") long orderProductId,
-                                                         @Param(value="identityType") long identityType);
+    public OrderProdCustRelation findByOrderProductId(@Param(value = "orderProductId") long orderProductId,
+                                                      @Param(value = "identityType") long identityType);
+
+    public List<OrderProdCustRelation> findAllByOrderProductId(@Param(value = "orderProductId") long orderProductId);
 }

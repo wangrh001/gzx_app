@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 public interface DocHandlerService {
-    public Resource loadAsResource(String filename,Long orderId);
-    public Map<String,String> storageFiles(MultipartFile[] files, String variablePath) throws StorageException;
+    public Resource loadAsResource(String filename, Long orderId);
+
+    public Map<String, String> storageFiles(MultipartFile[] files, String variablePath) throws StorageException;
 }

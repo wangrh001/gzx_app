@@ -15,7 +15,8 @@ public class SyswebConfigurer extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new SysInterceptor()).addPathPatterns("/**");
         super.addInterceptors(registry);
     }
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @Bean
     public FilterRegistrationBean filterRegist() {
         FilterRegistrationBean frBean = new FilterRegistrationBean();
@@ -24,7 +25,8 @@ public class SyswebConfigurer extends WebMvcConfigurerAdapter {
         System.out.println("filter");
         return frBean;
     }
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
     @Bean
     public ServletListenerRegistrationBean listenerRegist() {
         ServletListenerRegistrationBean srb = new ServletListenerRegistrationBean();

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="t_data_model")
+@Table(name = "t_data_model")
 public class DataModel {
     @Id
     @GeneratedValue

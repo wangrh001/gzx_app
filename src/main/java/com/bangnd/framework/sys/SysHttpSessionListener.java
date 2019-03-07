@@ -8,15 +8,15 @@ import javax.servlet.http.HttpSessionListener;
 public class SysHttpSessionListener implements HttpSessionListener {
 
     public static int online = 0;
+
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        online ++;
+        online++;
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
     }
-
 
 
 }

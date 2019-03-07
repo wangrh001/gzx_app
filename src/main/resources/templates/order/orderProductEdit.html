@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <title>user</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
-    <link rel="stylesheet" type = "text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
     <link rel="stylesheet" th:href="@{/css/table.css}"/>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
@@ -14,38 +14,39 @@
 
 <body class="container">
 <br/>
-<h1>添加订单</h1>
+<h1>修改订单产品</h1>
 <br/><br/>
 
-<form class="form-horizontal" method="post" id="order_product_form" th:action="@{/orderProduct/add(orderId=${order.id})}">
+<form class="form-horizontal" method="post" id="order_product_form" th:action="@{/orderProduct/modify}">
     <!--匹配的产品信息 -->
-    <table id="orderProduct" style="display: none">
+    <table id="orderProduct">
+        <input type="hidden" class="form-control" th:field="*{orderProduct.id}"/>
         <tr>
             <td>产品名称</td>
             <td>
                 <select th:field="*{orderProduct.productId}" th:remove="all-but-first">
                     <option th:each="product : ${products}"
-                            th:value="${product.productId}" th:text="${product.productName}"></option>
+                            th:value="${product.id}" th:text="${product.productName}"></option>
                 </select>
             </td>
 
             <td>贷款人</td>
             <td>
-                <select name="customer1" th:remove="all-but-first">
+                <select name="customer1" th:value="${customer1.id}" th:remove="all-but-first">
                     <option th:each="customer : ${customerList}"
                             th:value="${customer.id}" th:text="${customer.name}"></option>
                 </select>
             </td>
             <td>抵押人</td>
             <td>
-                <select name="customer2" th:remove="all-but-first">
+                <select name="customer2" th:value="${customer2.id}" th:remove="all-but-first">
                     <option th:each="customer : ${customerList}"
                             th:value="${customer.id}" th:text="${customer.name}"></option>
                 </select>
             </td>
             <td>连带贷款人</td>
             <td>
-                <select name="customer3" th:remove="all-but-first">
+                <select name="customer3" th:value="${customer3.id}" th:remove="all-but-first">
                     <option th:each="customer : ${customerList}"
                             th:value="${customer.id}" th:text="${customer.name}"></option>
                 </select>
@@ -53,9 +54,9 @@
         </tr>
         <tr>
             <td>计划匹配金额(万)</td>
-            <td><input type="text" th:field="*{orderProduct.planAmount}" placeholder="计划匹配金额(万)"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planAmount}" placeholder="计划匹配金额(万)"/></td>
             <td>计划利率</td>
-            <td><input type="text" th:field="*{orderProduct.planInterest}" placeholder="计划利率"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planInterest}" placeholder="计划利率"/></td>
             <td>计划还款方式</td>
             <td>
                 <select th:field="*{orderProduct.planPayWay}" th:remove="all-but-first">
@@ -71,13 +72,13 @@
                 </select>
             </td>
             <td>计划周期数</td>
-            <td><input type="text" th:field="*{orderProduct.planPeriodNum}" placeholder="计划周期数"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planPeriodNum}" placeholder="计划周期数"/></td>
         </tr>
         <tr>
             <td>真实匹配金额(万)</td>
-            <td><input type="text" th:field="*{orderProduct.realAmount}" placeholder="真实匹配金额(万)"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realAmount}" placeholder="真实匹配金额(万)"/></td>
             <td>真实利率</td>
-            <td><input type="text" th:field="*{orderProduct.realInterest}" placeholder="真实利率"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realInterest}" placeholder="真实利率"/></td>
             <td>真实还款方式</td>
             <td>
                 <select th:field="*{orderProduct.realPayWay}" th:remove="all-but-first">
@@ -93,9 +94,16 @@
                 </select>
             </td>
             <td>真实周期数</td>
-            <td><input type="text" th:field="*{orderProduct.realPeriodNum}" placeholder="真实周期数"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realPeriodNum}" placeholder="真实周期数"/></td>
         </tr>
-        <tr><td><input type="submit" value="保存方案" class="btn btn-info" /></td></tr>
+        <tr>
+            <td>批贷时间</td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.approveTime}" placeholder="批贷时间"/></td>
+        </tr>
+
+        <tr>
+            <td><input type="submit" value="更新方案" class="btn btn-info"/></td>
+        </tr>
     </table>
 </form>
 </body>

@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 
 import java.util.*;
 
-import com.dashu.AutoBulider.config.*;
+import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.sales.web.*;
 import com.bangnd.sales.entity.*;
 import com.bangnd.sales.form.*;
@@ -35,6 +35,7 @@ public class AgentController {
         if (agents != null) {
             for (Agent agent : agents) {
                 AgentVO agentVO = new AgentVO();
+                agentVO.setId(agent.getId());
                 agentVO.setName(agent.getName());
                 agentVO.setBusinessTypeName((agentBusinessTypeService.getAgentBusinessTypeById(agent.getBusinessType())).getName());
                 agentVO.setPhoneNO(agent.getPhoneNO());
@@ -61,12 +62,14 @@ public class AgentController {
         agent.setCreator(0);
         agent.setCreateTime(new Date());
         agentService.save(agent);
-        return "redirect:/sales/agent/home";
+        return "redirect:/sales/agent";
     }
 
     @RequestMapping("/sales/agent/toModify")
     public String toModify(Model model, Long id) {
         Agent agent = agentService.getAgentById(id);
+        model.addAttribute("businessTypes", agentBusinessTypeService.getAll());
+        model.addAttribute("channelTypes", agentChannelTypeService.getAll());
         model.addAttribute("agent", agent);
         return "/sales/agentAdd";
     }
@@ -94,7 +97,7 @@ public class AgentController {
     @RequestMapping("/sales/agent/delete")
     public String delete(Long id) {
         Agent oldAgent = agentService.getAgentById(id);
-        oldAgent.setState(0);
+        oldAgent.setState(100);
         oldAgent.setUpdator(0);
         oldAgent.setUpdateTime(new Date());
         agentService.merge(oldAgent);

@@ -17,4 +17,9 @@ public class PeriodTypeServiceImpl implements PeriodTypeService {
     public List<PeriodType> getAll() {
         return periodTypeRepository.findAll();
     }
+
+    @Override
+    public PeriodType getPeriodTypeById(int id) {
+        return periodTypeRepository.findOne(id);
+    }
 }

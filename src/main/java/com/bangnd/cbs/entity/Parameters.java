@@ -5,7 +5,7 @@ import java.util.Date;
 
 //参数配置表
 @Entity
-@Table(name="cfg_paraters")
+@Table(name = "cfg_paraters")
 public class Parameters {
 
     @Id

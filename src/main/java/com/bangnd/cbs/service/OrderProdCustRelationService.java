@@ -7,7 +7,13 @@ import java.util.List;
 
 public interface OrderProdCustRelationService {
     public void save(OrderProdCustRelation orderProdCustRelation);
+
     public List<Customer> findCustomersByOrderId(long orderId);
-    public Customer findCustomerByOrderProductId(long orderProductId,long identityType);
+
+    public Customer findCustomerByOrderProductId(long orderProductId, long identityType);
+
+    public List<OrderProdCustRelation> getObjsByOrderProdId(long orderProductId);
+
+    public OrderProdCustRelation findObjByOrderProductId(long orderProductId, long identityType);
 
 }

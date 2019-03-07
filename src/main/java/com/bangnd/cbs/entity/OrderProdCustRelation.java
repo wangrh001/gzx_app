@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name="t_cbs_order_prodCust")
+@Table(name = "t_cbs_order_prodCust")
 public class OrderProdCustRelation {
     @Id
     @GeneratedValue

@@ -12,32 +12,33 @@ import java.util.List;
 public class SearchFormCreator {
     /**
      * 根据列生成Form对象代码，核心是对于查询日期范围的处理、查询状态中"全部的处理"
+     *
      * @param dataModels
      * @return
      */
-    public String create(List<DataModel> dataModels,String company,String sys){
+    public String create(List<DataModel> dataModels, String company, String sys) {
         StringBuffer stringBuffer = new StringBuffer();
-        if(dataModels!=null){
+        if (dataModels != null) {
             String entityName = dataModels.get(0).getTableNames();
-            String UpEntityName=Character.toUpperCase(entityName.charAt(0))+entityName.substring(1);
-            stringBuffer.append("package com."+company+"."+sys+".form;\n");
+            String UpEntityName = Character.toUpperCase(entityName.charAt(0)) + entityName.substring(1);
+            stringBuffer.append("package com." + company + "." + sys + ".form;\n");
             stringBuffer.append("import javax.persistence.*;\n");
             stringBuffer.append("import java.util.*;\n");
-            stringBuffer.append("public class "+UpEntityName+"SearchForm {");
+            stringBuffer.append("public class " + UpEntityName + "SearchForm {");
             List<DataModel> dataModels1 = new ArrayList<DataModel>();
-            for(DataModel dataModel:dataModels){
+            for (DataModel dataModel : dataModels) {
                 //是查询列
-                if(dataModel.getIfSearchColumn()==1){
+                if (dataModel.getIfSearchColumn() == 1) {
                     DataModel dataModel1 = new DataModel();
                     //如果是业务日期，需要生成查询的开始时间和结束时间
-                    if(dataModel.getIfBusinessDate()==1){
+                    if (dataModel.getIfBusinessDate() == 1) {
                         DataModel dataModel2 = new DataModel();
                         dataModel1.setColumnType(dataModel.getColumnType());
-                        dataModel1.setColumnNameEn(dataModel.getColumnNameEn()+"Start");
+                        dataModel1.setColumnNameEn(dataModel.getColumnNameEn() + "Start");
                         dataModel2.setColumnType(dataModel.getColumnType());
-                        dataModel2.setColumnNameEn(dataModel.getColumnNameEn()+"End");
+                        dataModel2.setColumnNameEn(dataModel.getColumnNameEn() + "End");
                         dataModels1.add(dataModel2);
-                    }else {
+                    } else {
                         dataModel1.setColumnNameEn(dataModel.getColumnNameEn());
                         dataModel1.setColumnType(ConstantCfg.COLUMN_TYPE_STRING);
 
@@ -51,7 +52,7 @@ public class SearchFormCreator {
         return stringBuffer.toString();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         List<DataModel> dataModels = new ArrayList<DataModel>();
         DataModel dataModel = new DataModel();
         dataModel.setSysName("cbs");
@@ -77,6 +78,6 @@ public class SearchFormCreator {
         dataModel1.setIfModifyable(1);
         dataModels.add(dataModel1);
         SearchFormCreator searchFormCreator = new SearchFormCreator();
-        System.out.println(searchFormCreator.create(dataModels,"dashu","test"));
+        System.out.println(searchFormCreator.create(dataModels, "dashu", "test"));
     }
 }

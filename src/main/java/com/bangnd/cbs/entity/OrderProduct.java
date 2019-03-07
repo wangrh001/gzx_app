@@ -6,7 +6,7 @@ import java.util.Date;
 
 //订单产品表
 @Entity
-@Table(name="t_cbs_order_product")
+@Table(name = "t_cbs_order_product")
 public class OrderProduct {
     @Id
     @GeneratedValue
@@ -16,7 +16,7 @@ public class OrderProduct {
     private long orderId;
 
     @Column
-    private long productId;
+    private int productId;
 
     //计划金额
     @Column
@@ -96,6 +96,9 @@ public class OrderProduct {
     @Column(nullable = false, unique = false)
     private int orderProdState;
 
+    @Column
+    private int state;
+
     @Column(nullable = true, unique = false)
     private Date createTime;
     @Column(nullable = true, unique = false)
@@ -121,11 +124,11 @@ public class OrderProduct {
         this.orderId = orderId;
     }
 
-    public long getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(long productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
@@ -311,5 +314,13 @@ public class OrderProduct {
 
     public void setRealPayWay(long realPayWay) {
         this.realPayWay = realPayWay;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

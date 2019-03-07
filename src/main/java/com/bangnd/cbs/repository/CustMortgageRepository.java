@@ -6,5 +6,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface CustMortgageRepository extends JpaRepository<CustMortgage, Long> {
     public CustMortgage findByMortgageId(@Param(value = "mortgageId") long id);
+
     public CustMortgage findMortgageByCustomerId(@Param(value = "customerId") long id);
 }

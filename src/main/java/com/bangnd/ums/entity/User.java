@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="t_ums_user")
+@Table(name = "t_ums_user")
 public class User {
     @Id
     @GeneratedValue

@@ -1,19 +1,16 @@
 package com.dashu.AutoBulider.config;
 
 public class ConstantCfg {
-    public final static int COLUMN_TYPE_INT=1;
-    public final static int COLUMN_TYPE_LONG=2;
-    public final static int COLUMN_TYPE_STRING=3;
-    public final static int COLUMN_TYPE_DATE=4;
-    public final static int COLUMN_TYPE_BIGDECIMAL=5;
-
-    public final static int ORDER_STATE_INITIAL=1;
+    public final static int COLUMN_TYPE_INT = 1;
+    public final static int COLUMN_TYPE_LONG = 2;
+    public final static int COLUMN_TYPE_STRING = 3;
+    public final static int COLUMN_TYPE_DATE = 4;
+    public final static int COLUMN_TYPE_BIGDECIMAL = 5;
 
     //每行的列数
-    public final static int COLUMNS_PRE_ROW=6;
-
+    public final static int COLUMNS_PRE_ROW = 6;
     //html固定的引用文件
-    public final static String HTML_HEAD="<!DOCTYPE html>\n" +
+    public final static String HTML_HEAD = "<!DOCTYPE html>\n" +
             "<html lang=\"en\" xmlns:th=\"http://www.thymeleaf.org\">\n" +
             "<head>\n" +
             "    <meta charset=\"UTF-8\"/>\n" +

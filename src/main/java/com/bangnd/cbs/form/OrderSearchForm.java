@@ -7,6 +7,7 @@ public class OrderSearchForm {
     private String orderState;
     private String startDate;
     private String endDate;
+    private String payInterestWay;
 
     public String getApplicantName() {
         return applicantName;
@@ -54,5 +55,13 @@ public class OrderSearchForm {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String getPayInterestWay() {
+        return payInterestWay;
+    }
+
+    public void setPayInterestWay(String payInterestWay) {
+        this.payInterestWay = payInterestWay;
     }
 }

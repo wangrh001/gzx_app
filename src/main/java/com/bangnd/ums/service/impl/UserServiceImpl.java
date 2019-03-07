@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     public boolean verifyUserName(String userName) {
         User user1 = userRepository.findUserByUserName(userName);
         boolean flag = false;
-        if(user1!=null){
+        if (user1 != null) {
             flag = true;
         }
         return flag;
@@ -32,11 +32,11 @@ public class UserServiceImpl implements UserService {
 
     //验证密码是否正确
     @Override
-    public boolean verifyPassword(String userName,String password) {
+    public boolean verifyPassword(String userName, String password) {
         User user1 = userRepository.findUserByUserName(userName);
         boolean flag = false;
-        if(user1!=null){
-            if(user1.getPassword().equals(MD5Util.getMD5(password,true,32))){
+        if (user1 != null) {
+            if (user1.getPassword().equals(MD5Util.getMD5(password, true, 32))) {
                 flag = true;
             }
         }
@@ -50,9 +50,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePsd(String userName, String password) {
-        System.out.println("userName="+userName+":password:"+password);
-        User user=userRepository.findUserByUserName(userName);
-        user.setPassword(MD5Util.getMD5(password,true,32));
+        System.out.println("userName=" + userName + ":password:" + password);
+        User user = userRepository.findUserByUserName(userName);
+        user.setPassword(MD5Util.getMD5(password, true, 32));
         user.setUpdator(user.getId());
         user.setUpdateTime(new Date());
         userRepository.save(user);

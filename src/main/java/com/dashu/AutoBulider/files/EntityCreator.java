@@ -5,21 +5,22 @@ import com.dashu.AutoBulider.entity.DataModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.StringBuffer;
+
 import com.dashu.AutoBulider.config.ConstantCfg;
 
 public class EntityCreator {
-    public String create(List<DataModel> dataModels,String company,String sys){
-        StringBuffer javaCode= new StringBuffer();
-        if(dataModels!=null && dataModels.size()>0){
+    public String create(List<DataModel> dataModels, String company, String sys) {
+        StringBuffer javaCode = new StringBuffer();
+        if (dataModels != null && dataModels.size() > 0) {
             String entityName = dataModels.get(0).getTableNames();
-            String UpEntityName=Character.toUpperCase(entityName.charAt(0))+entityName.substring(1);
-            javaCode.append("package com."+company+"."+sys+".entity;");
+            String UpEntityName = Character.toUpperCase(entityName.charAt(0)) + entityName.substring(1);
+            javaCode.append("package com." + company + "." + sys + ".entity;");
             javaCode.append("import javax.persistence.*;");
             javaCode.append("import java.math.BigDecimal;");
             javaCode.append("import java.util.Date;");
             javaCode.append("@Entity");
-            javaCode.append("@Table(name=\"t_"+sys+"_"+entityName+"\")");
-            javaCode.append("public class "+UpEntityName+"{");
+            javaCode.append("@Table(name=\"t_" + sys + "_" + entityName + "\")");
+            javaCode.append("public class " + UpEntityName + "{");
             javaCode.append("@Id");
             javaCode.append("@GeneratedValue ");
             javaCode.append("public long id;");
@@ -37,12 +38,12 @@ public class EntityCreator {
     }
 
     //生成业务元素
-    public static String createBusinessColumn(List<DataModel> dataModels){
+    public static String createBusinessColumn(List<DataModel> dataModels) {
         StringBuffer javaCode = new StringBuffer();
-        for(DataModel dataModel:dataModels){
+        for (DataModel dataModel : dataModels) {
             //javaCode.append("//").append(dataModel.getColumnNameCh());
             javaCode.append("@Column \n");
-            switch (dataModel.getColumnType()){
+            switch (dataModel.getColumnType()) {
                 case ConstantCfg.COLUMN_TYPE_INT:
                     javaCode.append("public int ");
                     break;
@@ -59,12 +60,12 @@ public class EntityCreator {
                     javaCode.append("public BigDecimal ");
                     break;
             }
-            javaCode.append(dataModel.getColumnNameEn()+";");
+            javaCode.append(dataModel.getColumnNameEn() + ";");
         }
 
-        for(DataModel dataModel:dataModels){
-            String columnName=dataModel.getColumnNameEn();
-            switch (dataModel.getColumnType()){
+        for (DataModel dataModel : dataModels) {
+            String columnName = dataModel.getColumnNameEn();
+            switch (dataModel.getColumnType()) {
                 case ConstantCfg.COLUMN_TYPE_INT:
                     javaCode.append("public int get");
                     break;
@@ -81,36 +82,37 @@ public class EntityCreator {
                     javaCode.append("public BigDecimal get");
                     break;
             }
-            javaCode.append(Character.toUpperCase(columnName.charAt(0))).append(columnName.substring(1)+"(){");
-            javaCode.append("return "+dataModel.getColumnNameEn()+";}");
+            javaCode.append(Character.toUpperCase(columnName.charAt(0))).append(columnName.substring(1) + "(){");
+            javaCode.append("return " + dataModel.getColumnNameEn() + ";}");
 
         }
-        for(DataModel dataModel:dataModels){
-            String columnName=dataModel.getColumnNameEn();
-            String columnNameFormated = Character.toUpperCase(columnName.charAt(0))+columnName.substring(1);
-            switch (dataModel.getColumnType()){
+        for (DataModel dataModel : dataModels) {
+            String columnName = dataModel.getColumnNameEn();
+            String columnNameFormated = Character.toUpperCase(columnName.charAt(0)) + columnName.substring(1);
+            switch (dataModel.getColumnType()) {
                 case ConstantCfg.COLUMN_TYPE_INT:
-                    javaCode.append("public void set").append(columnNameFormated+"(int "+columnName+"){");
+                    javaCode.append("public void set").append(columnNameFormated + "(int " + columnName + "){");
                     break;
                 case ConstantCfg.COLUMN_TYPE_LONG:
-                    javaCode.append("public void set").append(columnNameFormated+"(long "+columnName+"){");
+                    javaCode.append("public void set").append(columnNameFormated + "(long " + columnName + "){");
                     break;
                 case ConstantCfg.COLUMN_TYPE_STRING:
-                    javaCode.append("public void set").append(columnNameFormated+"(String "+columnName+"){");
+                    javaCode.append("public void set").append(columnNameFormated + "(String " + columnName + "){");
                     break;
                 case ConstantCfg.COLUMN_TYPE_DATE:
-                    javaCode.append("public void set").append(columnNameFormated+"(Date "+columnName+"){");
+                    javaCode.append("public void set").append(columnNameFormated + "(Date " + columnName + "){");
                     break;
                 case ConstantCfg.COLUMN_TYPE_BIGDECIMAL:
-                    javaCode.append("public void set").append(columnNameFormated+"(BigDecimal "+columnName+"){");
+                    javaCode.append("public void set").append(columnNameFormated + "(BigDecimal " + columnName + "){");
                     break;
             }
-            javaCode.append("this."+columnName+"="+columnName+";}");
+            javaCode.append("this." + columnName + "=" + columnName + ";}");
         }
         return javaCode.toString();
     }
+
     //业务表生成基本元素
-    private String createBasisColumn(){
+    private String createBasisColumn() {
         StringBuffer javaCode = new StringBuffer();
         javaCode.append("@Column \n");
         javaCode.append("private int state;");
@@ -156,7 +158,7 @@ public class EntityCreator {
         return javaCode.toString();
     }
 
-    public static void main(String[] arg){
+    public static void main(String[] arg) {
         List<DataModel> dataModels = new ArrayList<DataModel>();
         DataModel dataModel = new DataModel();
         dataModel.setTableNames("TestEntity");
@@ -173,6 +175,6 @@ public class EntityCreator {
 
 
         EntityCreator entityCreator = new EntityCreator();
-        entityCreator.create(dataModels,"dashu","test");
+        entityCreator.create(dataModels, "dashu", "test");
     }
 }

@@ -3,19 +3,19 @@ package com.bangnd.util.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="cfg_period_type")
+@Table(name = "cfg_cbs_period_type")
 public class PeriodType {
     @Id
     @GeneratedValue
-    private long id;
+    private int id;
     @Column(nullable = false)
     private String name;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

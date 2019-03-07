@@ -7,8 +7,8 @@ import com.bangnd.util.cfg.ConstantCfg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class OrderProductServiceImpl implements OrderProductService {
@@ -18,7 +18,7 @@ public class OrderProductServiceImpl implements OrderProductService {
 
     @Override
     public List<OrderProduct> getOrderProductList(long id) {
-        return orderProductRepository.findByOrderId(id,ConstantCfg.ORDER_PRODUCT_STATE_DELETE);
+        return orderProductRepository.findByOrderId(id, ConstantCfg.ORDER_PRODUCT_STATE_DELETE);
     }
 
     @Override
@@ -28,8 +28,8 @@ public class OrderProductServiceImpl implements OrderProductService {
 
     @Override
     public void delete(long id) {
-        OrderProduct orderProduct=orderProductRepository.findById(id);
-        orderProduct.setOrderProdState(ConstantCfg.ORDER_PRODUCT_STATE_DELETE);
+        OrderProduct orderProduct = orderProductRepository.findById(id);
+        orderProduct.setState(ConstantCfg.ORDER_PRODUCT_STATE_DELETE);
         orderProduct.setUpdateTime(new Date());
         orderProductRepository.save(orderProduct);
     }

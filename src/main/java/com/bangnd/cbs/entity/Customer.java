@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="t_customer")
+@Table(name = "t_customer")
 public class Customer {
     @Id
     @GeneratedValue
@@ -32,6 +32,11 @@ public class Customer {
     //是不是新加入股东;Y、是；N、否
     @Column
     private String isNewStockholder;
+    @Column
+    private String bankCode;
+    @Column
+    private int bankId;
+
     //成为新股东月数
     @Column
     private int beStockholderMonths;
@@ -178,5 +183,21 @@ public class Customer {
 
     public void setOrderId(long orderId) {
         this.orderId = orderId;
+    }
+
+    public String getBankCode() {
+        return bankCode;
+    }
+
+    public void setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+    }
+
+    public int getBankId() {
+        return bankId;
+    }
+
+    public void setBankId(int bankId) {
+        this.bankId = bankId;
     }
 }

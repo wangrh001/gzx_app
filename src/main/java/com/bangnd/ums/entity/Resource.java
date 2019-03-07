@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="t_ums_resource")
+@Table(name = "t_ums_resource")
 public class Resource {
     @Id
     @GeneratedValue

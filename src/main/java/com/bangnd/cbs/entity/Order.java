@@ -3,8 +3,9 @@ package com.bangnd.cbs.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+
 @Entity
-@Table(name="t_cbs_order")
+@Table(name = "t_cbs_order")
 public class Order {
     @Id
     @GeneratedValue
@@ -54,7 +55,15 @@ public class Order {
 
     //服务合同签订时间
     @Column(nullable = true, unique = false)
-    private Date signTime;
+    private Date signDate;
+
+    //订单产品配置完成时间
+    @Column
+    private Date checkTime;
+
+    //1、一次性付息；2、按周期付息
+    @Column
+    private int payInterestWay;
 
     public BigDecimal getDemandAmount() {
         return demandAmount;
@@ -108,6 +117,9 @@ public class Order {
     @Column(nullable = false, unique = false)
     private int orderState;
 
+    @Column
+    private int state;
+
     @Column(nullable = true, unique = false)
     private Date createTime;
     @Column(nullable = true, unique = false)
@@ -149,12 +161,12 @@ public class Order {
         this.agentId = agentId;
     }
 
-    public Date getSignTime() {
-        return signTime;
+    public Date getSignDate() {
+        return signDate;
     }
 
-    public void setSignTime(Date signTime) {
-        this.signTime = signTime;
+    public void setSignDate(Date signDate) {
+        this.signDate = signDate;
     }
 
     public int getOrderState() {
@@ -219,5 +231,29 @@ public class Order {
 
     public void setBusinessType(int businessType) {
         this.businessType = businessType;
+    }
+
+    public Date getCheckTime() {
+        return checkTime;
+    }
+
+    public void setCheckTime(Date checkTime) {
+        this.checkTime = checkTime;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getPayInterestWay() {
+        return payInterestWay;
+    }
+
+    public void setPayInterestWay(int payInterestWay) {
+        this.payInterestWay = payInterestWay;
     }
 }

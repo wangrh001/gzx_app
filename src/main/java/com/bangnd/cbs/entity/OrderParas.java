@@ -12,7 +12,7 @@ import java.util.Date;
  * 不好格式化的参数，都放到这个表中
  */
 @Entity
-@Table(name="t_order_paras")
+@Table(name = "t_order_paras")
 public class OrderParas {
     @Id
     @GeneratedValue

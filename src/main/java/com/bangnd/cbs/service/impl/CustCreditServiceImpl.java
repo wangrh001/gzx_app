@@ -12,7 +12,7 @@ public class CustCreditServiceImpl implements CustCreditService {
     CustCreditRepository custCreditRepository;
 
     @Override
-    public void save(CustCredit custCredit){
+    public void save(CustCredit custCredit) {
         custCreditRepository.save(custCredit);
     }
 

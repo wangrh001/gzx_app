@@ -6,7 +6,7 @@ import java.util.Date;
 
 //客户公司表
 @Entity
-@Table(name="t_cust_company")
+@Table(name = "t_cust_company")
 public class CustCompany {
     @Id
     @GeneratedValue

@@ -6,8 +6,8 @@ import com.bangnd.cbs.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -39,7 +39,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void delete(Long id) {
         Customer custome = customerRepository.findById(id);
-        custome.setCustState(0);
+        custome.setCustState(100);
         custome.setUpdateTime(new Date());
         customerRepository.saveAndFlush(custome);
     }

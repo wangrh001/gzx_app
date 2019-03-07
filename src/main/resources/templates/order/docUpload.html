@@ -9,11 +9,18 @@
 </head>
 
 <body>
-<form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data" th:action="@{/order/toAdd(orderId=${orderId})}">
+<form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data"
+      th:action="@{/order/toAdd(orderId=${orderId})}">
     <table>
-        <tr><td><input type="submit" value="返回上页" class="btn btn-info" /></td></tr>
-        <tr><td><input type="hidden" th:field="*{orderId}"/></td></tr>
-        <tr th:each="file : ${files}"><td><img th:src="${file}"/></td></tr>
+        <tr>
+            <td><input type="submit" value="返回上页" class="btn btn-info"/></td>
+        </tr>
+        <tr>
+            <td><input type="hidden" th:field="*{orderId}"/></td>
+        </tr>
+        <tr th:each="file : ${files}">
+            <td><img th:src="${file}"/></td>
+        </tr>
     </table>
 </form>
 </body>

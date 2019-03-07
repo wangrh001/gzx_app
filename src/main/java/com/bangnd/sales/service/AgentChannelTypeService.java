@@ -7,5 +7,5 @@ import java.util.List;
 public interface AgentChannelTypeService {
     public List<AgentChannelType> getAll();
 
-    public AgentChannelType getAgentChannelTypeById(long ind);
+    public AgentChannelType getAgentChannelTypeById(Integer ind);
 }

@@ -17,7 +17,8 @@
         <th>申请人</th>
         <tr>
             <td>姓名</td>
-            <td><input type="text" class="form-control" th:field="*{order.applicantName}" placeholder="姓名"/></td>
+            <!--<td><input type="text" class="form-control" th:field="*{order.applicantName}" placeholder="姓名"/></td>-->
+            <td><input th:field="*{order.applicantName}" placeholder="姓名"/></td>
             <td>电话</td>
             <td><input type="text" class="form-control" th:field="*{order.cellPhone}" placeholder="电话"/></td>
             <td>业务类型</td>
@@ -25,7 +26,8 @@
                 <select name="businessType" th:remove="all-but-first">
                     <option th:each="businessType : ${businessTypes}"
                             th:value="${businessType.id}" th:text="${businessType.name}"
-                            th:selected="${businessType.id eq order.businessType}">Credit card</option>
+                            th:selected="${businessType.id eq order.businessType}">Credit card
+                    </option>
                 </select>
             </td>
         </tr>
@@ -43,7 +45,8 @@
                 <select name="payWay" th:remove="all-but-first">
                     <option th:each="payWay : ${payWays}"
                             th:value="${payWay.id}" th:text="${payWay.name}"
-                            th:selected="${payWay.id eq order.demandPayWay}">Credit card</option>
+                            th:selected="${payWay.id eq order.demandPayWay}">Credit card
+                    </option>
                 </select>
             </td>
             <td>利率(上浮%)</td>
@@ -55,14 +58,15 @@
                 <select name="periodType" th:remove="all-but-first">
                     <option th:each="periodType : ${periodTypes}"
                             th:value="${periodType.id}" th:text="${periodType.name}"
-                            th:selected="${periodType.id eq order.periodType}">Credit card</option>
+                            th:selected="${periodType.id eq order.periodType}">Credit card
+                    </option>
                 </select>
             </td>
 
             <td>周期数</td>
             <td><input type="text" class="form-control" th:field="*{order.demandNum}" placeholder="贷款周期数"/></td>
             <td>用款日期</td>
-            <td><input type="text" class="form-control" th:field="*{order.demandDate}"  value=""/></td>
+            <td><input type="text" class="form-control" th:field="*{order.demandDate}" value=""/></td>
         </tr>
     </table>
 
@@ -83,7 +87,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr  th:each="orderProductForm : ${orderProductFormList}">
+            <tr th:each="orderProductForm : ${orderProductFormList}">
                 <td th:text="${orderProductForm.id}">1</td>
                 <td th:text="${orderProductForm.borrowerName}">neo</td>
                 <td th:text="${orderProductForm.productName}">neo</td>

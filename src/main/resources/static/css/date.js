@@ -12,12 +12,6 @@
             $(this).parent().find('input').click();
         });
 
-        $('#demandDate').daterangepicker({
-            singleDatePicker: true,
-            startDate: moment().subtract(6, 'days')
-        });
-
-
         $('#startDate').daterangepicker({
             singleDatePicker: true,
             startDate: moment().subtract(6, 'days')
@@ -25,7 +19,7 @@
 
         $('#endDate').daterangepicker({
             singleDatePicker: true,
-            startDate: moment()
+            startDate: moment().subtract(6, 'days')
         });
 
         updateConfig();

@@ -20,7 +20,7 @@ public class AgentBusinessTypeServiceImpl implements AgentBusinessTypeService {
     }
 
     @Override
-    public AgentBusinessType getAgentBusinessTypeById(long id) {
+    public AgentBusinessType getAgentBusinessTypeById(Integer id) {
         return agentBusinessTypeRepository.findOne(id);
     }
 }

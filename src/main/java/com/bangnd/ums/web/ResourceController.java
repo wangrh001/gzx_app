@@ -17,10 +17,10 @@ public class ResourceController {
 
     //获取该用户可以访问的菜单
     @RequestMapping("/index")
-    public String getMenuTree(Model model, HttpSession session){
-        User user = (User)session.getAttribute("user");
-        String menuTree=resourceService.getMenuTreeString(user.getId());
-        model.addAttribute("menus",menuTree);
+    public String getMenuTree(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        String menuTree = resourceService.getMenuTreeString(user.getId());
+        model.addAttribute("menus", menuTree);
         return "/index";
     }
 }

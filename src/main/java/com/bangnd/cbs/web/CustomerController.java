@@ -3,9 +3,9 @@ package com.bangnd.cbs.web;
 import com.bangnd.cbs.entity.CustCredit;
 import com.bangnd.cbs.entity.CustMortgage;
 import com.bangnd.cbs.entity.Customer;
-import com.bangnd.cbs.service.CustCreditService;
-import com.bangnd.cbs.service.CustomerService;
-import com.bangnd.cbs.service.CustMortgageService;
+import com.bangnd.cbs.service.*;
+import com.bangnd.util.service.AreaConfService;
+import com.bangnd.util.service.StateTypeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +22,19 @@ public class CustomerController {
     @Resource
     CustCreditService custCreditService;
 
+    @Resource
+    AreaConfService areaConfService;
+    @Resource
+    StateTypeService stateTypeService;
+    @Resource
+    BankService bankService;
+
+    @Resource
+    OrderService orderService;
+
     /**
      * 将该用户添加到该订单下
+     *
      * @param orderId
      * @param customer
      * @param custMortgage
@@ -34,7 +45,7 @@ public class CustomerController {
     public String saveCustomer(String orderId,
                                Customer customer,
                                CustMortgage custMortgage,
-                               CustCredit custCredit){
+                               CustCredit custCredit) {
         //保存客户信息
         customer.setCustState(1);
         customer.setCreateTime(new Date());
@@ -51,32 +62,83 @@ public class CustomerController {
         custCredit.setCreator(0);
         custCredit.setCustomerId(customer.getId());
         custCreditService.save(custCredit);
-        return "redirect:/order/toAdd?orderId="+orderId;
-    }
-
-    /**
-     * 显示该客户的详细信息，需要配置只刷新下面的客户信息
-     * @param customerId
-     * @return
-     */
-    @RequestMapping("/customer/showCustDetail")
-    public String showCustomerDetail(long customerId,
-                                     Model model){
-        //根据客户id，获取customer，并放入前端
-        Customer customer = customerService.findCustomerById(customerId);
-        CustMortgage custMortgage = custMortgageService.findMortgageByCustomerId(customerId);
-        CustCredit custCredit = custCreditService.findCustCreditByCustomerId(customerId);
-        model.addAttribute("customer",customer);
-        model.addAttribute("custMortgage",custMortgage);
-        model.addAttribute("custCredit",custCredit);
-        return "";
+        return "redirect:/order/toAdd?orderId=" + orderId;
     }
 
     @RequestMapping("/customer/delete")
-    public String  delete(long id){
+    public String delete(long id) {
         customerService.delete(id);
         Customer customer = customerService.findCustomerById(id);
-        String orderId=new Long(customer.getOrderId()).toString();
-        return "redirect:/order/toAdd?orderId="+orderId;
+        String orderId = new Long(customer.getOrderId()).toString();
+        return "redirect:/order/toAdd?orderId=" + orderId;
+    }
+
+    @RequestMapping("/customer/toModify")
+    public String toModify(Model model, long id) {
+        Customer customer = customerService.findCustomerById(id);
+        CustMortgage custMortgage = custMortgageService.findMortgageByCustomerId(id);
+        CustCredit custCredit = custCreditService.findCustCreditByCustomerId(id);
+        model.addAttribute("orderId", customer.getOrderId());
+        model.addAttribute("customer", customer);
+        model.addAttribute("custMortgage", custMortgage);
+        model.addAttribute("areaList", areaConfService.getAll());
+        model.addAttribute("estateType", stateTypeService.getAll());
+        model.addAttribute("banks", bankService.getAll());
+        model.addAttribute("custCredit", custCredit);
+        return "/order/customerEdit";
+    }
+
+    @RequestMapping("/customer/modify")
+    public String modify(String orderId,
+                         Customer customer,
+                         CustMortgage custMortgage,
+                         CustCredit custCredit) {
+        Customer oldCust = customerService.findCustomerById(customer.getId());
+        CustMortgage oldCustMortgage = custMortgageService.findMortgageByCustomerId(customer.getId());
+        CustCredit oldCustCredit = custCreditService.findCustCreditByCustomerId(customer.getId());
+
+        oldCust.setAddress(customer.getAddress());
+        oldCust.setAge(customer.getAge());
+        oldCust.setBeStockholderMonths(customer.getBeStockholderMonths());
+        oldCust.setBirthday(customer.getBirthday());
+        oldCust.setCertiCode(customer.getCertiCode());
+        oldCust.setGender(customer.getGender());
+        oldCust.setIsNewStockholder(customer.getIsNewStockholder());
+        oldCust.setJob(customer.getJob());
+        oldCust.setName(customer.getName());
+        oldCust.setPhone(customer.getPhone());
+        oldCust.setUpdateTime(new Date());
+        oldCust.setUpdator(0);
+        oldCust.setBankId(customer.getBankId());
+        oldCust.setBankCode(customer.getBankCode());
+        customerService.save(oldCust);
+
+        oldCustMortgage.setEstateAge(custMortgage.getEstateAge());
+        oldCustMortgage.setEstateArea(custMortgage.getEstateArea());
+        oldCustMortgage.setEstatePrice(custMortgage.getEstatePrice());
+        oldCustMortgage.setEstateType(custMortgage.getEstateType());
+        oldCustMortgage.setHouseAddress(custMortgage.getHouseAddress());
+        oldCustMortgage.setMortgageType(custMortgage.getMortgageType());
+        oldCustMortgage.setUpdateTime(new Date());
+        oldCustMortgage.setUpdator(0);
+        custMortgageService.save(oldCustMortgage);
+
+        oldCustCredit.setContD2Times2Y(custCredit.getContD2Times2Y());
+        oldCustCredit.setContD2Times6M(custCredit.getContD2Times6M());
+        oldCustCredit.setContD3Times1Y(custCredit.getContD3Times1Y());
+        oldCustCredit.setContD3Times2Y(custCredit.getContD3Times2Y());
+        oldCustCredit.setContD3Times5Y(custCredit.getContD3Times5Y());
+        oldCustCredit.setContD4Times2Y(custCredit.getContD4Times2Y());
+        oldCustCredit.setDDays2Y(custCredit.getDDays2Y());
+        oldCustCredit.setDTimes5Y(custCredit.getDTimes5Y());
+        oldCustCredit.setDTimes2Y(custCredit.getDTimes2Y());
+        oldCustCredit.setDTimes6M(custCredit.getDTimes6M());
+        oldCustCredit.setMaxDelay(custCredit.getMaxDelay());
+        oldCustCredit.setFreezeAmount(custCredit.getFreezeAmount());
+        oldCustCredit.setUpdateTime(new Date());
+        oldCustCredit.setUpdator(0);
+        custCreditService.save(oldCustCredit);
+
+        return "redirect:/order/toAdd?orderId=" + orderId;
     }
 }

@@ -6,7 +6,7 @@ import java.util.Date;
 
 //客户信用表
 @Entity
-@Table(name="t_cust_credit")
+@Table(name = "t_cust_credit")
 public class CustCredit {
     @Id
     @GeneratedValue

@@ -20,7 +20,7 @@ public class AgentChannelTypeServiceImpl implements AgentChannelTypeService {
     }
 
     @Override
-    public AgentChannelType getAgentChannelTypeById(long id) {
+    public AgentChannelType getAgentChannelTypeById(Integer id) {
         return agentChannelTypeRepository.findOne(id);
     }
 }

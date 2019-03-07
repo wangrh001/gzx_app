@@ -1,7 +1,6 @@
 package com.bangnd.cbs.service.impl;
 
 import com.bangnd.cbs.entity.OrderDocument;
-import com.bangnd.cbs.entity.OrderProduct;
 import com.bangnd.cbs.repository.OrderDocRepository;
 import com.bangnd.cbs.service.OrderDocService;
 import org.springframework.beans.factory.annotation.Autowired;

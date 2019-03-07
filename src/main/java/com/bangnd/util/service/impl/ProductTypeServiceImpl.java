@@ -12,6 +12,7 @@ import java.util.List;
 public class ProductTypeServiceImpl implements ProductTypeService {
     @Autowired
     ProductTypeRepository productTypeRepository;
+
     @Override
     public List<ProductType> getAll() {
         return productTypeRepository.findAll();

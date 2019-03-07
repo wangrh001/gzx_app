@@ -1,13 +1,9 @@
 package com.bangnd.util.exception;
 
 /**
-
  * 文件存储异常运行时处理类
-
- * @author fantasy
-
  *
-
+ * @author fantasy
  */
 
 public class StorageException extends RuntimeException {

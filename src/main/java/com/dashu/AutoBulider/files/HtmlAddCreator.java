@@ -8,9 +8,9 @@ import java.util.List;
 
 public class HtmlAddCreator {
 
-    public String create(List<DataModel> dataModelList,String sys,String entityName){
+    public String create(List<DataModel> dataModelList, String sys, String entityName) {
         StringBuffer addHtml = new StringBuffer();
-        if(dataModelList!=null){
+        if (dataModelList != null) {
             addHtml.append(ConstantCfg.HTML_HEAD);
             addHtml.append("<body class=\"container\">\n");
             addHtml.append("<br/>\n");
@@ -19,27 +19,24 @@ public class HtmlAddCreator {
             //先将dataModeList中的需要新增的列整理出来
             List<DataModel> addDataModelList = new ArrayList<DataModel>();
 
-            for(DataModel dataModel:dataModelList){
-                if(dataModel.getIfModifyable()==1){
+            for (DataModel dataModel : dataModelList) {
+                if (dataModel.getIfModifyable() == 1) {
                     addDataModelList.add(dataModel);
                 }
             }
             //生成搜索区域
-            addHtml.append(HtmlListCreator.createInputArea(addDataModelList,sys,entityName,"add"));
+            addHtml.append(HtmlListCreator.createInputArea(addDataModelList, sys, entityName, "add"));
 
             addHtml.append("<div class=\"form-group\">\n");
-            addHtml.append("<div class=\"col-sm-2 control-label\">\n");
-            addHtml.append("<a href=\"/"+sys+"/"+entityName+"/add\" th:href=\"@{/"+sys+"/"+entityName+"/add}\" class=\"btn btn-info\">add</a>\n");
-            addHtml.append("    </div>\n");
             addHtml.append("</div>\n");
-            addHtml.append(    "</body>\n");
+            addHtml.append("</body>\n");
             addHtml.append("</html>");
         }
 
         return addHtml.toString();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         List<DataModel> dataModels = new ArrayList<DataModel>();
         DataModel dataModel = new DataModel();
         dataModel.setTableNames("TestEntity");
@@ -66,6 +63,6 @@ public class HtmlAddCreator {
 
 
         HtmlAddCreator entityCreator = new HtmlAddCreator();
-        System.out.println(entityCreator.create(dataModels,"test","test"));
+        System.out.println(entityCreator.create(dataModels, "test", "test"));
     }
 }

@@ -3,7 +3,7 @@ package com.bangnd.util.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="cfg_identity_type")
+@Table(name = "cfg_cbs_identity_type")
 public class IdentityType {
     @Id
     @GeneratedValue

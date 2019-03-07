@@ -15,8 +15,9 @@ public class CustMortgageServiceImpl implements CustMortgageService {
     public void save(CustMortgage mortgage) {
         custMortgageRepository.save(mortgage);
     }
+
     @Override
-    public CustMortgage findMortgageById(long id){
+    public CustMortgage findMortgageById(long id) {
         return custMortgageRepository.findByMortgageId(id);
     }
 

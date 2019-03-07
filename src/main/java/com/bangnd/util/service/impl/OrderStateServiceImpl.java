@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class OrderStateServiceImpl implements OrderStateService {
     @Autowired
     OrderStateRepository orderStateRepository;
+
     @Override
     public List<OrderState> getAll() {
         return orderStateRepository.findAll();

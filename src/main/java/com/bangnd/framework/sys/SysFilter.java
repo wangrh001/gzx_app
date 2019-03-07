@@ -1,4 +1,5 @@
 package com.bangnd.framework.sys;
+
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -17,9 +18,9 @@ public class SysFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest)servletRequest;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponseWrapper wrapper = new HttpServletResponseWrapper((HttpServletResponse) servletResponse);
-        if(request.getSession().getAttribute("user") != null ||
+        if (request.getSession().getAttribute("user") != null ||
                 request.getRequestURI().indexOf("/login") != -1 ||
                 request.getRequestURI().indexOf(".js") != -1 ||
                 request.getRequestURI().indexOf(".css") != -1 ||
@@ -28,13 +29,15 @@ public class SysFilter implements Filter {
                 request.getRequestURI().indexOf(".Bootstrap") != -1) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
-        }else {
+        } else {
             wrapper.sendRedirect("/login");
         }
     }
+
     @Override
     public void destroy() {
     }
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }

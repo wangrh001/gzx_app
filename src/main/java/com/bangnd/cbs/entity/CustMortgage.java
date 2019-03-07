@@ -6,7 +6,7 @@ import java.util.Date;
 
 //客户抵押物表
 @Entity
-@Table(name="t_cust_mortgage")
+@Table(name = "t_cust_mortgage")
 public class CustMortgage {
     @Id
     @GeneratedValue
@@ -54,6 +54,7 @@ public class CustMortgage {
     public void setHouseAddress(int houseAddress) {
         this.houseAddress = houseAddress;
     }
+
     public long getMortgageId() {
         return mortgageId;
     }

@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface ResourceRepository extends JpaRepository<Resource, Long> {
     @Query("select r from Resource  r where r.parentId = :parentId and r.state = 1")
-    public List<Resource> findAllByParentId(@Param(value="parentId") long parentId);
+    public List<Resource> findAllByParentId(@Param(value = "parentId") long parentId);
 }

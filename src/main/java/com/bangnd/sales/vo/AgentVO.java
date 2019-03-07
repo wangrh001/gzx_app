@@ -5,6 +5,8 @@ import java.util.*;
 
 public class AgentVO {
     @Column
+    public long id;
+    @Column
     public String name;
     @Column
     public String businessTypeName;
@@ -12,6 +14,14 @@ public class AgentVO {
     public String phoneNO;
     @Column
     public String companyName;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

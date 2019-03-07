@@ -5,7 +5,7 @@ import java.util.Date;
 
 //产品规则表
 @Entity
-@Table(name="t_cbs_product_rule")
+@Table(name = "t_cbs_product_rule")
 public class ProdRule {
     @Id
     @GeneratedValue
@@ -122,9 +122,11 @@ public class ProdRule {
     public void setUpdator(long updator) {
         this.updator = updator;
     }
+
     public String getExpressionDesc() {
         return expressionDesc;
     }
+
     public void setExpressionDesc(String expressionDesc) {
         this.expressionDesc = expressionDesc;
     }

@@ -9,6 +9,7 @@ import java.util.List;
 public class CfgEntityCreator {
     /**
      * 创建配置实体
+     *
      * @param tableName
      * @param columnName
      * @return
@@ -16,36 +17,35 @@ public class CfgEntityCreator {
     public String create(String company,
                          String sys,
                          String tableName,
-                         String columnName)
-    {
+                         String columnName) {
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("package com."+company+"."+sys+".entity;\n");
+        stringBuffer.append("package com." + company + "." + sys + ".entity;\n");
         stringBuffer.append("import javax.persistence.*;");
         stringBuffer.append("@Entity \n");
-        stringBuffer.append("@Table(name=\"cfg_"+tableName+"_"+columnName).append("\") \n");
-        String UpColumn=Character.toUpperCase(columnName.charAt(0))+columnName.substring(1);
-        String UpEntityName=Character.toUpperCase(tableName.charAt(0))+tableName.substring(1);
-        stringBuffer.append("public class "+UpEntityName+UpColumn+"{ \n");
+        stringBuffer.append("@Table(name=\"cfg_" + tableName + "_" + columnName).append("\") \n");
+        String UpColumn = Character.toUpperCase(columnName.charAt(0)) + columnName.substring(1);
+        String UpEntityName = Character.toUpperCase(tableName.charAt(0)) + tableName.substring(1);
+        stringBuffer.append("public class " + UpEntityName + UpColumn + "{ \n");
         stringBuffer.append("@Id \n");
         stringBuffer.append("@GeneratedValue \n");
-        stringBuffer.append("private int id;\n" );
+        stringBuffer.append("private int id;\n");
         stringBuffer.append("@Column(nullable = false)\n");
         stringBuffer.append("private String name;\n");
 
         stringBuffer.append("public int getId() {\n");
         stringBuffer.append("return id;\n");
-        stringBuffer.append("}\n" );
+        stringBuffer.append("}\n");
 
-        stringBuffer.append("public void setId(int id) {\n" );
-        stringBuffer.append("this.id = id;\n" );
-        stringBuffer.append("}\n" );
+        stringBuffer.append("public void setId(int id) {\n");
+        stringBuffer.append("this.id = id;\n");
+        stringBuffer.append("}\n");
 
-        stringBuffer.append("public String getName() {\n" );
-        stringBuffer.append("return name;\n" );
-        stringBuffer.append("}\n" );
+        stringBuffer.append("public String getName() {\n");
+        stringBuffer.append("return name;\n");
+        stringBuffer.append("}\n");
 
-        stringBuffer.append("public void setName(String name) {\n" );
-        stringBuffer.append("this.name = name;\n" );
+        stringBuffer.append("public void setName(String name) {\n");
+        stringBuffer.append("this.name = name;\n");
         stringBuffer.append("}");
         stringBuffer.append("}");
         return stringBuffer.toString();
@@ -53,6 +53,7 @@ public class CfgEntityCreator {
 
     /**
      * 创建生成配置表数据的insert脚本
+     *
      * @param tableName
      * @param columnName
      * @param scatterValues
@@ -60,17 +61,17 @@ public class CfgEntityCreator {
      */
     public String createInsertScript(String tableName,
                                      String columnName,
-                                     List<String> scatterValues){
+                                     List<String> scatterValues) {
         StringBuffer stringBuffer = new StringBuffer();
-        if(scatterValues!=null){
-            for(String s:scatterValues){
-                stringBuffer.append("insert into t_"+tableName+"_"+columnName+" (name) value(\'"+s+"\')\n");
+        if (scatterValues != null) {
+            for (String s : scatterValues) {
+                stringBuffer.append("insert into t_" + tableName + "_" + columnName + " (name) value(\'" + s + "\')\n");
             }
         }
         return stringBuffer.toString();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         List<DataModel> dataModels = new ArrayList<DataModel>();
         DataModel dataModel = new DataModel();
         dataModel.setSysName("cbs");
@@ -97,11 +98,11 @@ public class CfgEntityCreator {
         dataModels.add(dataModel1);
         CfgEntityCreator cfgEntityCreator = new CfgEntityCreator();
 
-        for(DataModel dataModel2:dataModels){
-            if(dataModel2.getIfScatter()==1){
+        for (DataModel dataModel2 : dataModels) {
+            if (dataModel2.getIfScatter() == 1) {
                 System.out.println(cfgEntityCreator.create(dataModel2.getTableNames(),
-                                    dataModel2.getColumnNameEn(),
-                                    "dashu","test"));
+                        dataModel2.getColumnNameEn(),
+                        "dashu", "test"));
             }
         }
     }

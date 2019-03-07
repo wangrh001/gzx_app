@@ -10,11 +10,11 @@
         #box {
             width: 300px;
             height: 400px;
-            background:black;
+            background: black;
             border: 1px solid cornflowerblue;
             margin: 100px auto;
             box-shadow: -10px 10px 10px black;
-            border-radius:5px;
+            border-radius: 5px;
         }
 
         .box1 {
@@ -22,45 +22,47 @@
             height: 200px;
             text-align: center;
             margin: 150px auto;
-            border-radius:5px;
+            border-radius: 5px;
         }
 
-        .box3{
+        .box3 {
             width: 100%;
             height: 60px;
-            background:gold;
-            float:right;
+            background: gold;
+            float: right;
             box-shadow: -5px 1px 10px black;
-            margin:30px auto;
-            border-radius:5px;
+            margin: 30px auto;
+            border-radius: 5px;
         }
 
         #a1 {
-            background:gold;
+            background: gold;
         }
+
         #a2 {
-            background:deepskyblue;
+            background: deepskyblue;
         }
-        h2{
+
+        h2 {
             text-align: center;
-            line-height:20px;
+            line-height: 20px;
         }
     </style>
 
     <!--<script type="text/javascript">-->
-        <!--// function verify(){-->
-        <!--//     alert("enter tijiao()")-->
-        <!--//     var userName = document.getElementById("userName").value-->
-        <!--//     if(userName.length<6||userName.length>10){-->
-        <!--//         alert("用户名输入错误！！！")-->
-        <!--//         return-->
-        <!--//     }-->
-        <!--//     var psd = document.getElementById("password").value-->
-        <!--//     if(psd.length>8||psd.length<6){-->
-        <!--//         alert("输入密码错误！！！")-->
-        <!--//         return-->
-        <!--//     }-->
-        <!--// }-->
+    <!--// function verify(){-->
+    <!--//     alert("enter tijiao()")-->
+    <!--//     var userName = document.getElementById("userName").value-->
+    <!--//     if(userName.length<6||userName.length>10){-->
+    <!--//         alert("用户名输入错误！！！")-->
+    <!--//         return-->
+    <!--//     }-->
+    <!--//     var psd = document.getElementById("password").value-->
+    <!--//     if(psd.length>8||psd.length<6){-->
+    <!--//         alert("输入密码错误！！！")-->
+    <!--//         return-->
+    <!--//     }-->
+    <!--// }-->
     <!--</script>-->
 </head>
 
@@ -73,10 +75,12 @@
 
     <div class="box1">
         <form action="" method="post" th:action="@{/loginVerify}">
-            <input type="text" name="userName" id="userName" placeholder="用户名" style="width: 200px; height: 30px; border-radius:5px;" />
+            <input type="text" name="userName" id="userName" placeholder="用户名"
+                   style="width: 200px; height: 30px; border-radius:5px;"/>
             <br/>
             <br/>
-            <input type="password" name="password" id="password" placeholder="请输入密码" style="width: 200px; height: 30px; border-radius:5px;" />
+            <input type="password" name="password" id="password" placeholder="请输入密码"
+                   style="width: 200px; height: 30px; border-radius:5px;"/>
             <br/>
             <br/>
             <input type="submit" value="登录" style="width: 200px; height: 30px; border-radius:5px;"/>

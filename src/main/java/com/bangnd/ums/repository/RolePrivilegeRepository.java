@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface RolePrivilegeRepository extends  JpaRepository<RolePrivilege, Long> {
+public interface RolePrivilegeRepository extends JpaRepository<RolePrivilege, Long> {
 
     @Query("select r from RolePrivilege r where r.roleId=:roleId and r.state=1")
     public List<RolePrivilege> findAllByRole(@Param("roleId") long roleId);

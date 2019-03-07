@@ -2,6 +2,7 @@ package com.dashu.AutoBulider.files;
 
 import com.dashu.AutoBulider.entity.DataModel;
 import com.dashu.AutoBulider.config.ConstantCfg;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,27 +13,34 @@ public class ShowListVOCreator {
 
     /**
      * 生成查询列表需要的vo
+     *
      * @param dataModelList
      * @return
      */
-    public String create(List<DataModel> dataModelList,String company,String sys){
+    public String create(List<DataModel> dataModelList, String company, String sys) {
         StringBuffer voCode = new StringBuffer();
-        if(dataModelList!=null) {
+        if (dataModelList != null) {
             String entityName = dataModelList.get(0).getTableNames();
-            String UpEntityName=Character.toUpperCase(entityName.charAt(0))+entityName.substring(1);
-            voCode.append("package com."+company+"."+sys+".vo;\n");
+            String UpEntityName = Character.toUpperCase(entityName.charAt(0)) + entityName.substring(1);
+            voCode.append("package com." + company + "." + sys + ".vo;\n");
             voCode.append("import javax.persistence.*;\n");
             voCode.append("import java.util.*;\n");
-            voCode.append("public class " +UpEntityName+ "VO {");
+            voCode.append("import java.math.BigDecimal;\n");
+            voCode.append("public class " + UpEntityName + "VO {");
+            voCode.append("@Column\n");
+            voCode.append("public long id;");
+            voCode.append("public long getId() { return id; }");
+            voCode.append("public void setId(long id) { this.id = id; }");
+
             List<DataModel> dataModels1 = new ArrayList<DataModel>();
-            for(DataModel dataModel:dataModelList){
-                if(dataModel.getIfShowColumn()==1){
+            for (DataModel dataModel : dataModelList) {
+                if (dataModel.getIfShowColumn() == 1) {
                     DataModel dataModel1 = new DataModel();
                     //如果是散列值，需要显示该列的中文名称
-                    if(dataModel.getIfScatter()==1){
+                    if (dataModel.getIfScatter() == 1) {
                         dataModel1.setColumnType(ConstantCfg.COLUMN_TYPE_STRING);
-                        dataModel1.setColumnNameEn(dataModel.getColumnNameEn()+"Name");
-                    }else{
+                        dataModel1.setColumnNameEn(dataModel.getColumnNameEn() + "Name");
+                    } else {
                         dataModel1.setColumnType(dataModel.getColumnType());
                         dataModel1.setColumnNameEn(dataModel.getColumnNameEn());
                     }
@@ -45,7 +53,7 @@ public class ShowListVOCreator {
         return voCode.toString();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         List<DataModel> dataModels = new ArrayList<DataModel>();
         DataModel dataModel = new DataModel();
         dataModel.setSysName("test");
@@ -73,6 +81,6 @@ public class ShowListVOCreator {
         dataModel1.setIfModifyable(1);
         dataModels.add(dataModel1);
         ShowListVOCreator showListVOCreator = new ShowListVOCreator();
-        System.out.println(showListVOCreator.create(dataModels,"dashu","test"));
+        System.out.println(showListVOCreator.create(dataModels, "dashu", "test"));
     }
 }

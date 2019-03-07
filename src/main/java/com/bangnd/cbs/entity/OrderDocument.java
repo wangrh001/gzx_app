@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="t_cbs_order_doc")
+@Table(name = "t_cbs_order_doc")
 public class OrderDocument {
     @Id
     @GeneratedValue

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="t_ums_role_privilege")
+@Table(name = "t_ums_role_privilege")
 public class RolePrivilege {
 
     @Id
