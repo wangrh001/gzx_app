@@ -36,23 +36,24 @@
             }
             order_form.submit()
         }
+
+        function actionLogRecord(actionId){
+            var order_form = document.getElementById("order_form")
+            order_form.action = "/orderLog/add?actionId=" + actionId
+            order_form.submit()
+        }
     </script>
 </head>
 
 <body class="container">
 <br/>
 <h4>添加订单</h4>
-<!--th:action="@{/order/add(orderId=${order.id})}"-->
 
 <form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data">
     <!--填写订单相关信息 -->
     <table>
         <th>订单信息</th>
         <tr>
-            <td>销售人员</td>
-            <td><input type="text" class="form-control" th:field="*{order.agentId}" placeholder="姓名"/></td>
-            <td>签约时间</td>
-            <td><input type="text" class="form-control" id="signDate" name="signDate" th:value="*{order.signDate ne null} ? *{#dates.format(order.signDate,'MM/dd/yyyy')}" placeholder="MM/DD/YYYY"/></td>
             <td>业务类型</td>
             <td>
                 <select th:field="*{order.businessType}" th:remove="all-but-first">
@@ -62,6 +63,8 @@
                     </option>
                 </select>
             </td>
+            <td>签约时间</td>
+            <td><input type="text" class="form-control" id="signDate" name="signDate" th:value="*{order.signDate ne null} ? *{#dates.format(order.signDate,'MM/dd/yyyy')}" placeholder="MM/DD/YYYY"/></td>
         </tr>
         <th>申请人</th>
         <tr>
@@ -74,7 +77,7 @@
                 <select th:field="*{order.payInterestWay}" th:remove="all-but-first">
                     <option th:each="payInterestWay : ${payInterestWays}"
                             th:value="${payInterestWay.id}" th:text="${payInterestWay.name}">
-                            th:selected="${payInterestWay.id eq order.payInterestWay}">Credit card
+                        th:selected="${payInterestWay.id eq order.payInterestWay}">Credit card
                     </option>
                 </select>
             </td>
@@ -125,10 +128,24 @@
                 <button type="submit" class="btn btn-info" onclick="formActionSetValue(3)">查看图片</button>
             </td>
         </tr>
-        <input type="hidden" class="form-control" id="orderId" th:value="*{order.id}"/>
+
+        <tr>
+            <td><button type="submit" class="btn btn-info" onclick="actionLogRecord(5)">下户完成</button></td>
+            <td><button type="submit" class="btn btn-info" onclick="actionLogRecord(6)">材料复核完成</button></td>
+            <td><button type="submit" class="btn btn-info" onclick="actionLogRecord(7)">产品复核完成</button></td>
+            <td><button type="submit" class="btn btn-info" onclick="actionLogRecord(8)">申请材料提交给银行</button></td>
+            <td><button type="submit" class="btn btn-info" onclick="actionLogRecord(10)">材料已归档</button></td>
+            <td><button type="submit" class="btn btn-info" onclick="actionLogRecord(11)">订单完结</button></td>
+        </tr>
+        <tr>
+            <td>备注</td>
+            <td><input type="text" class="form-control" th:field="*{orderLog.actionDesc}" placeholder="备注"/></td>
+        </tr>
+
+        <input type="hidden" class="form-control" id="orderId" name = "orderId" th:value="*{order.id}"/>
     </table>
     <!--显示订单下的客户信息 -->
-    <table>
+    <table th:if="${customerList} !=null">
         <tr>
             <th>姓名</th>
             <th>电话</th>
@@ -147,7 +164,7 @@
         </tr>
     </table>
     <!--显示订单下匹配的产品 -->
-    <table>
+    <table th:if="${orderProductForms} !=null">
         <tr>
             <th>序号</th>
             <th>贷款人</th>

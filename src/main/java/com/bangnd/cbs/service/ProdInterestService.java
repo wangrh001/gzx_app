@@ -2,11 +2,10 @@ package com.bangnd.cbs.service;
 
 import com.bangnd.cbs.entity.ProdInterest;
 import com.bangnd.cbs.form.ProdInterestSearchForm;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface ProdInterestService {
-    public List<ProdInterest> getProdInterestList(ProdInterestSearchForm prodInterestSearchForm);
+    public Page<ProdInterest> getProdInterestList(Integer pageNum, int size, ProdInterestSearchForm prodInterestSearchForm);
 
     public void save(ProdInterest prodInterest);
 

@@ -1,21 +1,21 @@
 package com.bangnd.hr.web;
 
+import com.bangnd.hr.entity.Salary;
+import com.bangnd.hr.form.SalarySearchForm;
+import com.bangnd.hr.service.SalaryExtendStateService;
+import com.bangnd.hr.service.SalaryService;
+import com.bangnd.hr.vo.SalaryVO;
+import com.bangnd.util.cfg.ConstantCfg;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.hr.web.*;
-import com.bangnd.hr.entity.*;
-import com.bangnd.hr.form.*;
-import com.bangnd.hr.service.*;
-import com.bangnd.hr.service.impl.*;
-import com.bangnd.hr.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class SalaryController {
@@ -25,12 +25,15 @@ public class SalaryController {
     SalaryExtendStateService salaryExtendStateService;
 
     @RequestMapping("/hr/salary")
-    public String home(Model model, SalarySearchForm salarySearchForm) {
-        List<Salary> salarys = salaryService.getSalaryList(salarySearchForm);
+    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, SalarySearchForm salarySearchForm) {
+        if(pageNum==null){
+            pageNum="1";
+        }
+        Page<Salary> pages = salaryService.getSalaryList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,salarySearchForm);
         model.addAttribute("extendStates", salaryExtendStateService.getAll());
         List<SalaryVO> salaryVOs = new ArrayList<>();
-        if (salarys != null) {
-            for (Salary salary : salarys) {
+        if (pages != null) {
+            for (Salary salary : pages) {
                 SalaryVO salaryVO = new SalaryVO();
                 salaryVO.setId(salary.getId());
                 salaryVO.setEmpName(salary.getEmpName());
@@ -40,6 +43,13 @@ public class SalaryController {
                 salaryVOs.add(salaryVO);
             }
         }
+
+        int pagenum=Integer.valueOf(pageNum);
+        model.addAttribute("page",pages);
+        model.addAttribute("pageNum",pagenum);
+        model.addAttribute("totalPages",pages.getTotalPages());
+        System.out.println("totalPages="+pages.getTotalPages());
+        model.addAttribute("totalElements",pages.getTotalElements());
         model.addAttribute("salaryVOs", salaryVOs);
         return "/hr/salaryList";
     }

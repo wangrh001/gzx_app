@@ -1,7 +1,6 @@
 package com.bangnd.mis.vo;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
 import java.math.BigDecimal;
 
 public class TaskVO {

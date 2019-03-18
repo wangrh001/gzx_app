@@ -26,6 +26,12 @@ public class PerformanceCommission {
     @Column
     public String agentName;
     @Column
+    public long employeeId;
+    @Column
+    public String employeeName;
+    @Column
+    public long orderProdId;
+    @Column
     public BigDecimal commission;
     @Column
     public BigDecimal performance;
@@ -42,6 +48,18 @@ public class PerformanceCommission {
 
     public String getAgentName() {
         return agentName;
+    }
+
+    public long getEmployeeId() {
+        return employeeId;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public long getOrderProdId() {
+        return orderProdId;
     }
 
     public BigDecimal getCommission() {
@@ -66,6 +84,18 @@ public class PerformanceCommission {
 
     public void setAgentName(String agentName) {
         this.agentName = agentName;
+    }
+
+    public void setEmployeeId(long employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public void setOrderProdId(long orderProdId) {
+        this.orderProdId = orderProdId;
     }
 
     public void setCommission(BigDecimal commission) {

@@ -1,13 +1,12 @@
 package com.bangnd.sales.service.impl;
 
-import com.bangnd.sales.entity.*;
-import com.bangnd.sales.service.*;
-import com.bangnd.sales.repository.*;
-
-import java.util.List;
-
+import com.bangnd.sales.entity.CommissionBaseType;
+import com.bangnd.sales.repository.CommissionBaseTypeRepository;
+import com.bangnd.sales.service.CommissionBaseTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CommissionBaseTypeServiceImpl implements CommissionBaseTypeService {

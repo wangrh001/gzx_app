@@ -1,21 +1,23 @@
 package com.bangnd.finance.web;
 
+import com.bangnd.finance.entity.Account;
+import com.bangnd.finance.form.AccountSearchForm;
+import com.bangnd.finance.service.AccountAccountStateService;
+import com.bangnd.finance.service.AccountBankService;
+import com.bangnd.finance.service.AccountCompanyService;
+import com.bangnd.finance.service.AccountService;
+import com.bangnd.finance.vo.AccountVO;
+import com.bangnd.util.cfg.ConstantCfg;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.finance.web.*;
-import com.bangnd.finance.entity.*;
-import com.bangnd.finance.form.*;
-import com.bangnd.finance.service.*;
-import com.bangnd.finance.service.impl.*;
-import com.bangnd.finance.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class AccountController {
@@ -29,14 +31,17 @@ public class AccountController {
     AccountCompanyService accountCompanyService;
 
     @RequestMapping("/finance/account")
-    public String home(Model model, AccountSearchForm accountSearchForm) {
-        List<Account> accounts = accountService.getAccountList(accountSearchForm);
+    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, AccountSearchForm accountSearchForm) {
+        if(pageNum==null){
+            pageNum="1";
+        }
+        Page<Account> pages = accountService.getAccountList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,accountSearchForm);
         model.addAttribute("banks", accountBankService.getAll());
         model.addAttribute("accountStates", accountAccountStateService.getAll());
         model.addAttribute("companys", accountCompanyService.getAll());
         List<AccountVO> accountVOs = new ArrayList<>();
-        if (accounts != null) {
-            for (Account account : accounts) {
+        if (pages != null) {
+            for (Account account : pages) {
                 AccountVO accountVO = new AccountVO();
                 accountVO.setId(account.getId());
                 accountVO.setAccountNames(account.getAccountNames());
@@ -45,6 +50,13 @@ public class AccountController {
                 accountVOs.add(accountVO);
             }
         }
+
+        int pagenum=Integer.valueOf(pageNum);
+        model.addAttribute("page",pages);
+        model.addAttribute("pageNum",pagenum);
+        model.addAttribute("totalPages",pages.getTotalPages());
+        System.out.println("totalPages="+pages.getTotalPages());
+        model.addAttribute("totalElements",pages.getTotalElements());
         model.addAttribute("accountVOs", accountVOs);
         return "/finance/accountList";
     }

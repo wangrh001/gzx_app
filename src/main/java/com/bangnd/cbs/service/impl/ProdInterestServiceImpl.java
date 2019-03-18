@@ -1,13 +1,14 @@
 package com.bangnd.cbs.service.impl;
 
 import com.bangnd.cbs.entity.ProdInterest;
-import com.bangnd.cbs.service.*;
 import com.bangnd.cbs.form.ProdInterestSearchForm;
-
-import java.util.*;
-
 import com.bangnd.cbs.repository.ProdInterestRepository;
+import com.bangnd.cbs.service.ProdInterestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ProdInterestServiceImpl implements ProdInterestService {
     @Autowired
     private ProdInterestRepository prodInterestRepository;
 
-    public List<ProdInterest> getProdInterestList(ProdInterestSearchForm prodInterestSearchForm) {
+    public Page<ProdInterest> getProdInterestList(Integer pageNum, int size, ProdInterestSearchForm prodInterestSearchForm) {
         Specification specification = new Specification<ProdInterest>() {
             @Override
             public Predicate toPredicate(Root<ProdInterest> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
@@ -40,7 +41,10 @@ public class ProdInterestServiceImpl implements ProdInterestService {
                 return cb.and(predicates.toArray(p));
             }
         };
-        return prodInterestRepository.findAll(specification);
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest((pageNum - 1), size, sort);
+        Page<ProdInterest> qyPage = this.prodInterestRepository.findAll(specification, pageable);
+        return qyPage;
     }
 
     @Override

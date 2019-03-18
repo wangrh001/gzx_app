@@ -1,13 +1,12 @@
 package com.bangnd.cs.service.impl;
 
-import com.bangnd.cs.entity.*;
-import com.bangnd.cs.service.*;
-import com.bangnd.cs.repository.*;
-
-import java.util.List;
-
+import com.bangnd.cs.entity.KnowledgeQuestionType;
+import com.bangnd.cs.repository.KnowledgeQuestionTypeRepository;
+import com.bangnd.cs.service.KnowledgeQuestionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class KnowledgeQuestionTypeServiceImpl implements KnowledgeQuestionTypeService {

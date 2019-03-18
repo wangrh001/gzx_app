@@ -1,14 +1,20 @@
 package com.bangnd.ums.web;
 
+import com.bangnd.ums.entity.RoleResource;
 import com.bangnd.ums.entity.User;
-import com.bangnd.ums.service.UserService;
+import com.bangnd.ums.entity.UserRole;
 import com.bangnd.ums.service.ResourceService;
+import com.bangnd.ums.service.RoleResourceService;
+import com.bangnd.ums.service.UserRoleService;
+import com.bangnd.ums.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpSession;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -19,6 +25,10 @@ public class LoginController {
 
     @Resource
     ResourceService resourceService;
+    @Resource
+    UserRoleService userRoleService;
+    @Resource
+    RoleResourceService roleResourceService;
 
     //跳转到登录页
     @RequestMapping("/login")
@@ -33,6 +43,19 @@ public class LoginController {
     public String loginVerify(Model model, String userName, String password, HttpSession session) {
         boolean verifyUserName = userService.verifyUserName(userName);
         User user = userService.getUserByUserName(userName);
+        List<UserRole> userRoles = userRoleService.findAllByUserId(user.getId());
+        List<com.bangnd.ums.entity.Resource> resources=new ArrayList();
+        if(userRoles!=null){
+            for(UserRole userRole:userRoles){
+                List<RoleResource> roleResources =roleResourceService.getRoleResourceByRoleId(userRole.getRoleId());
+                if(roleResources!=null){
+                    for(RoleResource roleResource:roleResources ){
+                        com.bangnd.ums.entity.Resource resource = resourceService.getResourceById(roleResource.getResId());
+                        resources.add(resource);
+                    }
+                }
+            }
+        }
         if (!verifyUserName) {
             model.addAttribute("message", "用户不存在，请确定输入是否正确");
             return "redirect:/login";
@@ -43,6 +66,8 @@ public class LoginController {
             return "redirect:/login";
         }
         session.setAttribute("user", user);
+        System.out.println("resources.size()="+resources.size());
+        session.setAttribute("userRes",resources);
         return "redirect:/index";
     }
 

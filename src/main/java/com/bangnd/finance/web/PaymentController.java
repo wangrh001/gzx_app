@@ -1,20 +1,23 @@
 package com.bangnd.finance.web;
 
 import com.bangnd.cbs.service.BankService;
+import com.bangnd.cbs.service.OrderProductService;
+import com.bangnd.finance.entity.Payment;
+import com.bangnd.finance.entity.PaymentPayType;
+import com.bangnd.finance.form.PaymentSearchForm;
+import com.bangnd.finance.service.*;
+import com.bangnd.finance.vo.PaymentVO;
+import com.bangnd.util.cfg.ConstantCfg;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.finance.entity.*;
-import com.bangnd.finance.form.*;
-import com.bangnd.finance.service.*;
-import com.bangnd.finance.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class PaymentController {
@@ -32,18 +35,23 @@ public class PaymentController {
     BankService bankService;
     @Resource
     OffsetService offsetService;
+    @Resource
+    OrderProductService orderProductService;
 
     @RequestMapping("/finance/payment")
-    public String home(Model model, PaymentSearchForm paymentSearchForm) {
-        List<Payment> payments = paymentService.getPaymentList(paymentSearchForm);
+    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, PaymentSearchForm paymentSearchForm) {
+        if(pageNum==null){
+            pageNum="1";
+        }
+        Page<Payment> pages = paymentService.getPaymentList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,paymentSearchForm);
         model.addAttribute("offsets", offsetService.getAll());
         model.addAttribute("inOuts",paymentInOutService.getAll());
         model.addAttribute("payTypes", paymentPayTypeService.getAll());
         model.addAttribute("payStates", paymentPayStateService.getAll());
         model.addAttribute("ifReals",paymentPayDataTypeService.getAll());
         List<PaymentVO> paymentVOs = new ArrayList<>();
-        if (payments != null) {
-            for (Payment payment : payments) {
+        if (pages != null) {
+            for (Payment payment : pages) {
                 PaymentVO paymentVO = new PaymentVO();
                 paymentVO.setId(payment.getId());
                 paymentVO.setOffset(payment.getOffset());
@@ -54,6 +62,12 @@ public class PaymentController {
                 paymentVOs.add(paymentVO);
             }
         }
+        int pagenum=Integer.valueOf(pageNum);
+        model.addAttribute("page",pages);
+        model.addAttribute("pageNum",pagenum);
+        model.addAttribute("totalPages",pages.getTotalPages());
+        System.out.println("totalPages="+pages.getTotalPages());
+        model.addAttribute("totalElements",pages.getTotalElements());
         model.addAttribute("paymentVOs", paymentVOs);
         return "/finance/paymentList";
     }
@@ -102,6 +116,9 @@ public class PaymentController {
         //设置订单id
         payment.setOrderId(sorcePayment.getOrderId());
 
+        //设置订单产品id
+        payment.setOrderProductId(sorcePayment.getOrderProductId());
+
         //该费用核销掉
         payment.setOffset(ConstantCfg.OFF_SET_CLOSE);
         //是实收付
@@ -111,6 +128,9 @@ public class PaymentController {
         payment.setCreator(0);
         payment.setCreateTime(new Date());
         paymentService.save(payment);
+
+        //该产品下所有已经的确认费用都已经核销，订单产品表的状态更新为客户已经支付
+        orderProductService.syncOrderProdState(sorcePayment.getOrderProductId());
 
         //将原费用的relatedId写成新费用的id
         sorcePayment.setRelatedId(payment.getId());

@@ -1,7 +1,6 @@
 package com.bangnd.sales.vo;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
 import java.math.BigDecimal;
 
 public class CommissionVO {
@@ -18,32 +17,56 @@ public class CommissionVO {
 
     @Column
     public String businessTypeName;
+
     @Column
-    public String productTypeName;
+    public String levelName;
+
     @Column
-    public int productId;
+    public String typeName;
+
+    @Column
+    public BigDecimal percent;
+
+    @Column
+    public String productName;
 
     public String getBusinessTypeName() {
         return businessTypeName;
-    }
-
-    public String getProductTypeName() {
-        return productTypeName;
-    }
-
-    public int getProductId() {
-        return productId;
     }
 
     public void setBusinessTypeName(String businessTypeName) {
         this.businessTypeName = businessTypeName;
     }
 
-    public void setProductTypeName(String productTypeName) {
-        this.productTypeName = productTypeName;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getLevelName() {
+        return levelName;
+    }
+
+    public void setLevelName(String levelName) {
+        this.levelName = levelName;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+
+    public BigDecimal getPercent() {
+        return percent;
+    }
+
+    public void setPercent(BigDecimal percent) {
+        this.percent = percent;
     }
 }

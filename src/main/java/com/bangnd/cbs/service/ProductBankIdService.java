@@ -1,6 +1,6 @@
 package com.bangnd.cbs.service;
 
-import com.bangnd.cbs.entity.*;
+import com.bangnd.cbs.entity.ProductBankId;
 
 import java.util.List;
 

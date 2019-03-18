@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface BusinessTypeService {
     public List<BusinessType> getAll();
+
+    public BusinessType findOneById(int id);
 }

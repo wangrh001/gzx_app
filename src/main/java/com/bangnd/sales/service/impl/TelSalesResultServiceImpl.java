@@ -1,13 +1,12 @@
 package com.bangnd.sales.service.impl;
 
-import com.bangnd.sales.entity.*;
-import com.bangnd.sales.service.*;
-import com.bangnd.sales.repository.*;
-
-import java.util.List;
-
+import com.bangnd.sales.entity.TelSalesResult;
+import com.bangnd.sales.repository.TelSalesResultRepository;
+import com.bangnd.sales.service.TelSalesResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TelSalesResultServiceImpl implements TelSalesResultService {

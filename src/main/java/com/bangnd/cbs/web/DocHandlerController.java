@@ -3,6 +3,8 @@ package com.bangnd.cbs.web;
 import com.bangnd.cbs.entity.OrderDocument;
 import com.bangnd.cbs.service.DocHandlerService;
 import com.bangnd.cbs.service.OrderDocService;
+import com.bangnd.cbs.service.OrderLogService;
+import com.bangnd.ums.entity.User;
 import com.bangnd.util.cfg.ConstantCfg;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.*;
 
@@ -22,6 +25,8 @@ public class DocHandlerController {
 
     @Resource
     DocHandlerService docHandlerService;
+    @Resource
+    OrderLogService orderLogService;
 
     @GetMapping("/doc/toUpload")
     public String toUpload(Model model) throws IOException {
@@ -36,9 +41,9 @@ public class DocHandlerController {
      * @return
      */
     @RequestMapping("/doc/upload")
-    public String upload(Model model, @RequestParam("files") MultipartFile[] files, Long orderId) {
+    public String upload(HttpServletRequest request, Model model, @RequestParam("files") MultipartFile[] files, Long orderId) {
         String url = "redirect:/order/toAdd?orderId=" + orderId.toString();
-        System.out.println(url);
+        int userId=Long.valueOf(((User)request.getSession().getAttribute("user")).getId()).intValue();
         Map<String, String> fileNameMapping = new HashMap<String, String>();
         if (files != null && files.length >= 1) {
             try {
@@ -60,6 +65,7 @@ public class DocHandlerController {
                 orderDocument.setCreateTime(new Date());
                 orderDocService.save(orderDocument);
             }
+            orderLogService.recordLog(orderId,userId,ConstantCfg.ORDER_ACTION_2);
             model.addAttribute("message", "文件： " + files.length + "个上传成功!");
             model.addAttribute("files", files);
         }

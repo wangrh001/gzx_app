@@ -5,6 +5,7 @@ import com.bangnd.cbs.entity.Order;
 import com.bangnd.cbs.entity.OrderProdCustRelation;
 import com.bangnd.cbs.entity.OrderProduct;
 import com.bangnd.cbs.service.*;
+import com.bangnd.ums.entity.User;
 import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.service.PayWayService;
 import com.bangnd.util.service.PeriodTypeService;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -32,21 +34,30 @@ public class OrderProductController {
     ProductService productService;
     @Resource
     PeriodTypeService periodTypeService;
+    @Resource
+    OrderLogService orderLogService;
 
 
     @RequestMapping("/orderProduct/add")
-    public String saveOrderProduct(String orderId,
+    public String saveOrderProduct(HttpServletRequest request,
+                                   String orderId,
                                    String customer1,
                                    String customer2,
                                    String customer3,
                                    OrderProduct orderProduct) {
+        int userId=Long.valueOf(((User)request.getSession().getAttribute("user")).getId()).intValue();
         orderProduct.setOrderId(new Long(orderId).longValue());
         orderProduct.setCreateTime(new Date());
         orderProduct.setCreator(0);
         orderProduct.setState(1);
-        //添加产品之处的状态是方案已经匹配
-        orderProduct.setOrderProdState(2);
+        Order order = orderService.findOrderById(orderProduct.getOrderId());
+        if(order.getSignDate()!=null&&!"".equals(order.getSignDate())){
+            orderProduct.setOrderProdState(ConstantCfg.ORDER_STATE_SIGNED);
+        }else {
+            orderProduct.setOrderProdState(ConstantCfg.ORDER_STATE_MATCHED);
+        }
         orderProductService.save(orderProduct);
+        orderLogService.recordLog(new Long(orderId).longValue(),userId,ConstantCfg.ORDER_ACTION_4);
 
         //这里才确认客户是什么身份
         System.out.println("customer1=" + customer1 + ";productId=" + orderProduct.getId());
@@ -140,6 +151,9 @@ public class OrderProductController {
         oldOrderProduct.setRealPeriodNum(orderProduct.getRealPeriodNum());
         oldOrderProduct.setRelationship(orderProduct.getRelationship());
         oldOrderProduct.setApproveTime(orderProduct.getApproveTime());
+        if(!"".equals(orderProduct.getApproveTime())&&orderProduct.getApproveTime()!=null){
+            oldOrderProduct.setOrderProdState(ConstantCfg.ORDER_PRODUCT_STATE_APPROVED);
+        }
         oldOrderProduct.setUpdateTime(new Date());
         oldOrderProduct.setUpdator(0);
         orderProductService.save(oldOrderProduct);

@@ -1,13 +1,12 @@
 package com.bangnd.sales.service.impl;
 
-import com.bangnd.sales.entity.*;
-import com.bangnd.sales.service.*;
-import com.bangnd.sales.repository.*;
-
-import java.util.List;
-
+import com.bangnd.sales.entity.AgentChannelType;
+import com.bangnd.sales.repository.AgentChannelTypeRepository;
+import com.bangnd.sales.service.AgentChannelTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AgentChannelTypeServiceImpl implements AgentChannelTypeService {

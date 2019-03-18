@@ -1,13 +1,12 @@
 package com.bangnd.finance.service.impl;
 
-import com.bangnd.finance.entity.*;
-import com.bangnd.finance.service.*;
-import com.bangnd.finance.repository.*;
-
-import java.util.List;
-
+import com.bangnd.finance.entity.AccountCompany;
+import com.bangnd.finance.repository.AccountCompanyRepository;
+import com.bangnd.finance.service.AccountCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AccountCompanyServiceImpl implements AccountCompanyService {

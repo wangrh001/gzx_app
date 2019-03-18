@@ -19,16 +19,6 @@
           method="post">
         <table>
             <tr>
-                <td>销售ID</td>
-                <td><input th:field="*{agentId}" value="" class="form-control"/></td>
-                <td>姓名</td>
-                <td><input th:field="*{agentName}" value="" class="form-control"/></td>
-                <td>提成</td>
-                <td><input th:field="*{commission}" value="" class="form-control"/></td>
-            </tr>
-            <tr>
-                <td>业绩</td>
-                <td><input th:field="*{performance}" value="" class="form-control"/></td>
                 <td>核算发放进度</td>
                 <td><select th:field="*{process}" th:remove="all-but-first">
                     <option th:each="process : ${processs}"

@@ -1,13 +1,14 @@
 package com.bangnd.sales.form;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
 
 public class PerformanceCommissionSearchForm {
     @Column
     public String month;
     @Column
     public String agentName;
+    @Column
+    public String employeeName;
     @Column
     public String process;
 
@@ -17,6 +18,10 @@ public class PerformanceCommissionSearchForm {
 
     public String getAgentName() {
         return agentName;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
     }
 
     public String getProcess() {
@@ -29,6 +34,10 @@ public class PerformanceCommissionSearchForm {
 
     public void setAgentName(String agentName) {
         this.agentName = agentName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
     public void setProcess(String process) {

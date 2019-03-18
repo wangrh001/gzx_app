@@ -1,6 +1,10 @@
 package com.bangnd.cbs.entity;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -36,10 +40,13 @@ public class Order {
 
     //申请人
     @Column
+    @NotEmpty(message="申请人不能为空")
     private String applicantName;
 
     //申请人电话
     @Column
+    @NotEmpty(message="电话不能为空")
+    @Length(min=6, message="密码长度不能少于六位")
     private String cellPhone;
 
     //1、居间业务；2、抵押业务；3、垫资过桥；
@@ -47,10 +54,10 @@ public class Order {
     private int businessType;
 
     //申请时间
-    @Column(nullable = false, unique = false)
+    @Column(nullable = true, unique = false)
     private Date applyTime;
     //销售人员
-    @Column(nullable = false, unique = false)
+    @Column(nullable = true, unique = false)
     private Integer agentId;
 
     //服务合同签订时间

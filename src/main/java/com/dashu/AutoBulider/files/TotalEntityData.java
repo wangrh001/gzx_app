@@ -877,6 +877,223 @@ public class TotalEntityData {
 //        dataModel11.setIfModifyable(1);
 //        dataModels.add(dataModel11);
 
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        //部门表
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("hr");
+//        dataModel.setTableNames("dept");
+//        dataModel.setColumnNameCh("部门名称");
+//        dataModel.setColumnNameEn("name");
+//        dataModel.setColumnType(3);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(0);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+        //用户表
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("ums");
+//        dataModel.setTableNames("user");
+//        dataModel.setColumnNameCh("用户名");
+//        dataModel.setColumnNameEn("userName");
+//        dataModel.setColumnType(3);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(0);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("最后登录时间");
+//        dataModel1.setColumnNameEn("lastLogInTime");
+//        dataModel1.setColumnType(4);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(0);
+//        dataModel1.setIfSearchColumn(0);
+//        dataModel1.setIfShowColumn(1);
+//        dataModel1.setIfModifyable(0);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("密码");
+//        dataModel2.setColumnNameEn("password");
+//        dataModel2.setColumnType(3);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(0);
+//        dataModel2.setIfSearchColumn(1);
+//        dataModel2.setIfShowColumn(0);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//工作内容表
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("hr");
+//        dataModel.setTableNames("action");
+//        dataModel.setColumnNameCh("业务行动");
+//        dataModel.setColumnNameEn("name");
+//        dataModel.setColumnType(3);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(0);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("所属岗位");
+//        dataModel1.setColumnNameEn("positionId");
+//        dataModel1.setColumnType(1);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(1);
+//        dataModel1.setIfSearchColumn(1);
+//        dataModel1.setIfShowColumn(0);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("是否参与提成");
+//        dataModel2.setColumnNameEn("isCommission");
+//        dataModel2.setColumnType(1);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(1);
+//        dataModel2.setIfSearchColumn(1);
+//        dataModel2.setIfShowColumn(0);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+          //岗位信息表
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("hr");
+//        dataModel.setTableNames("position");
+//        dataModel.setColumnNameCh("岗位名称");
+//        dataModel.setColumnNameEn("name");
+//        dataModel.setColumnType(2);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(0);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("所属部门");
+//        dataModel1.setColumnNameEn("deptId");
+//        dataModel1.setColumnType(1);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(1);
+//        dataModel1.setIfSearchColumn(1);
+//        dataModel1.setIfShowColumn(0);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("是否参与提成");
+//        dataModel2.setColumnNameEn("isCommission");
+//        dataModel2.setColumnType(1);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(1);
+//        dataModel2.setIfSearchColumn(1);
+//        dataModel2.setIfShowColumn(0);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//
+//        DataModel dataModel5 = new DataModel();
+//        dataModel5.setColumnNameCh("分几个等级");
+//        dataModel5.setColumnNameEn("level");
+//        dataModel5.setColumnType(1);
+//        dataModel5.setIfBusinessDate(0);
+//        dataModel5.setIfScatter(0);
+//        dataModel5.setIfSearchColumn(1);
+//        dataModel5.setIfShowColumn(0);
+//        dataModel5.setIfModifyable(1);
+//        dataModels.add(dataModel5);
+//
+//        DataModel dataModel4 = new DataModel();
+//        dataModel4.setColumnNameCh("薪酬起点");
+//        dataModel4.setColumnNameEn("salaryMin");
+//        dataModel4.setColumnType(5);
+//        dataModel4.setIfBusinessDate(0);
+//        dataModel4.setIfScatter(0);
+//        dataModel4.setIfSearchColumn(0);
+//        dataModel4.setIfShowColumn(0);
+//        dataModel4.setIfModifyable(1);
+//        dataModels.add(dataModel4);
+//
+//        DataModel dataModel3 = new DataModel();
+//        dataModel3.setColumnNameCh("薪酬终点");
+//        dataModel3.setColumnNameEn("salaryMax");
+//        dataModel3.setColumnType(5);
+//        dataModel3.setIfBusinessDate(0);
+//        dataModel3.setIfScatter(0);
+//        dataModel3.setIfSearchColumn(0);
+//        dataModel3.setIfShowColumn(0);
+//        dataModel3.setIfModifyable(1);
+//        dataModels.add(dataModel3);
+        //产品利息表
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("cbs");
+//        dataModel.setTableNames("prodInterest");
+//        dataModel.setColumnNameCh("产品id");
+//        dataModel.setColumnNameEn("productId");
+//        dataModel.setColumnType(1);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(0);
+//        dataModel.setIfSearchColumn(0);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("结算周期");
+//        dataModel2.setColumnNameEn("periodType");
+//        dataModel2.setColumnType(1);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(1);
+//        dataModel2.setIfSearchColumn(1);
+//        dataModel2.setIfShowColumn(1);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//
+//        DataModel dataModel4 = new DataModel();
+//        dataModel4.setColumnNameCh("产品利息");
+//        dataModel4.setColumnNameEn("interest");
+//        dataModel4.setColumnType(5);
+//        dataModel4.setIfBusinessDate(0);
+//        dataModel4.setIfScatter(0);
+//        dataModel4.setIfSearchColumn(0);
+//        dataModel4.setIfShowColumn(0);
+//        dataModel4.setIfModifyable(1);
+//        dataModels.add(dataModel4);
+//
+//
+//        DataModel dataModel10 = new DataModel();
+//        dataModel10.setColumnNameCh("开始时间");
+//        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+//        dataModel10.setColumnNameEn("beginDate");
+//        dataModel10.setColumnType(4);
+//        dataModel10.setIfBusinessDate(1);
+//        dataModel10.setIfScatter(0);
+//        dataModel10.setIfSearchColumn(0);
+//        dataModel10.setIfShowColumn(0);
+//        dataModel10.setIfModifyable(1);
+//        dataModels.add(dataModel10);
+//
+//        DataModel dataModel11 = new DataModel();
+//        dataModel11.setColumnNameCh("结束时间");
+//        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+//        dataModel11.setColumnNameEn("endDate");
+//        dataModel11.setColumnType(4);
+//        dataModel11.setIfBusinessDate(0);
+//        dataModel11.setIfScatter(0);
+//        dataModel11.setIfSearchColumn(0);
+//        dataModel11.setIfShowColumn(0);
+//        dataModel11.setIfModifyable(1);
+//        dataModels.add(dataModel11);
 
 //        List<DataModel> dataModels = new ArrayList<DataModel>();
 //        DataModel dataModel = new DataModel();
@@ -1308,23 +1525,23 @@ public class TotalEntityData {
 //        dataModel3.setIfModifyable(1);
 //        dataModels.add(dataModel3);
 
-          //查询自己的业绩和提成
 //        List<DataModel> dataModels = new ArrayList<DataModel>();
 //        DataModel dataModel = new DataModel();
 //        dataModel.setSysName("sales");
-//        dataModel.setTableNames("PerformanceCommission");
+//        dataModel.setTableNames("performanceCommission");
 //        dataModel.setColumnNameCh("销售ID");
 //        dataModel.setColumnNameEn("agentId");
 //        dataModel.setColumnType(2);
 //        dataModel.setIfBusinessDate(0);
 //        dataModel.setIfScatter(0);
 //        dataModel.setIfSearchColumn(0);
-//        dataModel.setIfShowColumn(1);
-//        dataModel.setIfModifyable(1);
+//        dataModel.setIfShowColumn(0);
+//        dataModel.setIfModifyable(0);
 //        dataModels.add(dataModel);
 //
 //        DataModel dataModel1 = new DataModel();
 //        dataModel1.setColumnNameCh("年月");
+//        //注意：不能用yearMonth，mysql的关键字
 //        dataModel1.setColumnNameEn("month");
 //        dataModel1.setColumnType(3);
 //        dataModel1.setIfBusinessDate(0);
@@ -1335,16 +1552,48 @@ public class TotalEntityData {
 //        dataModels.add(dataModel1);
 //
 //        DataModel dataModel2 = new DataModel();
-//        dataModel2.setColumnNameCh("姓名");
-//        //注意：不能用yearMonth，mysql的关键字
+//        dataModel2.setColumnNameCh("销售姓名");
 //        dataModel2.setColumnNameEn("agentName");
 //        dataModel2.setColumnType(3);
 //        dataModel2.setIfBusinessDate(0);
 //        dataModel2.setIfScatter(0);
 //        dataModel2.setIfSearchColumn(1);
 //        dataModel2.setIfShowColumn(1);
-//        dataModel2.setIfModifyable(1);
+//        dataModel2.setIfModifyable(0);
 //        dataModels.add(dataModel2);
+//
+//        DataModel dataModel4 = new DataModel();
+//        dataModel4.setColumnNameCh("雇员ID");
+//        dataModel4.setColumnNameEn("employeeId");
+//        dataModel4.setColumnType(2);
+//        dataModel4.setIfBusinessDate(0);
+//        dataModel4.setIfScatter(0);
+//        dataModel4.setIfSearchColumn(0);
+//        dataModel4.setIfShowColumn(0);
+//        dataModel4.setIfModifyable(0);
+//        dataModels.add(dataModel4);
+//
+//        DataModel dataModel5 = new DataModel();
+//        dataModel5.setColumnNameCh("雇员姓名");
+//        dataModel5.setColumnNameEn("employeeName");
+//        dataModel5.setColumnType(3);
+//        dataModel5.setIfBusinessDate(0);
+//        dataModel5.setIfScatter(0);
+//        dataModel5.setIfSearchColumn(1);
+//        dataModel5.setIfShowColumn(1);
+//        dataModel5.setIfModifyable(0);
+//        dataModels.add(dataModel5);
+//
+//        DataModel dataModel6 = new DataModel();
+//        dataModel6.setColumnNameCh("订单产品ID");
+//        dataModel6.setColumnNameEn("orderProdId");
+//        dataModel6.setColumnType(2);
+//        dataModel6.setIfBusinessDate(0);
+//        dataModel6.setIfScatter(0);
+//        dataModel6.setIfSearchColumn(0);
+//        dataModel6.setIfShowColumn(1);
+//        dataModel6.setIfModifyable(0);
+//        dataModels.add(dataModel6);
 //
 //        DataModel dataModel10 = new DataModel();
 //        dataModel10.setColumnNameCh("提成");
@@ -1354,7 +1603,7 @@ public class TotalEntityData {
 //        dataModel10.setIfScatter(0);
 //        dataModel10.setIfSearchColumn(0);
 //        dataModel10.setIfShowColumn(1);
-//        dataModel10.setIfModifyable(1);
+//        dataModel10.setIfModifyable(0);
 //        dataModels.add(dataModel10);
 //
 //        DataModel dataModel11 = new DataModel();
@@ -1365,7 +1614,7 @@ public class TotalEntityData {
 //        dataModel11.setIfScatter(0);
 //        dataModel11.setIfSearchColumn(0);
 //        dataModel11.setIfShowColumn(1);
-//        dataModel11.setIfModifyable(1);
+//        dataModel11.setIfModifyable(0);
 //        dataModels.add(dataModel11);
 //
 //        DataModel dataModel3 = new DataModel();
@@ -1454,6 +1703,90 @@ public class TotalEntityData {
 //        dataModel3.setIfShowColumn(1);
 //        dataModel3.setIfModifyable(1);
 //        dataModels.add(dataModel3);
+
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("ums");
+//        dataModel.setTableNames("resource");
+//        dataModel.setColumnNameCh("资源名称");
+//        dataModel.setColumnNameEn("name");
+//        dataModel.setColumnType(3);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(0);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("资源链接");
+//        dataModel1.setColumnNameEn("resUrl");
+//        dataModel1.setColumnType(3);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(0);
+//        dataModel1.setIfSearchColumn(1);
+//        dataModel1.setIfShowColumn(1);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("资源类型");
+//        dataModel2.setColumnNameEn("type");
+//        dataModel2.setColumnType(1);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(1);
+//        dataModel2.setIfSearchColumn(1);
+//        dataModel2.setIfShowColumn(1);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//
+//        DataModel dataModel3 = new DataModel();
+//        dataModel3.setColumnNameCh("父资源");
+//        dataModel3.setColumnNameEn("parentId");
+//        dataModel3.setColumnType(1);
+//        dataModel3.setIfBusinessDate(0);
+//        dataModel3.setIfScatter(1);
+//        dataModel3.setIfSearchColumn(1);
+//        dataModel3.setIfShowColumn(1);
+//        dataModel3.setIfModifyable(1);
+//        dataModels.add(dataModel3);
+
+          //角色资源表
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("ums");
+//        dataModel.setTableNames("roleResource");
+//        dataModel.setColumnNameCh("角色");
+//        dataModel.setColumnNameEn("roleId");
+//        dataModel.setColumnType(2);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(1);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("资源");
+//        dataModel1.setColumnNameEn("resId");
+//        dataModel1.setColumnType(2);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(1);
+//        dataModel1.setIfSearchColumn(1);
+//        dataModel1.setIfShowColumn(1);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//        //1、可读；2、可新增和可维护；3、可删、可新增、可维护
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("权限类型");
+//        dataModel2.setColumnNameEn("type");
+//        dataModel2.setColumnType(1);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(1);
+//        dataModel2.setIfSearchColumn(1);
+//        dataModel2.setIfShowColumn(1);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
 
     }
 }

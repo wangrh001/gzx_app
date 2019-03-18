@@ -1,21 +1,22 @@
 package com.bangnd.sales.web;
 
+import com.bangnd.sales.entity.TelSales;
+import com.bangnd.sales.form.TelSalesSearchForm;
+import com.bangnd.sales.service.TelSalesResultService;
+import com.bangnd.sales.service.TelSalesService;
+import com.bangnd.sales.service.TelSalesTaskDelayService;
+import com.bangnd.sales.vo.TelSalesVO;
+import com.bangnd.util.cfg.ConstantCfg;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.sales.web.*;
-import com.bangnd.sales.entity.*;
-import com.bangnd.sales.form.*;
-import com.bangnd.sales.service.*;
-import com.bangnd.sales.service.impl.*;
-import com.bangnd.sales.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class TelSalesController {
@@ -27,19 +28,29 @@ public class TelSalesController {
     TelSalesTaskDelayService telSalesTaskDelayService;
 
     @RequestMapping("/sales/telSales")
-    public String home(Model model, TelSalesSearchForm telSalesSearchForm) {
-        List<TelSales> telSaless = telSalesService.getTelSalesList(telSalesSearchForm);
+    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, TelSalesSearchForm telSalesSearchForm) {
+        if(pageNum==null){
+            pageNum="1";
+        }
+        Page<TelSales> pages =telSalesService.getTelSalesList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,telSalesSearchForm);
         model.addAttribute("results", telSalesResultService.getAll());
         model.addAttribute("taskDelays", telSalesTaskDelayService.getAll());
         List<TelSalesVO> telSalesVOs = new ArrayList<>();
-        if (telSaless != null) {
-            for (TelSales telSales : telSaless) {
+        if (pages != null) {
+            for (TelSales telSales : pages) {
                 TelSalesVO telSalesVO = new TelSalesVO();
                 telSalesVO.setId(telSales.getId());
                 telSalesVO.setPhone(telSales.getPhone());
                 telSalesVOs.add(telSalesVO);
             }
         }
+
+        int pagenum=Integer.valueOf(pageNum);
+        model.addAttribute("page",pages);
+        model.addAttribute("pageNum",pagenum);
+        model.addAttribute("totalPages",pages.getTotalPages());
+        System.out.println("totalPages="+pages.getTotalPages());
+        model.addAttribute("totalElements",pages.getTotalElements());
         model.addAttribute("telSalesVOs", telSalesVOs);
         return "/sales/telSalesList";
     }

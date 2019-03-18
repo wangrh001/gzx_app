@@ -1,13 +1,12 @@
 package com.bangnd.hr.service.impl;
 
-import com.bangnd.hr.entity.*;
-import com.bangnd.hr.service.*;
-import com.bangnd.hr.repository.*;
-
-import java.util.List;
-
+import com.bangnd.hr.entity.EmployeeCity;
+import com.bangnd.hr.repository.EmployeeCityRepository;
+import com.bangnd.hr.service.EmployeeCityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EmployeeCityServiceImpl implements EmployeeCityService {

@@ -1,12 +1,9 @@
 package com.bangnd.mis.service.impl;
 
 import com.bangnd.mis.entity.Task;
-import com.bangnd.mis.service.*;
 import com.bangnd.mis.form.TaskSearchForm;
-
-import java.util.*;
-
 import com.bangnd.mis.repository.TaskRepository;
+import com.bangnd.mis.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -15,8 +12,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TaskServiceImpl implements TaskService {

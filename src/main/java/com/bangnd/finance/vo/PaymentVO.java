@@ -1,8 +1,8 @@
 package com.bangnd.finance.vo;
 
-import javax.persistence.*;
+import javax.persistence.Column;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Date;
 
 public class PaymentVO {
     @Column

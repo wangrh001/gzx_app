@@ -1,7 +1,6 @@
 package com.bangnd.crm.form;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
 
 public class CustSearchForm {
     @Column

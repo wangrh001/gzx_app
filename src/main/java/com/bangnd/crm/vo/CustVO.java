@@ -1,7 +1,6 @@
 package com.bangnd.crm.vo;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
 
 public class CustVO {
     @Column

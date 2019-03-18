@@ -1,7 +1,7 @@
 package com.bangnd.finance.form;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
+import java.util.Date;
 
 public class PaymentSearchForm {
     @Column

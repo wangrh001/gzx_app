@@ -1,13 +1,12 @@
 package com.bangnd.hr.service.impl;
 
-import com.bangnd.hr.entity.*;
-import com.bangnd.hr.service.*;
-import com.bangnd.hr.repository.*;
-
-import java.util.List;
-
+import com.bangnd.hr.entity.CurriculumPosId;
+import com.bangnd.hr.repository.CurriculumPosIdRepository;
+import com.bangnd.hr.service.CurriculumPosIdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CurriculumPosIdServiceImpl implements CurriculumPosIdService {

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>新增</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/sales/commission/modify}" th:object="${commission}" method="post">
+        <table>
+            <input type="hidden" class="form-control" th:field="*{id}"/>
+            <tr>
+                <td>业务类型</td>
+                <td><select th:field="*{businessType}" th:remove="all-but-first">
+                    <option th:each="businessType : ${businessTypes}"
+                            th:value="${businessType.id}" th:text="${businessType.name}">Credit card
+                    </option>
+                </select></td>
+                <td>产品</td>
+                <td><select th:field="*{productId}" th:remove="all-but-first">
+                    <option th:each="product : ${products}"
+                            th:value="${product.id}" th:text="${product.productName}">
+                    </option>
+                </select></td>
+                <td>渠道类型</td>
+                <td><select th:field="*{channelType}" th:remove="all-but-first">
+                    <option th:each="channelType : ${channelTypes}"
+                            th:value="${channelType.id}" th:text="${channelType.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>销售等级</td>
+                <td><select th:field="*{level}" th:remove="all-but-first">
+                    <option th:each="level : ${levels}"
+                            th:value="${level.id}" th:text="${level.name}">Credit card
+                    </option>
+                </select></td>
+                <td>岗位</td>
+                <td><select th:field="*{type}" th:remove="all-but-first">
+                    <option th:each="type : ${types}"
+                            th:value="${type.id}" th:text="${type.name}">Credit card
+                    </option>
+                </select></td>
+                <td>提成方式</td>
+                <td><select th:field="*{way}" th:remove="all-but-first">
+                    <option th:each="way : ${ways}"
+                            th:value="${way.id}" th:text="${way.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>提成比例</td>
+                <td><input th:field="*{percent}" value="" class="form-control"/></td>
+                <td>累进阶段</td>
+                <td><input th:field="*{sum}" value="" class="form-control"/></td>
+                <td>计算基础</td>
+                <td><select th:field="*{baseType}" th:remove="all-but-first">
+                    <option th:each="baseType : ${baseTypes}"
+                            th:value="${baseType.id}" th:text="${baseType.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>开始日期</td>
+                <td><input id="startDate" name="startDate"
+                           th:value="*{startDate ne null} ? *{#dates.format(startDate,'MM/dd/yyyy')}"
+                           class="form-control"/></td>
+                <td>结束日期</td>
+                <td><input id="endDate" name="endDate"
+                           th:value="*{endDate ne null} ? *{#dates.format(endDate,'MM/dd/yyyy')}" class="form-control"/>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="保存" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="form-group">
+</div>
+</body>
+</html>

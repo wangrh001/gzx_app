@@ -1,13 +1,12 @@
 package com.bangnd.crm.service.impl;
 
-import com.bangnd.crm.entity.*;
-import com.bangnd.crm.service.*;
-import com.bangnd.crm.repository.*;
-
-import java.util.List;
-
+import com.bangnd.crm.entity.CustCity;
+import com.bangnd.crm.repository.CustCityRepository;
+import com.bangnd.crm.service.CustCityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CustCityServiceImpl implements CustCityService {

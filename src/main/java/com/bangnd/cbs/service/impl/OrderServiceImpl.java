@@ -5,6 +5,10 @@ import com.bangnd.cbs.form.OrderSearchForm;
 import com.bangnd.cbs.repository.OrderRepository;
 import com.bangnd.cbs.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -27,11 +31,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void save(Order order) {
+        System.out.println("order="+order.getAgentId());
         orderRepository.save(order);
     }
 
 
-    public List<Order> getOrderList(OrderSearchForm orderSearchForm) {
+    public Page<Order> getOrderList(Integer pageNum, int size, List<Integer> orderStateList, OrderSearchForm orderSearchForm) {
         Assert.notNull(orderSearchForm);
         Specification specification = new Specification<Order>() {
             @Override
@@ -46,13 +51,18 @@ public class OrderServiceImpl implements OrderService {
                 if (orderSearchForm.getOrderState() != null && !"".equals(orderSearchForm.getOrderState())) {
                     System.out.println("orderState=" + orderSearchForm.getOrderState());
                     if ("0".equals(orderSearchForm.getOrderState())) {
-                        System.out.println("enter the orderState = 0");
                         predicates.add(cb.notEqual(root.get("orderState").as(Integer.class), new Integer(orderSearchForm.getOrderState())));
                     } else {
-                        System.out.println("enter the orderState != 0");
                         predicates.add(cb.equal(root.get("orderState").as(Integer.class), new Integer(orderSearchForm.getOrderState())));
                     }
                 }
+                //状态只能显示该角色下可以查看的状态
+                CriteriaBuilder.In<Integer> in = cb.in(root.get("orderState"));
+                for(Integer orderState:orderStateList){
+                    in.value(orderState);
+                }
+                predicates.add(in);
+
                 predicates.add(cb.notEqual(root.get("state").as(Integer.class), new Integer(100)));
 
                 if (orderSearchForm.getCellPhone() != null && !"".equals(orderSearchForm.getCellPhone())) {
@@ -92,7 +102,11 @@ public class OrderServiceImpl implements OrderService {
                 return cb.and(predicates.toArray(p));
             }
         };
-        return orderRepository.findAll(specification);
+
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest((pageNum - 1), size, sort);
+        Page<Order> qyPage = this.orderRepository.findAll(specification, pageable);
+        return qyPage;
     }
 
     @Override

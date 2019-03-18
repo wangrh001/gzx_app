@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]
+    <script type="text/javascript" src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script type="text/javascript" src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    -->
+</head>
+
+<body class="container">
+<br/>
+<h4>订单操作列表</h4>
+
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>操作人</th>
+            <th>操作时间</th>
+            <th>操作项</th>
+            <th>备注</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderLogListForm : ${orderLogListForms}">
+            <td th:text="${orderLogListForm.id}">1</td>
+            <td th:text="${orderLogListForm.userName}">neo</td>
+            <td th:text="${orderLogListForm.actionTime}">6</td>
+            <td th:text="${orderLogListForm.actionName}">6</td>
+            <td th:text="${orderLogListForm.actionDesc}"></td>
+
+        </tr>
+
+        </tbody>
+    </table>
+    <table>
+        <tr>
+            <td><a th:href="@{/orderLog/list(pageNum=1)}">首页</a></td>
+            <td th:switch="${pageNum}">
+                <p th:case="1"><a th:href="@{/orderLog/list(pageNum=1)}">上一页</a></p>
+                <p th:case="*"><a th:href="@{/orderLog/list(pageNum=${pageNum-1})}">上一页</a></p>
+            </td>
+            <td th:switch="${pageNum}">
+                <p th:case="${totalPages}"><a th:href="@{/orderLog/list(pageNum=${totalPages})}">下一页</a></p>
+                <p th:case="*"><a th:href="@{/orderLog/list(pageNum=${pageNum+1})}">下一页</a></p>
+            </td>
+            <td><a th:href="@{/orderLog/list(pageNum=${totalPages})}">尾页</a></td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

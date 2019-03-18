@@ -1,7 +1,6 @@
 package com.bangnd.finance.form;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
 
 public class AccountingRuleSearchForm {
     @Column

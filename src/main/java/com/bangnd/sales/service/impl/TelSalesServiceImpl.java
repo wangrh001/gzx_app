@@ -1,13 +1,14 @@
 package com.bangnd.sales.service.impl;
 
 import com.bangnd.sales.entity.TelSales;
-import com.bangnd.sales.service.*;
 import com.bangnd.sales.form.TelSalesSearchForm;
-
-import java.util.*;
-
 import com.bangnd.sales.repository.TelSalesRepository;
+import com.bangnd.sales.service.TelSalesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,16 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class TelSalesServiceImpl implements TelSalesService {
     @Autowired
     private TelSalesRepository telSalesRepository;
 
-    public List<TelSales> getTelSalesList(TelSalesSearchForm telSalesSearchForm) {
+    public Page<TelSales> getTelSalesList(Integer pageNum, int size, TelSalesSearchForm telSalesSearchForm) {
         Specification specification = new Specification<TelSales>() {
             @Override
             public Predicate toPredicate(Root<TelSales> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
@@ -39,7 +41,10 @@ public class TelSalesServiceImpl implements TelSalesService {
                 return cb.and(predicates.toArray(p));
             }
         };
-        return telSalesRepository.findAll(specification);
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest((pageNum - 1), size, sort);
+        Page<TelSales> qyPage = this.telSalesRepository.findAll(specification, pageable);
+        return qyPage;
     }
 
     @Override

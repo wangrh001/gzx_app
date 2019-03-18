@@ -27,12 +27,12 @@
             <tr>
                 <td>对方银行</td>
                 <td>
-                <select th:field="*{otherBankId}" th:remove="all-but-first">
-                    <option th:each="bank : ${banks}"
-                            th:value="${bank.id}" th:text="${bank.name}"
-                            th:selected="${bank.id eq otherBankId}">Credit card
-                    </option>
-                </select>
+                    <select th:field="*{otherBankId}" th:remove="all-but-first">
+                        <option th:each="bank : ${banks}"
+                                th:value="${bank.id}" th:text="${bank.name}"
+                                th:selected="${bank.id eq otherBankId}">Credit card
+                        </option>
+                    </select>
                 </td>
                 <td>对方银行卡号</td>
                 <td><input th:field="*{otherCardNo}" value="" class="form-control"/></td>

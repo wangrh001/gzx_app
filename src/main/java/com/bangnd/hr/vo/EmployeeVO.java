@@ -1,7 +1,6 @@
 package com.bangnd.hr.vo;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
 
 public class EmployeeVO {
     @Column

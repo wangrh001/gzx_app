@@ -1,8 +1,6 @@
 package com.bangnd.cbs.vo;
 
-import javax.persistence.*;
-import java.util.*;
-import java.math.BigDecimal;
+import javax.persistence.Column;
 
 public class ProductVO {
     @Column

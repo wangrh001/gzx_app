@@ -1,21 +1,22 @@
 package com.bangnd.finance.web;
 
+import com.bangnd.finance.entity.AccountingRule;
+import com.bangnd.finance.form.AccountingRuleSearchForm;
+import com.bangnd.finance.service.AccountBalanceService;
+import com.bangnd.finance.service.AccountingRuleFeeTypeService;
+import com.bangnd.finance.service.AccountingRuleService;
+import com.bangnd.finance.vo.AccountingRuleVO;
+import com.bangnd.util.cfg.ConstantCfg;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.finance.web.*;
-import com.bangnd.finance.entity.*;
-import com.bangnd.finance.form.*;
-import com.bangnd.finance.service.*;
-import com.bangnd.finance.service.impl.*;
-import com.bangnd.finance.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class AccountingRuleController {
@@ -27,14 +28,17 @@ public class AccountingRuleController {
     AccountBalanceService accountBalanceService;
 
     @RequestMapping("/finance/accountingRule")
-    public String home(Model model, AccountingRuleSearchForm accountingRuleSearchForm) {
-        List<AccountingRule> accountingRules = accountingRuleService.getAccountingRuleList(accountingRuleSearchForm);
+    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, AccountingRuleSearchForm accountingRuleSearchForm) {
+        if(pageNum==null){
+            pageNum="1";
+        }
+        Page<AccountingRule> pages = accountingRuleService.getAccountingRuleList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,accountingRuleSearchForm);
         model.addAttribute("feeTypes", accountingRuleFeeTypeService.getAll());
         model.addAttribute("debitSides", accountBalanceService.getAll());
         model.addAttribute("creditSides", accountBalanceService.getAll());
         List<AccountingRuleVO> accountingRuleVOs = new ArrayList<>();
-        if (accountingRules != null) {
-            for (AccountingRule accountingRule : accountingRules) {
+        if (pages != null) {
+            for (AccountingRule accountingRule : pages) {
                 AccountingRuleVO accountingRuleVO = new AccountingRuleVO();
                 accountingRuleVO.setId(accountingRule.getId());
                 accountingRuleVO.setFeeTypeName((accountingRuleFeeTypeService.getAccountingRuleFeeTypeById(accountingRule.getFeeType())).getName());
@@ -43,6 +47,13 @@ public class AccountingRuleController {
                 accountingRuleVOs.add(accountingRuleVO);
             }
         }
+
+        int pagenum=Integer.valueOf(pageNum);
+        model.addAttribute("page",pages);
+        model.addAttribute("pageNum",pagenum);
+        model.addAttribute("totalPages",pages.getTotalPages());
+        System.out.println("totalPages="+pages.getTotalPages());
+        model.addAttribute("totalElements",pages.getTotalElements());
         model.addAttribute("accountingRuleVOs", accountingRuleVOs);
         return "/finance/accountingRuleList";
     }

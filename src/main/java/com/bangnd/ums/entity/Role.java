@@ -10,24 +10,6 @@ public class Role {
     @GeneratedValue
     private long id;
 
-    @Column
-    private String name;
-
-    @Column
-    private int state;
-
-    @Column
-    private long creator;
-
-    @Column
-    private Date createTime;
-
-    @Column
-    private long updator;
-
-    @Column
-    private Date updateTime;
-
     public long getId() {
         return id;
     }
@@ -36,6 +18,9 @@ public class Role {
         this.id = id;
     }
 
+    @Column
+    private String name;
+
     public String getName() {
         return name;
     }
@@ -43,6 +28,17 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Column
+    private int state;
+    @Column
+    private long creator;
+    @Column
+    private Date createTime;
+    @Column
+    private long updator;
+    @Column
+    private Date updateTime;
 
     public int getState() {
         return state;

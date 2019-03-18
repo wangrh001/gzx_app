@@ -112,68 +112,54 @@ public class TotalCodeCreator {
 
     public static void main(String[] args) {
         List<DataModel> dataModels = new ArrayList<DataModel>();
-        //产品利息表
         DataModel dataModel = new DataModel();
-        dataModel.setSysName("cbs");
-        dataModel.setTableNames("prodInterest");
-        dataModel.setColumnNameCh("产品id");
-        dataModel.setColumnNameEn("productId");
+        dataModel.setSysName("util");
+        dataModel.setTableNames("workFlow");
+        //1、订单处理工作；
+        dataModel.setColumnNameCh("工作类型");
+        dataModel.setColumnNameEn("workType");
         dataModel.setColumnType(1);
         dataModel.setIfBusinessDate(0);
-        dataModel.setIfScatter(0);
-        dataModel.setIfSearchColumn(0);
+        dataModel.setIfScatter(1);
+        dataModel.setIfSearchColumn(1);
         dataModel.setIfShowColumn(1);
         dataModel.setIfModifyable(1);
         dataModels.add(dataModel);
 
+        DataModel dataModel1 = new DataModel();
+        dataModel1.setColumnNameCh("转前状态");
+        dataModel1.setColumnNameEn("beforState");
+        dataModel1.setColumnType(1);
+        dataModel1.setIfBusinessDate(0);
+        dataModel1.setIfScatter(1);
+        dataModel1.setIfSearchColumn(1);
+        dataModel1.setIfShowColumn(1);
+        dataModel1.setIfModifyable(1);
+        dataModels.add(dataModel1);
+
         DataModel dataModel2 = new DataModel();
-        dataModel2.setColumnNameCh("结算周期");
-        dataModel2.setColumnNameEn("periodType");
-        dataModel2.setColumnType(1);
+        dataModel2.setColumnNameCh("流转条件");
+        dataModel2.setColumnNameEn("transCondition");
+        dataModel2.setColumnType(3);
         dataModel2.setIfBusinessDate(0);
-        dataModel2.setIfScatter(1);
-        dataModel2.setIfSearchColumn(1);
+        dataModel2.setIfScatter(0);
+        dataModel2.setIfSearchColumn(0);
         dataModel2.setIfShowColumn(1);
         dataModel2.setIfModifyable(1);
         dataModels.add(dataModel2);
 
-        DataModel dataModel4 = new DataModel();
-        dataModel4.setColumnNameCh("产品利息");
-        dataModel4.setColumnNameEn("interest");
-        dataModel4.setColumnType(5);
-        dataModel4.setIfBusinessDate(0);
-        dataModel4.setIfScatter(0);
-        dataModel4.setIfSearchColumn(0);
-        dataModel4.setIfShowColumn(0);
-        dataModel4.setIfModifyable(1);
-        dataModels.add(dataModel4);
-
-
-        DataModel dataModel10 = new DataModel();
-        dataModel10.setColumnNameCh("开始时间");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
-        dataModel10.setColumnNameEn("beginDate");
-        dataModel10.setColumnType(4);
-        dataModel10.setIfBusinessDate(1);
-        dataModel10.setIfScatter(0);
-        dataModel10.setIfSearchColumn(0);
-        dataModel10.setIfShowColumn(0);
-        dataModel10.setIfModifyable(1);
-        dataModels.add(dataModel10);
-
-        DataModel dataModel11 = new DataModel();
-        dataModel11.setColumnNameCh("结束时间");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
-        dataModel11.setColumnNameEn("endDate");
-        dataModel11.setColumnType(4);
-        dataModel11.setIfBusinessDate(0);
-        dataModel11.setIfScatter(0);
-        dataModel11.setIfSearchColumn(0);
-        dataModel11.setIfShowColumn(0);
-        dataModel11.setIfModifyable(1);
-        dataModels.add(dataModel11);
+        DataModel dataModel3 = new DataModel();
+        dataModel3.setColumnNameCh("转后状态");
+        dataModel3.setColumnNameEn("afterState");
+        dataModel3.setColumnType(1);
+        dataModel3.setIfBusinessDate(0);
+        dataModel3.setIfScatter(1);
+        dataModel3.setIfSearchColumn(1);
+        dataModel3.setIfShowColumn(1);
+        dataModel3.setIfModifyable(1);
+        dataModels.add(dataModel3);
 
         TotalCodeCreator totalCodeCreator = new TotalCodeCreator();
-        totalCodeCreator.create(dataModels, "bangnd", "cbs", "prodInterest");
+        totalCodeCreator.create(dataModels, "bangnd", "util", "workFlow");
     }
 }

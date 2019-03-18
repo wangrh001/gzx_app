@@ -1,7 +1,7 @@
 package com.bangnd.batch.form;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
+import java.util.Date;
 
 public class JobSearchForm {
     @Column

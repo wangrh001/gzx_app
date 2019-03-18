@@ -5,7 +5,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>MES平台</title>
+    <title>EDOP</title>
     <!--Bootstrap-->
     <link th:href="@{Bootstrap/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
     <!-- Font Awesome -->
@@ -18,10 +18,10 @@
     <link th:href="@{Bootstrap/ace/css/ace-skins.min.css}" rel="stylesheet"/>
     <link th:href="@{Bootstrap/toastr/toastr.min.css}" rel="stylesheet"/>
 
+    <script th:src="@{Bootstrap/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{Bootstrap/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{Bootstrap/sidebar-menu/sidebar-menu.js}"></script>
     <script th:src="@{Bootstrap/bootstrap/js/bootstrap-tab.js}"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
     <!--[if lt IE 9]>
     <script src="/Scripts/html5shiv.js"></script>
     <script src="/Scripts/respond.min.js"></script>
@@ -43,7 +43,6 @@
 <body>
 
 <div class="navbar navbar-default" id="navbar">
-
     <ul class="navbar-header pull-left">
         <a class="fa fa-list-ul menu-toggler" id="menu-toggler" href="#">
             <i class="icon-reorder" style="font-size:20px;margin-left:-18px;margin-top:8px;display:flex;"></i>
@@ -60,11 +59,7 @@
             <li class="light-blue" style="height:50px;">
                 <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                     <img class="nav-user-photo" th:src="@{Bootstrap/ace/avatars/avatar2.png}" alt="Admin's Photo"/>
-                    <span class="user-info">
-                            <small>欢迎光临,</small>
-                            1310177
-                        </span>
-
+                    <span class="user-info"><small>欢迎光临,</small>1310177</span>
                     <i class="icon-caret-down"></i>
                 </a>
                 <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
@@ -84,9 +79,8 @@
                 <i class="icon-double-angle-left" data-icon1="icon-double-angle-left"
                    data-icon2="icon-double-angle-right"></i>
             </div>
-            <ul class="nav nav-list" id="menu">
-                <li></li>
-            </ul>
+            <ul class="nav nav-list" id="menu"></ul>
+            <input type="hidden" th:value="${menus}" id="menus"/>
         </div>
         <div class="main-content">
             <div class="page-content">
@@ -97,7 +91,7 @@
                         </ul>
                         <div class="tab-content" style="height:1000px">
                             <div role="tabpanel" class="tab-pane active" id="Index" style="height:100%">
-                                <h2>欢迎进入后台管理系统</h2>
+                                <h2>欢迎进入企业数字办公平台</h2>
                             </div>
                         </div>
                     </div>
@@ -106,10 +100,23 @@
         </div>
     </div>
 </div>
+<!--<script th:inline="javascript">-->
+<!--//thymeleaf内联模式也可以获取数据-->
+<!--$(function(){-->
+<!--/*<![CDATA[*/-->
+<!--var type = [[${menus}]];-->
+<!--//alert(type);-->
+<!--console.log('-===',type,typeof type)-->
+<!--$('#menu').sidebarMenu({data:type});-->
+<!--/*]]>*/-->
+<!--})-->
+<!--</script>-->
 
 <script type="text/javascript">
     //toastr.options.positionClass = 'toast-bottom-right';
     $(function () {
+        // var menustr=document.getElementById("menus").valueOf().value
+        // var men = JSON.stringify(menustr.value)
         $('#menu').sidebarMenu({
             data: [
                 {
@@ -122,7 +129,20 @@
                         text: '订单管理',
                         // icon: 'icon-glass',
                         url: '/order'
-                    }]
+                    },
+                        {
+                            id: '12',
+                            text: '产品管理',
+                            // icon: 'icon-glass',
+                            url: '/cbs/product'
+                        },
+                        {
+                            id: '13',
+                            text: '产品利息',
+                            // icon: 'icon-glass',
+                            url: '/cbs/prodInterest'
+                        }
+                    ]
                 },
                 {
                     id: '2',
@@ -130,39 +150,212 @@
                     // icon: 'icon-cog',
                     url: '',
                     menus: [{
-                        id: '21',
-                        text: '雇员管理',
+                        id: '20',
+                        text: '部门管理',
                         // icon: 'icon-glass',
-                        url: ''
-                    }]
+                        url: '/hr/dept'
+                    },
+                        {
+                            id: '21',
+                            text: '岗位管理',
+                            // icon: 'icon-glass',
+                            url: '/hr/position'
+                        },{
+                            id: '22',
+                            text: '工作管理',
+                            // icon: 'icon-glass',
+                            url: '/hr/action'
+                        },
+                        {
+                            id: '23',
+                            text: '雇员管理',
+                            // icon: 'icon-glass',
+                            url: '/hr/employee'
+                        },
+                        {
+                            id: '24',
+                            text: '考勤管理',
+                            // icon: 'icon-glass',
+                            url: '/hr/attendance'
+                        },
+                        {
+                            id: '25',
+                            text: '薪酬管理',
+                            // icon: 'icon-glass',
+                            url: '/hr/salary'
+                        },
+                        {
+                            id: '26',
+                            text: '培训管理',
+                            // icon: 'icon-glass',
+                            url: '/hr/curriculum'
+                        }
+                    ]
                 },
                 {
-                    id: '1',
-                    text: '销售系统',
+                    id: '3',
+                    text: 'CRM',
                     // icon: 'icon-cog',
                     url: '',
                     menus: [{
-                        id: '2',
-                        text: '销售人员管理',
+                        id: '31',
+                        text: '客户管理',
                         // icon: 'icon-glass',
-                        url: ''
+                        url: '/crm/cust'
                     }]
                 },
                 {
-                    id: '1',
+                    id: '4',
                     text: '财务系统',
                     // icon: 'icon-cog',
                     url: '',
                     menus: [{
-                        id: '2',
+                        id: '41',
                         text: '收付费管理',
                         // icon: 'icon-glass',
+                        url: '/finance/payment'
+                    },
+                        {
+                            id: '42',
+                            text: '记账规则管理',
+                            // icon: 'icon-glass',
+                            url: '/finance/accountingRule'
+                        },
+                        {
+                            id: '44',
+                            text: '账户管理',
+                            // icon: 'icon-glass',
+                            url: '/finance/account'
+                        }
+                    ]
+                },
+                {
+                    id: '5',
+                    text: '销售系统',
+                    // icon: 'icon-cog',
+                    url: '',
+                    menus: [
+                        {
+                            id: '51',
+                            text: '销售人员管理',
+                            // icon: 'icon-glass',
+                            url: '/sales/agent'
+                        },
+                        {
+                            id: '52',
+                            text: '提成比例管理',
+                            // icon: 'icon-glass',
+                            url: '/sales/commission'
+                        },
+                        {
+                            id: '54',
+                            text: '提成管理',
+                            // icon: 'icon-glass',
+                            url: '/sales/performanceCommission'
+                        }
+                    ]
+                },
+                {
+                    id: '6',
+                    text: '客服系统',
+                    // icon: 'icon-cog',
+                    url: '',
+                    menus: [{
+                        id: '61',
+                        text: '客户服务',
+                        // icon: 'icon-glass',
+                        url: '/cs/workOrder'
+                    },
+                        {
+                            id: '62',
+                            text: '知识库管理',
+                            // icon: 'icon-glass',
+                            url: '/cs/knowledge'
+                        }
+                    ]
+                },
+                {
+                    id: '7',
+                    text: '企业管理系统',
+                    // icon: 'icon-cog',
+                    url: '',
+                    menus: [{
+                        id: '71',
+                        text: '经营测算',
+                        // icon: 'icon-glass',
                         url: ''
-                    }]
+                    },
+                        {
+                            id: '72',
+                            text: '报表查看',
+                            // icon: 'icon-glass',
+                            url: ''
+                        },
+                        {
+                            id: '73',
+                            text: '任务管理',
+                            // icon: 'icon-glass',
+                            url: '/mis/task'
+                        }
+                    ]
+                },
+                {
+                    id: '8',
+                    text: 'IT管理系统',
+                    // icon: 'icon-cog',
+                    url: '',
+                    menus: [{
+                        id: '81',
+                        text: '批处理管理',
+                        // icon: 'icon-glass',
+                        url: '/batch/job'
+                    },
+                        {
+                            id: '82',
+                            text: '批处理任务管理',
+                            // icon: 'icon-glass',
+                            url: '/batch/BTask'
+                        },
+                        {
+                            id: '83',
+                            text: '用户管理',
+                            // icon: 'icon-glass',
+                            url: '/ums/user'
+                        },
+                        {
+                            id: '84',
+                            text: '角色管理',
+                            // icon: 'icon-glass',
+                            url: '/ums/role'
+                        },
+                        {
+                            id: '85',
+                            text: '用户角色管理',
+                            // icon: 'icon-glass',
+                            url: '/ums/userRole'
+                        },
+                        {
+                            id: '86',
+                            text: '资源管理',
+                            // icon: 'icon-glass',
+                            url: '/ums/resource'
+                        },
+                        {
+                            id: '87',
+                            text: '角色资源管理',
+                            // icon: 'icon-glass',
+                            url: '/ums/roleResource'
+                        },
+                        {
+                            id: '88',
+                            text: '工作流配置',
+                            // icon: 'icon-glass',
+                            url: '/util/workFlow'
+                        }
+                    ]
                 }
             ]
         });
-
         $("#menu-toggler").click(function () {
             var children = $("#sidebar-collapse").children("i");
             if ($(children).hasClass("icon-double-angle-left")) {

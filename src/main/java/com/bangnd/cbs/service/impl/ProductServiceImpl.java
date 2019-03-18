@@ -1,13 +1,14 @@
 package com.bangnd.cbs.service.impl;
 
 import com.bangnd.cbs.entity.Product;
-import com.bangnd.cbs.service.*;
 import com.bangnd.cbs.form.ProductSearchForm;
-
-import java.util.*;
-
 import com.bangnd.cbs.repository.ProductRepository;
+import com.bangnd.cbs.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public List<Product> getProductList(ProductSearchForm productSearchForm) {
+    public Page<Product> getProductList(Integer pageNum, int size, ProductSearchForm productSearchForm) {
         Specification specification = new Specification<Product>() {
             @Override
             public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
@@ -57,7 +58,11 @@ public class ProductServiceImpl implements ProductService {
                 return cb.and(predicates.toArray(p));
             }
         };
-        return productRepository.findAll(specification);
+
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest((pageNum - 1), size, sort);
+        Page<Product> qyPage = this.productRepository.findAll(specification, pageable);
+        return qyPage;
     }
 
     @Override
@@ -83,5 +88,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getInterestProduct(){
         return productRepository.findAllByBusiType();
+    }
+
+    @Override
+    public List<Product> getAllProduct() {
+        return productRepository.findAllByState();
     }
 }

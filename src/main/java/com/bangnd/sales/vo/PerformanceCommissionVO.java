@@ -1,7 +1,6 @@
 package com.bangnd.sales.vo;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
 import java.math.BigDecimal;
 
 public class PerformanceCommissionVO {
@@ -17,11 +16,13 @@ public class PerformanceCommissionVO {
     }
 
     @Column
-    public long agentId;
-    @Column
     public String month;
     @Column
     public String agentName;
+    @Column
+    public String employeeName;
+    @Column
+    public long orderProdId;
     @Column
     public BigDecimal commission;
     @Column
@@ -29,16 +30,20 @@ public class PerformanceCommissionVO {
     @Column
     public String processName;
 
-    public long getAgentId() {
-        return agentId;
-    }
-
     public String getMonth() {
         return month;
     }
 
     public String getAgentName() {
         return agentName;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public long getOrderProdId() {
+        return orderProdId;
     }
 
     public BigDecimal getCommission() {
@@ -53,16 +58,20 @@ public class PerformanceCommissionVO {
         return processName;
     }
 
-    public void setAgentId(long agentId) {
-        this.agentId = agentId;
-    }
-
     public void setMonth(String month) {
         this.month = month;
     }
 
     public void setAgentName(String agentName) {
         this.agentName = agentName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public void setOrderProdId(long orderProdId) {
+        this.orderProdId = orderProdId;
     }
 
     public void setCommission(BigDecimal commission) {

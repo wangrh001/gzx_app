@@ -1,7 +1,6 @@
 package com.bangnd.sales.entity;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -42,7 +41,18 @@ public class Agent {
     @Column
     public String userName;
     @Column
+    public long userId;
+
+    @Column
     public int jobYears;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public String getName() {
         return name;

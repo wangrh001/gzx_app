@@ -21,8 +21,7 @@ public class Commission {
 
     @Column
     public int businessType;
-    @Column
-    public int productType;
+
     @Column
     public int productId;
     @Column
@@ -46,10 +45,6 @@ public class Commission {
 
     public int getBusinessType() {
         return businessType;
-    }
-
-    public int getProductType() {
-        return productType;
     }
 
     public int getProductId() {
@@ -94,10 +89,6 @@ public class Commission {
 
     public void setBusinessType(int businessType) {
         this.businessType = businessType;
-    }
-
-    public void setProductType(int productType) {
-        this.productType = productType;
     }
 
     public void setProductId(int productId) {

@@ -1,9 +1,8 @@
 package com.bangnd.util.security;
 
-import java.security.MessageDigest;
-
 import sun.misc.BASE64Encoder;
 
+import java.security.MessageDigest;
 import java.util.List;
 
 public class MD5Util {

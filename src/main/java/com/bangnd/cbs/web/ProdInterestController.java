@@ -1,22 +1,22 @@
 package com.bangnd.cbs.web;
 
+import com.bangnd.cbs.entity.ProdInterest;
+import com.bangnd.cbs.form.ProdInterestSearchForm;
+import com.bangnd.cbs.service.ProdInterestService;
+import com.bangnd.cbs.service.ProductService;
+import com.bangnd.cbs.vo.ProdInterestVO;
+import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.service.PeriodTypeService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.cbs.web.*;
-import com.bangnd.cbs.entity.*;
-import com.bangnd.cbs.form.*;
-import com.bangnd.cbs.service.*;
-import com.bangnd.cbs.service.impl.*;
-import com.bangnd.cbs.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class ProdInterestController {
@@ -28,13 +28,16 @@ public class ProdInterestController {
     ProductService productService;
 
     @RequestMapping("/cbs/prodInterest")
-    public String home(Model model, ProdInterestSearchForm prodInterestSearchForm) {
-        List<ProdInterest> prodInterests = prodInterestService.getProdInterestList(prodInterestSearchForm);
+    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, ProdInterestSearchForm prodInterestSearchForm) {
+        if(pageNum==null){
+            pageNum="1";
+        }
+        Page<ProdInterest> pages = prodInterestService.getProdInterestList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,prodInterestSearchForm);
         model.addAttribute("periodTypes", periodTypeService.getAll());
         model.addAttribute("products",productService.getInterestProduct());
         List<ProdInterestVO> prodInterestVOs = new ArrayList<>();
-        if (prodInterests != null) {
-            for (ProdInterest prodInterest : prodInterests) {
+        if (pages != null) {
+            for (ProdInterest prodInterest : pages) {
                 ProdInterestVO prodInterestVO = new ProdInterestVO();
                 prodInterestVO.setId(prodInterest.getId());
                 prodInterestVO.setInterest(prodInterest.getInterest());
@@ -43,6 +46,13 @@ public class ProdInterestController {
                 prodInterestVOs.add(prodInterestVO);
             }
         }
+
+        int pagenum=Integer.valueOf(pageNum);
+        model.addAttribute("page",pages);
+        model.addAttribute("pageNum",pagenum);
+        model.addAttribute("totalPages",pages.getTotalPages());
+        System.out.println("totalPages="+pages.getTotalPages());
+        model.addAttribute("totalElements",pages.getTotalElements());
         model.addAttribute("prodInterestVOs", prodInterestVOs);
         return "/cbs/prodInterestList";
     }

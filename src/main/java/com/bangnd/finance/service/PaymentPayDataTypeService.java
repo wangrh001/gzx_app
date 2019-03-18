@@ -1,6 +1,6 @@
 package com.bangnd.finance.service;
 
-import com.bangnd.finance.entity.*;
+import com.bangnd.finance.entity.PaymentPayDataType;
 
 import java.util.List;
 

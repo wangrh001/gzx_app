@@ -1,7 +1,6 @@
 package com.bangnd.cs.vo;
-import javax.persistence.*;
-import java.util.*;
-import java.math.BigDecimal;
+
+import javax.persistence.Column;
 public class WorkOrderVO {@Column
 public long id;public long getId() { return id; }public void setId(long id) { this.id = id; }@Column 
 public String csName;@Column 

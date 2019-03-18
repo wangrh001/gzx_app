@@ -3,11 +3,9 @@ package com.bangnd.cbs.repository;
 import com.bangnd.cbs.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor {
@@ -19,4 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     @Query("select p from Product p where p.busiType in (3,4) and p.state<>100")
     List<Product> findAllByBusiType();
+
+    @Query("select p from Product p where p.state<>100")
+    List<Product> findAllByState();
 }

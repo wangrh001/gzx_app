@@ -1,6 +1,6 @@
 package com.bangnd.sales.service;
 
-import com.bangnd.sales.entity.*;
+import com.bangnd.sales.entity.CommissionChannelType;
 
 import java.util.List;
 

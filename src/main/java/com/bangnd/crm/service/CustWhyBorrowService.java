@@ -1,6 +1,6 @@
 package com.bangnd.crm.service;
 
-import com.bangnd.crm.entity.*;
+import com.bangnd.crm.entity.CustWhyBorrow;
 
 import java.util.List;
 

@@ -28,7 +28,7 @@ public class ShowListVOCreator {
             voCode.append("import java.math.BigDecimal;\n");
             voCode.append("public class " + UpEntityName + "VO {");
             voCode.append("@Column\n");
-            voCode.append("public long id;");
+            voCode.append("private long id;");
             voCode.append("public long getId() { return id; }");
             voCode.append("public void setId(long id) { this.id = id; }");
 

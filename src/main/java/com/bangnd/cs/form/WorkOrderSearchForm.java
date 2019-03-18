@@ -1,6 +1,6 @@
 package com.bangnd.cs.form;
-import javax.persistence.*;
-import java.util.*;
+
+import javax.persistence.Column;
 public class WorkOrderSearchForm {@Column 
 public String csName;@Column 
 public String cstype;@Column 

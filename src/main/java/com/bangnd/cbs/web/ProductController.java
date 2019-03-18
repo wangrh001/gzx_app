@@ -1,23 +1,24 @@
 package com.bangnd.cbs.web;
 
-import com.bangnd.util.entity.BusinessType;
+import com.bangnd.cbs.entity.Product;
+import com.bangnd.cbs.form.ProductSearchForm;
+import com.bangnd.cbs.service.ProductBankIdService;
+import com.bangnd.cbs.service.ProductProductStateService;
+import com.bangnd.cbs.service.ProductProductTypeService;
+import com.bangnd.cbs.service.ProductService;
+import com.bangnd.cbs.vo.ProductVO;
+import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.service.BusinessTypeService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.cbs.web.*;
-import com.bangnd.cbs.entity.*;
-import com.bangnd.cbs.form.*;
-import com.bangnd.cbs.service.*;
-import com.bangnd.cbs.service.impl.*;
-import com.bangnd.cbs.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class ProductController {
@@ -34,21 +35,31 @@ public class ProductController {
     BusinessTypeService businessTypeService;
 
     @RequestMapping("/cbs/product")
-    public String home(Model model, ProductSearchForm productSearchForm) {
-        List<Product> products = productService.getProductList(productSearchForm);
+    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, ProductSearchForm productSearchForm) {
+        if(pageNum==null){
+            pageNum="1";
+        }
+        Page<Product> pages = productService.getProductList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,productSearchForm);
         model.addAttribute("bankIds", productBankIdService.getAll());
         model.addAttribute("productTypes", productProductTypeService.getAll());
         model.addAttribute("productStates", productProductStateService.getAll());
         model.addAttribute("busiTypes", businessTypeService.getAll());
         List<ProductVO> productVOs = new ArrayList<>();
-        if (products != null) {
-            for (Product product : products) {
+        if (pages != null) {
+            for (Product product : pages) {
                 ProductVO productVO = new ProductVO();
                 productVO.setId(product.getId());
                 productVO.setProductName(product.getProductName());
                 productVOs.add(productVO);
             }
         }
+
+        int pagenum=Integer.valueOf(pageNum);
+        model.addAttribute("page",pages);
+        model.addAttribute("pageNum",pagenum);
+        model.addAttribute("totalPages",pages.getTotalPages());
+        System.out.println("totalPages="+pages.getTotalPages());
+        model.addAttribute("totalElements",pages.getTotalElements());
         model.addAttribute("productVOs", productVOs);
         return "/cbs/productList";
     }

@@ -37,6 +37,10 @@ public class Payment {
     public int payType;
     @Column
     public long orderId;
+
+    @Column(nullable = true)
+    public long orderProductId;
+
     @Column
     public Date payDate;
     @Column
@@ -215,5 +219,13 @@ public class Payment {
 
     public void setOtherBankId(long otherBankId) {
         this.otherBankId = otherBankId;
+    }
+
+    public long getOrderProductId() {
+        return orderProductId;
+    }
+
+    public void setOrderProductId(long orderProductId) {
+        this.orderProductId = orderProductId;
     }
 }

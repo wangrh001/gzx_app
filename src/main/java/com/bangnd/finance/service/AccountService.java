@@ -2,11 +2,10 @@ package com.bangnd.finance.service;
 
 import com.bangnd.finance.entity.Account;
 import com.bangnd.finance.form.AccountSearchForm;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface AccountService {
-    public List<Account> getAccountList(AccountSearchForm accountSearchForm);
+    public Page<Account> getAccountList(Integer pageNum, int size, AccountSearchForm accountSearchForm);
 
     public void save(Account account);
 

@@ -1,21 +1,22 @@
 package com.bangnd.hr.web;
 
+import com.bangnd.hr.entity.Curriculum;
+import com.bangnd.hr.form.CurriculumSearchForm;
+import com.bangnd.hr.service.CurriculumPosIdService;
+import com.bangnd.hr.service.CurriculumService;
+import com.bangnd.hr.service.CurriculumTypeService;
+import com.bangnd.hr.vo.CurriculumVO;
+import com.bangnd.util.cfg.ConstantCfg;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.hr.web.*;
-import com.bangnd.hr.entity.*;
-import com.bangnd.hr.form.*;
-import com.bangnd.hr.service.*;
-import com.bangnd.hr.service.impl.*;
-import com.bangnd.hr.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class CurriculumController {
@@ -27,13 +28,16 @@ public class CurriculumController {
     CurriculumPosIdService curriculumPosIdService;
 
     @RequestMapping("/hr/curriculum")
-    public String home(Model model, CurriculumSearchForm curriculumSearchForm) {
-        List<Curriculum> curriculums = curriculumService.getCurriculumList(curriculumSearchForm);
+    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, CurriculumSearchForm curriculumSearchForm) {
+        if(pageNum==null){
+            pageNum="1";
+        }
+        Page<Curriculum> pages =  curriculumService.getCurriculumList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,curriculumSearchForm);
         model.addAttribute("types", curriculumTypeService.getAll());
         model.addAttribute("posIds", curriculumPosIdService.getAll());
         List<CurriculumVO> curriculumVOs = new ArrayList<>();
-        if (curriculums != null) {
-            for (Curriculum curriculum : curriculums) {
+        if (pages != null) {
+            for (Curriculum curriculum : pages) {
                 CurriculumVO curriculumVO = new CurriculumVO();
                 curriculumVO.setId(curriculum.getId());
                 curriculumVO.setName(curriculum.getName());
@@ -43,6 +47,13 @@ public class CurriculumController {
                 curriculumVOs.add(curriculumVO);
             }
         }
+
+        int pagenum=Integer.valueOf(pageNum);
+        model.addAttribute("page",pages);
+        model.addAttribute("pageNum",pagenum);
+        model.addAttribute("totalPages",pages.getTotalPages());
+        System.out.println("totalPages="+pages.getTotalPages());
+        model.addAttribute("totalElements",pages.getTotalElements());
         model.addAttribute("curriculumVOs", curriculumVOs);
         return "/hr/curriculumList";
     }

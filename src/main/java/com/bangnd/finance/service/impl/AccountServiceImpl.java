@@ -1,13 +1,14 @@
 package com.bangnd.finance.service.impl;
 
 import com.bangnd.finance.entity.Account;
-import com.bangnd.finance.service.*;
 import com.bangnd.finance.form.AccountSearchForm;
-
-import java.util.*;
-
 import com.bangnd.finance.repository.AccountRepository;
+import com.bangnd.finance.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public List<Account> getAccountList(AccountSearchForm accountSearchForm) {
+    public Page<Account> getAccountList(Integer pageNum, int size, AccountSearchForm accountSearchForm) {
         Specification specification = new Specification<Account>() {
             @Override
             public Predicate toPredicate(Root<Account> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
@@ -43,7 +44,10 @@ public class AccountServiceImpl implements AccountService {
                 return cb.and(predicates.toArray(p));
             }
         };
-        return accountRepository.findAll(specification);
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest((pageNum - 1), size, sort);
+        Page<Account> qyPage = this.accountRepository.findAll(specification, pageable);
+        return qyPage;
     }
 
     @Override

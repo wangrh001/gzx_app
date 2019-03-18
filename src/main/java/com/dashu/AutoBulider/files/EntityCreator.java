@@ -23,7 +23,7 @@ public class EntityCreator {
             javaCode.append("public class " + UpEntityName + "{");
             javaCode.append("@Id");
             javaCode.append("@GeneratedValue ");
-            javaCode.append("public long id;");
+            javaCode.append("private long id;");
             javaCode.append("public long getId() { return id; }");
             javaCode.append("public void setId(long id) { this.id = id; }");
 
@@ -45,19 +45,19 @@ public class EntityCreator {
             javaCode.append("@Column \n");
             switch (dataModel.getColumnType()) {
                 case ConstantCfg.COLUMN_TYPE_INT:
-                    javaCode.append("public int ");
+                    javaCode.append("private int ");
                     break;
                 case ConstantCfg.COLUMN_TYPE_LONG:
-                    javaCode.append("public long ");
+                    javaCode.append("private long ");
                     break;
                 case ConstantCfg.COLUMN_TYPE_STRING:
-                    javaCode.append("public String ");
+                    javaCode.append("private String ");
                     break;
                 case ConstantCfg.COLUMN_TYPE_DATE:
-                    javaCode.append("public Date ");
+                    javaCode.append("private Date ");
                     break;
                 case ConstantCfg.COLUMN_TYPE_BIGDECIMAL:
-                    javaCode.append("public BigDecimal ");
+                    javaCode.append("private BigDecimal ");
                     break;
             }
             javaCode.append(dataModel.getColumnNameEn() + ";");

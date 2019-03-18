@@ -4,32 +4,11 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "t_user_role")
+@Table(name = "t_ums_userRole")
 public class UserRole {
     @Id
     @GeneratedValue
     private long id;
-
-    @Column
-    private long userId;
-
-    @Column
-    private long roleId;
-
-    @Column
-    private int state;
-
-    @Column
-    private long creator;
-
-    @Column
-    private Date createTime;
-
-    @Column
-    private long updator;
-
-    @Column
-    private Date updateTime;
 
     public long getId() {
         return id;
@@ -39,21 +18,37 @@ public class UserRole {
         this.id = id;
     }
 
+    @Column
+    private long roleId;
+    @Column
+    private long userId;
+
+    public long getRoleId() {
+        return roleId;
+    }
+
     public long getUserId() {
         return userId;
+    }
+
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
     }
 
     public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(long roleId) {
-        this.roleId = roleId;
-    }
+    @Column
+    private int state;
+    @Column
+    private long creator;
+    @Column
+    private Date createTime;
+    @Column
+    private long updator;
+    @Column
+    private Date updateTime;
 
     public int getState() {
         return state;

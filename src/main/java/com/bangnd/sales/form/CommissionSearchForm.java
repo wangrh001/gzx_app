@@ -1,7 +1,6 @@
 package com.bangnd.sales.form;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
 
 public class CommissionSearchForm {
     @Column

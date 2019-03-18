@@ -1,13 +1,12 @@
 package com.bangnd.hr.service.impl;
 
-import com.bangnd.hr.entity.*;
-import com.bangnd.hr.service.*;
-import com.bangnd.hr.repository.*;
-
-import java.util.List;
-
+import com.bangnd.hr.entity.EmployeeManageGrade;
+import com.bangnd.hr.repository.EmployeeManageGradeRepository;
+import com.bangnd.hr.service.EmployeeManageGradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EmployeeManageGradeServiceImpl implements EmployeeManageGradeService {

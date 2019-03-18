@@ -2,11 +2,10 @@ package com.bangnd.sales.service;
 
 import com.bangnd.sales.entity.PerformanceCommission;
 import com.bangnd.sales.form.PerformanceCommissionSearchForm;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface PerformanceCommissionService {
-    public List<PerformanceCommission> getPerformanceCommissionList(PerformanceCommissionSearchForm performanceCommissionSearchForm);
+    public Page<PerformanceCommission> getPerformanceCommissionList(Integer pageNum, int size, PerformanceCommissionSearchForm performanceCommissionSearchForm);
 
     public void save(PerformanceCommission performanceCommission);
 

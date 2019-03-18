@@ -1,13 +1,12 @@
 package com.bangnd.batch.service.impl;
 
-import com.bangnd.batch.entity.*;
-import com.bangnd.batch.service.*;
-import com.bangnd.batch.repository.*;
-
-import java.util.List;
-
+import com.bangnd.batch.entity.BTaskResult;
+import com.bangnd.batch.repository.BTaskResultRepository;
+import com.bangnd.batch.service.BTaskResultService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class BTaskResultServiceImpl implements BTaskResultService {

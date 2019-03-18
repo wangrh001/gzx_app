@@ -1,13 +1,14 @@
 package com.bangnd.sales.service.impl;
 
 import com.bangnd.sales.entity.PerformanceCommission;
-import com.bangnd.sales.service.*;
 import com.bangnd.sales.form.PerformanceCommissionSearchForm;
-
-import java.util.*;
-
 import com.bangnd.sales.repository.PerformanceCommissionRepository;
+import com.bangnd.sales.service.PerformanceCommissionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PerformanceCommissionServiceImpl implements PerformanceCommissionService {
     @Autowired
     private PerformanceCommissionRepository performanceCommissionRepository;
 
-    public List<PerformanceCommission> getPerformanceCommissionList(PerformanceCommissionSearchForm performanceCommissionSearchForm) {
+    public Page<PerformanceCommission> getPerformanceCommissionList(Integer pageNum, int size, PerformanceCommissionSearchForm performanceCommissionSearchForm) {
         Specification specification = new Specification<PerformanceCommission>() {
             @Override
             public Predicate toPredicate(Root<PerformanceCommission> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
@@ -33,6 +34,9 @@ public class PerformanceCommissionServiceImpl implements PerformanceCommissionSe
                 }
                 if (performanceCommissionSearchForm.getAgentName() != null && !"".equals(performanceCommissionSearchForm.getAgentName())) {
                     predicates.add(cb.like(root.get("agentName").as(String.class), "%" + performanceCommissionSearchForm.getAgentName() + "%"));
+                }
+                if (performanceCommissionSearchForm.getEmployeeName() != null && !"".equals(performanceCommissionSearchForm.getEmployeeName())) {
+                    predicates.add(cb.like(root.get("employeeName").as(String.class), "%" + performanceCommissionSearchForm.getEmployeeName() + "%"));
                 }
                 if (performanceCommissionSearchForm.getProcess() != null && !"".equals(performanceCommissionSearchForm.getProcess())) {
                     if ("0".equals(performanceCommissionSearchForm.getProcess())) {
@@ -46,7 +50,10 @@ public class PerformanceCommissionServiceImpl implements PerformanceCommissionSe
                 return cb.and(predicates.toArray(p));
             }
         };
-        return performanceCommissionRepository.findAll(specification);
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest((pageNum - 1), size, sort);
+        Page<PerformanceCommission> qyPage = this.performanceCommissionRepository.findAll(specification, pageable);
+        return qyPage;
     }
 
     @Override

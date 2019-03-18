@@ -56,9 +56,13 @@
             </tr>
             <tr>
                 <td>支付日期开始</td>
-                <td><input id="payDateStart" name="payDateStart" th:value="${payDateStart ne null}?${#dates.format(payDateStart,'MM/dd/yyyy')}" value="" class="form-control"/></td>
+                <td><input id="payDateStart" name="payDateStart"
+                           th:value="${payDateStart ne null}?${#dates.format(payDateStart,'MM/dd/yyyy')}" value=""
+                           class="form-control"/></td>
                 <td>支付日期结束</td>
-                <td><input id="payDateEnd" name="payDateEnd" th:value="${payDateEnd ne null}?${#dates.format(payDateEnd,'MM/dd/yyyy')}" value="" class="form-control"/></td>
+                <td><input id="payDateEnd" name="payDateEnd"
+                           th:value="${payDateEnd ne null}?${#dates.format(payDateEnd,'MM/dd/yyyy')}" value=""
+                           class="form-control"/></td>
             </tr>
             <tr>
                 <td><input type="submit" value="Search" class="btn btn-info"/></td>
@@ -90,6 +94,20 @@
             <td><a th:href="@{/finance/payment/delete(id=${paymentVO.id})}">删除</a></td>
         </tr>
         </tbody>
+    </table>
+    <table>
+        <tr>
+            <td><a th:href="@{/finance/payment(pageNum=1)}">首页</a></td>
+            <td th:switch="${pageNum}">
+                <p th:case="1"><a th:href="@{/finance/payment(pageNum=1)}">上一页</a></p>
+                <p th:case="*"><a th:href="@{/finance/payment(pageNum=${pageNum-1})}">上一页</a></p>
+            </td>
+            <td th:switch="${pageNum}">
+                <p th:case="${totalPages}"><a th:href="@{/finance/payment(pageNum=${totalPages})}">下一页</a></p>
+                <p th:case="*"><a th:href="@{/finance/payment(pageNum=${pageNum+1})}">下一页</a></p>
+            </td>
+            <td><a th:href="@{/finance/payment(pageNum=${totalPages})}">尾页</a></td>
+        </tr>
     </table>
 </div>
 <div class="form-group">

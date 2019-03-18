@@ -1,6 +1,6 @@
 package com.bangnd.sales.service;
 
-import com.bangnd.sales.entity.*;
+import com.bangnd.sales.entity.TelSalesResult;
 
 import java.util.List;
 

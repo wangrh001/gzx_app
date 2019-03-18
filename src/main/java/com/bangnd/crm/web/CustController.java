@@ -1,21 +1,18 @@
 package com.bangnd.crm.web;
 
+import com.bangnd.crm.entity.Cust;
+import com.bangnd.crm.form.CustSearchForm;
+import com.bangnd.crm.service.*;
+import com.bangnd.crm.vo.CustVO;
+import com.bangnd.util.cfg.ConstantCfg;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.crm.web.*;
-import com.bangnd.crm.entity.*;
-import com.bangnd.crm.form.*;
-import com.bangnd.crm.service.*;
-import com.bangnd.crm.service.impl.*;
-import com.bangnd.crm.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class CustController {

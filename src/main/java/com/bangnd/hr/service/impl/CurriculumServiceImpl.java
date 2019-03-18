@@ -1,13 +1,14 @@
 package com.bangnd.hr.service.impl;
 
 import com.bangnd.hr.entity.Curriculum;
-import com.bangnd.hr.service.*;
 import com.bangnd.hr.form.CurriculumSearchForm;
-
-import java.util.*;
-
 import com.bangnd.hr.repository.CurriculumRepository;
+import com.bangnd.hr.service.CurriculumService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CurriculumServiceImpl implements CurriculumService {
     @Autowired
     private CurriculumRepository curriculumRepository;
 
-    public List<Curriculum> getCurriculumList(CurriculumSearchForm curriculumSearchForm) {
+    public Page<Curriculum> getCurriculumList(Integer pageNum, int size, CurriculumSearchForm curriculumSearchForm) {
         Specification specification = new Specification<Curriculum>() {
             @Override
             public Predicate toPredicate(Root<Curriculum> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
@@ -53,7 +54,11 @@ public class CurriculumServiceImpl implements CurriculumService {
                 return cb.and(predicates.toArray(p));
             }
         };
-        return curriculumRepository.findAll(specification);
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest((pageNum - 1), size, sort);
+        Page<Curriculum> qyPage = this.curriculumRepository.findAll(specification, pageable);
+        return qyPage;
+
     }
 
     @Override

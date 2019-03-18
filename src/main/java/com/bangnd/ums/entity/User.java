@@ -8,32 +8,7 @@ import java.util.Date;
 public class User {
     @Id
     @GeneratedValue
-    private long id;
-
-    @Column
-    private String userName;
-
-    @Column
-    private String password;
-
-    @Column
-    private int state;
-
-    //最后一次登录时间
-    @Column
-    private Date lastLogInTime;
-
-    @Column
-    private long creator;
-
-    @Column
-    private Date createTime;
-
-    @Column
-    private long updator;
-
-    @Column
-    private Date updateTime;
+    public long id;
 
     public long getId() {
         return id;
@@ -43,21 +18,47 @@ public class User {
         this.id = id;
     }
 
+    @Column
+    public String userName;
+    @Column
+    public Date lastLogInTime;
+    @Column
+    public String password;
+
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public Date getLastLogInTime() {
+        return lastLogInTime;
     }
 
     public String getPassword() {
         return password;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setLastLogInTime(Date lastLogInTime) {
+        this.lastLogInTime = lastLogInTime;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Column
+    private int state;
+    @Column
+    private long creator;
+    @Column
+    private Date createTime;
+    @Column
+    private long updator;
+    @Column
+    private Date updateTime;
 
     public int getState() {
         return state;
@@ -65,14 +66,6 @@ public class User {
 
     public void setState(int state) {
         this.state = state;
-    }
-
-    public Date getLastLogInTime() {
-        return lastLogInTime;
-    }
-
-    public void setLastLogInTime(Date lastLogInTime) {
-        this.lastLogInTime = lastLogInTime;
     }
 
     public long getCreator() {

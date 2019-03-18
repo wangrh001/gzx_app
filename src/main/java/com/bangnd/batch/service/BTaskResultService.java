@@ -1,6 +1,6 @@
 package com.bangnd.batch.service;
 
-import com.bangnd.batch.entity.*;
+import com.bangnd.batch.entity.BTaskResult;
 
 import java.util.List;
 

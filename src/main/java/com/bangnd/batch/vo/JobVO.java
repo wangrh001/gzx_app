@@ -1,8 +1,7 @@
 package com.bangnd.batch.vo;
 
-import javax.persistence.*;
-import java.util.*;
-import java.math.BigDecimal;
+import javax.persistence.Column;
+import java.util.Date;
 
 public class JobVO {
     @Column

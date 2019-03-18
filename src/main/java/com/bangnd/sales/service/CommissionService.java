@@ -2,11 +2,10 @@ package com.bangnd.sales.service;
 
 import com.bangnd.sales.entity.Commission;
 import com.bangnd.sales.form.CommissionSearchForm;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface CommissionService {
-    public List<Commission> getCommissionList(CommissionSearchForm commissionSearchForm);
+    public Page<Commission> getCommissionList(Integer pageNum, int size, CommissionSearchForm commissionSearchForm);
 
     public void save(Commission commission);
 

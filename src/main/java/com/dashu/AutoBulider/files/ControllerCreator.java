@@ -41,7 +41,7 @@ public class ControllerCreator {
             controllerCode.append("import javax.annotation.Resource;\n");
             controllerCode.append("import org.springframework.ui.Model;\n");
             controllerCode.append("import java.util.*;\n");
-            controllerCode.append("import com.dashu.AutoBulider.config.*;\n");
+            controllerCode.append("import com.bangnd.util.cfg.*;\n");
             controllerCode.append("import com." + company + "." + sys + ".web.*;\n");
             controllerCode.append("import com." + company + "." + sys + ".entity.*;\n");
             controllerCode.append("import com." + company + "." + sys + ".form.*;\n");

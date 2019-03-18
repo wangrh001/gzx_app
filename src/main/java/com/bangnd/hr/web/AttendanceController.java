@@ -1,21 +1,21 @@
 package com.bangnd.hr.web;
 
+import com.bangnd.hr.entity.Attendance;
+import com.bangnd.hr.form.AttendanceSearchForm;
+import com.bangnd.hr.service.AttendanceAskTypeService;
+import com.bangnd.hr.service.AttendanceService;
+import com.bangnd.hr.vo.AttendanceVO;
+import com.bangnd.util.cfg.ConstantCfg;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.hr.web.*;
-import com.bangnd.hr.entity.*;
-import com.bangnd.hr.form.*;
-import com.bangnd.hr.service.*;
-import com.bangnd.hr.service.impl.*;
-import com.bangnd.hr.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class AttendanceController {
@@ -25,12 +25,15 @@ public class AttendanceController {
     AttendanceAskTypeService attendanceAskTypeService;
 
     @RequestMapping("/hr/attendance")
-    public String home(Model model, AttendanceSearchForm attendanceSearchForm) {
-        List<Attendance> attendances = attendanceService.getAttendanceList(attendanceSearchForm);
+    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, AttendanceSearchForm attendanceSearchForm) {
+        if(pageNum==null){
+            pageNum="1";
+        }
+        Page<Attendance> pages = attendanceService.getAttendanceList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,attendanceSearchForm);
         model.addAttribute("askTypes", attendanceAskTypeService.getAll());
         List<AttendanceVO> attendanceVOs = new ArrayList<>();
-        if (attendances != null) {
-            for (Attendance attendance : attendances) {
+        if (pages != null) {
+            for (Attendance attendance : pages) {
                 AttendanceVO attendanceVO = new AttendanceVO();
                 attendanceVO.setId(attendance.getId());
                 attendanceVO.setEmpName(attendance.getEmpName());
@@ -39,6 +42,13 @@ public class AttendanceController {
                 attendanceVOs.add(attendanceVO);
             }
         }
+
+        int pagenum=Integer.valueOf(pageNum);
+        model.addAttribute("page",pages);
+        model.addAttribute("pageNum",pagenum);
+        model.addAttribute("totalPages",pages.getTotalPages());
+        System.out.println("totalPages="+pages.getTotalPages());
+        model.addAttribute("totalElements",pages.getTotalElements());
         model.addAttribute("attendanceVOs", attendanceVOs);
         return "/hr/attendanceList";
     }

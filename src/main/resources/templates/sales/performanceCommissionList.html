@@ -21,8 +21,12 @@
             <tr>
                 <td>年月</td>
                 <td><input th:field="*{month}" value="" class="form-control"/></td>
-                <td>姓名</td>
+                <td>销售姓名</td>
                 <td><input th:field="*{agentName}" value="" class="form-control"/></td>
+                <td>雇员姓名</td>
+                <td><input th:field="*{employeeName}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
                 <td>核算发放进度</td>
                 <td><select th:field="*{process}" th:remove="all-but-first">
                     <option th:each="process : ${processs}"
@@ -41,9 +45,10 @@
         <thead>
         <tr>
             <th>序号</th>
-            <th>销售ID</th>
             <th>年月</th>
-            <th>姓名</th>
+            <th>销售姓名</th>
+            <th>雇员姓名</th>
+            <th>订单产品ID</th>
             <th>提成</th>
             <th>业绩</th>
             <th>核算发放进度</th>
@@ -54,9 +59,10 @@
         <tbody>
         <tr th:each="performanceCommissionVO : ${performanceCommissionVOs}">
             <td th:text="${performanceCommissionVO.id}">1</td>
-            <td th:text="${performanceCommissionVO.agentId}">1</td>
             <td th:text="${performanceCommissionVO.month}">1</td>
             <td th:text="${performanceCommissionVO.agentName}">1</td>
+            <td th:text="${performanceCommissionVO.employeeName}">1</td>
+            <td th:text="${performanceCommissionVO.orderProdId}">1</td>
             <td th:text="${performanceCommissionVO.commission}">1</td>
             <td th:text="${performanceCommissionVO.performance}">1</td>
             <td th:text="${performanceCommissionVO.processName}">1</td>
@@ -65,6 +71,22 @@
         </tr>
         </tbody>
     </table>
+
+    <table>
+        <tr>
+            <td><a th:href="@{/sales/performanceCommission(pageNum=1)}">首页</a></td>
+            <td th:switch="${pageNum}">
+                <p th:case="1"><a th:href="@{/sales/performanceCommission(pageNum=1)}">上一页</a></p>
+                <p th:case="*"><a th:href="@{/sales/performanceCommission(pageNum=${pageNum-1})}">上一页</a></p>
+            </td>
+            <td th:switch="${pageNum}">
+                <p th:case="${totalPages}"><a th:href="@{/sales/performanceCommission(pageNum=${totalPages})}">下一页</a></p>
+                <p th:case="*"><a th:href="@{/sales/performanceCommission(pageNum=${pageNum+1})}">下一页</a></p>
+            </td>
+            <td><a th:href="@{/sales/performanceCommission(pageNum=${totalPages})}">尾页</a></td>
+        </tr>
+    </table>
+
 </div>
 <div class="form-group">
     <div class="col-sm-2 control-label">

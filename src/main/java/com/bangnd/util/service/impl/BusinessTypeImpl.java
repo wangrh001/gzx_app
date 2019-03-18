@@ -1,5 +1,6 @@
 package com.bangnd.util.service.impl;
 
+import com.bangnd.util.entity.BusinessType;
 import com.bangnd.util.repository.BusinessTypeReository;
 import com.bangnd.util.service.BusinessTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +17,10 @@ public class BusinessTypeImpl implements BusinessTypeService {
     @Override
     public List<com.bangnd.util.entity.BusinessType> getAll() {
         return businessTypeReository.findAll();
+    }
+
+    @Override
+    public BusinessType findOneById(int id) {
+        return businessTypeReository.findOne(id);
     }
 }

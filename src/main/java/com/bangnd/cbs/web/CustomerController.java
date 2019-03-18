@@ -4,6 +4,8 @@ import com.bangnd.cbs.entity.CustCredit;
 import com.bangnd.cbs.entity.CustMortgage;
 import com.bangnd.cbs.entity.Customer;
 import com.bangnd.cbs.service.*;
+import com.bangnd.ums.entity.User;
+import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.service.AreaConfService;
 import com.bangnd.util.service.StateTypeService;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Controller
@@ -30,7 +33,7 @@ public class CustomerController {
     BankService bankService;
 
     @Resource
-    OrderService orderService;
+    OrderLogService orderLogService;
 
     /**
      * 将该用户添加到该订单下
@@ -42,16 +45,19 @@ public class CustomerController {
      * @return
      */
     @RequestMapping("/customer/add")
-    public String saveCustomer(String orderId,
+    public String saveCustomer(HttpServletRequest request,
+                               String orderId,
                                Customer customer,
                                CustMortgage custMortgage,
                                CustCredit custCredit) {
+        int userId=Long.valueOf(((User)request.getSession().getAttribute("user")).getId()).intValue();
         //保存客户信息
         customer.setCustState(1);
         customer.setCreateTime(new Date());
         customer.setCreator(0);
         customer.setOrderId(new Long(orderId).longValue());
         customerService.save(customer);
+        orderLogService.recordLog(new Long(orderId).longValue(),userId,ConstantCfg.ORDER_ACTION_3);
         //保存抵押物信息
         custMortgage.setCreateTime(new Date());
         custMortgage.setCreator(0);

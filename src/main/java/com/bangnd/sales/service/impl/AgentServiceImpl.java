@@ -1,13 +1,14 @@
 package com.bangnd.sales.service.impl;
 
 import com.bangnd.sales.entity.Agent;
-import com.bangnd.sales.service.*;
 import com.bangnd.sales.form.AgentSearchForm;
-
-import java.util.*;
-
 import com.bangnd.sales.repository.AgentRepository;
+import com.bangnd.sales.service.AgentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,16 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class AgentServiceImpl implements AgentService {
     @Autowired
     private AgentRepository agentRepository;
 
-    public List<Agent> getAgentList(AgentSearchForm agentSearchForm) {
+    public Page<Agent> getAgentList(Integer pageNum, int size, AgentSearchForm agentSearchForm) {
         Specification specification = new Specification<Agent>() {
             @Override
             public Predicate toPredicate(Root<Agent> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
@@ -61,11 +63,15 @@ public class AgentServiceImpl implements AgentService {
                     predicates.add(cb.like(root.get("jobYears").as(String.class), "%" + agentSearchForm.getJobYears() + "%"));
                 }
                 predicates.add(cb.notEqual(root.get("state").as(Integer.class), new Integer(100)));
+                predicates.add(cb.notEqual(root.get("id").as(Integer.class), new Integer(0)));
                 Predicate[] p = new Predicate[predicates.size()];
                 return cb.and(predicates.toArray(p));
             }
         };
-        return agentRepository.findAll(specification);
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest((pageNum - 1), size, sort);
+        Page<Agent> qyPage = this.agentRepository.findAll(specification, pageable);
+        return qyPage;
     }
 
     @Override
@@ -81,5 +87,24 @@ public class AgentServiceImpl implements AgentService {
     @Override
     public void merge(Agent agent) {
         agentRepository.save(agent);
+    }
+
+    @Override
+    public List<Agent> getOutAllAgents() {
+        return agentRepository.getOutAllAgents();
+    }
+
+    @Override
+    public void bandUser(long agentId, long userId) {
+        Agent agent = agentRepository.findById(agentId);
+        agent.setUpdateTime(new Date());
+        agent.setUpdator(0);
+        agent.setUserId(userId);
+        agentRepository.save(agent);
+    }
+
+    @Override
+    public Agent getAgentByUserId(long userId) {
+        return agentRepository.findOneByUserId(userId);
     }
 }

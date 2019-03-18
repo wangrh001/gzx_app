@@ -10,35 +10,6 @@ public class Resource {
     @GeneratedValue
     private long id;
 
-    @Column
-    private String name;
-
-    //资源的父ID
-    @Column
-    private long parentId;
-
-    //菜单、按钮（未来可以是一个输入框等）
-    @Column
-    private int type;
-
-    @Column
-    private String resUrl;
-
-    @Column
-    private int state;
-
-    @Column
-    private long creator;
-
-    @Column
-    private Date createTime;
-
-    @Column
-    private long updator;
-
-    @Column
-    private Date updateTime;
-
     public long getId() {
         return id;
     }
@@ -47,37 +18,61 @@ public class Resource {
         this.id = id;
     }
 
+    @Column
+    private String name;
+    @Column
+    private String resUrl;
+    @Column
+    private int type;
+    @Column
+    private long parentId;
+
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(long parentId) {
-        this.parentId = parentId;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
     }
 
     public String getResUrl() {
         return resUrl;
     }
 
+    public int getType() {
+        return type;
+    }
+
+    public long getParentId() {
+        return parentId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setResUrl(String resUrl) {
         this.resUrl = resUrl;
     }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setParentId(long parentId) {
+        this.parentId = parentId;
+    }
+
+    @Column
+    private int state;
+    @Column
+    private long creator;
+    @Column
+    private Date createTime;
+    @Column
+    private long updator;
+    @Column
+    private Date updateTime;
+    @Column
+    private String columnName;
+    @Column
+    private String valueSet;
 
     public int getState() {
         return state;
@@ -117,5 +112,21 @@ public class Resource {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getColumnName() {
+        return columnName;
+    }
+
+    public void setColumnName(String columnName) {
+        this.columnName = columnName;
+    }
+
+    public String getValueSet() {
+        return valueSet;
+    }
+
+    public void setValueSet(String valueSet) {
+        this.valueSet = valueSet;
     }
 }

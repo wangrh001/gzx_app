@@ -1,21 +1,19 @@
 package com.bangnd.cs.web;
 
+import com.bangnd.cs.entity.Knowledge;
+import com.bangnd.cs.form.KnowledgeSearchForm;
+import com.bangnd.cs.service.KnowledgeQuestionTypeService;
+import com.bangnd.cs.service.KnowledgeService;
+import com.bangnd.cs.vo.KnowledgeVO;
+import com.bangnd.util.cfg.ConstantCfg;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.cs.web.*;
-import com.bangnd.cs.entity.*;
-import com.bangnd.cs.form.*;
-import com.bangnd.cs.service.*;
-import com.bangnd.cs.service.impl.*;
-import com.bangnd.cs.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class KnowledgeController {

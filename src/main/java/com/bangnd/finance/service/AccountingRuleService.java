@@ -2,11 +2,10 @@ package com.bangnd.finance.service;
 
 import com.bangnd.finance.entity.AccountingRule;
 import com.bangnd.finance.form.AccountingRuleSearchForm;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface AccountingRuleService {
-    public List<AccountingRule> getAccountingRuleList(AccountingRuleSearchForm accountingRuleSearchForm);
+    public Page<AccountingRule> getAccountingRuleList(Integer pageNum, int size, AccountingRuleSearchForm accountingRuleSearchForm);
 
     public void save(AccountingRule accountingRule);
 

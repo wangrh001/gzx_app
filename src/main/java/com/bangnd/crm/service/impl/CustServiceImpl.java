@@ -1,12 +1,9 @@
 package com.bangnd.crm.service.impl;
 
 import com.bangnd.crm.entity.Cust;
-import com.bangnd.crm.service.*;
 import com.bangnd.crm.form.CustSearchForm;
-
-import java.util.*;
-
 import com.bangnd.crm.repository.CustRepository;
+import com.bangnd.crm.service.CustService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -15,8 +12,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CustServiceImpl implements CustService {

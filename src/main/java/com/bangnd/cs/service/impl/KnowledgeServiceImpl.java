@@ -1,12 +1,9 @@
 package com.bangnd.cs.service.impl;
 
 import com.bangnd.cs.entity.Knowledge;
-import com.bangnd.cs.service.*;
 import com.bangnd.cs.form.KnowledgeSearchForm;
-
-import java.util.*;
-
 import com.bangnd.cs.repository.KnowledgeRepository;
+import com.bangnd.cs.service.KnowledgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -15,8 +12,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class KnowledgeServiceImpl implements KnowledgeService {

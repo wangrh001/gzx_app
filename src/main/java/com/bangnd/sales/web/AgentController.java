@@ -1,21 +1,22 @@
 package com.bangnd.sales.web;
 
+import com.bangnd.sales.entity.Agent;
+import com.bangnd.sales.form.AgentSearchForm;
+import com.bangnd.sales.service.AgentBusinessTypeService;
+import com.bangnd.sales.service.AgentChannelTypeService;
+import com.bangnd.sales.service.AgentService;
+import com.bangnd.sales.vo.AgentVO;
+import com.bangnd.util.cfg.ConstantCfg;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.sales.web.*;
-import com.bangnd.sales.entity.*;
-import com.bangnd.sales.form.*;
-import com.bangnd.sales.service.*;
-import com.bangnd.sales.service.impl.*;
-import com.bangnd.sales.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class AgentController {
@@ -27,13 +28,16 @@ public class AgentController {
     AgentChannelTypeService agentChannelTypeService;
 
     @RequestMapping("/sales/agent")
-    public String home(Model model, AgentSearchForm agentSearchForm) {
-        List<Agent> agents = agentService.getAgentList(agentSearchForm);
+    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, AgentSearchForm agentSearchForm) {
+        if(pageNum==null){
+            pageNum="1";
+        }
+        Page<Agent> pages = agentService.getAgentList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,agentSearchForm);
         model.addAttribute("businessTypes", agentBusinessTypeService.getAll());
         model.addAttribute("channelTypes", agentChannelTypeService.getAll());
         List<AgentVO> agentVOs = new ArrayList<>();
-        if (agents != null) {
-            for (Agent agent : agents) {
+        if (pages != null) {
+            for (Agent agent : pages) {
                 AgentVO agentVO = new AgentVO();
                 agentVO.setId(agent.getId());
                 agentVO.setName(agent.getName());
@@ -43,6 +47,13 @@ public class AgentController {
                 agentVOs.add(agentVO);
             }
         }
+
+        int pagenum=Integer.valueOf(pageNum);
+        model.addAttribute("page",pages);
+        model.addAttribute("pageNum",pagenum);
+        model.addAttribute("totalPages",pages.getTotalPages());
+        System.out.println("totalPages="+pages.getTotalPages());
+        model.addAttribute("totalElements",pages.getTotalElements());
         model.addAttribute("agentVOs", agentVOs);
         return "/sales/agentList";
     }

@@ -1,6 +1,6 @@
 package com.bangnd.hr.service;
 
-import com.bangnd.hr.entity.*;
+import com.bangnd.hr.entity.SalaryExtendState;
 
 import java.util.List;
 

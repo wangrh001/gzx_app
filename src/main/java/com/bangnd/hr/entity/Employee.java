@@ -51,6 +51,16 @@ public class Employee {
     public String emgPhone;
     @Column
     public int position;
+    @Column
+    public long userId;
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public String getName() {
         return name;

@@ -2,11 +2,10 @@ package com.bangnd.hr.service;
 
 import com.bangnd.hr.entity.Salary;
 import com.bangnd.hr.form.SalarySearchForm;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface SalaryService {
-    public List<Salary> getSalaryList(SalarySearchForm salarySearchForm);
+    public Page<Salary> getSalaryList(Integer pageNum, int size, SalarySearchForm salarySearchForm);
 
     public void save(Salary salary);
 

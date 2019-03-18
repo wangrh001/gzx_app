@@ -1,13 +1,12 @@
 package com.bangnd.mis.service.impl;
 
-import com.bangnd.mis.entity.*;
-import com.bangnd.mis.service.*;
-import com.bangnd.mis.repository.*;
-
-import java.util.List;
-
+import com.bangnd.mis.entity.TaskType;
+import com.bangnd.mis.repository.TaskTypeRepository;
+import com.bangnd.mis.service.TaskTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TaskTypeServiceImpl implements TaskTypeService {

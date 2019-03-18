@@ -1,13 +1,14 @@
 package com.bangnd.hr.service.impl;
 
 import com.bangnd.hr.entity.Attendance;
-import com.bangnd.hr.service.*;
 import com.bangnd.hr.form.AttendanceSearchForm;
-
-import java.util.*;
-
 import com.bangnd.hr.repository.AttendanceRepository;
+import com.bangnd.hr.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,16 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
     @Autowired
     private AttendanceRepository attendanceRepository;
 
-    public List<Attendance> getAttendanceList(AttendanceSearchForm attendanceSearchForm) {
+    public Page<Attendance> getAttendanceList(Integer pageNum, int size, AttendanceSearchForm attendanceSearchForm) {
         Specification specification = new Specification<Attendance>() {
             @Override
             public Predicate toPredicate(Root<Attendance> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
@@ -49,7 +51,10 @@ public class AttendanceServiceImpl implements AttendanceService {
                 return cb.and(predicates.toArray(p));
             }
         };
-        return attendanceRepository.findAll(specification);
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest((pageNum - 1), size, sort);
+        Page<Attendance> qyPage = this.attendanceRepository.findAll(specification, pageable);
+        return qyPage;
     }
 
     @Override

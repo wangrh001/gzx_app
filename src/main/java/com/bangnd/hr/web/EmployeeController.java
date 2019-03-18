@@ -1,21 +1,20 @@
 package com.bangnd.hr.web;
 
+import com.bangnd.hr.entity.Employee;
+import com.bangnd.hr.form.EmployeeSearchForm;
+import com.bangnd.hr.service.*;
+import com.bangnd.hr.vo.EmployeeVO;
+import com.bangnd.util.cfg.ConstantCfg;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.hr.web.*;
-import com.bangnd.hr.entity.*;
-import com.bangnd.hr.form.*;
-import com.bangnd.hr.service.*;
-import com.bangnd.hr.service.impl.*;
-import com.bangnd.hr.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class EmployeeController {
@@ -24,33 +23,43 @@ public class EmployeeController {
     @Resource
     EmployeeCityService employeeCityService;
     @Resource
-    EmployeeDeptService employeeDeptService;
+    DeptService deptService;
     @Resource
     EmployeeManageGradeService employeeManageGradeService;
     @Resource
     EmployeeTechGradeService employeeTechGradeService;
     @Resource
-    EmployeePositionService employeePositionService;
+    PositionService positionService;
 
     @RequestMapping("/hr/employee")
-    public String home(Model model, EmployeeSearchForm employeeSearchForm) {
-        List<Employee> employees = employeeService.getEmployeeList(employeeSearchForm);
+    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, EmployeeSearchForm employeeSearchForm) {
+        if(pageNum==null){
+            pageNum="1";
+        }
+        Page<Employee> pages = employeeService.getEmployeeList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,employeeSearchForm);
         model.addAttribute("citys", employeeCityService.getAll());
-        model.addAttribute("depts", employeeDeptService.getAll());
+        model.addAttribute("depts", deptService.getAll());
         model.addAttribute("manageGrades", employeeManageGradeService.getAll());
         model.addAttribute("techGrades", employeeTechGradeService.getAll());
-        model.addAttribute("positions", employeePositionService.getAll());
+        model.addAttribute("positions", positionService.getAll());
         List<EmployeeVO> employeeVOs = new ArrayList<>();
-        if (employees != null) {
-            for (Employee employee : employees) {
+        if (pages != null) {
+            for (Employee employee : pages) {
                 EmployeeVO employeeVO = new EmployeeVO();
                 employeeVO.setId(employee.getId());
                 employeeVO.setName(employee.getName());
-                employeeVO.setDeptName((employeeDeptService.getEmployeeDeptById(employee.getDept())).getName());
+                employeeVO.setDeptName((deptService.getDeptById(employee.getDept())).getName());
                 employeeVO.setTechGradeName((employeeTechGradeService.getEmployeeTechGradeById(employee.getTechGrade())).getName());
                 employeeVOs.add(employeeVO);
             }
         }
+
+        int pagenum=Integer.valueOf(pageNum);
+        model.addAttribute("page",pages);
+        model.addAttribute("pageNum",pagenum);
+        model.addAttribute("totalPages",pages.getTotalPages());
+        System.out.println("totalPages="+pages.getTotalPages());
+        model.addAttribute("totalElements",pages.getTotalElements());
         model.addAttribute("employeeVOs", employeeVOs);
         return "/hr/employeeList";
     }
@@ -60,10 +69,10 @@ public class EmployeeController {
         Employee employee = new Employee();
         model.addAttribute("employee", employee);
         model.addAttribute("citys", employeeCityService.getAll());
-        model.addAttribute("depts", employeeDeptService.getAll());
+        model.addAttribute("depts", deptService.getAll());
         model.addAttribute("manageGrades", employeeManageGradeService.getAll());
         model.addAttribute("techGrades", employeeTechGradeService.getAll());
-        model.addAttribute("positions", employeePositionService.getAll());
+        model.addAttribute("positions", positionService.getAll());
         return "/hr/employeeAdd";
     }
 
@@ -81,10 +90,10 @@ public class EmployeeController {
         Employee employee = employeeService.getEmployeeById(id);
         model.addAttribute("employee", employee);
         model.addAttribute("citys", employeeCityService.getAll());
-        model.addAttribute("depts", employeeDeptService.getAll());
+        model.addAttribute("depts", deptService.getAll());
         model.addAttribute("manageGrades", employeeManageGradeService.getAll());
         model.addAttribute("techGrades", employeeTechGradeService.getAll());
-        model.addAttribute("positions", employeePositionService.getAll());
+        model.addAttribute("positions", positionService.getAll());
         return "/hr/employeeAdd";
     }
 

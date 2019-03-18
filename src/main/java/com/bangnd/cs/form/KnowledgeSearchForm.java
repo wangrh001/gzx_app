@@ -1,7 +1,6 @@
 package com.bangnd.cs.form;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Column;
 
 public class KnowledgeSearchForm {
     @Column

@@ -1,21 +1,19 @@
 package com.bangnd.batch.web;
 
+import com.bangnd.batch.entity.Job;
+import com.bangnd.batch.form.JobSearchForm;
+import com.bangnd.batch.service.JobService;
+import com.bangnd.batch.service.JobTypeService;
+import com.bangnd.batch.vo.JobVO;
+import com.bangnd.util.cfg.ConstantCfg;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.batch.web.*;
-import com.bangnd.batch.entity.*;
-import com.bangnd.batch.form.*;
-import com.bangnd.batch.service.*;
-import com.bangnd.batch.service.impl.*;
-import com.bangnd.batch.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class JobController {

@@ -1,12 +1,9 @@
 package com.bangnd.batch.service.impl;
 
 import com.bangnd.batch.entity.Job;
-import com.bangnd.batch.service.*;
 import com.bangnd.batch.form.JobSearchForm;
-
-import java.util.*;
-
 import com.bangnd.batch.repository.JobRepository;
+import com.bangnd.batch.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -15,8 +12,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class JobServiceImpl implements JobService {

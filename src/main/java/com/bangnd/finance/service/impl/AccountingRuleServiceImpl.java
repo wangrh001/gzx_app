@@ -1,13 +1,14 @@
 package com.bangnd.finance.service.impl;
 
 import com.bangnd.finance.entity.AccountingRule;
-import com.bangnd.finance.service.*;
 import com.bangnd.finance.form.AccountingRuleSearchForm;
-
-import java.util.*;
-
 import com.bangnd.finance.repository.AccountingRuleRepository;
+import com.bangnd.finance.service.AccountingRuleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +16,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AccountingRuleServiceImpl implements AccountingRuleService {
     @Autowired
     private AccountingRuleRepository accountingRuleRepository;
 
-    public List<AccountingRule> getAccountingRuleList(AccountingRuleSearchForm accountingRuleSearchForm) {
+    public Page<AccountingRule> getAccountingRuleList(Integer pageNum, int size, AccountingRuleSearchForm accountingRuleSearchForm) {
         Specification specification = new Specification<AccountingRule>() {
             @Override
             public Predicate toPredicate(Root<AccountingRule> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
@@ -40,7 +41,10 @@ public class AccountingRuleServiceImpl implements AccountingRuleService {
                 return cb.and(predicates.toArray(p));
             }
         };
-        return accountingRuleRepository.findAll(specification);
+        Sort sort = new Sort(Sort.Direction.ASC, "id");
+        Pageable pageable = new PageRequest((pageNum - 1), size, sort);
+        Page<AccountingRule> qyPage = this.accountingRuleRepository.findAll(specification, pageable);
+        return qyPage;
     }
 
     @Override

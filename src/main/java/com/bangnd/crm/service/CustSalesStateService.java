@@ -1,6 +1,6 @@
 package com.bangnd.crm.service;
 
-import com.bangnd.crm.entity.*;
+import com.bangnd.crm.entity.CustSalesState;
 
 import java.util.List;
 

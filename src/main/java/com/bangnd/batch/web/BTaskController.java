@@ -1,21 +1,19 @@
 package com.bangnd.batch.web;
 
+import com.bangnd.batch.entity.BTask;
+import com.bangnd.batch.form.BTaskSearchForm;
+import com.bangnd.batch.service.BTaskResultService;
+import com.bangnd.batch.service.BTaskService;
+import com.bangnd.batch.vo.BTaskVO;
+import com.bangnd.util.cfg.ConstantCfg;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-
-import org.springframework.ui.Model;
-
-import java.util.*;
-
-import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.batch.web.*;
-import com.bangnd.batch.entity.*;
-import com.bangnd.batch.form.*;
-import com.bangnd.batch.service.*;
-import com.bangnd.batch.service.impl.*;
-import com.bangnd.batch.vo.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class BTaskController {

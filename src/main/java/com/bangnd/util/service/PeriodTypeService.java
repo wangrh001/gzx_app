@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface PeriodTypeService {
     public List<PeriodType> getAll();
+
     public PeriodType getPeriodTypeById(int id);
 }
