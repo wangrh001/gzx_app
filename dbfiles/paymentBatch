@@ -1,0 +1,207 @@
+begin
+	#生成居间业务、垫资业务的各项手续费；生成产品佣金
+	declare v_id,v_prod_id,v_business_type,v_order_id,v_in_out,v_pay_type,v_user_id,v_action_id INT;
+	declare v_name,v_bank_code VARCHAR(30);
+	declare v_amount,v_broker,v_law_fee,v_fair_fee,v_license_fee DECIMAL(10,2);
+	declare done boolean default 0;
+	declare v_sign_date,v_approved_date DATE;
+
+	#计算t_cbs_order_product，状态为5计算完后，修改为51
+	DECLARE mycursor CURSOR FOR
+		SELECT t1.id,t1.product_id,t1.real_amount,
+			   t2.business_type,t2.id,
+			   t4.name,t4.bank_code,t1.approve_time
+		from t_cbs_order_product t1,t_cbs_order t2,t_cbs_order_prod_cust t3,t_customer t4
+		where t1.order_id=t2.id
+		and t1.id = t3.order_product_id
+		and t3.customer_id = t4.id
+		and t3.identity_type=1
+		and t2.business_type in (1,2)
+		and t1.approve_time<SYSDATE()
+		and t1.state<>100
+		and t2.state<>100
+		and t1.order_prod_state =5;
+	declare continue handler for sqlstate '02000' set done=1;
+	OPEN mycursor;
+	repeat
+	FETCH mycursor INTO v_id,v_prod_id,v_amount,v_business_type,v_order_id,v_name,v_bank_code,v_approved_date;
+	if not done then
+		update t_cbs_order_product set order_prod_state=51 where id=v_id;
+		
+		select t.brokerage,t.law_fee,t.fair_fee,t.license_fee
+		into v_broker,v_law_fee,v_fair_fee,v_license_fee
+		from t_cbs_product t where t.id=v_prod_id;
+		
+		if v_broker <>0 then
+			insert into t_finance_payment(order_product_id,
+			account_name,amount,create_time,creator,in_out,operator_id,order_id,pay_date,
+			pay_state,state,offset,if_real,pay_type,other_bank_id,related_id,updator)
+			values(v_id,v_name,v_amount*v_broker,sysdate(),0,1,0,v_order_id,sysdate(),
+			6,1,2,2,3,0,0,0);#应收手续费
+		end if;
+		
+		if v_law_fee <>0 then
+			insert into t_finance_payment(order_product_id,
+			account_name,amount,create_time,creator,in_out,operator_id,order_id,pay_date,
+			pay_state,state,offset,if_real,pay_type,other_bank_id,related_id,updator)
+			values(v_id,v_name,v_amount*v_law_fee,sysdate(),0,1,0,v_order_id,sysdate(),
+			6,1,2,2,9,0,0,0);#律师费
+		end if;
+
+		if v_fair_fee <>0 then
+			insert into t_finance_payment(order_product_id,
+			account_name,amount,create_time,creator,in_out,operator_id,order_id,pay_date,
+			pay_state,state,offset,if_real,pay_type,other_bank_id,related_id,updator)
+			values(v_id,v_name,v_amount*v_fair_fee,sysdate(),0,1,0,v_order_id,sysdate(),
+			6,1,2,2,10,0,0,0);#公证费
+		end if;
+
+		if v_license_fee <>0 then
+			insert into t_finance_payment(order_product_id,
+			account_name,amount,create_time,creator,in_out,operator_id,order_id,pay_date,
+			pay_state,state,offset,if_real,pay_type,other_bank_id,related_id,updator)
+			values(v_id,v_name,v_amount*v_license_fee,sysdate(),0,1,0,v_order_id,sysdate(),
+			6,1,2,2,11,0,0,0);#执照费
+		end if;		
+		
+		#计算每个人的提成,一个人可能有多个算佣的action，可能在多个岗位
+		#只计算了简单累进比例，没有计算分段累进比例
+		##假设1、佣金的计算基础只和岗位有关
+		##假设2、佣金的发放方式只和岗位、渠道类型有关
+		##假设3、简单累计比例是按照业绩越高，佣金比例越高的方式配置的
+		BEGIN
+		DECLARE v_count,v_position_id,v_level,v_count_2,v_base_type,v_way,v_channel_type,v_pay_way,v_agent_id,v_employee_id INT;
+		DECLARE v_percent,v_commission ,v_total_performance,v_total_commission DECIMAL(10,4);
+		DECLARE v_employee_name,v_agent_name,v_month VARCHAR(100);
+		declare done2 boolean default 0;
+		
+		#查询出在这个订单下所有的工作，以及该工作所属于的岗位，如果一个人多个岗位算佣，则累加
+		DECLARE mycursor2 CURSOR FOR 
+		select distinct o.user_id,p.id from t_cbs_order_log o,t_hr_action a,t_hr_position p
+		where o.order_id = v_order_id
+		and o.action_id = a.id
+		and a.position_id = p.id
+		and a.state<>100
+		and a.is_commission=1
+		and p.is_commission=1;
+		declare continue handler for sqlstate '02000' set done2=1;
+		open mycursor2;
+		REPEAT
+		fetch mycursor2 into v_user_id,v_position_id;
+		if not done2 then	
+			select count(*) into v_count from t_hr_employee e where e.user_id= v_user_id;
+			#是我们公司的员工
+			if v_count=1 then
+				select e.manage_grade,name,id into v_level,v_employee_name,v_employee_id from t_hr_employee e where e.user_id= v_user_id;
+				set v_channel_type = 1;
+			#其他公司的业务员
+			ELSE 
+				select name,id into v_agent_name,v_agent_id from t_sales_agent a where a.user_id = v_user_id;
+				set v_level = 0;
+				set v_channel_type = 2;
+            end if;
+			##假设1：佣金的计算基础只和岗位有关
+			select min(base_type) into v_base_type from t_sales_commission c where c.type= v_position_id;
+			##假设2:佣金的发放方式只和岗位、渠道类型有关
+			select min(pay_way) into v_pay_way from t_sales_commission c where c.type = v_position_id and c.channel_type = v_channel_type;
+			
+			select count(c.base_type) into v_count_2 from t_sales_commission c where c.type=v_position_id 
+			and c.product_id = v_prod_id
+			and c.state=1 and c.channel_type =v_channel_type
+			and c.start_date<v_approved_date
+			and c.end_date>=v_approved_date
+			and c.level=v_level
+			and c.way = 1 #简单比例
+			and c.business_type = v_business_type;
+			
+			#说明的确是简单比例
+			if v_count_2 = 1 then
+				select c.percent,c.pay_way,c.base_type into v_percent,v_pay_way,v_base_type from t_sales_commission c where c.type=v_position_id 
+				and c.product_id = v_prod_id
+				and c.state=1 and c.channel_type =v_channel_type
+				and c.start_date<v_approved_date
+				and c.end_date>=v_approved_date
+				and c.level=v_level
+				and c.way = 1 #简单比例
+				and c.business_type = v_business_type;
+				
+				if v_base_type = 1 then
+					set v_commission=v_amount*v_percent;
+				elseif v_base_type = 2 then 
+					set v_commission=v_amount*v_broker*v_percent;
+				end if;
+			end if;
+			
+			#查询累计比例配置
+			select count(c.base_type) into v_count_2 from t_sales_commission c where c.type=v_position_id 
+			and c.product_id = v_prod_id
+			and c.state=1 and c.channel_type =v_channel_type
+			and c.start_date<v_approved_date
+			and c.end_date>=v_approved_date
+			and c.level=v_level
+			and c.way = 2 #累进比例
+			and c.business_type = v_business_type
+			and c.sum>=v_amount;				
+			
+			#如果累计比例配置大于1，则说明是累计比例
+			if v_count_2>1 THEN
+				#取出累进比例中大于sum的最小比例系数
+				#假设3：简单累计比例是按照业绩越高，佣金比例越高的方式配置的
+				select min(c.percent) into v_percent from t_sales_commission c where c.type=v_position_id 
+				and c.product_id = v_prod_id
+				and c.state=1 and c.channel_type =v_channel_type
+				and c.start_date<v_approved_date
+				and c.end_date>=v_approved_date
+				and c.level=v_level
+				and c.way = 2 #累进比例
+				and c.business_type = v_business_type
+				and c.sum<=v_amount;
+
+				if v_base_type = 1 then
+					set v_commission=v_amount*v_percent;
+				elseif v_base_type = 2 then 
+					set v_commission=v_amount*v_broker*v_percent;
+				end if;
+			end if;  
+		
+			if v_commission is not null and v_commission<>0 then 
+				#先写入明细表
+				insert into t_sales_performance_comm_detail(agent_id,commission,create_time,creator,employee_id,performance,state,updator,order_product_id)
+				values(ifnull(v_agent_id,0),ifnull(v_commission,0),sysdate(),0,ifnull(v_employee_id,0),v_amount,1,0,v_id);
+				#按月发放，需要汇总到按月发放表中
+				if ifnull(v_pay_way,0) = 1 then
+					select date_format(SYSDATE(),'%Y%m') into v_month;
+					
+					select count(*) into v_count from t_sales_performance_commission p where p.month = v_month and (agent_id = v_agent_id or employee_id = v_employee_id);
+					
+					if v_count=0 then
+						insert into t_sales_performance_commission(agent_id,agent_name,commission,create_time,creator,month,performance,process,state,updator,employee_id,employee_name)
+						values(ifnull(v_agent_id,0),v_agent_name,v_commission,SYSDATE(),0,v_month,v_amount,0,1,0,ifnull(v_employee_id,0),v_employee_name);
+					ELSE
+						select sum(p.commission),sum(p.performance) into v_total_commission,v_total_performance from t_sales_performance_commission p 
+						where p.month = v_month and (agent_id = v_agent_id or employee_id = v_employee_id) and state<>100;
+						set v_total_commission = v_total_commission + v_commission,v_total_performance = v_total_performance + v_amount;
+						
+						update t_sales_performance_commission p set commission=v_total_commission,performance=v_total_performance,update_time=SYSDATE()
+						where p.month = v_month and (agent_id = v_agent_id or employee_id = v_employee_id) and state<>100;
+					end if;							
+				#如果是逐笔发放，写入费用表中
+				ELSEIF ifnull(v_pay_way,0) = 2 then 
+					insert into t_finance_payment(order_product_id,amount,create_time,creator,in_out,operator_id,order_id,pay_date,
+					pay_state,state,offset,if_real,pay_type,other_bank_id,related_id,updator)
+					values(v_id,v_commission,sysdate(),0,2,0,v_order_id,sysdate(),
+					6,1,2,2,6,0,0,0);#应付佣金
+				end if;			
+			end if;
+			
+			
+		end if;
+		until done2 end REPEAT;
+		close mycursor2;
+		END;
+
+
+	end if;
+	until done end repeat;
+	CLOSE mycursor;
+end
