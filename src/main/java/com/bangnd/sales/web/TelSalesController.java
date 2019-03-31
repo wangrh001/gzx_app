@@ -28,11 +28,11 @@ public class TelSalesController {
     TelSalesTaskDelayService telSalesTaskDelayService;
 
     @RequestMapping("/sales/telSales")
-    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, TelSalesSearchForm telSalesSearchForm) {
-        if(pageNum==null){
-            pageNum="1";
+    public String home(Model model, @RequestParam(value = "pageNum", required = false) String pageNum, TelSalesSearchForm telSalesSearchForm) {
+        if (pageNum == null) {
+            pageNum = "1";
         }
-        Page<TelSales> pages =telSalesService.getTelSalesList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,telSalesSearchForm);
+        Page<TelSales> pages = telSalesService.getTelSalesList(Integer.valueOf(pageNum), ConstantCfg.NUM_PER_PAGE, telSalesSearchForm);
         model.addAttribute("results", telSalesResultService.getAll());
         model.addAttribute("taskDelays", telSalesTaskDelayService.getAll());
         List<TelSalesVO> telSalesVOs = new ArrayList<>();
@@ -45,12 +45,12 @@ public class TelSalesController {
             }
         }
 
-        int pagenum=Integer.valueOf(pageNum);
-        model.addAttribute("page",pages);
-        model.addAttribute("pageNum",pagenum);
-        model.addAttribute("totalPages",pages.getTotalPages());
-        System.out.println("totalPages="+pages.getTotalPages());
-        model.addAttribute("totalElements",pages.getTotalElements());
+        int pagenum = Integer.valueOf(pageNum);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", pagenum);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        System.out.println("totalPages=" + pages.getTotalPages());
+        model.addAttribute("totalElements", pages.getTotalElements());
         model.addAttribute("telSalesVOs", telSalesVOs);
         return "/sales/telSalesList";
     }

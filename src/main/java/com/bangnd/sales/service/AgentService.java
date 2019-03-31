@@ -17,7 +17,15 @@ public interface AgentService {
 
     public List<Agent> getOutAllAgents();
 
-    public void bandUser(long agentId, long userId);
+    public void bandUser(long agentId, long userId, String userName);
 
     public Agent getAgentByUserId(long userId);
+
+    public List<Agent> getAgentByAgentName(String agentName);
+
+    public Agent getAgentByEmployeeId(long empolyeeId);
+
+    public List<Agent> getAgentByGroupId(long groupId);
+
+
 }

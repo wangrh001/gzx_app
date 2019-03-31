@@ -4,6 +4,7 @@ import com.bangnd.ums.entity.User;
 import com.bangnd.ums.form.UserSearchForm;
 import com.bangnd.ums.repository.UserRepository;
 import com.bangnd.ums.service.UserService;
+import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.security.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,9 +35,7 @@ public class UserServiceImpl implements UserService {
                 if (userSearchForm.getUserName() != null && !"".equals(userSearchForm.getUserName())) {
                     predicates.add(cb.like(root.get("userName").as(String.class), "%" + userSearchForm.getUserName() + "%"));
                 }
-                if (userSearchForm.getPassword() != null && !"".equals(userSearchForm.getPassword())) {
-                    predicates.add(cb.like(root.get("password").as(String.class), "%" + userSearchForm.getPassword() + "%"));
-                }
+                predicates.add(cb.notEqual(root.get("id").as(Long.class), new Long(0)));
                 predicates.add(cb.notEqual(root.get("state").as(Integer.class), new Integer(100)));
                 Predicate[] p = new Predicate[predicates.size()];
                 return cb.and(predicates.toArray(p));
@@ -51,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAll() {
-        return userRepository.findAll();
+        return userRepository.findByStateNot(ConstantCfg.STATE_100);
     }
 
     @Override
@@ -77,6 +76,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUserName(String userName) {
         return userRepository.findUserByUserName(userName);
+    }
+
+    @Override
+    public List<User> getAllUserByUserName(String userName) {
+        return userRepository.findAllByUserName(userName);
     }
 
     //验证用户名是否存在

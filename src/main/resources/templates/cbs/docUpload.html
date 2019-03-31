@@ -1,27 +1,80 @@
 <!DOCTYPE html>
-<html lang="zh-CN"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>所有文件</title>
-</head>
 
-<body>
-<form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data"
-      th:action="@{/order/toAdd(orderId=${orderId})}">
-    <table>
-        <tr>
-            <td><input type="submit" value="返回上页" class="btn btn-info"/></td>
-        </tr>
-        <tr>
-            <td><input type="hidden" th:field="*{orderId}"/></td>
-        </tr>
-        <tr th:each="file : ${files}">
-            <td><img th:src="${file}"/></td>
-        </tr>
-    </table>
+    <meta charset="utf-8" />
+    <title>Bootstrap 实例 - 模态框（Modal）插件</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script th:inline="javascript">
+        function AddButton() {
+            /*<![CDATA[*/
+            var files = [[${files}]];
+            var imgFileTable =document.getElementById("imgFileTable");
+            var fileSize = files.length;
+
+            for(var i=0;i<Math.ceil(fileSize/5);i++){
+                var tr = document.createElement("tr");
+                for(var j=0;j<5;j++){
+                        var td = document.createElement("td");
+                        var img = document.createElement("img");
+                        if(5*i+j>=files.length){
+                            break;
+                        }
+                        img.src = files[5*i+j];
+                        img.width = "150"
+                        img.height = "150"
+                        img.onclick = function () {
+                            imgZoomIn(this.src);
+                        }
+                        td.appendChild(img);
+                        tr.appendChild(td);
+                }
+                imgFileTable.appendChild(tr);
+            }
+        }
+        //这个符号不能删除！！！！
+        // /*]]>*/
+    </script>
+
+</head>
+<body class="container" onload="AddButton()">
+
+<form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data" th:action="@{/order/toEdit(orderId=${orderId})}" >
+<div class="row">
+    <div class="col-md-12 ">
+        <div>
+            <table id="imgFileTable" cellpadding="500" style="float: left;">
+            </table>
+        </div>
+        <!--图片放大 模态框（Modal） -->
+        <div class="modal fade text-center" id="imgZoomInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="display: inline-block; width: auto;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="" id="pigImg" />
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal -->
+        </div>
+    </div>
+</div>
+    <div><tr>
+        <td><input type="submit" value="返回上页" class="btn btn-info"/></td>
+    </tr></div>
 </form>
 </body>
+<script type="text/javascript">
+    //点击查看原图
+    function imgZoomIn(src){
+        $("#pigImg").attr('src',src);
+        $("#imgZoomInModal").modal("show");
+    }
+</script>
 </html>

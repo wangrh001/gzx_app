@@ -42,6 +42,9 @@ public class Commission {
     public Date startDate;
     @Column
     public Date endDate;
+    //1、按月发放；2、逐笔发放
+    @Column
+    private int payWay;
 
     public int getBusinessType() {
         return businessType;
@@ -129,6 +132,14 @@ public class Commission {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public int getPayWay() {
+        return payWay;
+    }
+
+    public void setPayWay(int payWay) {
+        this.payWay = payWay;
     }
 
     @Column

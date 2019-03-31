@@ -17,7 +17,11 @@ public interface EmployeeService {
 
     public List<Employee> getAll();
 
-    public void bandUser(long employeeId,long userId);
+    public void bandUser(long employeeId, long userId,String userName);
 
     public Employee getEmployeeByUserId(long userId);
+
+    public List<Employee> getEmployeeByEmployeeName(String employeeName);
+
+    public List<Employee> getEmployeeByPositionId(int positionId);
 }

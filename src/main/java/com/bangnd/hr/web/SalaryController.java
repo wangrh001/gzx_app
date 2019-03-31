@@ -25,11 +25,11 @@ public class SalaryController {
     SalaryExtendStateService salaryExtendStateService;
 
     @RequestMapping("/hr/salary")
-    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, SalarySearchForm salarySearchForm) {
-        if(pageNum==null){
-            pageNum="1";
+    public String home(Model model, @RequestParam(value = "pageNum", required = false) String pageNum, SalarySearchForm salarySearchForm) {
+        if (pageNum == null) {
+            pageNum = "1";
         }
-        Page<Salary> pages = salaryService.getSalaryList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,salarySearchForm);
+        Page<Salary> pages = salaryService.getSalaryList(Integer.valueOf(pageNum), ConstantCfg.NUM_PER_PAGE, salarySearchForm);
         model.addAttribute("extendStates", salaryExtendStateService.getAll());
         List<SalaryVO> salaryVOs = new ArrayList<>();
         if (pages != null) {
@@ -44,12 +44,12 @@ public class SalaryController {
             }
         }
 
-        int pagenum=Integer.valueOf(pageNum);
-        model.addAttribute("page",pages);
-        model.addAttribute("pageNum",pagenum);
-        model.addAttribute("totalPages",pages.getTotalPages());
-        System.out.println("totalPages="+pages.getTotalPages());
-        model.addAttribute("totalElements",pages.getTotalElements());
+        int pagenum = Integer.valueOf(pageNum);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", pagenum);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        System.out.println("totalPages=" + pages.getTotalPages());
+        model.addAttribute("totalElements", pages.getTotalElements());
         model.addAttribute("salaryVOs", salaryVOs);
         return "/hr/salaryList";
     }

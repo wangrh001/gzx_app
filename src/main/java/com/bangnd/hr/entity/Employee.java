@@ -37,7 +37,8 @@ public class Employee {
     public int techGrade;
     @Column
     public Date hiredate;
-    @Column
+
+    @Column(nullable = true)
     public Date leavedate;
     @Column
     public String phone;
@@ -53,6 +54,8 @@ public class Employee {
     public int position;
     @Column
     public long userId;
+    @Column
+    public String userName;
 
     public long getUserId() {
         return userId;
@@ -239,5 +242,13 @@ public class Employee {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

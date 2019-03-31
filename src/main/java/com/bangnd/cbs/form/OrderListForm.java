@@ -9,6 +9,7 @@ public class OrderListForm {
     private BigDecimal amount;
     private Date applyDate;
     private String orderState;
+    private String nextHandler;
 
     public long getOrderId() {
         return orderId;
@@ -48,5 +49,13 @@ public class OrderListForm {
 
     public void setApplyDate(Date applyDate) {
         this.applyDate = applyDate;
+    }
+
+    public String getNextHandler() {
+        return nextHandler;
+    }
+
+    public void setNextHandler(String nextHandler) {
+        this.nextHandler = nextHandler;
     }
 }

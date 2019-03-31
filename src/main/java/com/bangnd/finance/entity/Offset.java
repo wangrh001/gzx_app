@@ -3,7 +3,7 @@ package com.bangnd.finance.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="cfg_payment_offset")
+@Table(name = "cfg_payment_offset")
 public class Offset {
     @Id
     @GeneratedValue

@@ -4,6 +4,7 @@ import com.bangnd.cbs.entity.OrderLog;
 import com.bangnd.cbs.form.OrderLogListForm;
 import com.bangnd.cbs.service.OrderLogService;
 import com.bangnd.hr.service.ActionService;
+import com.bangnd.ums.service.ResourceService;
 import com.bangnd.ums.service.UserService;
 import com.bangnd.util.cfg.ConstantCfg;
 import org.springframework.data.domain.Page;
@@ -25,14 +26,13 @@ public class OrderLogController {
     UserService userService;
     @Resource
     ActionService actionService;
+    @Resource
+    ResourceService resourceService;
 
     @RequestMapping("/orderLog/list")
     public String list(Model model, @RequestParam(value="pageNum",required=false) String pageNum, long orderId) {
-        if(pageNum==null){
-            pageNum="1";
-        }
-        Page<OrderLog> pages = orderLogService.getAllLogByOrderId(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,orderId);
 
+        Page<OrderLog> pages = orderLogService.getAllLogByOrderId(Integer.valueOf(pageNum==null?"1":pageNum),ConstantCfg.NUM_PER_PAGE,orderId);
         List<OrderLogListForm> orderLogListForms = new ArrayList<OrderLogListForm>();
         if (pages != null) {
             for (OrderLog orderLog : pages) {
@@ -40,24 +40,25 @@ public class OrderLogController {
                 orderLogListForm.setId(orderLog.getId());
                 orderLogListForm.setUserName((userService.getUserByUserId(orderLog.getUserId()).getUserName()));
                 orderLogListForm.setActionTime(orderLog.getOperatorTime());
-                orderLogListForm.setActionName(actionService.getActionById(orderLog.getActionId()).getName());
+                orderLogListForm.setButtonName(resourceService.getResourceById(orderLog.getButtonId()).getName());
                 orderLogListForm.setActionDesc(orderLog.getActionDesc());
                 orderLogListForms.add(orderLogListForm);
             }
         }
-        int pagenum=Integer.valueOf(pageNum);
+        int pagenum=Integer.valueOf(pageNum==null?"1":pageNum);
+        model.addAttribute("orderId",orderId);
         model.addAttribute("page",pages);
         model.addAttribute("pageNum",pagenum);
-        model.addAttribute("totalPages",pages.getTotalPages());
-        model.addAttribute("totalElements",pages.getTotalElements());
+        model.addAttribute("totalPages","共"+String.valueOf(pages.getTotalPages())+"页");
+        model.addAttribute("totalElements","共"+pages.getTotalElements()+"条");
         model.addAttribute("orderLogListForms", orderLogListForms);
         return "/cbs/orderLogList";
     }
 
     @RequestMapping("/orderLog/add")
-    public String add(OrderLog orderLog, long actionId,long orderId) {
-        System.out.println("actionId="+actionId);
-        orderLog.setActionId(actionId);
+    public String add(OrderLog orderLog, int buttonId,long orderId) {
+        System.out.println("actionId="+buttonId);
+        orderLog.setButtonId(buttonId);
         orderLog.setOrderId(orderId);
         orderLog.setUserId(1);
         orderLog.setOperatorTime(new Date());

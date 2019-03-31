@@ -47,27 +47,27 @@
             <th>序号</th>
             <th>年月</th>
             <th>销售姓名</th>
-            <th>雇员姓名</th>
-            <th>订单产品ID</th>
             <th>提成</th>
+            <th>最低提成</th>
+            <th>最高提成</th>
             <th>业绩</th>
+            <th>收息</th>
             <th>核算发放进度</th>
-            <th>编辑</th>
-            <th>删除</th>
+            <th>查看明细</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="performanceCommissionVO : ${performanceCommissionVOs}">
             <td th:text="${performanceCommissionVO.id}">1</td>
             <td th:text="${performanceCommissionVO.month}">1</td>
-            <td th:text="${performanceCommissionVO.agentName}">1</td>
-            <td th:text="${performanceCommissionVO.employeeName}">1</td>
-            <td th:text="${performanceCommissionVO.orderProdId}">1</td>
+            <td th:text="${performanceCommissionVO.salerName}">1</td>
             <td th:text="${performanceCommissionVO.commission}">1</td>
+            <td th:text="${performanceCommissionVO.minCommission}">1</td>
+            <td th:text="${performanceCommissionVO.maxCommission}">1</td>
             <td th:text="${performanceCommissionVO.performance}">1</td>
+            <td th:text="${performanceCommissionVO.interest}">1</td>
             <td th:text="${performanceCommissionVO.processName}">1</td>
-            <td><a th:href="@{/sales/performanceCommission/toModify(id=${performanceCommissionVO.id})}">edit</a></td>
-            <td><a th:href="@{/sales/performanceCommission/delete(id=${performanceCommissionVO.id})}">delete</a></td>
+            <td><a th:href="@{/sales/performanceCommission/detailList(id=${performanceCommissionVO.id})}">看看</a></td>
         </tr>
         </tbody>
     </table>
@@ -80,7 +80,8 @@
                 <p th:case="*"><a th:href="@{/sales/performanceCommission(pageNum=${pageNum-1})}">上一页</a></p>
             </td>
             <td th:switch="${pageNum}">
-                <p th:case="${totalPages}"><a th:href="@{/sales/performanceCommission(pageNum=${totalPages})}">下一页</a></p>
+                <p th:case="${totalPages}"><a th:href="@{/sales/performanceCommission(pageNum=${totalPages})}">下一页</a>
+                </p>
                 <p th:case="*"><a th:href="@{/sales/performanceCommission(pageNum=${pageNum+1})}">下一页</a></p>
             </td>
             <td><a th:href="@{/sales/performanceCommission(pageNum=${totalPages})}">尾页</a></td>

@@ -5,15 +5,20 @@ import com.bangnd.sales.form.AgentSearchForm;
 import com.bangnd.sales.service.AgentBusinessTypeService;
 import com.bangnd.sales.service.AgentChannelTypeService;
 import com.bangnd.sales.service.AgentService;
+import com.bangnd.sales.service.GroupService;
 import com.bangnd.sales.vo.AgentVO;
 import com.bangnd.util.cfg.ConstantCfg;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,21 +31,36 @@ public class AgentController {
     AgentBusinessTypeService agentBusinessTypeService;
     @Resource
     AgentChannelTypeService agentChannelTypeService;
+    @Resource
+    GroupService groupService;
+    /**
+     * form表单提交 Date类型数据绑定
+     *
+     * @param binder
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
     @RequestMapping("/sales/agent")
-    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, AgentSearchForm agentSearchForm) {
-        if(pageNum==null){
-            pageNum="1";
+    public String home(Model model, @RequestParam(value = "pageNum", required = false) String pageNum, AgentSearchForm agentSearchForm) {
+        if (pageNum == null) {
+            pageNum = "1";
         }
-        Page<Agent> pages = agentService.getAgentList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,agentSearchForm);
+        Page<Agent> pages = agentService.getAgentList(Integer.valueOf(pageNum), ConstantCfg.NUM_PER_PAGE, agentSearchForm);
+        model.addAttribute("groups",groupService.getAll());
         model.addAttribute("businessTypes", agentBusinessTypeService.getAll());
-        model.addAttribute("channelTypes", agentChannelTypeService.getAll());
+        model.addAttribute("channelTypes", agentChannelTypeService.getOutSalesTypes());
         List<AgentVO> agentVOs = new ArrayList<>();
         if (pages != null) {
             for (Agent agent : pages) {
                 AgentVO agentVO = new AgentVO();
                 agentVO.setId(agent.getId());
                 agentVO.setName(agent.getName());
+                agentVO.setGroupName(groupService.getGroupById(agent.getGroupId()).getName());
                 agentVO.setBusinessTypeName((agentBusinessTypeService.getAgentBusinessTypeById(agent.getBusinessType())).getName());
                 agentVO.setPhoneNO(agent.getPhoneNO());
                 agentVO.setCompanyName(agent.getCompanyName());
@@ -48,12 +68,12 @@ public class AgentController {
             }
         }
 
-        int pagenum=Integer.valueOf(pageNum);
-        model.addAttribute("page",pages);
-        model.addAttribute("pageNum",pagenum);
-        model.addAttribute("totalPages",pages.getTotalPages());
-        System.out.println("totalPages="+pages.getTotalPages());
-        model.addAttribute("totalElements",pages.getTotalElements());
+        int pagenum = Integer.valueOf(pageNum);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", pagenum);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        System.out.println("totalPages=" + pages.getTotalPages());
+        model.addAttribute("totalElements", pages.getTotalElements());
         model.addAttribute("agentVOs", agentVOs);
         return "/sales/agentList";
     }
@@ -62,14 +82,17 @@ public class AgentController {
     public String toAdd(Model model) {
         Agent agent = new Agent();
         model.addAttribute("agent", agent);
+        model.addAttribute("groups",groupService.getAll());
         model.addAttribute("businessTypes", agentBusinessTypeService.getAll());
-        model.addAttribute("channelTypes", agentChannelTypeService.getAll());
+        model.addAttribute("channelTypes", agentChannelTypeService.getOutSalesTypes());
         return "/sales/agentAdd";
     }
 
     @RequestMapping("/sales/agent/add")
     public String add(Agent agent) {
         agent.setState(ConstantCfg.ORDER_STATE_INITIAL);
+        //手动添加的业务员都是外勤
+        agent.setChannelType(ConstantCfg.CHANNEL_TYPE_2);
         agent.setCreator(0);
         agent.setCreateTime(new Date());
         agentService.save(agent);
@@ -79,15 +102,16 @@ public class AgentController {
     @RequestMapping("/sales/agent/toModify")
     public String toModify(Model model, Long id) {
         Agent agent = agentService.getAgentById(id);
+        model.addAttribute("groups",groupService.getAll());
         model.addAttribute("businessTypes", agentBusinessTypeService.getAll());
-        model.addAttribute("channelTypes", agentChannelTypeService.getAll());
+        model.addAttribute("channelTypes", agentChannelTypeService.getOutSalesTypes());
         model.addAttribute("agent", agent);
-        return "/sales/agentAdd";
+        return "/sales/agentEdit";
     }
 
     @RequestMapping("/sales/agent/modify")
     public String modify(Agent agent, Long id) {
-        Agent oldAgent = agentService.getAgentById(id);
+        Agent oldAgent = agentService.getAgentById(agent.getId());
         oldAgent.setName(agent.getName());
         oldAgent.setBusinessType(agent.getBusinessType());
         oldAgent.setChannelType(agent.getChannelType());
@@ -102,7 +126,7 @@ public class AgentController {
         oldAgent.setUpdator(0);
         oldAgent.setUpdateTime(new Date());
         agentService.merge(oldAgent);
-        return "redirect:/sales/agent/toModify?id=" + id;
+        return "redirect:/sales/agent/toModify?id=" + agent.getId();
     }
 
     @RequestMapping("/sales/agent/delete")

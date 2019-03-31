@@ -15,6 +15,9 @@
     <script type="text/javascript" src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script type="text/javascript" src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     -->
+    <script>
+
+    </script>
 </head>
 
 <body class="container">
@@ -33,29 +36,31 @@
         </tr>
         </thead>
         <tbody>
+        <input type="hidden" th:field="*{orderId}"/>
         <tr th:each="orderLogListForm : ${orderLogListForms}">
             <td th:text="${orderLogListForm.id}">1</td>
             <td th:text="${orderLogListForm.userName}">neo</td>
             <td th:text="${orderLogListForm.actionTime}">6</td>
-            <td th:text="${orderLogListForm.actionName}">6</td>
+            <td th:text="${orderLogListForm.buttonName}">6</td>
             <td th:text="${orderLogListForm.actionDesc}"></td>
-
         </tr>
 
         </tbody>
     </table>
     <table>
         <tr>
-            <td><a th:href="@{/orderLog/list(pageNum=1)}">首页</a></td>
+            <td th:text="*{totalPages}"></td>
+            <td th:text="*{totalElements}"></td>
+            <td><a th:href="@{/orderLog/list(pageNum=1,orderId=${orderId})}">首页</a></td>
             <td th:switch="${pageNum}">
-                <p th:case="1"><a th:href="@{/orderLog/list(pageNum=1)}">上一页</a></p>
-                <p th:case="*"><a th:href="@{/orderLog/list(pageNum=${pageNum-1})}">上一页</a></p>
+                <p th:case="1"><a th:href="@{/orderLog/list(pageNum=1,orderId=${orderId})}">上一页</a></p>
+                <p th:case="*"><a th:href="@{/orderLog/list(pageNum=${pageNum-1},orderId=${orderId})}">上一页</a></p>
             </td>
             <td th:switch="${pageNum}">
-                <p th:case="${totalPages}"><a th:href="@{/orderLog/list(pageNum=${totalPages})}">下一页</a></p>
-                <p th:case="*"><a th:href="@{/orderLog/list(pageNum=${pageNum+1})}">下一页</a></p>
+                <p th:case="${totalPages}"><a th:href="@{/orderLog/list(pageNum=${totalPages},orderId=${orderId})}">下一页</a></p>
+                <p th:case="*"><a th:href="@{/orderLog/list(pageNum=${pageNum+1},orderId=${orderId})}">下一页</a></p>
             </td>
-            <td><a th:href="@{/orderLog/list(pageNum=${totalPages})}">尾页</a></td>
+            <td><a th:href="@{/orderLog/list(pageNum=${totalPages},orderId=${orderId})}">尾页</a></td>
         </tr>
     </table>
 

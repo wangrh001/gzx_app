@@ -4,6 +4,7 @@ import com.bangnd.ums.entity.Role;
 import com.bangnd.ums.form.RoleSearchForm;
 import com.bangnd.ums.repository.RoleRepository;
 import com.bangnd.ums.service.RoleService;
+import com.bangnd.util.cfg.ConstantCfg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -57,7 +58,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> getAll() {
-        return roleRepository.findAll();
+        return roleRepository.findByStateNot(ConstantCfg.STATE_100);
     }
 
 

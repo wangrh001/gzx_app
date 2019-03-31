@@ -11,6 +11,8 @@ public interface UserService {
 
     public User getUserByUserName(String userName);
 
+    public List<User> getAllUserByUserName(String userName);
+
     public boolean verifyUserName(String userName);
 
     public boolean verifyPassword(String userName, String password);

@@ -58,6 +58,9 @@ public class Payment {
     @Column
     public long relatedId;
 
+    @Column
+    public String posted;
+
     public int getIfReal() {
         return ifReal;
     }
@@ -227,5 +230,13 @@ public class Payment {
 
     public void setOrderProductId(long orderProductId) {
         this.orderProductId = orderProductId;
+    }
+
+    public String getPosted() {
+        return posted;
+    }
+
+    public void setPosted(String posted) {
+        this.posted = posted;
     }
 }

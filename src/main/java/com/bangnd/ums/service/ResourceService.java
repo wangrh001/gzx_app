@@ -20,4 +20,8 @@ public interface ResourceService {
     public String getMenuTreeString(List<Resource> resources);
 
     public List<Resource> getAll();
+
+    public List<Resource> getParentResource();
+
+    public List<Resource> getAllButtonRes();
 }

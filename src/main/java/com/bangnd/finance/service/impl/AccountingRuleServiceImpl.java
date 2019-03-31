@@ -61,4 +61,9 @@ public class AccountingRuleServiceImpl implements AccountingRuleService {
     public void merge(AccountingRule accountingRule) {
         accountingRuleRepository.save(accountingRule);
     }
+
+    @Override
+    public List<AccountingRule> getAccountingRuleByFeeType(int feeType) {
+        return accountingRuleRepository.findAllByFeeType(feeType);
+    }
 }

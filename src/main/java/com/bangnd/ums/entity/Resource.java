@@ -26,6 +26,8 @@ public class Resource {
     private int type;
     @Column
     private long parentId;
+    @Column
+    private int grade;
 
     public String getName() {
         return name;
@@ -128,5 +130,13 @@ public class Resource {
 
     public void setValueSet(String valueSet) {
         this.valueSet = valueSet;
+    }
+
+    public int getGrade() {
+        return grade;
+    }
+
+    public void setGrade(int grade) {
+        this.grade = grade;
     }
 }

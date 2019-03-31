@@ -25,11 +25,11 @@ public class AttendanceController {
     AttendanceAskTypeService attendanceAskTypeService;
 
     @RequestMapping("/hr/attendance")
-    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, AttendanceSearchForm attendanceSearchForm) {
-        if(pageNum==null){
-            pageNum="1";
+    public String home(Model model, @RequestParam(value = "pageNum", required = false) String pageNum, AttendanceSearchForm attendanceSearchForm) {
+        if (pageNum == null) {
+            pageNum = "1";
         }
-        Page<Attendance> pages = attendanceService.getAttendanceList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,attendanceSearchForm);
+        Page<Attendance> pages = attendanceService.getAttendanceList(Integer.valueOf(pageNum), ConstantCfg.NUM_PER_PAGE, attendanceSearchForm);
         model.addAttribute("askTypes", attendanceAskTypeService.getAll());
         List<AttendanceVO> attendanceVOs = new ArrayList<>();
         if (pages != null) {
@@ -43,12 +43,12 @@ public class AttendanceController {
             }
         }
 
-        int pagenum=Integer.valueOf(pageNum);
-        model.addAttribute("page",pages);
-        model.addAttribute("pageNum",pagenum);
-        model.addAttribute("totalPages",pages.getTotalPages());
-        System.out.println("totalPages="+pages.getTotalPages());
-        model.addAttribute("totalElements",pages.getTotalElements());
+        int pagenum = Integer.valueOf(pageNum);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", pagenum);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        System.out.println("totalPages=" + pages.getTotalPages());
+        model.addAttribute("totalElements", pages.getTotalElements());
         model.addAttribute("attendanceVOs", attendanceVOs);
         return "/hr/attendanceList";
     }

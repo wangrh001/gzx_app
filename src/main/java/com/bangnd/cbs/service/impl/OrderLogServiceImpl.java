@@ -56,12 +56,13 @@ public class OrderLogServiceImpl implements OrderLogService {
         }else return false;
     }
     @Override
-    public void recordLog(long orderId,long userId,int actionId){
+    public void recordLog(long orderId,long userId,int buttonId){
         OrderLog orderLog = new OrderLog();
         orderLog.setOrderId(orderId);
         orderLog.setUserId(userId);
-        orderLog.setActionId(actionId);
+        orderLog.setButtonId(buttonId);
         orderLog.setState(1);
+        orderLog.setOperatorTime(new Date());
         orderLog.setCreator(Long.valueOf(userId).intValue());
         orderLog.setCreateTime(new Date());
         orderLogRepository.save(orderLog);

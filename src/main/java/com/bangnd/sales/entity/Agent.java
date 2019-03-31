@@ -25,7 +25,10 @@ public class Agent {
     @Column
     public int channelType;
     @Column
-    public String employeeCode;
+    public long employeeId;
+    @Column
+    public long groupId;
+
     @Column
     public String bankCode;
     @Column
@@ -42,6 +45,9 @@ public class Agent {
     public String userName;
     @Column
     public long userId;
+    @Column
+    private long parentId;
+
 
     @Column
     public int jobYears;
@@ -66,8 +72,12 @@ public class Agent {
         return channelType;
     }
 
-    public String getEmployeeCode() {
-        return employeeCode;
+    public long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getBankCode() {
@@ -112,10 +122,6 @@ public class Agent {
 
     public void setChannelType(int channelType) {
         this.channelType = channelType;
-    }
-
-    public void setEmployeeCode(String employeeCode) {
-        this.employeeCode = employeeCode;
     }
 
     public void setBankCode(String bankCode) {
@@ -199,5 +205,21 @@ public class Agent {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(long parentId) {
+        this.parentId = parentId;
+    }
+
+    public long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(long groupId) {
+        this.groupId = groupId;
     }
 }

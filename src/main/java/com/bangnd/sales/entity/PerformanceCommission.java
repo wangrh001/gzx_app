@@ -20,47 +20,45 @@ public class PerformanceCommission {
     }
 
     @Column
-    public long agentId;
+    public long salerId;
     @Column
     public String month;
     @Column
-    public String agentName;
-    @Column
-    public long employeeId;
-    @Column
-    public String employeeName;
-    @Column
-    public long orderProdId;
+    public String salerName;
     @Column
     public BigDecimal commission;
     @Column
+    public BigDecimal minCommission;
+    @Column
+    public BigDecimal maxCommission;
+
+    @Column
     public BigDecimal performance;
+    @Column
+    public BigDecimal interest;
     @Column
     public int process;
 
-    public long getAgentId() {
-        return agentId;
+    public long getSalerId() {
+        return salerId;
+    }
+
+    public void setSalerId(long salerId) {
+        this.salerId = salerId;
+    }
+
+    public String getSalerName() {
+        return salerName;
+    }
+
+    public void setSalerName(String salerName) {
+        this.salerName = salerName;
     }
 
     public String getMonth() {
         return month;
     }
 
-    public String getAgentName() {
-        return agentName;
-    }
-
-    public long getEmployeeId() {
-        return employeeId;
-    }
-
-    public String getEmployeeName() {
-        return employeeName;
-    }
-
-    public long getOrderProdId() {
-        return orderProdId;
-    }
 
     public BigDecimal getCommission() {
         return commission;
@@ -74,29 +72,11 @@ public class PerformanceCommission {
         return process;
     }
 
-    public void setAgentId(long agentId) {
-        this.agentId = agentId;
-    }
 
     public void setMonth(String month) {
         this.month = month;
     }
 
-    public void setAgentName(String agentName) {
-        this.agentName = agentName;
-    }
-
-    public void setEmployeeId(long employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
-    }
-
-    public void setOrderProdId(long orderProdId) {
-        this.orderProdId = orderProdId;
-    }
 
     public void setCommission(BigDecimal commission) {
         this.commission = commission;
@@ -159,5 +139,29 @@ public class PerformanceCommission {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public BigDecimal getInterest() {
+        return interest;
+    }
+
+    public void setInterest(BigDecimal interest) {
+        this.interest = interest;
+    }
+
+    public BigDecimal getMinCommission() {
+        return minCommission;
+    }
+
+    public void setMinCommission(BigDecimal minCommission) {
+        this.minCommission = minCommission;
+    }
+
+    public BigDecimal getMaxCommission() {
+        return maxCommission;
+    }
+
+    public void setMaxCommission(BigDecimal maxCommission) {
+        this.maxCommission = maxCommission;
     }
 }

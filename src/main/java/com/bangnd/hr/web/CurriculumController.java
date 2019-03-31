@@ -28,11 +28,11 @@ public class CurriculumController {
     CurriculumPosIdService curriculumPosIdService;
 
     @RequestMapping("/hr/curriculum")
-    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, CurriculumSearchForm curriculumSearchForm) {
-        if(pageNum==null){
-            pageNum="1";
+    public String home(Model model, @RequestParam(value = "pageNum", required = false) String pageNum, CurriculumSearchForm curriculumSearchForm) {
+        if (pageNum == null) {
+            pageNum = "1";
         }
-        Page<Curriculum> pages =  curriculumService.getCurriculumList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,curriculumSearchForm);
+        Page<Curriculum> pages = curriculumService.getCurriculumList(Integer.valueOf(pageNum), ConstantCfg.NUM_PER_PAGE, curriculumSearchForm);
         model.addAttribute("types", curriculumTypeService.getAll());
         model.addAttribute("posIds", curriculumPosIdService.getAll());
         List<CurriculumVO> curriculumVOs = new ArrayList<>();
@@ -48,12 +48,12 @@ public class CurriculumController {
             }
         }
 
-        int pagenum=Integer.valueOf(pageNum);
-        model.addAttribute("page",pages);
-        model.addAttribute("pageNum",pagenum);
-        model.addAttribute("totalPages",pages.getTotalPages());
-        System.out.println("totalPages="+pages.getTotalPages());
-        model.addAttribute("totalElements",pages.getTotalElements());
+        int pagenum = Integer.valueOf(pageNum);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", pagenum);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        System.out.println("totalPages=" + pages.getTotalPages());
+        model.addAttribute("totalElements", pages.getTotalElements());
         model.addAttribute("curriculumVOs", curriculumVOs);
         return "/hr/curriculumList";
     }

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>新增</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/cbs/prodInterest/add}" th:object="${prodInterest}" method="post">
+        <table>
+            <input type="hidden" th:field="*{id}"/>
+            <tr>
+                <td>产品</td>
+                <td><select th:field="*{productId}" th:remove="all-but-first">
+                    <option th:each="product : ${products}"
+                            th:value="${product.id}" th:text="${product.productName}">Credit card
+                    </option>
+                </select></td>
+                <td>结算周期</td>
+                <td><select th:field="*{periodType}" th:remove="all-but-first">
+                    <option th:each="periodType : ${periodTypes}"
+                            th:value="${periodType.id}" th:text="${periodType.name}">Credit card
+                    </option>
+                </select></td>
+                <td>产品利息</td>
+                <td><input th:field="*{interest}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>开始时间</td>
+                <td><input id="beginDate" name="beginDate" th:value="*{beginDate ne null} ? *{#dates.format(beginDate,'yyyy-MM-dd')}" placeholder="yyyy-MM-dd"  class="form-control"/></td>
+                <td>结束时间</td>
+                <td><input id="endDate" name="endDate" th:value="*{endDate ne null} ? *{#dates.format(endDate,'yyyy-MM-dd')}" placeholder="yyyy-MM-dd"  class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="保存" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="form-group">
+</div>
+</body>
+</html>

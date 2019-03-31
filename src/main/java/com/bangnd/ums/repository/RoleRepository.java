@@ -11,4 +11,6 @@ public interface RoleRepository extends JpaRepository<Role, Long>, JpaSpecificat
     public Role findById(@Param(value = "id") long id);
 
     List<Role> findByStateNot(@Param(value = "status") int status);
+
+
 }

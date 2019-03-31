@@ -5,7 +5,7 @@ import java.util.Date;
 public class OrderLogListForm {
     private long id;
     private String userName;
-    private String actionName;
+    private String buttonName;
     private Date actionTime;
     private String actionDesc;
 
@@ -25,12 +25,12 @@ public class OrderLogListForm {
         this.userName = userName;
     }
 
-    public String getActionName() {
-        return actionName;
+    public String getButtonName() {
+        return buttonName;
     }
 
-    public void setActionName(String actionName) {
-        this.actionName = actionName;
+    public void setButtonName(String buttonName) {
+        this.buttonName = buttonName;
     }
 
     public Date getActionTime() {

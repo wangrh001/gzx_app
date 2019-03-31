@@ -31,9 +31,10 @@ public class ResourceController {
             pageNum="1";
         }
         System.out.println("pageNum="+pageNum);
+        System.out.println("resourceSearchForm.getType()="+resourceSearchForm.getType());
         Page<com.bangnd.ums.entity.Resource> pages=resourceService.getResourceList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,resourceSearchForm);
         model.addAttribute("types", resourceTypeService.getAll());
-        model.addAttribute("parentIds", resourceService.getAll());
+        model.addAttribute("parentIds", resourceService.getParentResource());
         List<ResourceVO> resourceVOs = new ArrayList<>();
         if (pages != null) {
             for (com.bangnd.ums.entity.Resource resource : pages) {
@@ -64,12 +65,14 @@ public class ResourceController {
         com.bangnd.ums.entity.Resource resource = new com.bangnd.ums.entity.Resource();
         model.addAttribute("resource", resource);
         model.addAttribute("types", resourceTypeService.getAll());
-        model.addAttribute("parentIds", resourceService.getAll());
+        model.addAttribute("parentIds", resourceService.getParentResource());
         return "/ums/resourceAdd";
     }
 
     @RequestMapping("/ums/resource/add")
     public String add(com.bangnd.ums.entity.Resource resource) {
+        com.bangnd.ums.entity.Resource parentResource = resourceService.getResourceById(resource.getParentId());
+        resource.setGrade(parentResource.getGrade()+1);
         resource.setState(ConstantCfg.ORDER_STATE_INITIAL);
         resource.setCreator(0);
         resource.setCreateTime(new Date());
@@ -82,13 +85,13 @@ public class ResourceController {
         com.bangnd.ums.entity.Resource resource = resourceService.getResourceById(id);
         model.addAttribute("resource", resource);
         model.addAttribute("types", resourceTypeService.getAll());
-        model.addAttribute("parentIds", resourceService.getAll());
-        return "/ums/resourceAdd";
+        model.addAttribute("parentIds", resourceService.getParentResource());
+        return "/ums/resourceEdit";
     }
 
     @RequestMapping("/ums/resource/modify")
     public String modify(com.bangnd.ums.entity.Resource resource, Long id) {
-        com.bangnd.ums.entity.Resource oldResource = resourceService.getResourceById(id);
+        com.bangnd.ums.entity.Resource oldResource = resourceService.getResourceById(resource.getId());
         oldResource.setName(resource.getName());
         oldResource.setResUrl(resource.getResUrl());
         oldResource.setType(resource.getType());
@@ -96,7 +99,7 @@ public class ResourceController {
         oldResource.setUpdator(0);
         oldResource.setUpdateTime(new Date());
         resourceService.merge(oldResource);
-        return "redirect:/ums/resource/toModify?id=" + id;
+        return "redirect:/ums/resource/toModify?id=" + resource.getId();
     }
 
     @RequestMapping("/ums/resource/delete")

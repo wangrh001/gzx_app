@@ -7,5 +7,7 @@ import java.util.List;
 public interface AgentChannelTypeService {
     public List<AgentChannelType> getAll();
 
+    public List<AgentChannelType> getOutSalesTypes();
+
     public AgentChannelType getAgentChannelTypeById(Integer ind);
 }

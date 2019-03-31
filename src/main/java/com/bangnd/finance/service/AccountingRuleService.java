@@ -4,6 +4,8 @@ import com.bangnd.finance.entity.AccountingRule;
 import com.bangnd.finance.form.AccountingRuleSearchForm;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface AccountingRuleService {
     public Page<AccountingRule> getAccountingRuleList(Integer pageNum, int size, AccountingRuleSearchForm accountingRuleSearchForm);
 
@@ -12,4 +14,6 @@ public interface AccountingRuleService {
     public AccountingRule getAccountingRuleById(long id);
 
     public void merge(AccountingRule accountingRule);
+
+    public List<AccountingRule> getAccountingRuleByFeeType(int feeType);
 }

@@ -17,5 +17,11 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
     public List<Employee> findAll();
 
     @Query("select e from Employee e where e.userId=:userId")
-    public Employee findOneByUserId(@Param(value="userId") long userId);
+    public Employee findOneByUserId(@Param(value = "userId") long userId);
+
+    @Query("select e from Employee e where e.name like %:name% and state <> 100")
+    public List<Employee> findAllByName(@Param(value="name") String name);
+
+    @Query("select e from Employee e where e.position=:position and state <> 100")
+    public List<Employee> findAllByPosition(@Param(value="position") int position);
 }

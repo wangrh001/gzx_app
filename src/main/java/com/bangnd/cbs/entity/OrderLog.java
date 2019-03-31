@@ -20,7 +20,7 @@ public class OrderLog {
     private long userId;
 
     @Column
-    private long actionId;
+    private long buttonId;
 
     @Column
     private Date operatorTime;
@@ -72,12 +72,12 @@ public class OrderLog {
         this.userId = userId;
     }
 
-    public long getActionId() {
-        return actionId;
+    public long getButtonId() {
+        return buttonId;
     }
 
-    public void setActionId(long actionId) {
-        this.actionId = actionId;
+    public void setButtonId(long buttonId) {
+        this.buttonId = buttonId;
     }
 
     public Date getOperatorTime() {

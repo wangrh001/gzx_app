@@ -5,6 +5,7 @@ import com.bangnd.finance.form.AccountingRuleSearchForm;
 import com.bangnd.finance.service.AccountBalanceService;
 import com.bangnd.finance.service.AccountingRuleFeeTypeService;
 import com.bangnd.finance.service.AccountingRuleService;
+import com.bangnd.finance.service.PaymentPayTypeService;
 import com.bangnd.finance.vo.AccountingRuleVO;
 import com.bangnd.util.cfg.ConstantCfg;
 import org.springframework.data.domain.Page;
@@ -26,14 +27,16 @@ public class AccountingRuleController {
     AccountingRuleFeeTypeService accountingRuleFeeTypeService;
     @Resource
     AccountBalanceService accountBalanceService;
+    @Resource
+    PaymentPayTypeService paymentPayTypeService;
 
     @RequestMapping("/finance/accountingRule")
-    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, AccountingRuleSearchForm accountingRuleSearchForm) {
-        if(pageNum==null){
-            pageNum="1";
+    public String home(Model model, @RequestParam(value = "pageNum", required = false) String pageNum, AccountingRuleSearchForm accountingRuleSearchForm) {
+        if (pageNum == null) {
+            pageNum = "1";
         }
-        Page<AccountingRule> pages = accountingRuleService.getAccountingRuleList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,accountingRuleSearchForm);
-        model.addAttribute("feeTypes", accountingRuleFeeTypeService.getAll());
+        Page<AccountingRule> pages = accountingRuleService.getAccountingRuleList(Integer.valueOf(pageNum), ConstantCfg.NUM_PER_PAGE, accountingRuleSearchForm);
+        model.addAttribute("feeTypes", paymentPayTypeService.getAll());
         model.addAttribute("debitSides", accountBalanceService.getAll());
         model.addAttribute("creditSides", accountBalanceService.getAll());
         List<AccountingRuleVO> accountingRuleVOs = new ArrayList<>();
@@ -41,19 +44,19 @@ public class AccountingRuleController {
             for (AccountingRule accountingRule : pages) {
                 AccountingRuleVO accountingRuleVO = new AccountingRuleVO();
                 accountingRuleVO.setId(accountingRule.getId());
-                accountingRuleVO.setFeeTypeName((accountingRuleFeeTypeService.getAccountingRuleFeeTypeById(accountingRule.getFeeType())).getName());
+                accountingRuleVO.setFeeTypeName((paymentPayTypeService.getPaymentPayTypeById(accountingRule.getFeeType())).getName());
                 accountingRuleVO.setDebitSideName((accountBalanceService.getAccountBalanceById(accountingRule.getDebitSide())).getName());
                 accountingRuleVO.setCreditSideName((accountBalanceService.getAccountBalanceById(accountingRule.getCreditSide())).getName());
                 accountingRuleVOs.add(accountingRuleVO);
             }
         }
 
-        int pagenum=Integer.valueOf(pageNum);
-        model.addAttribute("page",pages);
-        model.addAttribute("pageNum",pagenum);
-        model.addAttribute("totalPages",pages.getTotalPages());
-        System.out.println("totalPages="+pages.getTotalPages());
-        model.addAttribute("totalElements",pages.getTotalElements());
+        int pagenum = Integer.valueOf(pageNum);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", pagenum);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        System.out.println("totalPages=" + pages.getTotalPages());
+        model.addAttribute("totalElements", pages.getTotalElements());
         model.addAttribute("accountingRuleVOs", accountingRuleVOs);
         return "/finance/accountingRuleList";
     }
@@ -62,7 +65,7 @@ public class AccountingRuleController {
     public String toAdd(Model model) {
         AccountingRule accountingRule = new AccountingRule();
         model.addAttribute("accountingRule", accountingRule);
-        model.addAttribute("feeTypes", accountingRuleFeeTypeService.getAll());
+        model.addAttribute("feeTypes", paymentPayTypeService.getAll());
         model.addAttribute("debitSides", accountBalanceService.getAll());
         model.addAttribute("creditSides", accountBalanceService.getAll());
         return "/finance/accountingRuleAdd";
@@ -81,15 +84,15 @@ public class AccountingRuleController {
     public String toModify(Model model, Long id) {
         AccountingRule accountingRule = accountingRuleService.getAccountingRuleById(id);
         model.addAttribute("accountingRule", accountingRule);
-        model.addAttribute("feeTypes", accountingRuleFeeTypeService.getAll());
+        model.addAttribute("feeTypes", paymentPayTypeService.getAll());
         model.addAttribute("debitSides", accountBalanceService.getAll());
         model.addAttribute("creditSides", accountBalanceService.getAll());
-        return "/finance/accountingRuleAdd";
+        return "/finance/accountingRuleEdit";
     }
 
     @RequestMapping("/finance/accountingRule/modify")
     public String modify(AccountingRule accountingRule, Long id) {
-        AccountingRule oldAccountingRule = accountingRuleService.getAccountingRuleById(id);
+        AccountingRule oldAccountingRule = accountingRuleService.getAccountingRuleById(accountingRule.getId());
         oldAccountingRule.setFeeType(accountingRule.getFeeType());
         oldAccountingRule.setDebitSide(accountingRule.getDebitSide());
         oldAccountingRule.setCreditSide(accountingRule.getCreditSide());

@@ -13,7 +13,10 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
 
     List<User> findByStateNot(@Param(value = "status") int status);
 
-    @Query("select u from User u where u.userName=:userName")
+    @Query("select u from User u where u.userName =:userName")
     public User findUserByUserName(@Param("userName") String userName);
+
+    @Query("select u from User u where u.userName like %:userName%")
+    public List<User> findAllByUserName(@Param("userName") String userName);
 
 }

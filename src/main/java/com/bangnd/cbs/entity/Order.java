@@ -21,7 +21,7 @@ public class Order {
 
     //可接受利率
     @Column
-    private BigDecimal demandInterest;
+    private BigDecimal demandInterest=new BigDecimal(0);
 
     //用款开始时间
     @Column
@@ -29,14 +29,17 @@ public class Order {
 
     //支付方式，1、等额本息；2、等额本金；3、月息年本
     @Column
-    private int demandPayWay;
+    private int demandPayWay=0;
 
     //周期类型：1、天；2、周；3、月；4、年
     @Column
-    private long periodType;
+    private int periodType;
 
     @Column
     private int periodNum;
+
+    @Column
+    private int nextOrgType=0;
 
     //申请人
     @Column
@@ -58,7 +61,9 @@ public class Order {
     private Date applyTime;
     //销售人员
     @Column(nullable = true, unique = false)
-    private Integer agentId;
+    private long salerId;
+    @Column
+    private int channelType;
 
     //服务合同签订时间
     @Column(nullable = true, unique = false)
@@ -69,8 +74,8 @@ public class Order {
     private Date checkTime;
 
     //1、一次性付息；2、按周期付息
-    @Column
-    private int payInterestWay;
+    @Column(nullable = true)
+    private int payInterestWay=0;
 
     public BigDecimal getDemandAmount() {
         return demandAmount;
@@ -104,11 +109,11 @@ public class Order {
         this.demandPayWay = demandPayWay;
     }
 
-    public long getPeriodType() {
+    public int getPeriodType() {
         return periodType;
     }
 
-    public void setPeriodType(long periodType) {
+    public void setPeriodType(int periodType) {
         this.periodType = periodType;
     }
 
@@ -160,12 +165,12 @@ public class Order {
         this.applyTime = applyTime;
     }
 
-    public Integer getAgentId() {
-        return agentId;
+    public long getSalerId() {
+        return salerId;
     }
 
-    public void setAgentId(Integer agentId) {
-        this.agentId = agentId;
+    public void setSalerId(long salerId) {
+        this.salerId = salerId;
     }
 
     public Date getSignDate() {
@@ -262,5 +267,21 @@ public class Order {
 
     public void setPayInterestWay(int payInterestWay) {
         this.payInterestWay = payInterestWay;
+    }
+
+    public int getNextOrgType() {
+        return nextOrgType;
+    }
+
+    public void setNextOrgType(int nextOrgType) {
+        this.nextOrgType = nextOrgType;
+    }
+
+    public int getChannelType() {
+        return channelType;
+    }
+
+    public void setChannelType(int channelType) {
+        this.channelType = channelType;
     }
 }

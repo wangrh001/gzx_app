@@ -66,6 +66,7 @@
             <th>序号</th>
             <th>姓名</th>
             <th>所在部门</th>
+            <th>岗位</th>
             <th>技术职级</th>
             <th>编辑</th>
             <th>删除</th>
@@ -76,6 +77,7 @@
             <td th:text="${employeeVO.id}">1</td>
             <td th:text="${employeeVO.name}">1</td>
             <td th:text="${employeeVO.deptName}">1</td>
+            <td th:text="${employeeVO.positionName}">1</td>
             <td th:text="${employeeVO.techGradeName}">1</td>
             <td><a th:href="@{/hr/employee/toModify(id=${employeeVO.id})}">edit</a></td>
             <td><a th:href="@{/hr/employee/delete(id=${employeeVO.id})}">delete</a></td>

@@ -16,6 +16,15 @@ public interface AgentRepository extends JpaRepository<Agent, Long>, JpaSpecific
     @Query("select a from Agent a where a.state<>100 and a.channelType=2")
     public List<Agent> getOutAllAgents();
 
-    @Query("select a from Agent a where  a.userId=:userId")
+    @Query("select a from Agent a where  a.userId=:userId and a.state<>100")
     public Agent findOneByUserId(@Param(value = "userId") long userId);
+
+    @Query("select a from Agent a where  a.name like %:name% and state <> 100")
+    public List<Agent> findAllByName(@Param(value = "name") String name);
+
+    @Query("select e from Agent e where e.employeeId = :employeeId and state <> 100")
+    public Agent findAgentByEmployeeId(@Param(value = "employeeId") long employeeId);
+
+    @Query("select a from Agent a where a.groupId=:groupId")
+    public List<Agent> findAllByGroupId(@Param(value = "groupId") long groupId);
 }

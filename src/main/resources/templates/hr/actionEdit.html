@@ -17,7 +17,7 @@
 <div>
     <form class="form-horizontal" th:action="@{/hr/action/modify}" th:object="${action}" method="post">
         <table>
-            <input type="hidden" class="form-control" id="id" name = "id" th:value="*{id}"/>
+            <input type="hidden" class="form-control" id="id" name="id" th:value="*{id}"/>
             <tr>
                 <td>业务行动</td>
                 <td><input th:field="*{name}" value="" class="form-control"/></td>
@@ -31,6 +31,12 @@
                 <td><select th:field="*{isCommission}" th:remove="all-but-first">
                     <option th:each="isCommission : ${isCommissions}"
                             th:value="${isCommission.id}" th:text="${isCommission.name}">Credit card
+                    </option>
+                </select></td>
+                <td>资源</td>
+                <td><select th:field="*{resId}" th:remove="all-but-first">
+                    <option th:each="res : ${resIds}"
+                            th:value="${res.id}" th:text="${res.name}">Credit card
                     </option>
                 </select></td>
             </tr>

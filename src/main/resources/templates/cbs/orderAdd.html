@@ -39,49 +39,31 @@
             var order_form = document.getElementById("order_form")
             //提交表单数据
             if (actionType == 1) {
-                order_form.action = "/order/add?orderId=" + orderId
-                //单独提交文件
-            } else if (actionType == 2) {
-                order_form.action = "/doc/upload?orderId=" + orderId
+                order_form.action = "/order/add?buttonId=71"
+            } else if(actionType == 2){
+                order_form.action = "/order/add?buttonId=72"
             } else if (actionType == 3) {
+                if(orderId==null || orderId == 0 ){
+                    alert("请先暂存订单！");
+                    return
+                }
+                order_form.action = "/doc/upload?orderId=" + orderId
+            } else if (actionType == 4) {
                 order_form.action = "/doc/showAllPic?orderId=" + orderId
             }
             if(needFill()){
                 order_form.submit()
             }
         }
-
         function actionLogRecord(actionId){
             var order_form = document.getElementById("order_form")
             order_form.action = "/orderLog/add?actionId=" + actionId
             order_form.submit()
         }
-
-        function AddButton() {
-            /*<![CDATA[*/
-            var type = [[${buttonRes}]];
-            alert(type)
-            //这个符号不能删除！！！！
-            // /*]]>*/
-            var obj=JSON.parse(type);
-
-            for(var p in obj){//遍历json数组时，这么写p为索引，0,1
-                var orderTable =document.getElementById("orderTable");
-                var bt =document.createElement("button");           //createElement生成button对象
-                bt.className="btn btn-info"
-                bt.innerHTML = obj[p].buttonName;
-                bt.onclick = function () {                          //绑定点击事件
-                    var order_form = document.getElementById("order_form")
-                    order_form.action = obj[p].ResUrl
-                    order_form.submit()
-                };
-                orderTable.appendChild(bt);                         //添加到页面
-            }
-        }
     </script>
 </head>
 
-<body class="container" onload="AddButton()">
+<body class="container">
 <br/>
 <h4>添加订单</h4>
 
@@ -100,7 +82,8 @@
                 </select>
             </td>
             <td>签约时间</td>
-            <td><input type="text" class="form-control" id="signDate" name="signDate" th:value="*{order.signDate ne null} ? *{#dates.format(order.signDate,'MM/dd/yyyy')}" placeholder="MM/DD/YYYY"/></td>
+            <td><input type="text" class="form-control" id="signDate" name="signDate" th:value="*{order.signDate ne null} ? *{#dates.format(order.signDate,'yyyy-MM-dd')}" placeholder="yyyy-MM-dd"/></td>
+            <td><input type="submit" value="提交订单" onclick="formActionSetValue(2)" class="btn btn-info"/></td>
         </tr>
         <th>申请人</th>
         <tr>
@@ -108,32 +91,41 @@
             <td><input type="text" class="form-control" th:field="*{order.applicantName}" placeholder="姓名" /></td>
             <td>电话</td>
             <td><input type="text" class="form-control" th:field="*{order.cellPhone}" placeholder="电话"/></td>
-            <td>结息类型</td>
-            <td>
-                <select th:field="*{order.payInterestWay}" th:remove="all-but-first">
-                    <option th:each="payInterestWay : ${payInterestWays}"
-                            th:value="${payInterestWay.id}" th:text="${payInterestWay.name}">
-                            th:selected="${payInterestWay.id eq order.payInterestWay}">Credit card
-                    </option>
-                </select>
-            </td>
+            <!--<td>结息类型</td>-->
+            <!--<td>-->
+                <!--<select th:field="*{order.payInterestWay}" th:remove="all-but-first">-->
+                    <!--<option th:each="payInterestWay : ${payInterestWays}"-->
+                            <!--th:value="${payInterestWay.id}" th:text="${payInterestWay.name}">-->
+                            <!--th:selected="${payInterestWay.id eq order.payInterestWay}">Credit card-->
+                    <!--</option>-->
+                <!--</select>-->
+            <!--</td>-->
         </tr>
         <!--客户诉求 -->
         <th>请录入贷款诉求</th>
         <tr>
             <td>金额(万元)</td>
             <td><input type="text" class="form-control" th:field="*{order.demandAmount}" placeholder="金额"/></td>
-            <td>还款选择</td>
+            <td>下家机构类型</td>
             <td>
-                <select th:field="*{order.demandPayWay}" th:remove="all-but-first">
-                    <option th:each="payWay : ${payWays}"
-                            th:value="${payWay.id}" th:text="${payWay.name}"
-                            th:selected="${payWay.id eq order.demandPayWay}">Credit card
+                <select th:field="*{order.nextOrgType}" th:remove="all-but-first">
+                    <option th:each="organType : ${organTypes}"
+                            th:value="${organType.id}" th:text="${organType.name}"
+                            th:selected="${organType.id eq order.nextOrgType}">Credit card
                     </option>
                 </select>
             </td>
-            <td>利率</td>
-            <td><input type="text" class="form-control" th:field="*{order.demandInterest}" placeholder="利率(上浮%)"/></td>
+            <!--<td>还款选择</td>-->
+            <!--<td>-->
+                <!--<select th:field="*{order.demandPayWay}" th:remove="all-but-first">-->
+                    <!--<option th:each="payWay : ${payWays}"-->
+                            <!--th:value="${payWay.id}" th:text="${payWay.name}"-->
+                            <!--th:selected="${payWay.id eq order.demandPayWay}">Credit card-->
+                    <!--</option>-->
+                <!--</select>-->
+            <!--</td>-->
+            <!--<td>利率</td>-->
+            <!--<td><input type="text" class="form-control" th:field="*{order.demandInterest}" placeholder="利率(上浮%)"/></td>-->
         </tr>
         <tr>
             <td>周期类型</td>
@@ -148,33 +140,18 @@
             <td>周期数</td>
             <td><input type="text" class="form-control" th:field="*{order.periodNum}" placeholder="贷款月数"/></td>
             <td>用款日期</td>
-            <td><input type="text" class="form-control" id="demandDate" name="demandDate" th:value="*{order.demandDate ne null} ? *{#dates.format(order.demandDate,'MM/dd/yyyy')}"/></td>
+            <td><input type="text" class="form-control" id="demandDate" name="demandDate" th:value="*{order.demandDate ne null} ? *{#dates.format(order.demandDate,'yyyy-MM-dd')}"/></td>
         </tr>
 
+        <tr>
+            <td><input type="submit" value="暂存订单" onclick="formActionSetValue(1)" class="btn btn-info"/></td>
+            <td><input type="button" value="添加客户" class="btn btn-info" onclick="showAddCustomerPage()"/></td>
+            <td><input type="button" value="添加产品" class="btn btn-info" onclick="showAddProductPage()"/></td>
+            <td>上传客户资料<input name="files" type="file" multiple="true"/></td>
+            <td><button type="submit" class="btn btn-info" onclick="formActionSetValue(3)">确定上传</button></td>
+            <td><button type="submit" class="btn btn-info" onclick="formActionSetValue(4)">查看图片</button></td>
 
-
-        <!--<tr>-->
-            <!--<td><input type="submit" value="保存订单" onclick="formActionSetValue(1)" class="btn btn-info"/></td>-->
-            <!--<td><input type="button" value="添加客户" class="btn btn-info" onclick="showAddCustomerPage()"/></td>-->
-            <!--<td><input type="button" value="添加产品" class="btn btn-info" onclick="showAddProductPage()"/></td>-->
-            <!--<td>上传客户资料<input name="files" type="file" multiple="true"/></td>-->
-            <!--<td>-->
-                <!--<button type="submit" class="btn btn-info" onclick="formActionSetValue(2)">确定上传</button>-->
-            <!--</td>-->
-            <!--<td>-->
-                <!--<button type="submit" class="btn btn-info" onclick="formActionSetValue(3)">查看图片</button>-->
-            <!--</td>-->
-        <!--</tr>-->
-
-        <!--<tr>-->
-            <!--<td><button type="submit" class="btn btn-info" onclick="actionLogRecord(5)">下户完成</button></td>-->
-            <!--<td><button type="submit" class="btn btn-info" onclick="actionLogRecord(6)">材料复核完成</button></td>-->
-            <!--<td><button type="submit" class="btn btn-info" onclick="actionLogRecord(7)">产品复核完成</button></td>-->
-            <!--<td><button type="submit" class="btn btn-info" onclick="actionLogRecord(8)">申请材料提交给银行</button></td>-->
-            <!--<td><button type="submit" class="btn btn-info" onclick="actionLogRecord(10)">材料已归档</button></td>-->
-            <!--<td><button type="submit" class="btn btn-info" onclick="actionLogRecord(11)">订单完结</button></td>-->
-        <!--</tr>-->
-
+        </tr>
 
         <tr>
             <td>备注</td>
@@ -274,8 +251,8 @@
                     </option>
                 </select>
             </td>
-            <td>房龄</td>
-            <td><input type="text" class="form-control" th:field="*{custMortgage.estateAge}" placeholder="房龄"/></td>
+            <td>抵押次数</td>
+            <td><input type="text" class="form-control" th:field="*{custMortgage.mortgageCount}" placeholder="抵押次数"/></td>
             <td>类型</td>
             <td>
                 <select th:field="*{custMortgage.estateType}" th:remove="all-but-first">
@@ -289,17 +266,17 @@
             <td><input type="text" class="form-control" th:field="*{custMortgage.estatePrice}" placeholder="评估金额"/></td>
         </tr>
         <!--客户征信信息 -->
-        <th>客户征信</th>
-        <tr>
-            <td>两年内连超(次)</td>
-            <td><input type="text" class="form-control" th:field="*{custCredit.contD2Times2Y}" placeholder="连超"/></td>
-            <td>两年内总超(次)</td>
-            <td><input type="text" class="form-control" th:field="*{custCredit.DDays2Y}" placeholder="累超"/></td>
-            <td>最长逾期(天)</td>
-            <td><input type="text" class="form-control" th:field="*{custCredit.maxDelay}" placeholder="逾期"/></td>
-            <td>信用卡冻结余额(元)</td>
-            <td><input type="text" class="form-control" th:field="*{custCredit.freezeAmount}" placeholder="冻结金额"/></td>
-        </tr>
+        <!--<th>客户征信</th>-->
+        <!--<tr>-->
+            <!--<td>两年内连超(次)</td>-->
+            <!--<td><input type="text" class="form-control" th:field="*{custCredit.contD2Times2Y}" placeholder="连超"/></td>-->
+            <!--<td>两年内总超(次)</td>-->
+            <!--<td><input type="text" class="form-control" th:field="*{custCredit.DDays2Y}" placeholder="累超"/></td>-->
+            <!--<td>最长逾期(天)</td>-->
+            <!--<td><input type="text" class="form-control" th:field="*{custCredit.maxDelay}" placeholder="逾期"/></td>-->
+            <!--<td>信用卡冻结余额(元)</td>-->
+            <!--<td><input type="text" class="form-control" th:field="*{custCredit.freezeAmount}" placeholder="冻结金额"/></td>-->
+        <!--</tr>-->
         <tr>
             <td><input type="submit" value="保存客户" class="btn btn-info"/></td>
         </tr>

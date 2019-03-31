@@ -42,7 +42,7 @@ public class DocHandlerController {
      */
     @RequestMapping("/doc/upload")
     public String upload(HttpServletRequest request, Model model, @RequestParam("files") MultipartFile[] files, Long orderId) {
-        String url = "redirect:/order/toAdd?orderId=" + orderId.toString();
+        String url = "redirect:/order/toEdit?orderId=" + orderId.toString();
         int userId=Long.valueOf(((User)request.getSession().getAttribute("user")).getId()).intValue();
         Map<String, String> fileNameMapping = new HashMap<String, String>();
         if (files != null && files.length >= 1) {
@@ -65,7 +65,7 @@ public class DocHandlerController {
                 orderDocument.setCreateTime(new Date());
                 orderDocService.save(orderDocument);
             }
-            orderLogService.recordLog(orderId,userId,ConstantCfg.ORDER_ACTION_2);
+            orderLogService.recordLog(orderId,userId,ConstantCfg.ORDER_BUTTON_UPLOADDOC);
             model.addAttribute("message", "文件： " + files.length + "个上传成功!");
             model.addAttribute("files", files);
         }
@@ -83,7 +83,7 @@ public class DocHandlerController {
         }
         model.addAttribute("files", fileNames);
         model.addAttribute("orderId", orderId);
-        return "/order/docUpload";
+        return "/cbs/docUpload";
     }
 
     //查看已经上传的文件

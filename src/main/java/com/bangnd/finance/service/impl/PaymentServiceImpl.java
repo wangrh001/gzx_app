@@ -4,6 +4,8 @@ import com.bangnd.finance.entity.Payment;
 import com.bangnd.finance.form.PaymentSearchForm;
 import com.bangnd.finance.repository.PaymentRepository;
 import com.bangnd.finance.service.PaymentService;
+import com.bangnd.util.cfg.ConstantCfg;
+import com.bangnd.util.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +18,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -36,9 +40,9 @@ public class PaymentServiceImpl implements PaymentService {
                     } else {
                         predicates.add(cb.equal(root.get("offset"), paymentSearchForm.getOffset()));
                     }
-                }else {
-                        //默认去未核销的
-                        predicates.add(cb.equal(root.get("offset"), 2));
+                } else {
+                    //默认去未核销的
+                    predicates.add(cb.equal(root.get("offset"), 2));
                 }
 
                 if (paymentSearchForm.getInOut() != null && !"".equals(paymentSearchForm.getInOut())) {
@@ -67,7 +71,7 @@ public class PaymentServiceImpl implements PaymentService {
                     } else {
                         predicates.add(cb.equal(root.get("payState").as(Integer.class), paymentSearchForm.getPayState()));
                     }
-                }else {
+                } else {
                     predicates.add(cb.notEqual(root.get("payState").as(Integer.class), new Integer(7)));
                 }
                 if (paymentSearchForm.getIfReal() != null && !"".equals(paymentSearchForm.getIfReal())) {
@@ -92,6 +96,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public void save(Payment payment) {
+        payment.setPosted("N");
         paymentRepository.save(payment);
     }
 
@@ -108,5 +113,52 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public List<Payment> getPaymentListByOrderProdId(long id) {
         return paymentRepository.findAllByorderProductId(id);
+    }
+
+    @Override
+    public Payment getPaymentByOrderIdAndFeeType(long orderId, int feeType) {
+        Payment payment = null;
+        try {
+            return paymentRepository.findPaymentByOrderIdAndFeeType(orderId, feeType, ConstantCfg.OFF_SET_CLOSE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return payment;
+    }
+
+    @Override
+    public BigDecimal getSumIncome(Date date) {
+        String feeType = "(1,3,9,10,11,30)";
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_YEAR,1);
+        return paymentRepository.findAllByDateAndFeeType(date,calendar.getTime(),feeType);
+    }
+
+    @Override
+    public BigDecimal getSumExpend(Date date) {
+        String feeType = "(2,5,6,7)";
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_YEAR,1);
+        return paymentRepository.findAllByDateAndFeeType(date,calendar.getTime(),feeType);
+    }
+
+    @Override
+    public BigDecimal getSumCashIn(Date date) {
+        String feeType = "(13,14,15,16,17,18,28,31)";
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_YEAR,1);
+        return paymentRepository.findAllByDateAndFeeType(date,calendar.getTime(),feeType);
+    }
+
+    @Override
+    public BigDecimal getSumCashOut(Date date) {
+        String feeType = "(8,12,19,23,24,25,29)";
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_YEAR,1);
+        return paymentRepository.findAllByDateAndFeeType(date,calendar.getTime(),feeType);
     }
 }

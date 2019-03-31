@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>新增</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/sales/agent/add}" th:object="${agent}" method="post">
+        <table>
+            <input type="hidden" th:field="*{id}"/>
+            <tr>
+                <td>姓名</td>
+                <td><input th:field="*{name}" value="" class="form-control"/></td>
+                <td>业务类型</td>
+                <td><select th:field="*{businessType}" th:remove="all-but-first">
+                    <option th:each="businessType : ${businessTypes}"
+                            th:value="${businessType.id}" th:text="${businessType.name}">Credit card
+                    </option>
+                </select></td>
+                <td>渠道类型</td>
+                <td><select th:field="*{channelType}" th:remove="all-but-first">
+                    <option th:each="channelType : ${channelTypes}"
+                            th:value="${channelType.id}" th:text="${channelType.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>银行账号</td>
+                <td><input th:field="*{bankCode}" value="" class="form-control"/></td>
+                <td>合作开始日期</td>
+                <td><input th:id= "*{cooperateBeginDate}" th:name="*{cooperateBeginDate}" th:value="*{cooperateBeginDate ne null} ? *{#dates.format(cooperateBeginDate,'yyyy-MM-dd')}"
+                           class="form-control"/></td>
+                <td>合作结束日期</td>
+                <td><input th:id= "*{cooperateEndDate}" th:name="*{cooperateEndDate}" th:value="*{cooperateEndDate ne null} ? *{#dates.format(cooperateEndDate,'yyyy-MM-dd')}"
+                           class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>生份证号</td>
+                <td><input th:field="*{centiCode}" value="" class="form-control"/></td>
+                <td>手机号</td>
+                <td><input th:field="*{phoneNO}" value="" class="form-control"/></td>
+                <td>公司名</td>
+                <td><input th:field="*{companyName}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>用户名</td>
+                <td><input th:field="*{userName}" value="" class="form-control"/></td>
+                <td>从业年限</td>
+                <td><input th:field="*{jobYears}" value="" class="form-control"/></td>
+                <td>所属团队</td>
+                <td><select th:field="*{groupId}" th:remove="all-but-first">
+                    <option th:each="group : ${groups}"
+                            th:value="${group.id}" th:text="${group.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="保存" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

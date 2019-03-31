@@ -69,7 +69,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel5 = new DataModel();
 //        dataModel5.setColumnNameCh("合作开始日期");
-          //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+          //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel5.setColumnNameEn("cooperateBeginDate");
 //        dataModel5.setColumnType(4);
 //        dataModel5.setIfBusinessDate(1);
@@ -81,7 +81,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel6 = new DataModel();
 //        dataModel6.setColumnNameCh("合作结束日期");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel6.setColumnNameEn("cooperateEndDate");
 //        dataModel6.setColumnType(4);
 //        dataModel6.setIfBusinessDate(1);
@@ -163,7 +163,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel1 = new DataModel();
 //        dataModel1.setColumnNameCh("生日");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel1.setColumnNameEn("birthday");
 //        dataModel1.setColumnType(4);
 //        dataModel1.setIfBusinessDate(0);
@@ -241,7 +241,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel8 = new DataModel();
 //        dataModel8.setColumnNameCh("雇佣时间");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel8.setColumnNameEn("hiredate");
 //        dataModel8.setColumnType(4);
 //        dataModel8.setIfBusinessDate(0);
@@ -253,7 +253,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel9 = new DataModel();
 //        dataModel9.setColumnNameCh("离职时间");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel9.setColumnNameEn("leavedate");
 //        dataModel9.setColumnType(4);
 //        dataModel9.setIfBusinessDate(0);
@@ -345,7 +345,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel1 = new DataModel();
 //        dataModel1.setColumnNameCh("生日");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel1.setColumnNameEn("birthday");
 //        dataModel1.setColumnType(4);
 //        dataModel1.setIfBusinessDate(0);
@@ -563,7 +563,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel12 = new DataModel();
 //        dataModel12.setColumnNameCh("支付日期");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel12.setColumnNameEn("payDate");
 //        dataModel12.setColumnType(4);
 //        dataModel12.setIfBusinessDate(1);
@@ -671,7 +671,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel10 = new DataModel();
 //        dataModel10.setColumnNameCh("开始时间");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel10.setColumnNameEn("beginDate");
 //        dataModel10.setColumnType(4);
 //        dataModel10.setIfBusinessDate(1);
@@ -683,7 +683,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel3 = new DataModel();
 //        dataModel3.setColumnNameCh("结束时间");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel3.setColumnNameEn("endDate");
 //        dataModel3.setColumnType(1);
 //        dataModel3.setIfBusinessDate(0);
@@ -855,7 +855,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel10 = new DataModel();
 //        dataModel10.setColumnNameCh("开始时间");
-//        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+//        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel10.setColumnNameEn("beginDate");
 //        dataModel10.setColumnType(4);
 //        dataModel10.setIfBusinessDate(1);
@@ -867,7 +867,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel11 = new DataModel();
 //        dataModel11.setColumnNameCh("结束时间");
-//        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+//        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel11.setColumnNameEn("endDate");
 //        dataModel11.setColumnType(4);
 //        dataModel11.setIfBusinessDate(0);
@@ -1073,7 +1073,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel10 = new DataModel();
 //        dataModel10.setColumnNameCh("开始时间");
-//        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+//        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel10.setColumnNameEn("beginDate");
 //        dataModel10.setColumnType(4);
 //        dataModel10.setIfBusinessDate(1);
@@ -1085,7 +1085,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel11 = new DataModel();
 //        dataModel11.setColumnNameCh("结束时间");
-//        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+//        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel11.setColumnNameEn("endDate");
 //        dataModel11.setColumnType(4);
 //        dataModel11.setIfBusinessDate(0);
@@ -1274,7 +1274,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel10 = new DataModel();
 //        dataModel10.setColumnNameCh("开始日期");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel10.setColumnNameEn("startDate");
 //        dataModel10.setColumnType(4);
 //        dataModel10.setIfBusinessDate(0);
@@ -1286,7 +1286,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel11 = new DataModel();
 //        dataModel11.setColumnNameCh("结束日期");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel11.setColumnNameEn("endDate");
 //        dataModel11.setColumnType(4);
 //        dataModel11.setIfBusinessDate(0);
@@ -1370,7 +1370,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel5 = new DataModel();
 //        dataModel5.setColumnNameCh("发放时间");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel5.setColumnNameEn("extendDate");
 //        dataModel5.setColumnType(4);
 //        dataModel5.setIfBusinessDate(1);
@@ -1669,7 +1669,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel10 = new DataModel();
 //        dataModel10.setColumnNameCh("最后执行时间");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel10.setColumnNameEn("lastTime");
 //        dataModel10.setColumnType(4);
 //        dataModel10.setIfBusinessDate(1);
@@ -1681,7 +1681,7 @@ public class TotalEntityData {
 //
 //        DataModel dataModel11 = new DataModel();
 //        dataModel11.setColumnNameCh("上线时间");
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel11.setColumnNameEn("startTime");
 //        dataModel11.setColumnType(4);
 //        dataModel11.setIfBusinessDate(1);
@@ -1694,7 +1694,7 @@ public class TotalEntityData {
 //        DataModel dataModel3 = new DataModel();
 //        dataModel3.setColumnNameCh("下次执行时间");
 //        //1、待执行；2、执行中
-        //前端传的字符串日期格式必须是：MM/DD/YYYY，后端会自动存储成日期类型
+        //前端传的字符串日期格式必须是：yyyy-MM-dd，后端会自动存储成日期类型
 //        dataModel3.setColumnNameEn("nextTime");
 //        dataModel3.setColumnType(4);
 //        dataModel3.setIfBusinessDate(1);
@@ -1788,5 +1788,353 @@ public class TotalEntityData {
 //        dataModel2.setIfModifyable(1);
 //        dataModels.add(dataModel2);
 
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("util");
+//        dataModel.setTableNames("workFlow");
+//        //1、订单处理工作；
+//        dataModel.setColumnNameCh("工作类型");
+//        dataModel.setColumnNameEn("workType");
+//        dataModel.setColumnType(1);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(1);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("转前状态");
+//        dataModel1.setColumnNameEn("beforState");
+//        dataModel1.setColumnType(1);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(1);
+//        dataModel1.setIfSearchColumn(1);
+//        dataModel1.setIfShowColumn(1);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("流转条件");
+//        dataModel2.setColumnNameEn("transCondition");
+//        dataModel2.setColumnType(3);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(0);
+//        dataModel2.setIfSearchColumn(0);
+//        dataModel2.setIfShowColumn(1);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//
+//        DataModel dataModel3 = new DataModel();
+//        dataModel3.setColumnNameCh("转后状态");
+//        dataModel3.setColumnNameEn("afterState");
+//        dataModel3.setColumnType(1);
+//        dataModel3.setIfBusinessDate(0);
+//        dataModel3.setIfScatter(1);
+//        dataModel3.setIfSearchColumn(1);
+//        dataModel3.setIfShowColumn(1);
+//        dataModel3.setIfModifyable(1);
+//        dataModels.add(dataModel3);
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("util");
+//        dataModel.setTableNames("calcFormula");
+//        dataModel.setColumnNameCh("公式名");
+//        dataModel.setColumnNameEn("name");
+//        dataModel.setColumnType(3);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(0);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("表达式");
+//        dataModel1.setColumnNameEn("expression");
+//        dataModel1.setColumnType(3);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(0);
+//        dataModel1.setIfSearchColumn(1);
+//        dataModel1.setIfShowColumn(1);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("计算类型");
+//        //1、利息；2、下户费；3、律师费；4、佣金
+//        dataModel2.setColumnNameEn("type");
+//        dataModel2.setColumnType(1);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(1);
+//        dataModel2.setIfSearchColumn(1);
+//        dataModel2.setIfShowColumn(1);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//
+//        DataModel dataModel3 = new DataModel();
+//        dataModel3.setColumnNameCh("开始时间");
+//        dataModel3.setColumnNameEn("beginDate");
+//        dataModel3.setColumnType(4);
+//        dataModel3.setIfBusinessDate(0);
+//        dataModel3.setIfScatter(0);
+//        dataModel3.setIfSearchColumn(0);
+//        dataModel3.setIfShowColumn(0);
+//        dataModel3.setIfModifyable(1);
+//        dataModels.add(dataModel3);
+//
+//        DataModel dataModel4 = new DataModel();
+//        dataModel4.setColumnNameCh("结束时间");
+//        dataModel4.setColumnNameEn("endDate");
+//        dataModel4.setColumnType(4);
+//        dataModel4.setIfBusinessDate(0);
+//        dataModel4.setIfScatter(0);
+//        dataModel4.setIfSearchColumn(0);
+//        dataModel4.setIfShowColumn(0);
+//        dataModel4.setIfModifyable(1);
+//        dataModels.add(dataModel4);
+
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("finance");
+//        dataModel.setTableNames("accountingEntry");
+//        dataModel.setColumnNameCh("借方科目");
+//        dataModel.setColumnNameEn("debit");
+//        dataModel.setColumnType(1);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(1);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("贷方科目");
+//        dataModel1.setColumnNameEn("credit");
+//        dataModel1.setColumnType(1);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(1);
+//        dataModel1.setIfSearchColumn(1);
+//        dataModel1.setIfShowColumn(1);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("记账日期");
+//        dataModel2.setColumnNameEn("accountingDate");
+//        dataModel2.setColumnType(4);
+//        dataModel2.setIfBusinessDate(1);
+//        dataModel2.setIfScatter(0);
+//        dataModel2.setIfSearchColumn(1);
+//        dataModel2.setIfShowColumn(1);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//
+//        DataModel dataModel3 = new DataModel();
+//        dataModel3.setColumnNameCh("金额");
+//        dataModel3.setColumnNameEn("amount");
+//        dataModel3.setColumnType(5);
+//        dataModel3.setIfBusinessDate(0);
+//        dataModel3.setIfScatter(0);
+//        dataModel3.setIfSearchColumn(1);
+//        dataModel3.setIfShowColumn(1);
+//        dataModel3.setIfModifyable(1);
+//        dataModels.add(dataModel3);
+
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("finance");
+//        dataModel.setTableNames("balance");
+//        dataModel.setColumnNameCh("科目");
+//        dataModel.setColumnNameEn("subject");
+//        dataModel.setColumnType(1);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(1);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("账期");
+//        dataModel1.setColumnNameEn("accountingPeriod");
+//        dataModel1.setColumnType(1);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(1);
+//        dataModel1.setIfSearchColumn(1);
+//        dataModel1.setIfShowColumn(1);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("期初额");
+//        dataModel2.setColumnNameEn("startAmount");
+//        dataModel2.setColumnType(5);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(0);
+//        dataModel2.setIfSearchColumn(0);
+//        dataModel2.setIfShowColumn(1);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//
+//        DataModel dataModel3 = new DataModel();
+//        dataModel3.setColumnNameCh("变动额");
+//        dataModel3.setColumnNameEn("amount");
+//        dataModel3.setColumnType(5);
+//        dataModel3.setIfBusinessDate(0);
+//        dataModel3.setIfScatter(0);
+//        dataModel3.setIfSearchColumn(0);
+//        dataModel3.setIfShowColumn(1);
+//        dataModel3.setIfModifyable(1);
+//        dataModels.add(dataModel3);
+//
+//        DataModel dataModel4 = new DataModel();
+//        dataModel4.setColumnNameCh("期末额");
+//        dataModel4.setColumnNameEn("endAmount");
+//        dataModel4.setColumnType(5);
+//        dataModel4.setIfBusinessDate(0);
+//        dataModel4.setIfScatter(0);
+//        dataModel4.setIfSearchColumn(0);
+//        dataModel4.setIfShowColumn(1);
+//        dataModel4.setIfModifyable(1);
+//        dataModels.add(dataModel4);
+
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("finance");
+//        dataModel.setTableNames("accountingPeriod");
+//        dataModel.setColumnNameCh("名称");
+//        dataModel.setColumnNameEn("name");
+//        dataModel.setColumnType(3);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(0);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("开始日期");
+//        dataModel1.setColumnNameEn("startDate");
+//        dataModel1.setColumnType(4);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(0);
+//        dataModel1.setIfSearchColumn(0);
+//        dataModel1.setIfShowColumn(1);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("结束日期");
+//        dataModel2.setColumnNameEn("endDate");
+//        dataModel2.setColumnType(4);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(0);
+//        dataModel2.setIfSearchColumn(0);
+//        dataModel2.setIfShowColumn(1);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//
+//        DataModel dataModel3 = new DataModel();
+//        dataModel3.setColumnNameCh("状态");
+//        dataModel3.setColumnNameEn("periodState");
+//        dataModel3.setColumnType(1);
+//        dataModel3.setIfBusinessDate(0);
+//        dataModel3.setIfScatter(1);
+//        dataModel3.setIfSearchColumn(1);
+//        dataModel3.setIfShowColumn(1);
+//        dataModel3.setIfModifyable(1);
+//        dataModels.add(dataModel3);
+
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("finance");
+//        dataModel.setTableNames("balance");
+//        dataModel.setColumnNameCh("科目");
+//        dataModel.setColumnNameEn("subject");
+//        dataModel.setColumnType(1);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(1);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("账期");
+//        dataModel1.setColumnNameEn("accountingPeriod");
+//        dataModel1.setColumnType(1);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(1);
+//        dataModel1.setIfSearchColumn(1);
+//        dataModel1.setIfShowColumn(1);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("期初额借方");
+//        dataModel2.setColumnNameEn("startAmountDebit");
+//        dataModel2.setColumnType(5);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(0);
+//        dataModel2.setIfSearchColumn(0);
+//        dataModel2.setIfShowColumn(1);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//
+//        DataModel dataModel21 = new DataModel();
+//        dataModel21.setColumnNameCh("期初额贷方");
+//        dataModel21.setColumnNameEn("startAmountCredit");
+//        dataModel21.setColumnType(5);
+//        dataModel21.setIfBusinessDate(0);
+//        dataModel21.setIfScatter(0);
+//        dataModel21.setIfSearchColumn(0);
+//        dataModel21.setIfShowColumn(1);
+//        dataModel21.setIfModifyable(1);
+//        dataModels.add(dataModel21);
+//
+//        DataModel dataModel3 = new DataModel();
+//        dataModel3.setColumnNameCh("变动额借方");
+//        dataModel3.setColumnNameEn("amountDebit");
+//        dataModel3.setColumnType(5);
+//        dataModel3.setIfBusinessDate(0);
+//        dataModel3.setIfScatter(0);
+//        dataModel3.setIfSearchColumn(0);
+//        dataModel3.setIfShowColumn(1);
+//        dataModel3.setIfModifyable(1);
+//        dataModels.add(dataModel3);
+//
+//        DataModel dataModel31 = new DataModel();
+//        dataModel31.setColumnNameCh("变动额贷方");
+//        dataModel31.setColumnNameEn("amountCredit");
+//        dataModel31.setColumnType(5);
+//        dataModel31.setIfBusinessDate(0);
+//        dataModel31.setIfScatter(0);
+//        dataModel31.setIfSearchColumn(0);
+//        dataModel31.setIfShowColumn(1);
+//        dataModel31.setIfModifyable(1);
+//        dataModels.add(dataModel31);
+//
+//        DataModel dataModel4 = new DataModel();
+//        dataModel4.setColumnNameCh("期末额借方");
+//        dataModel4.setColumnNameEn("endAmountDebit");
+//        dataModel4.setColumnType(5);
+//        dataModel4.setIfBusinessDate(0);
+//        dataModel4.setIfScatter(0);
+//        dataModel4.setIfSearchColumn(0);
+//        dataModel4.setIfShowColumn(1);
+//        dataModel4.setIfModifyable(1);
+//        dataModels.add(dataModel4);
+//
+//        DataModel dataModel41 = new DataModel();
+//        dataModel41.setColumnNameCh("期末额贷方");
+//        dataModel41.setColumnNameEn("endAmountCredit");
+//        dataModel41.setColumnType(5);
+//        dataModel41.setIfBusinessDate(0);
+//        dataModel41.setIfScatter(0);
+//        dataModel41.setIfSearchColumn(0);
+//        dataModel41.setIfShowColumn(1);
+//        dataModel41.setIfModifyable(1);
+//        dataModels.add(dataModel41);
     }
 }

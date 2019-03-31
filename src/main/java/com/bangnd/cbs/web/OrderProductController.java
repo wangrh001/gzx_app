@@ -51,13 +51,11 @@ public class OrderProductController {
         orderProduct.setCreator(0);
         orderProduct.setState(1);
         Order order = orderService.findOrderById(orderProduct.getOrderId());
-        if(order.getSignDate()!=null&&!"".equals(order.getSignDate())){
-            orderProduct.setOrderProdState(ConstantCfg.ORDER_STATE_SIGNED);
-        }else {
-            orderProduct.setOrderProdState(ConstantCfg.ORDER_STATE_MATCHED);
-        }
+        //订单产品状态设置成订单状态
+        orderProduct.setOrderProdState(order.getOrderState());
         orderProductService.save(orderProduct);
-        orderLogService.recordLog(new Long(orderId).longValue(),userId,ConstantCfg.ORDER_ACTION_4);
+        //
+        orderLogService.recordLog(new Long(orderId).longValue(),userId,ConstantCfg.ORDER_BUTTON_ADDPROD);
 
         //这里才确认客户是什么身份
         System.out.println("customer1=" + customer1 + ";productId=" + orderProduct.getId());
@@ -84,14 +82,14 @@ public class OrderProductController {
         orderProdCustRelation3.setIdentityType(ConstantCfg.CUSTOMER_IDENTITY_TYPE_3);
         orderProdCustRelationService.save(orderProdCustRelation2);
 
-        return "redirect:/order/toAdd?orderId=" + orderId;
+        return "redirect:/order/toEdit?orderId=" + orderId;
     }
 
     @RequestMapping("/orderProduct/delete")
     public String delete(long id) {
         orderProductService.delete(id);
         OrderProduct orderProduct = orderProductService.findById(id);
-        return "redirect:/order/toAdd?orderId=" + orderProduct.getOrderId();
+        return "redirect:/order/toEdit?orderId=" + orderProduct.getOrderId();
     }
 
     @RequestMapping("/orderProduct/toModify")
@@ -125,7 +123,7 @@ public class OrderProductController {
         model.addAttribute("customer2", customer2);
         model.addAttribute("customer3", customer3);
         model.addAttribute("orderProduct", orderProduct);
-        return "/order/orderProductEdit";
+        return "/cbs/orderProductEdit";
     }
 
     @RequestMapping("/orderProduct/modify")
@@ -188,7 +186,7 @@ public class OrderProductController {
             }
         }
         //这里用oldOrderProducut是因为，orderProduct这个对象在html中没有hidden orderId这个属性，故无法带过来
-        return "redirect:/order/toAdd?orderId=" + oldOrderProduct.getOrderId();
+        return "redirect:/order/toEdit?orderId=" + oldOrderProduct.getOrderId();
 
     }
 }

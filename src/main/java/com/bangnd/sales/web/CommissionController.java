@@ -9,13 +9,17 @@ import com.bangnd.sales.service.*;
 import com.bangnd.sales.vo.CommissionVO;
 import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.service.BusinessTypeService;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,12 +46,24 @@ public class CommissionController {
     @Resource
     ProductService productService;
 
+    /**
+     * form表单提交 Date类型数据绑定
+     *
+     * @param binder
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
     @RequestMapping("/sales/commission")
-    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, CommissionSearchForm commissionSearchForm) {
-        if(pageNum==null){
-            pageNum="1";
+    public String home(Model model, @RequestParam(value = "pageNum", required = false) String pageNum, CommissionSearchForm commissionSearchForm) {
+        if (pageNum == null) {
+            pageNum = "1";
         }
-        Page<Commission> pages = commissionService.getCommissionList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,commissionSearchForm);
+        Page<Commission> pages = commissionService.getCommissionList(Integer.valueOf(pageNum), ConstantCfg.NUM_PER_PAGE, commissionSearchForm);
         model.addAttribute("businessTypes", businessTypeService.getAll());
         List<Product> products = productService.getAllProduct();
         model.addAttribute("products", products);
@@ -70,12 +86,12 @@ public class CommissionController {
             }
         }
 
-        int pagenum=Integer.valueOf(pageNum);
-        model.addAttribute("page",pages);
-        model.addAttribute("pageNum",pagenum);
-        model.addAttribute("totalPages",pages.getTotalPages());
-        System.out.println("totalPages="+pages.getTotalPages());
-        model.addAttribute("totalElements",pages.getTotalElements());
+        int pagenum = Integer.valueOf(pageNum);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", pagenum);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        System.out.println("totalPages=" + pages.getTotalPages());
+        model.addAttribute("totalElements", pages.getTotalElements());
         model.addAttribute("commissionVOs", commissionVOs);
         return "/sales/commissionList";
     }

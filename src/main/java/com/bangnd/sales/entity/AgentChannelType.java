@@ -10,6 +10,9 @@ public class AgentChannelType {
     private int id;
     @Column(nullable = false)
     private String name;
+    //1、内部；2、外部
+    @Column
+    private int type;
 
     public int getId() {
         return id;
@@ -25,5 +28,13 @@ public class AgentChannelType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

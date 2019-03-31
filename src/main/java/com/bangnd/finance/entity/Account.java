@@ -21,7 +21,7 @@ public class Account {
     @Column
     public String accountNames;
     @Column
-    public String amountNo;
+    public String accountNo;
     @Column
     public int bank;
     @Column
@@ -33,9 +33,6 @@ public class Account {
         return accountNames;
     }
 
-    public String getAmountNo() {
-        return amountNo;
-    }
 
     public int getBank() {
         return bank;
@@ -53,8 +50,12 @@ public class Account {
         this.accountNames = accountNames;
     }
 
-    public void setAmountNo(String amountNo) {
-        this.amountNo = amountNo;
+    public String getAccountNo() {
+        return accountNo;
+    }
+
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo;
     }
 
     public void setBank(int bank) {

@@ -14,6 +14,9 @@ public class AgentVO {
     @Column
     public String companyName;
 
+    @Column
+    public String groupName;
+
     public long getId() {
         return id;
     }
@@ -52,5 +55,13 @@ public class AgentVO {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }

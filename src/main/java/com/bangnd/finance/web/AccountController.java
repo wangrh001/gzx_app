@@ -8,13 +8,17 @@ import com.bangnd.finance.service.AccountCompanyService;
 import com.bangnd.finance.service.AccountService;
 import com.bangnd.finance.vo.AccountVO;
 import com.bangnd.util.cfg.ConstantCfg;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,12 +34,24 @@ public class AccountController {
     @Resource
     AccountCompanyService accountCompanyService;
 
+    /**
+     * form表单提交 Date类型数据绑定
+     *
+     * @param binder
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
     @RequestMapping("/finance/account")
-    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, AccountSearchForm accountSearchForm) {
-        if(pageNum==null){
-            pageNum="1";
+    public String home(Model model, @RequestParam(value = "pageNum", required = false) String pageNum, AccountSearchForm accountSearchForm) {
+        if (pageNum == null) {
+            pageNum = "1";
         }
-        Page<Account> pages = accountService.getAccountList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,accountSearchForm);
+        Page<Account> pages = accountService.getAccountList(Integer.valueOf(pageNum), ConstantCfg.NUM_PER_PAGE, accountSearchForm);
         model.addAttribute("banks", accountBankService.getAll());
         model.addAttribute("accountStates", accountAccountStateService.getAll());
         model.addAttribute("companys", accountCompanyService.getAll());
@@ -45,18 +61,17 @@ public class AccountController {
                 AccountVO accountVO = new AccountVO();
                 accountVO.setId(account.getId());
                 accountVO.setAccountNames(account.getAccountNames());
-                accountVO.setAmountNo(account.getAmountNo());
+                accountVO.setAmountNo(account.getAccountNo());
                 accountVO.setBankName((accountBankService.getAccountBankById(account.getBank())).getName());
                 accountVOs.add(accountVO);
             }
         }
-
-        int pagenum=Integer.valueOf(pageNum);
-        model.addAttribute("page",pages);
-        model.addAttribute("pageNum",pagenum);
-        model.addAttribute("totalPages",pages.getTotalPages());
-        System.out.println("totalPages="+pages.getTotalPages());
-        model.addAttribute("totalElements",pages.getTotalElements());
+        int pagenum = Integer.valueOf(pageNum);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", pagenum);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        System.out.println("totalPages=" + pages.getTotalPages());
+        model.addAttribute("totalElements", pages.getTotalElements());
         model.addAttribute("accountVOs", accountVOs);
         return "/finance/accountList";
     }
@@ -87,21 +102,21 @@ public class AccountController {
         model.addAttribute("banks", accountBankService.getAll());
         model.addAttribute("accountStates", accountAccountStateService.getAll());
         model.addAttribute("companys", accountCompanyService.getAll());
-        return "/finance/accountAdd";
+        return "/finance/accountEdit";
     }
 
     @RequestMapping("/finance/account/modify")
     public String modify(Account account, Long id) {
-        Account oldAccount = accountService.getAccountById(id);
+        Account oldAccount = accountService.getAccountById(account.getId());
         oldAccount.setAccountNames(account.getAccountNames());
-        oldAccount.setAmountNo(account.getAmountNo());
+        oldAccount.setAccountNo(account.getAccountNo());
         oldAccount.setBank(account.getBank());
         oldAccount.setAccountState(account.getAccountState());
         oldAccount.setCompany(account.getCompany());
         oldAccount.setUpdator(0);
         oldAccount.setUpdateTime(new Date());
         accountService.merge(oldAccount);
-        return "redirect:/finance/account/toModify?id=" + id;
+        return "redirect:/finance/account/toModify?id=" + account.getId();
     }
 
     @RequestMapping("/finance/account/delete")

@@ -111,24 +111,24 @@ public class TotalCodeCreator {
     }
 
     public static void main(String[] args) {
+
         List<DataModel> dataModels = new ArrayList<DataModel>();
         DataModel dataModel = new DataModel();
-        dataModel.setSysName("util");
-        dataModel.setTableNames("workFlow");
-        //1、订单处理工作；
-        dataModel.setColumnNameCh("工作类型");
-        dataModel.setColumnNameEn("workType");
-        dataModel.setColumnType(1);
+        dataModel.setSysName("sales");
+        dataModel.setTableNames("group");
+        dataModel.setColumnNameCh("组名");
+        dataModel.setColumnNameEn("name");
+        dataModel.setColumnType(3);
         dataModel.setIfBusinessDate(0);
-        dataModel.setIfScatter(1);
+        dataModel.setIfScatter(0);
         dataModel.setIfSearchColumn(1);
         dataModel.setIfShowColumn(1);
         dataModel.setIfModifyable(1);
         dataModels.add(dataModel);
 
         DataModel dataModel1 = new DataModel();
-        dataModel1.setColumnNameCh("转前状态");
-        dataModel1.setColumnNameEn("beforState");
+        dataModel1.setColumnNameCh("级别");
+        dataModel1.setColumnNameEn("grade");
         dataModel1.setColumnType(1);
         dataModel1.setIfBusinessDate(0);
         dataModel1.setIfScatter(1);
@@ -138,28 +138,28 @@ public class TotalCodeCreator {
         dataModels.add(dataModel1);
 
         DataModel dataModel2 = new DataModel();
-        dataModel2.setColumnNameCh("流转条件");
-        dataModel2.setColumnNameEn("transCondition");
-        dataModel2.setColumnType(3);
+        dataModel2.setColumnNameCh("父组");
+        dataModel2.setColumnNameEn("parentId");
+        dataModel2.setColumnType(1);
         dataModel2.setIfBusinessDate(0);
-        dataModel2.setIfScatter(0);
-        dataModel2.setIfSearchColumn(0);
+        dataModel2.setIfScatter(1);
+        dataModel2.setIfSearchColumn(1);
         dataModel2.setIfShowColumn(1);
         dataModel2.setIfModifyable(1);
         dataModels.add(dataModel2);
 
         DataModel dataModel3 = new DataModel();
-        dataModel3.setColumnNameCh("转后状态");
-        dataModel3.setColumnNameEn("afterState");
-        dataModel3.setColumnType(1);
+        dataModel3.setColumnNameCh("负责人");
+        dataModel3.setColumnNameEn("employeeId");
+        dataModel3.setColumnType(2);
         dataModel3.setIfBusinessDate(0);
         dataModel3.setIfScatter(1);
         dataModel3.setIfSearchColumn(1);
         dataModel3.setIfShowColumn(1);
         dataModel3.setIfModifyable(1);
-        dataModels.add(dataModel3);
+        dataModels.add(dataModel);
 
         TotalCodeCreator totalCodeCreator = new TotalCodeCreator();
-        totalCodeCreator.create(dataModels, "bangnd", "util", "workFlow");
+        totalCodeCreator.create(dataModels, "bangnd", "sales", "group");
     }
 }

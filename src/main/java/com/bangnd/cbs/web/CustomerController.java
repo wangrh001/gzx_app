@@ -8,12 +8,16 @@ import com.bangnd.ums.entity.User;
 import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.service.AreaConfService;
 import com.bangnd.util.service.StateTypeService;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Controller
@@ -34,6 +38,17 @@ public class CustomerController {
 
     @Resource
     OrderLogService orderLogService;
+
+    /**
+     * form表单提交 Date类型数据绑定
+     * @param binder
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
     /**
      * 将该用户添加到该订单下
@@ -57,7 +72,7 @@ public class CustomerController {
         customer.setCreator(0);
         customer.setOrderId(new Long(orderId).longValue());
         customerService.save(customer);
-        orderLogService.recordLog(new Long(orderId).longValue(),userId,ConstantCfg.ORDER_ACTION_3);
+        orderLogService.recordLog(new Long(orderId).longValue(),userId,ConstantCfg.ORDER_BUTTON_ADDCUST);
         //保存抵押物信息
         custMortgage.setCreateTime(new Date());
         custMortgage.setCreator(0);
@@ -68,7 +83,7 @@ public class CustomerController {
         custCredit.setCreator(0);
         custCredit.setCustomerId(customer.getId());
         custCreditService.save(custCredit);
-        return "redirect:/order/toAdd?orderId=" + orderId;
+        return "redirect:/order/toEdit?orderId=" + orderId;
     }
 
     @RequestMapping("/customer/delete")
@@ -76,7 +91,7 @@ public class CustomerController {
         customerService.delete(id);
         Customer customer = customerService.findCustomerById(id);
         String orderId = new Long(customer.getOrderId()).toString();
-        return "redirect:/order/toAdd?orderId=" + orderId;
+        return "redirect:/order/toEdit?orderId=" + orderId;
     }
 
     @RequestMapping("/customer/toModify")
@@ -91,7 +106,7 @@ public class CustomerController {
         model.addAttribute("estateType", stateTypeService.getAll());
         model.addAttribute("banks", bankService.getAll());
         model.addAttribute("custCredit", custCredit);
-        return "/order/customerEdit";
+        return "/cbs/customerEdit";
     }
 
     @RequestMapping("/customer/modify")

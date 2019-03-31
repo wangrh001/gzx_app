@@ -7,16 +7,22 @@ import com.bangnd.cbs.service.ProductService;
 import com.bangnd.cbs.vo.ProdInterestVO;
 import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.service.PeriodTypeService;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+
 
 @Controller
 public class ProdInterestController {
@@ -26,6 +32,17 @@ public class ProdInterestController {
     PeriodTypeService periodTypeService;
     @Resource
     ProductService productService;
+
+    /**
+     * form表单提交 Date类型数据绑定
+     * @param binder
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
     @RequestMapping("/cbs/prodInterest")
     public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, ProdInterestSearchForm prodInterestSearchForm) {
@@ -81,12 +98,12 @@ public class ProdInterestController {
         model.addAttribute("prodInterest", prodInterest);
         model.addAttribute("periodTypes", periodTypeService.getAll());
         model.addAttribute("products",productService.getInterestProduct());
-        return "/cbs/prodInterestAdd";
+        return "/cbs/prodInterestEdit";
     }
 
     @RequestMapping("/cbs/prodInterest/modify")
     public String modify(ProdInterest prodInterest, Long id) {
-        ProdInterest oldProdInterest = prodInterestService.getProdInterestById(id);
+        ProdInterest oldProdInterest = prodInterestService.getProdInterestById(prodInterest.getId());
         oldProdInterest.setProductId(prodInterest.getProductId());
         oldProdInterest.setPeriodType(prodInterest.getPeriodType());
         oldProdInterest.setInterest(prodInterest.getInterest());
@@ -95,7 +112,7 @@ public class ProdInterestController {
         oldProdInterest.setUpdator(0);
         oldProdInterest.setUpdateTime(new Date());
         prodInterestService.merge(oldProdInterest);
-        return "redirect:/cbs/prodInterest/toModify?id=" + id;
+        return "redirect:/cbs/prodInterest/";
     }
 
     @RequestMapping("/cbs/prodInterest/delete")

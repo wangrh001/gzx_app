@@ -11,6 +11,17 @@ public class OrderState {
     @Column(nullable = false)
     private String name;
 
+    @Column
+    private int busiType;
+
+    public int getBusiType() {
+        return busiType;
+    }
+
+    public void setBusiType(int busiType) {
+        this.busiType = busiType;
+    }
+
     public long getId() {
         return id;
     }

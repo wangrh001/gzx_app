@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>列表</h4>
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>订单ID</th>
+            <th>销售姓名</th>
+            <th>雇员姓名</th>
+            <th>提成</th>
+            <th>最低提成</th>
+            <th>最高提成</th>
+            <th>业绩</th>
+            <th>收息</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="performanceCommDetailVO : ${performanceCommDetailVOs}">
+            <td th:text="${performanceCommDetailVO.id}">1</td>
+            <td th:text="${performanceCommDetailVO.orderId}">1</td>
+            <td th:text="${performanceCommDetailVO.agentName}">1</td>
+            <td th:text="${performanceCommDetailVO.employeeName}">1</td>
+            <td th:text="${performanceCommDetailVO.commission}">1</td>
+            <td th:text="${performanceCommDetailVO.minCommission}">1</td>
+            <td th:text="${performanceCommDetailVO.maxCommission}">1</td>
+            <td th:text="${performanceCommDetailVO.performance}">1</td>
+            <td th:text="${performanceCommDetailVO.interest}">1</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

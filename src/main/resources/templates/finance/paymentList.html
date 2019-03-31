@@ -57,11 +57,11 @@
             <tr>
                 <td>支付日期开始</td>
                 <td><input id="payDateStart" name="payDateStart"
-                           th:value="${payDateStart ne null}?${#dates.format(payDateStart,'MM/dd/yyyy')}" value=""
+                           th:value="${payDateStart ne null}?${#dates.format(payDateStart,'yyyy-MM-dd')}" value=""
                            class="form-control"/></td>
                 <td>支付日期结束</td>
                 <td><input id="payDateEnd" name="payDateEnd"
-                           th:value="${payDateEnd ne null}?${#dates.format(payDateEnd,'MM/dd/yyyy')}" value=""
+                           th:value="${payDateEnd ne null}?${#dates.format(payDateEnd,'yyyy-MM-dd')}" value=""
                            class="form-control"/></td>
             </tr>
             <tr>

@@ -42,6 +42,27 @@
                     </option>
                 </select></td>
             </tr>
+
+            <tr>
+                <td>业务类型</td>
+                <td><select th:field="*{busiType}" th:remove="all-but-first">
+                    <option th:each="busiType : ${busiTypes}"
+                            th:value="${busiType.id}" th:text="${busiType.name}">Credit card
+                    </option>
+                </select></td>
+                <td>岗位</td>
+                <td><select th:field="*{positionId}" th:remove="all-but-first">
+                    <option th:each="position : ${positions}"
+                            th:value="${position.id}" th:text="${position.name}">Credit card
+                    </option>
+                </select></td>
+                <td>按钮</td>
+                <td><select th:field="*{buttonId}" th:remove="all-but-first">
+                    <option th:each="button : ${buttons}"
+                            th:value="${button.id}" th:text="${button.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
             <tr>
                 <td><input type="submit" value="更新" class="btn btn-info"/></td>
             </tr>

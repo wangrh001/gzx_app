@@ -72,7 +72,7 @@
                 $('#rtl-wrap').show();
                 options.locale = {
                     direction: $('#rtl').is(':checked') ? 'rtl' : 'ltr',
-                    // format: 'MM/DD/YYYY HH:mm',
+                    // format: 'yyyy-MM-dd HH:mm',
                     format: 'YYYY-MM-DD',
                     separator: ' - ',
                     applyLabel: 'Apply',

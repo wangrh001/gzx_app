@@ -35,9 +35,11 @@ public class CustMortgage {
     //抵押物和抵押人关系：1、所有；2、实际控制
     @Column
     private int belongType;
+    @Column
+    private int mortgageCount=0;
 
     @Column
-    private int estateAge;
+    private int estateAge=0;
     @Column
     private Date createTime;
     @Column
@@ -149,5 +151,13 @@ public class CustMortgage {
 
     public void setBelongType(int belongType) {
         this.belongType = belongType;
+    }
+
+    public int getMortgageCount() {
+        return mortgageCount;
+    }
+
+    public void setMortgageCount(int mortgageCount) {
+        this.mortgageCount = mortgageCount;
     }
 }

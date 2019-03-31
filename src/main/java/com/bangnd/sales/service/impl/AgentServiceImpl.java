@@ -95,16 +95,32 @@ public class AgentServiceImpl implements AgentService {
     }
 
     @Override
-    public void bandUser(long agentId, long userId) {
+    public void bandUser(long agentId, long userId, String userName) {
         Agent agent = agentRepository.findById(agentId);
         agent.setUpdateTime(new Date());
         agent.setUpdator(0);
         agent.setUserId(userId);
+        agent.setUserName(userName);
         agentRepository.save(agent);
     }
 
     @Override
     public Agent getAgentByUserId(long userId) {
         return agentRepository.findOneByUserId(userId);
+    }
+
+    @Override
+    public List<Agent> getAgentByAgentName(String agentName) {
+        return agentRepository.findAllByName(agentName);
+    }
+
+    @Override
+    public Agent getAgentByEmployeeId(long empolyeeId) {
+        return agentRepository.findAgentByEmployeeId(empolyeeId);
+    }
+
+    @Override
+    public List<Agent> getAgentByGroupId(long groupId) {
+        return agentRepository.findAllByGroupId(groupId);
     }
 }

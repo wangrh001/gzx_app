@@ -22,7 +22,14 @@
                 <td>金额</td>
                 <td><input th:field="*{amount}" value="" class="form-control"/></td>
                 <td>公司银行卡</td>
-                <td><input th:field="*{compCardNo}" value="" class="form-control"/></td>
+                <td>
+                    <select th:field="*{compCardNo}" th:remove="all-but-first">
+                        <option th:each="account : ${accounts}"
+                                th:value="${account.accountNo}" th:text="${account.accountNames}"
+                                th:selected="${account.accountNo eq compCardNo}">Credit card
+                        </option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>对方银行</td>
@@ -38,7 +45,8 @@
                 <td><input th:field="*{otherCardNo}" value="" class="form-control"/></td>
 
                 <td>支付日期</td>
-                <td><input th:field="*{payDate}" value="" class="form-control"/></td>
+                <td><input type="text" class="form-control" id="payDate" name="payDate"
+                           th:value="*{payDate ne null} ? *{#dates.format(payDate,'yyyy-MM-dd')}"/></td>
             </tr>
             <tr>
                 <td>对方姓名</td>

@@ -54,6 +54,12 @@
                 <td><input th:field="*{userName}" value="" class="form-control"/></td>
                 <td>从业年限</td>
                 <td><input th:field="*{jobYears}" value="" class="form-control"/></td>
+                <td>所属团队</td>
+                <td><select th:field="*{groupId}" th:remove="all-but-first">
+                    <option th:each="group : ${groups}"
+                            th:value="${group.id}" th:text="${group.name}">Credit card
+                    </option>
+                </select></td>
             </tr>
             <tr>
                 <td><input type="submit" value="保存" class="btn btn-info"/></td>

@@ -1,7 +1,9 @@
 package com.bangnd.hr.service.impl;
 
 import com.bangnd.hr.entity.Employee;
+import com.bangnd.hr.entity.EmployeePosition;
 import com.bangnd.hr.form.EmployeeSearchForm;
+import com.bangnd.hr.repository.EmployeePositionRepository;
 import com.bangnd.hr.repository.EmployeeRepository;
 import com.bangnd.hr.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ import java.util.List;
 public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private EmployeePositionRepository employeePositionRepository;
 
     public Page<Employee> getEmployeeList(Integer pageNum, int size, EmployeeSearchForm employeeSearchForm) {
         Specification specification = new Specification<Employee>() {
@@ -100,9 +104,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void bandUser(long employeeId, long userId) {
+    public void bandUser(long employeeId, long userId,String userName) {
         Employee employee = employeeRepository.findById(employeeId);
         employee.setUserId(userId);
+        employee.setUserName(userName);
         employee.setUpdateTime(new Date());
         employee.setUpdator(0);
         employeeRepository.save(employee);
@@ -112,4 +117,37 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getEmployeeByUserId(long userId) {
         return employeeRepository.findOneByUserId(userId);
     }
+
+    @Override
+    public List<Employee> getEmployeeByEmployeeName(String employeeName) {
+        return employeeRepository.findAllByName(employeeName);
+    }
+
+//    //支持一个雇员多个岗位，获取该岗位所有在职雇员
+//    @Override
+//    public List<Employee> getEmployeeByPositionId(int posId) {
+//        List<EmployeePosition> employeePositions = employeePositionRepository.findAllByPosId(posId);
+//        List<Employee> employees = new ArrayList<>();
+//        if(employeePositions!=null){
+//            for(EmployeePosition employeePosition : employeePositions){
+//                if(employeePosition!=null){
+//                    Employee employee = employeeRepository.findById(employeePosition.getEmpId());
+//                    if(employee!=null && employee.getState() == 1){
+//                        employees.add(employee);
+//                    }
+//                }
+//            }
+//        }
+//        return  employees;
+//    }
+    /**
+     *  不支持一个雇员多个岗位，获取该岗位所有在职雇员
+     */
+
+    @Override
+    public List<Employee> getEmployeeByPositionId(int posId) {
+        List<Employee> employees = employeeRepository.findAllByPosition(posId);
+        return employees;
+    }
+
 }

@@ -64,4 +64,9 @@ public class AccountServiceImpl implements AccountService {
     public void merge(Account account) {
         accountRepository.save(account);
     }
+
+    @Override
+    public List<Account> getAll() {
+        return accountRepository.findAll();
+    }
 }

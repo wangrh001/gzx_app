@@ -9,13 +9,17 @@ import com.bangnd.cbs.service.ProductService;
 import com.bangnd.cbs.vo.ProductVO;
 import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.service.BusinessTypeService;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +37,17 @@ public class ProductController {
     ProductProductStateService productProductStateService;
     @Resource
     BusinessTypeService businessTypeService;
+
+    /**
+     * form表单提交 Date类型数据绑定
+     * @param binder
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
 
     @RequestMapping("/cbs/product")
     public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, ProductSearchForm productSearchForm) {
@@ -92,12 +107,12 @@ public class ProductController {
         model.addAttribute("productTypes", productProductTypeService.getAll());
         model.addAttribute("productStates", productProductStateService.getAll());
         model.addAttribute("busiTypes", businessTypeService.getAll());
-        return "/cbs/productAdd";
+        return "/cbs/productEdit";
     }
 
     @RequestMapping("/cbs/product/modify")
     public String modify(Product product, int id) {
-        Product oldProduct = productService.getProductById(id);
+        Product oldProduct = productService.getProductById(Long.valueOf(product.getId()).intValue());
         oldProduct.setProductName(product.getProductName());
         oldProduct.setBankId(product.getBankId());
         oldProduct.setBusiType(product.getBusiType());
@@ -113,7 +128,7 @@ public class ProductController {
         oldProduct.setUpdator(0);
         oldProduct.setUpdateTime(new Date());
         productService.merge(oldProduct);
-        return "redirect:/cbs/product/toModify?id=" + id;
+        return "redirect:/cbs/product/";
     }
 
     @RequestMapping("/cbs/product/delete")

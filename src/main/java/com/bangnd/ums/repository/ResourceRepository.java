@@ -16,4 +16,10 @@ public interface ResourceRepository extends JpaRepository<Resource, Long>, JpaSp
     @Query("select r from Resource  r where r.parentId = :parentId and r.state = 1")
     public List<Resource> findAllByParentId(@Param(value = "parentId") long parentId);
 
+    @Query("select r from Resource  r where r.grade = :gradeId and r.state = 1")
+    public List<Resource> finAllByGrade(@Param(value="gradeId") int gradeId);
+
+    @Query("select r from Resource  r where r.type = :type and r.state = 1")
+    public List<Resource> findAllByType(@Param(value="type") int type);
+
 }

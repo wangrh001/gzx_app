@@ -97,7 +97,7 @@
         </tr>
         <tr>
             <td>批贷时间</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.approveTime}" placeholder="批贷时间"/></td>
+            <td><input type="text" class="form-control" id="approveTime" name="approveTime" th:value="*{orderProduct.approveTime ne null} ? *{#dates.format(orderProduct.approveTime,'yyyy-MM-dd')}" placeholder="yyyy-MM-dd"/></td>
         </tr>
 
         <tr>
