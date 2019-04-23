@@ -8,4 +8,6 @@ public interface OrderDocService {
     public void save(OrderDocument orderDocument);
 
     public List<OrderDocument> findAllByOrderId(Long orderId);
+
+    public List<OrderDocument> findAllByOrderIdAndType(Long orderId,int type);
 }

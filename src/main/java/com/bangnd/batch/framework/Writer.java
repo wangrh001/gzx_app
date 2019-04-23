@@ -1,9 +1,11 @@
 package com.bangnd.batch.framework;
 
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class Writer implements ItemWriter<String> {
 
     @Override

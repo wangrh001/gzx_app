@@ -16,6 +16,14 @@
 <!--&lt;!&ndash;<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>&ndash;&gt;-->
 <!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>-->
 <!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>-->
+<script th:inline="javascript">
+    var xList=[[${xJson}]]
+    var seriesBalance =[[${seriesJsonBalance}]]
+    var yjsonBalance = [[${yJsonBalance}]]
+
+    var seriesArrayBalance = seriesBalance.split(',')
+    var xArray = xList.split(',');
+</script>
 <script type="text/javascript">
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
@@ -30,7 +38,7 @@
             trigger: 'axis'
         },
         legend: {
-            data: ['收入', '支出', '利润']
+            data: seriesArrayBalance
         },
         toolbox: {
             show: true,
@@ -42,46 +50,37 @@
         xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            data: xArray
         },
         yAxis: {
             type: 'value'
         },
-        series: [{
-            name: '收入',
-            type: 'line',
-            smooth: true,
-            data: [10, 12, 21, 54, 260, 830, 710]
-        },
-            {
-                name: '支出',
-                type: 'line',
-                smooth: true,
-                data: [30, 182, 434, 791, 390, 30, 10]
-            },
-            {
-                name: '利润',
-                type: 'line',
-                smooth: true,
-                data: [1320, 1132, 601, 234, 120, 90, 20]
-            }]
+        series: JSON.parse(yjsonBalance)
     };
     myChart.setOption(option, true);
 
 </script>
-<div>
-    <table>
-        <tr>
-            <td>周期</td>
-            <td>
-                <select th:field="*{periodId}" th:remove="all-but-first">
-                    <option th:each="period : ${periods}"
-                            th:value="${period.id}" th:text="${period.name}"></option>
-                </select>
-            </td>
-        </tr>
-    </table>
-</div>
 
+<script>
+    function reselect() {
+        var queryForm = document.getElementById("queryForm")
+        queryForm.submit()
+    }
+</script>
+<form id="queryForm">
+    <div>
+        <table>
+            <tr>
+                <td>周期</td>
+                <td>
+                    <select th:id="periodId"  th:name="periodId" onchange="reselect()" th:remove="all-but-first">
+                        <option th:each="period : ${periods}"
+                                th:value="${period.id}" th:text="${period.name}"></option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+</form>
 </body>
 </html>

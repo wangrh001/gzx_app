@@ -52,6 +52,9 @@ public class Agent {
     @Column
     public int jobYears;
 
+    @Column
+    private String ddUserName;
+
     public long getUserId() {
         return userId;
     }
@@ -221,5 +224,13 @@ public class Agent {
 
     public void setGroupId(long groupId) {
         this.groupId = groupId;
+    }
+
+    public String getDdUserName() {
+        return ddUserName;
+    }
+
+    public void setDdUserName(String ddUserName) {
+        this.ddUserName = ddUserName;
     }
 }

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class ParaCalculationImpl{
+public class ParaCalculationImpl {
 
     public static void main(String[] args) {
 //        String expression = "date1==date2?100:200";
@@ -55,8 +55,8 @@ public class ParaCalculationImpl{
 
         Atest atest = new Atest();
         B b = new B();
-        BigDecimal c=new BigDecimal(0);
-        c=atest.getA();
+        BigDecimal c = new BigDecimal(0);
+        c = atest.getA();
         b.setB(c);
         System.out.println(b.getB());
 

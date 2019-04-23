@@ -2,7 +2,7 @@ package com.bangnd.batch.service.impl;
 
 import com.bangnd.batch.entity.Job;
 import com.bangnd.batch.form.JobSearchForm;
-import com.bangnd.batch.repository.JobRepository;
+import com.bangnd.batch.repository.MyJobRepository;
 import com.bangnd.batch.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class JobServiceImpl implements JobService {
     @Autowired
-    private JobRepository jobRepository;
+    private MyJobRepository myJobRepository;
 
     public List<Job> getJobList(JobSearchForm jobSearchForm) {
         Specification specification = new Specification<Job>() {
@@ -44,21 +44,21 @@ public class JobServiceImpl implements JobService {
                 return cb.and(predicates.toArray(p));
             }
         };
-        return jobRepository.findAll(specification);
+        return myJobRepository.findAll(specification);
     }
 
     @Override
     public void save(Job job) {
-        jobRepository.save(job);
+        myJobRepository.save(job);
     }
 
     @Override
     public Job getJobById(long id) {
-        return jobRepository.findById(id);
+        return myJobRepository.findById(id);
     }
 
     @Override
     public void merge(Job job) {
-        jobRepository.save(job);
+        myJobRepository.save(job);
     }
 }

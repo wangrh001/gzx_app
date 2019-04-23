@@ -86,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getInterestProduct(){
+    public List<Product> getInterestProduct() {
         return productRepository.findAllByBusiType();
     }
 

@@ -2,27 +2,40 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <title>Bootstrap 实例 - 模态框（Modal）插件</title>
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <!--<link rel="stylesheet" th:href="@{/css/table.css}"/>-->
+
     <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script th:inline="javascript">
-        function AddButton() {
-            /*<![CDATA[*/
-            var files = [[${files}]];
-            var imgFileTable =document.getElementById("imgFileTable");
-            var fileSize = files.length;
 
-            for(var i=0;i<Math.ceil(fileSize/5);i++){
-                var tr = document.createElement("tr");
-                for(var j=0;j<5;j++){
+        function createFilesHtml(files,typeName,chName) {
+
+            console.log('enter the createFilesHtml----'+ typeof files)
+            /*<![CDATA[*/
+            var div = document.getElementById("filesDiv");
+            var fileTable= document.createElement("table")
+            fileTable.setAttribute("id",typeName)
+            fileTable.setAttribute("cellpadding",500)
+            fileTable.setAttribute("style","float: left;")
+
+            var th =document.createElement("th")
+            th.innerHTML=chName
+            fileTable.appendChild(th)
+
+            var fileSize = files.length;
+            if(fileSize>0){
+                for (var i = 0; i < Math.ceil(fileSize / 5); i++) {
+                    var tr = document.createElement("tr");
+                    for (var j = 0; j < 5; j++) {
                         var td = document.createElement("td");
                         var img = document.createElement("img");
-                        if(5*i+j>=files.length){
+                        if (5 * i + j >= files.length) {
                             break;
                         }
-                        img.src = files[5*i+j];
+                        img.src = files[5 * i + j];
                         img.width = "150"
                         img.height = "150"
                         img.onclick = function () {
@@ -30,50 +43,122 @@
                         }
                         td.appendChild(img);
                         tr.appendChild(td);
+                    }
+                    fileTable.appendChild(tr);
                 }
-                imgFileTable.appendChild(tr);
+                div.appendChild(fileTable);
             }
+            //这个符号不能删除！！！！
+            // /*]]>*/
         }
-        //这个符号不能删除！！！！
-        // /*]]>*/
-    </script>
+        
+        function openFile() {
+            console.log('enter the openFile')
+            document.getElementById("files").click();
+        }
+        
+        function uploadFileByType(typeId) {
+            console.log('enter the uploadFileByType')
+            /*<![CDATA[*/
+            var form = document.getElementById(typeId);
+            console.log('form==='+form)
+            var orderId = document.getElementById("orderId").value
+            console.log('orderId==='+orderId)
+            form.action="/doc/uploadTypeFile?typeId="+typeId+"&orderId="+orderId
+            form.submit();
+            //这个符号不能删除！！！！
+            // /*]]>*/
+        }
+        
+        function AddButton() {
+            /*<![CDATA[*/
+            //生成进入该页面的所有button
+            var files = [[${typeFiles}]];
+            var outTable = document.createElement("table")
+            if(files){
+                var fileJson = JSON.parse(files)
+                for(var p in fileJson){
+                    var chName = fileJson[p].chName;
+                    var enName = fileJson[p].enName;
+                    var typeId = fileJson[p].typeId;
+                    var fileList = fileJson[p].filesPath;
 
+                    if(p % 3 == 0){
+                        var outRow = outTable.insertRow();
+                    }
+                    var outCell = outRow.insertCell()
+
+                    var fileForm =document.createElement("form")
+                    fileForm.id=typeId;
+                    fileForm.method='post';
+                    fileForm.enctype='multipart/form-data';
+                    //fileForm.class='form-horizontal';
+                    //fileForm.class = 'uploadButton';
+                    fileForm.style = 'float:center;';
+                    // fileForm.weight='20%';
+
+                    var table = document.createElement("table")
+                    //table.id=enName
+                    console.log('table.id='+table.id)
+
+                    var th = document.createElement("th")
+                    th.innerHTML=chName
+                    table.appendChild(th)
+
+                    var row = table.insertRow()
+                    var button = row.insertCell()
+                    button.innerHTML="<input id = 'files' class='fileinput' name='files' type='file' multiple='true'/><button type='submit'  onclick='uploadFileByType("+typeId+")'>确定上传</button>";
+                    //生成现有文件
+                    if(fileList){
+                        createFilesHtml(fileList,enName,chName)
+                    }
+                    fileForm.appendChild(table)
+                    outCell.appendChild(fileForm)
+                    document.body.appendChild(outTable);
+                }
+            }
+
+            console.log('enter end function----')
+            //这个符号不能删除！！！！
+            // /*]]>*/
+        }
+    </script>
 </head>
 <body class="container" onload="AddButton()">
 
-<form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data" th:action="@{/order/toEdit(orderId=${orderId})}" >
-<div class="row">
-    <div class="col-md-12 ">
-        <div>
-            <table id="imgFileTable" cellpadding="500" style="float: left;">
-            </table>
-        </div>
-        <!--图片放大 模态框（Modal） -->
-        <div class="modal fade text-center" id="imgZoomInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog" style="display: inline-block; width: auto;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times; </button>
+<form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data" th:action="@{/order/toEdit(orderId=${orderId})}">
+    <input type="hidden" id="orderId" th:value="*{orderId}"/>
+
+    <div class="row">
+        <div class="col-md-12 " id="filesDiv">
+            <!--图片放大 模态框（Modal） -->
+            <div class="modal fade text-center" id="imgZoomInModal" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="display: inline-block; width: auto;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="" id="pigImg"/>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <img src="" id="pigImg" />
-                    </div>
+                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-content -->
+                <!-- /.modal -->
             </div>
-            <!-- /.modal -->
         </div>
     </div>
-</div>
-    <div><tr>
-        <td><input type="submit" value="返回上页" class="btn btn-info"/></td>
-    </tr></div>
+    <div>
+         <input type="submit" value="返回上页" class="btn btn-info"/>
+    </div>
 </form>
 </body>
 <script type="text/javascript">
     //点击查看原图
-    function imgZoomIn(src){
-        $("#pigImg").attr('src',src);
+    function imgZoomIn(src) {
+        $("#pigImg").attr('src', src);
         $("#imgZoomInModal").modal("show");
     }
 </script>

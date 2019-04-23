@@ -2,6 +2,7 @@ package com.bangnd.sales.service;
 
 import com.bangnd.sales.entity.PerformanceCommDetail;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,6 @@ public interface PerformanceCommDetailService {
 
     public List<PerformanceCommDetail> findAllByAgentId(long agentId, Date sd,Date ed);
 
-    public List<PerformanceCommDetail> findByOneDayAndAgentId(long agentId,String xdate) throws Exception;
+    public BigDecimal findByOneDayAndAgentId(long agentId, String xdate) throws Exception;
 
 }

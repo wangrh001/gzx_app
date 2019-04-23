@@ -189,6 +189,6 @@ public class UserController {
         } else {
             return "/ums/password";
         }
-        return "/index";
+        return "redirect:/index";
     }
 }

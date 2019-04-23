@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html style="height: 30%" lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+</head>
+
+<script type="text/javascript" th:src="@{/echarts/echarts.common.min.js}"/>
+<body style="height: 100%; margin: 0">
+<div id="container" style="height: 100%"></div>
+<!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>-->
+<!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>-->
+<!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>-->
+<!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>-->
+<!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>-->
+<!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>-->
+<!--&lt;!&ndash;<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script>&ndash;&gt;-->
+<!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>-->
+<!--<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>-->
+<script th:inline="javascript">
+    var xList=[[${xJson}]]
+    var seriesCashFlow =[[${seriesJsonCashFlow}]]
+    var yjsonCashFlow = [[${yJsonCashFlow}]]
+
+    var seriesArrayCashFlow = seriesCashFlow.split(',')
+    var xArray = xList.split(',');
+</script>
+
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        title: {
+            text: '财务大盘'
+            //subtext: '纯属虚构'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: seriesArrayCashFlow
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                magicType: {show: true, type: ['stack', 'tiled']},
+                saveAsImage: {show: true}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: xArray
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: JSON.parse(yjsonCashFlow)
+    };
+    myChart.setOption(option, true);
+
+</script>
+
+<script>
+    function reselect() {
+        var queryForm = document.getElementById("queryForm")
+        queryForm.submit()
+    }
+</script>
+<form id="queryForm">
+<div>
+    <table>
+        <tr>
+            <td>周期</td>
+            <td>
+                <select th:id="periodId"  th:name="periodId" onchange="reselect()" th:remove="all-but-first">
+                    <option th:each="period : ${periods}"
+                            th:value="${period.id}" th:text="${period.name}"></option>
+                </select>
+            </td>
+        </tr>
+    </table>
+</div>
+</form>
+</body>
+</html>

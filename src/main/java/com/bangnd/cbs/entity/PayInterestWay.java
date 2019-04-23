@@ -3,7 +3,7 @@ package com.bangnd.cbs.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="cfg_cbs_payInterest_way")
+@Table(name = "cfg_cbs_payInterest_way")
 public class PayInterestWay {
     @Id
     @GeneratedValue

@@ -17,6 +17,7 @@ public class SysFilter implements Filter {
 
         if (request.getSession().getAttribute("user") != null ||
                 request.getRequestURI().indexOf("/login") != -1 ||
+                request.getRequestURI().indexOf("/client") != -1 ||
                 request.getRequestURI().indexOf(".js") != -1 ||
                 request.getRequestURI().indexOf(".css") != -1 ||
                 request.getRequestURI().indexOf(".png") != -1 ||

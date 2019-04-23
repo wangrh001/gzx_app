@@ -41,6 +41,7 @@ public class CustomerController {
 
     /**
      * form表单提交 Date类型数据绑定
+     *
      * @param binder
      */
     @InitBinder
@@ -65,14 +66,14 @@ public class CustomerController {
                                Customer customer,
                                CustMortgage custMortgage,
                                CustCredit custCredit) {
-        int userId=Long.valueOf(((User)request.getSession().getAttribute("user")).getId()).intValue();
+        int userId = Long.valueOf(((User) request.getSession().getAttribute("user")).getId()).intValue();
         //保存客户信息
         customer.setCustState(1);
         customer.setCreateTime(new Date());
         customer.setCreator(0);
         customer.setOrderId(new Long(orderId).longValue());
         customerService.save(customer);
-        orderLogService.recordLog(new Long(orderId).longValue(),userId,ConstantCfg.ORDER_BUTTON_ADDCUST);
+        orderLogService.recordLog(new Long(orderId).longValue(), userId, ConstantCfg.ORDER_BUTTON_ADDCUST);
         //保存抵押物信息
         custMortgage.setCreateTime(new Date());
         custMortgage.setCreator(0);

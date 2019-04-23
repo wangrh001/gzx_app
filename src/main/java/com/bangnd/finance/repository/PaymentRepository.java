@@ -24,8 +24,8 @@ public interface PaymentRepository extends JpaRepository<Payment, Long>, JpaSpec
                                                   @Param(value = "type") int type,
                                                   @Param(value = "offset") int offset);
 
-    @Query("select sum(p.amount) from Payment p where p.payDate>=:startDate and p.payDate<=:endDate and p.payType in :feeType")
+    @Query("select sum(p.amount) from Payment p where p.payDate>=:startDate and p.payDate<=:endDate and p.payType in (:feeType)")
     public BigDecimal findAllByDateAndFeeType(@Param(value = "startDate") Date startDate,
                                               @Param(value = "endDate") Date endDate,
-                                              @Param(value = "feeType") String feeType);
+                                              @Param(value = "feeType") List<Integer> feeType);
 }

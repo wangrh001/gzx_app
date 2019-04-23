@@ -26,10 +26,10 @@ public class OrderProductServiceImpl implements OrderProductService {
     }
 
     @Override
-    public void updateOrderProductStateByOrderId(long orderId, int orderProductState,int updatorId) {
-        List<OrderProduct> orderProductList = orderProductRepository.findByOrderId(orderId,ConstantCfg.ORDER_PRODUCT_STATE_DELETE);
-        if(orderProductList!=null){
-            for(OrderProduct orderProduct:orderProductList){
+    public void updateOrderProductStateByOrderId(long orderId, int orderProductState, int updatorId) {
+        List<OrderProduct> orderProductList = orderProductRepository.findByOrderId(orderId, ConstantCfg.ORDER_PRODUCT_STATE_DELETE);
+        if (orderProductList != null) {
+            for (OrderProduct orderProduct : orderProductList) {
                 orderProduct.setOrderProdState(orderProductState);
                 orderProduct.setUpdateTime(new Date());
                 orderProduct.setUpdator(updatorId);
@@ -44,7 +44,7 @@ public class OrderProductServiceImpl implements OrderProductService {
     }
 
     @Override
-    public void updateOrderProductState(long id,int orderProductState) {
+    public void updateOrderProductState(long id, int orderProductState) {
         OrderProduct orderProduct = orderProductRepository.findById(id);
         orderProduct.setOrderProdState(orderProductState);
         orderProduct.setUpdateTime(new Date());
@@ -55,9 +55,9 @@ public class OrderProductServiceImpl implements OrderProductService {
     public void syncOrderProdState(long id) {
         OrderProduct orderProduct = orderProductRepository.findById(id);
         List<Payment> payments = paymentService.getPaymentListByOrderProdId(id);
-        for(Payment payment:payments){
+        for (Payment payment : payments) {
             //发现有未核销的费用，修改订单状态为费用已经生成、break;
-            if(payment.getOffset()==2) {
+            if (payment.getOffset() == 2) {
                 orderProduct.setOrderProdState(ConstantCfg.ORDER_PRODUCT_STATE_CACLED);
                 break;
             }

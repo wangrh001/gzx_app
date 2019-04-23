@@ -27,4 +27,7 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
     List<Order> findAllBySalsesId(@Param(value = "salerId") long salerId,
                                   @Param(value = "startDate") Date startDate,
                                   @Param(value = "endDate") Date date);
+
+    @Query("select o from Order o where o.approveId=:approveId")
+    public Order getOrderByApproveId(@Param(value = "approveId") String approveId);
 }

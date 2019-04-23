@@ -9,20 +9,20 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
     <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
-    <script type="text/javascript" th:src="@{/css/date.js}"/>
     <script th:inline="javascript">
         function needFill() {
             var applicantName = document.getElementById("applicantName").value
-            if(applicantName==null||applicantName==''){
+            if (applicantName == null || applicantName == '') {
                 alert('申请人不能为空！')
                 return false
             }
             var cellPhone = document.getElementById("cellPhone").value
-            if(cellPhone==null||cellPhone==''){
+            if (cellPhone == null || cellPhone == '') {
                 alert('电话不能为空！')
                 return false
             }
         }
+
         //显示添加客户页面
         function showAddCustomerPage() {
             var borrower = document.getElementById("borrower")
@@ -40,10 +40,10 @@
             //提交表单数据
             if (actionType == 1) {
                 order_form.action = "/order/add?buttonId=71"
-            } else if(actionType == 2){
+            } else if (actionType == 2) {
                 order_form.action = "/order/add?buttonId=72"
             } else if (actionType == 3) {
-                if(orderId==null || orderId == 0 ){
+                if (orderId == null || orderId == 0) {
                     alert("请先暂存订单！");
                     return
                 }
@@ -51,19 +51,154 @@
             } else if (actionType == 4) {
                 order_form.action = "/doc/showAllPic?orderId=" + orderId
             }
-            if(needFill()){
+            if (needFill()) {
                 order_form.submit()
             }
         }
-        function actionLogRecord(actionId){
+
+        function actionLogRecord(actionId) {
             var order_form = document.getElementById("order_form")
             order_form.action = "/orderLog/add?actionId=" + actionId
             order_form.submit()
         }
+
+        function createInputFileHtml(inputData,inputType) {
+            console.log('enter the createInputFileHtml------- ')
+            if(inputType==1){
+                var inputTable=document.getElementById("needInputTable")
+                if (inputData.length>0){
+                    inputTable.style.display="block"
+                    var needTh = document.getElementById("needTh")
+                    needTh.style.display="block"
+                }
+            }else if(inputType==2){
+                var inputTable=document.getElementById("canModifyTable")
+                if (inputData.length>0){
+                    inputTable.style.display = "block"
+                    var canModifyTh = document.getElementById("canModifyTh")
+                    canModifyTh.style.display = "block"
+                }
+            }
+
+            /*<![CDATA[*/
+            for (var p in inputData) {//遍历json数组时，这么写p为索引，从0开始
+                var chName = inputData[p].chName;
+                var enName = inputData[p].enName;
+                var ifScatter = inputData[p].ifScatter;
+                var dataType = inputData[p].dataType;
+                var canModify = inputData[p].canModify;
+                var needInput = inputData[p].needInput;
+                var dataValue = inputData[p].dataValue;
+
+                if (p % 3 == 0) {
+                    var row = inputTable.insertRow()
+                }
+                var title = row.insertCell();
+                title.innerHTML = chName
+                var input = row.insertCell();
+
+
+                //不存在这种情况：不能修改、但必填项
+                if(ifScatter==1&&needInput==1&&canModify==1){
+                    if(enName=='houseType'){
+                        input.innerHTML = "<select name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>住宅</OPTION> <OPTION value=2>别墅</OPTION> <OPTION value=3>公寓</OPTION> <OPTION value=4>办公</OPTION> </select><span style='color:red; float:left; height:24px'>*</span> "
+                    }else if(enName=='nextLoanWay'){
+                        input.innerHTML = "<select name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>见单放</OPTION> <OPTION value=2>见他放</OPTION> <OPTION value=3>见回执</OPTION> <OPTION value=4>见领证单</OPTION> </select><span style='color:red; float:left; height:24px'>*</span> "
+                    }else if(enName=='nextCapitalAccountProvider'){
+                        input.innerHTML = "<select name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>我司</OPTION> <OPTION value=2>渠道</OPTION> <OPTION value=3>客户</OPTION> </select><span style='color:red; float:left; height:24px'>*</span> "
+                    }else if(enName=='nextOrganType'){
+                        input.innerHTML = "<select name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>银行</OPTION> <OPTION value=2>机构</OPTION></select><span style='color:red; float:left; height:24px'>*</span> "
+                    }else{
+                        input.innerHTML = "<select name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>是</OPTION> <OPTION value=2>否</OPTION></select><span style='color:red; float:left; height:24px'>*</span> "
+                    }
+                }
+                if(ifScatter==1&&needInput==2&&canModify==1){
+                    if(enName=='houseType'){
+                        input.innerHTML = "<select name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>住宅</OPTION> <OPTION value=2>别墅</OPTION> <OPTION value=3>公寓</OPTION> <OPTION value=4>办公</OPTION> </select> "
+                    }else if(enName=='nextLoanWay'){
+                        input.innerHTML = "<select name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>见单放</OPTION> <OPTION value=2>见他放</OPTION> <OPTION value=3>见回执</OPTION> <OPTION value=4>见领证单</OPTION> </select> "
+                    }else if(enName=='nextCapitalAccountProvider'){
+                        input.innerHTML = "<select name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>我司</OPTION> <OPTION value=2>渠道</OPTION> <OPTION value=3>客户</OPTION> </select> "
+                    }else if(enName=='nextOrganType'){
+                        input.innerHTML = "<select name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>银行</OPTION> <OPTION value=2>机构</OPTION> "
+                    }else{
+                        input.innerHTML = "<select name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>是</OPTION> <OPTION value=2>否</OPTION> "
+                    }
+                }
+                if(ifScatter==1&&needInput==2&&canModify==2){
+                    if(enName=='houseType'){
+                        input.innerHTML = "<select disabled='disabled' name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>住宅</OPTION> <OPTION value=2>别墅</OPTION> <OPTION value=3>公寓</OPTION> <OPTION value=4>办公</OPTION> </select> "
+                    }else if(enName=='nextLoanWay'){
+                        input.innerHTML = "<select disabled='disabled' name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>见单放</OPTION> <OPTION value=2>见他放</OPTION> <OPTION value=3>见回执</OPTION> <OPTION value=4>见领证单</OPTION> </select> "
+                    }else if(enName=='nextCapitalAccountProvider'){
+                        input.innerHTML = "<select disabled='disabled' name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>我司</OPTION> <OPTION value=2>渠道</OPTION> <OPTION value=3>客户</OPTION> </select> "
+                    }else if(enName=='nextOrganType'){
+                        input.innerHTML = "<select disabled='disabled' name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>银行</OPTION> <OPTION value=2>机构</OPTION> "
+                    }else{
+                        input.innerHTML = "<select disabled='disabled' name='"+enName+"' id='"+enName+"'> <OPTION value=0>未知</OPTION> <OPTION value=1>是</OPTION> <OPTION value=2>否</OPTION> "
+                    }
+                }
+                if(ifScatter==2&&needInput==1&&canModify==1&&dataType==4){
+                    input.innerHTML = "<input style='float:left; height:34px' placeholder='yyyy-MM-dd' type='text' class='form-control required-field' id=" + enName + " name=" + enName + " value=" + dataValue + "><span style='color:red; float:left; height:24px'>*</span>"
+                }
+                if(ifScatter==2&&needInput==1&&canModify==1&&dataType!=4){
+                    input.innerHTML = "<input style='float:left; height:34px' type='text' class='form-control required-field' id=" + enName + " name=" + enName + " value=" + dataValue + "><span style='color:red; float:left; height:24px'>*</span>"
+                }
+                if(ifScatter==2&&needInput==2&&canModify==1&&dataType==4){
+                    input.innerHTML = "<input type='text' class='form-control' placeholder='yyyy-MM-dd' id=" + enName + " name=" + enName + " value='"+dataValue+"'>"
+                }
+                if(ifScatter==2&&needInput==2&&canModify==1&&dataType!=4){
+                    input.innerHTML = "<input type='text' class='form-control' id=" + enName + " name=" + enName + " value='"+dataValue+"'>"
+                }
+                if(ifScatter==2&&canModify==2){
+                    input.innerHTML = "<input disabled='disabled' type='text' class='form-control' placeholder='yyyy-MM-dd' id=" + enName + " name=" + enName + " value='"+dataValue+"'>"
+                }
+            }
+            /*]]>*/
+        }
+
+        function AddField() {
+            /*<![CDATA[*/
+            //生成输入框
+            var inputFiled = [[${formatInfos}]];
+            console.log(inputFiled)
+            var infoList = JSON.parse(inputFiled);
+
+            var needInpuData=[];
+            var canModifyData=[];
+
+            for (var p in infoList) {//遍历json数组时，这么写p为索引，从0开始
+                var canModify = infoList[p].canModify;
+                var needInput = infoList[p].needInput;
+                var dataType = infoList[p].dataType;
+
+                if(needInput == 1){
+                    needInpuData.push(infoList[p])
+                }else if(canModify == 1){
+                    canModifyData.push(infoList[p])
+                }
+            }
+            createInputFileHtml(needInpuData,1);
+            createInputFileHtml(canModifyData,2);
+            /*]]>*/
+        }
+
+
     </script>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+
+    <script>
+        function signDateCheck() {
+            var signDate = document.getElementById('signDate').value
+            if (signDate == "") {
+                alert("签约时间不能为空！")
+            }
+        }
+    </script>
+
 </head>
 
-<body class="container">
+<body class="container" onload="AddField()">
 <br/>
 <h4>添加订单</h4>
 
@@ -82,84 +217,37 @@
                 </select>
             </td>
             <td>签约时间</td>
-            <td><input type="text" class="form-control" id="signDate" name="signDate" th:value="*{order.signDate ne null} ? *{#dates.format(order.signDate,'yyyy-MM-dd')}" placeholder="yyyy-MM-dd"/></td>
-            <td><input type="submit" value="提交订单" onclick="formActionSetValue(2)" class="btn btn-info"/></td>
-        </tr>
-        <th>申请人</th>
-        <tr>
+            <td><input type="text" class="form-control" id="signDate" name="signDate"
+                       th:value="*{order.signDate ne null} ? *{#dates.format(order.signDate,'yyyy-MM-dd')}"
+                       onclick="signDateCheck()" placeholder="yyyy-MM-dd"/></td>
             <td>姓名</td>
-            <td><input type="text" class="form-control" th:field="*{order.applicantName}" placeholder="姓名" /></td>
-            <td>电话</td>
-            <td><input type="text" class="form-control" th:field="*{order.cellPhone}" placeholder="电话"/></td>
-            <!--<td>结息类型</td>-->
-            <!--<td>-->
-                <!--<select th:field="*{order.payInterestWay}" th:remove="all-but-first">-->
-                    <!--<option th:each="payInterestWay : ${payInterestWays}"-->
-                            <!--th:value="${payInterestWay.id}" th:text="${payInterestWay.name}">-->
-                            <!--th:selected="${payInterestWay.id eq order.payInterestWay}">Credit card-->
-                    <!--</option>-->
-                <!--</select>-->
-            <!--</td>-->
+            <td><input type="text" class="form-control" th:field="*{order.applicantName}" placeholder="姓名"/></td>
         </tr>
-        <!--客户诉求 -->
-        <th>请录入贷款诉求</th>
+
         <tr>
             <td>金额(万元)</td>
             <td><input type="text" class="form-control" th:field="*{order.demandAmount}" placeholder="金额"/></td>
-            <td>下家机构类型</td>
-            <td>
-                <select th:field="*{order.nextOrgType}" th:remove="all-but-first">
-                    <option th:each="organType : ${organTypes}"
-                            th:value="${organType.id}" th:text="${organType.name}"
-                            th:selected="${organType.id eq order.nextOrgType}">Credit card
-                    </option>
-                </select>
-            </td>
-            <!--<td>还款选择</td>-->
-            <!--<td>-->
-                <!--<select th:field="*{order.demandPayWay}" th:remove="all-but-first">-->
-                    <!--<option th:each="payWay : ${payWays}"-->
-                            <!--th:value="${payWay.id}" th:text="${payWay.name}"-->
-                            <!--th:selected="${payWay.id eq order.demandPayWay}">Credit card-->
-                    <!--</option>-->
-                <!--</select>-->
-            <!--</td>-->
-            <!--<td>利率</td>-->
-            <!--<td><input type="text" class="form-control" th:field="*{order.demandInterest}" placeholder="利率(上浮%)"/></td>-->
-        </tr>
-        <tr>
-            <td>周期类型</td>
-            <td>
-                <select th:field="*{order.periodType}" th:remove="all-but-first">
-                    <option th:each="periodType : ${periodTypes}"
-                            th:value="${periodType.id}" th:text="${periodType.name}"
-                            th:selected="${periodType.id eq order.periodType}">Credit card
-                    </option>
-                </select>
-            </td>
-            <td>周期数</td>
+            <td>用款天数</td>
             <td><input type="text" class="form-control" th:field="*{order.periodNum}" placeholder="贷款月数"/></td>
             <td>用款日期</td>
-            <td><input type="text" class="form-control" id="demandDate" name="demandDate" th:value="*{order.demandDate ne null} ? *{#dates.format(order.demandDate,'yyyy-MM-dd')}"/></td>
+            <td><input type="text" class="form-control" id="demandDate" name="demandDate"
+                       th:value="*{order.demandDate ne null} ? *{#dates.format(order.demandDate,'yyyy-MM-dd')}"/></td>
         </tr>
-
-        <tr>
-            <td><input type="submit" value="暂存订单" onclick="formActionSetValue(1)" class="btn btn-info"/></td>
-            <td><input type="button" value="添加客户" class="btn btn-info" onclick="showAddCustomerPage()"/></td>
-            <td><input type="button" value="添加产品" class="btn btn-info" onclick="showAddProductPage()"/></td>
-            <td>上传客户资料<input name="files" type="file" multiple="true"/></td>
-            <td><button type="submit" class="btn btn-info" onclick="formActionSetValue(3)">确定上传</button></td>
-            <td><button type="submit" class="btn btn-info" onclick="formActionSetValue(4)">查看图片</button></td>
-
-        </tr>
-
         <tr>
             <td>备注</td>
             <td><input type="text" class="form-control" th:field="*{orderLog.actionDesc}" placeholder="备注"/></td>
         </tr>
-
-        <input type="hidden" class="form-control" id="orderId" name = "orderId" th:value="*{order.id}"/>
+        <tr>
+            <td><input type="button" value="添加客户" class="btn btn-info" onclick="showAddCustomerPage()"/></td>
+            <td><input type="button" value="添加产品" class="btn btn-info" onclick="showAddProductPage()"/></td>
+            <td><button type="submit" class="btn btn-info" onclick="uploadFiles()">上传客户资料</button></td>
+            <td><input type="submit" value="提交订单" onclick="formActionSetValue(2)" class="btn btn-info"/></td>
+        </tr>
+        <input type="hidden" class="form-control" id="periodType" name="periodType" value="1"/>
     </table>
+    <table id="needInputTable" style="display: none"><th style="display:none" id="needTh">必录项</th></table>
+    <table id="canModifyTable" style="display: none"><th style="display:none" id="canModifyTh">可录项</th></table>
+
     <!--显示订单下的客户信息 -->
     <table th:if="${customerList} !=null">
         <tr>
@@ -199,7 +287,9 @@
             <td th:text="${orderProductForm.productName}">neo</td>
             <td th:text="${orderProductForm.planAmount}">neo</td>
             <td th:text="${orderProductForm.realAmount}">neo</td>
-            <td th:text="${orderProductForm.approveTime ne null}?${#dates.format(orderProductForm.approveTime,'yyyy-MM-dd')}">neo</td>
+            <td th:text="${orderProductForm.approveTime ne null}?${#dates.format(orderProductForm.approveTime,'yyyy-MM-dd')}">
+                neo
+            </td>
             <td th:text="${orderProductForm.serviceName}">neo</td>
             <td th:text="${orderProductForm.stateName}">neo</td>
             <td><a th:href="@{/orderProduct/toModify(id=${orderProductForm.id})}">修改</a></td>
@@ -252,7 +342,8 @@
                 </select>
             </td>
             <td>抵押次数</td>
-            <td><input type="text" class="form-control" th:field="*{custMortgage.mortgageCount}" placeholder="抵押次数"/></td>
+            <td><input type="text" class="form-control" th:field="*{custMortgage.mortgageCount}" placeholder="抵押次数"/>
+            </td>
             <td>类型</td>
             <td>
                 <select th:field="*{custMortgage.estateType}" th:remove="all-but-first">
@@ -268,14 +359,14 @@
         <!--客户征信信息 -->
         <!--<th>客户征信</th>-->
         <!--<tr>-->
-            <!--<td>两年内连超(次)</td>-->
-            <!--<td><input type="text" class="form-control" th:field="*{custCredit.contD2Times2Y}" placeholder="连超"/></td>-->
-            <!--<td>两年内总超(次)</td>-->
-            <!--<td><input type="text" class="form-control" th:field="*{custCredit.DDays2Y}" placeholder="累超"/></td>-->
-            <!--<td>最长逾期(天)</td>-->
-            <!--<td><input type="text" class="form-control" th:field="*{custCredit.maxDelay}" placeholder="逾期"/></td>-->
-            <!--<td>信用卡冻结余额(元)</td>-->
-            <!--<td><input type="text" class="form-control" th:field="*{custCredit.freezeAmount}" placeholder="冻结金额"/></td>-->
+        <!--<td>两年内连超(次)</td>-->
+        <!--<td><input type="text" class="form-control" th:field="*{custCredit.contD2Times2Y}" placeholder="连超"/></td>-->
+        <!--<td>两年内总超(次)</td>-->
+        <!--<td><input type="text" class="form-control" th:field="*{custCredit.DDays2Y}" placeholder="累超"/></td>-->
+        <!--<td>最长逾期(天)</td>-->
+        <!--<td><input type="text" class="form-control" th:field="*{custCredit.maxDelay}" placeholder="逾期"/></td>-->
+        <!--<td>信用卡冻结余额(元)</td>-->
+        <!--<td><input type="text" class="form-control" th:field="*{custCredit.freezeAmount}" placeholder="冻结金额"/></td>-->
         <!--</tr>-->
         <tr>
             <td><input type="submit" value="保存客户" class="btn btn-info"/></td>
@@ -283,7 +374,8 @@
     </table>
 </form>
 
-<form class="form-horizontal" method="post" id="order_product_form" th:action="@{/orderProduct/add(orderId=${order.id})}">
+<form class="form-horizontal" method="post" id="order_product_form"
+      th:action="@{/orderProduct/add(orderId=${order.id})}">
     <!--匹配的产品信息 -->
     <table id="orderProduct" style="display: none">
         <tr>
@@ -319,9 +411,11 @@
         </tr>
         <tr>
             <td>计划匹配金额(万)</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.planAmount}" placeholder="计划匹配金额(万)"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planAmount}" placeholder="计划匹配金额(万)"/>
+            </td>
             <td>计划利率</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.planInterest}" placeholder="计划利率"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planInterest}" placeholder="计划利率"/>
+            </td>
             <td>计划还款方式</td>
             <td>
                 <select th:field="*{orderProduct.planPayWay}" th:remove="all-but-first">
@@ -337,13 +431,16 @@
                 </select>
             </td>
             <td>计划周期数</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.planPeriodNum}" placeholder="计划周期数"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planPeriodNum}" placeholder="计划周期数"/>
+            </td>
         </tr>
         <tr>
             <td>真实匹配金额(万)</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.realAmount}" placeholder="真实匹配金额(万)"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realAmount}" placeholder="真实匹配金额(万)"/>
+            </td>
             <td>真实利率</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.realInterest}" placeholder="真实利率"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realInterest}" placeholder="真实利率"/>
+            </td>
             <td>真实还款方式</td>
             <td>
                 <select th:field="*{orderProduct.realPayWay}" th:remove="all-but-first">
@@ -359,7 +456,8 @@
                 </select>
             </td>
             <td>真实周期数</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.realPeriodNum}" placeholder="真实周期数"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realPeriodNum}" placeholder="真实周期数"/>
+            </td>
         </tr>
         <tr>
             <td><input type="submit" value="保存方案" class="btn btn-info"/></td>

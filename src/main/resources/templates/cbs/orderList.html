@@ -15,6 +15,40 @@
     <script type="text/javascript" src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script type="text/javascript" src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     -->
+    <script th:inline="javascript">
+        function doQuery(pagePara) {
+            /*<![CDATA[*/
+            var pageNum = [[${pageNum}]];
+            var totalPages = [[${totalPages}]];
+            // /*]]>*/
+            var queryForm = document.getElementById("queryForm")
+            if(pagePara==-1){
+                console.log("enter the -1 page")
+                queryForm.action="/order/list?pageNum="+totalPages
+            }else if(pagePara==1){
+                queryForm.action="/order/list?pageNum="+pagePara
+            }else {
+                queryForm.action="/order/list?pageNum="+pageNum
+            }
+            queryForm.submit();
+        }
+        function doQueryMinus1(pageNum) {
+            /*<![CDATA[*/
+            var pageNum = [[${pageNum}]]-1;
+            // /*]]>*/
+            var queryForm = document.getElementById("queryForm")
+            queryForm.action="/order/list?pageNum="+pageNum
+            queryForm.submit();
+        }
+        function doQueryPlus1(pageNum) {
+            /*<![CDATA[*/
+            var pageNum = [[${pageNum}]]+1;
+            // /*]]>*/
+            var queryForm = document.getElementById("queryForm")
+            queryForm.action="/order/list?pageNum="+pageNum
+            queryForm.submit();
+        }
+    </script>
 </head>
 
 <body class="container">
@@ -23,14 +57,11 @@
 
 <!--查询条件-->
 <div>
-    <form class="form-horizontal" th:action="@{/order/list}" th:object="${orderSearchForm}" method="post">
+    <form class="form-horizontal" id = "queryForm" th:action="@{/order/list}" th:object="${orderSearchForm}" method="post">
         <table>
             <tr>
                 <td>客户姓名</td>
                 <td><input th:field="*{applicantName}" value="" class="form-control"/></td>
-
-                <td>手机号</td>
-                <td><input th:field="*{cellPhone}" value="" class="form-control"/></td>
                 <td>业务类型</td>
                 <td>
                     <select th:field="*{businessType}" th:remove="all-but-first">
@@ -39,18 +70,6 @@
                         </option>
                     </select>
                 </td>
-                <td>结息类型</td>
-                <td>
-                    <select th:field="*{payInterestWay}" th:remove="all-but-first">
-                        <option th:each="payInterestWay : ${payInterestWays}"
-                                th:value="${payInterestWay.id}" th:text="${payInterestWay.name}">Credit card
-                        </option>
-                    </select>
-                </td>
-
-            </tr>
-
-            <tr>
                 <td>订单进度</td>
                 <td>
                     <select th:field="*{orderState}" value="" th:remove="all-but-first">
@@ -59,6 +78,9 @@
                         </option>
                     </select>
                 </td>
+            </tr>
+
+            <tr>
                 <td>开始日期</td>
                 <td><input type="text" class="form-control" th:field="*{startDate}" value=""/></td>
                 <td>结束日期</td>
@@ -78,8 +100,8 @@
         <tr>
             <th>序号</th>
             <th>客户姓名</th>
-            <th>金额</th>
-            <th>申请日期</th>
+            <th>金额(万)</th>
+            <th>用款日期</th>
             <th>当前进度</th>
             <th>查看轨迹</th>
             <th>编辑</th>
@@ -91,7 +113,8 @@
             <td th:text="${orderListForm.orderId}">1</td>
             <td th:text="${orderListForm.applicantName}">neo</td>
             <td th:text="${orderListForm.amount}">6</td>
-            <td th:text="${orderListForm.applyDate ne null}?${#dates.format(orderListForm.applyDate,'yyyy-MM-dd')}">6</td>
+            <td th:text="${orderListForm.demandDate ne null}?${#dates.format(orderListForm.demandDate,'yyyy-MM-dd')}">6
+            </td>
             <td th:text="${orderListForm.orderState}"></td>
             <td><a th:href="@{/orderLog/list(orderId=${orderListForm.orderId})}">查看轨迹</a></td>
             <td><a th:href="@{/order/toEdit(orderId=${orderListForm.orderId})}">edit</a></td>
@@ -103,16 +126,16 @@
 
     <table>
         <tr>
-            <td><a th:href="@{/order/list(pageNum=1)}">首页</a></td>
+            <td><a href="javascript:doQuery(1)">首页</a></td>
             <td th:switch="${pageNum}">
-                <p th:case="1"><a th:href="@{/order/list(pageNum=1)}">上一页</a></p>
-                <p th:case="*"><a th:href="@{/order/list(pageNum=${pageNum-1})}">上一页</a></p>
+                <p th:case="1"><a href="javascript:doQuery(1)">上一页</a></p>
+                <p th:case="*"><a href="javascript:doQueryMinus1(1)">上一页</a></p>
             </td>
             <td th:switch="${pageNum}">
-                <p th:case="${totalPages}"><a th:href="@{/order/list(pageNum=${totalPages})}">下一页</a></p>
-                <p th:case="*"><a th:href="@{/order/list(pageNum=${pageNum+1})}">下一页</a></p>
+                <p th:case="${totalPages}"><a href="javascript:doQuery(-1)">下一页</a></p>
+                <p th:case="*"><a href="javascript:doQueryPlus1(1)">下一页</a></p>
             </td>
-            <td><a th:href="@{/order/list(pageNum=${totalPages})}">尾页</a></td>
+            <td><a href="javascript:doQuery(-1)">尾页</a></td>
         </tr>
     </table>
 </div>

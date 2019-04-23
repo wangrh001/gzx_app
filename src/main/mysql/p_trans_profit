@@ -1,0 +1,52 @@
+begin
+	declare v_id,v_pay_type,v_count,v_period_id INT;
+	declare v_in_amount,v_out_amount,v_credit_amount,v_debit_amount DECIMAL default 0;
+	declare v_end_date DATE;
+	declare done boolean default 0;
+
+	#将收入结转成本年利润
+	DECLARE mycursor CURSOR FOR select b.id from cfg_account_balance b where b.type=4;
+	DECLARE mycursor2 CURSOR FOR select b.id from cfg_account_balance b where b.type=5;
+	declare continue handler for sqlstate '02000' set done=1;
+
+	select count(*) into v_count from t_finance_accounting_period p where p.end_date<=ADDDATE(SYSDATE(),INTERVAL 2 DAY) and p.period_state = 1;
+	#如果今天是账期结束日期，需要进行利润的结转，记录科目结转
+	if v_count = 1 THEN
+		select id,end_date into v_period_id,v_end_date from t_finance_accounting_period p where p.end_date<=ADDDATE(SYSDATE(),INTERVAL 2 DAY)  and p.period_state=1;
+		OPEN mycursor;
+		repeat
+		FETCH mycursor INTO v_id;
+			select count(a.end_amount_credit) into v_count from t_finance_balance a where a.subject = v_id and a.accounting_period=v_period_id;
+			if v_count = 1 THEN
+				select a.end_amount_credit into v_in_amount from t_finance_balance a where a.subject = v_id and a.accounting_period = v_period_id;
+				insert into t_finance_accounting_entry(accounting_date,amount,debit,credit,state,creator,create_time)values(v_end_date,v_in_amount,v_id,22,1,0,SYSDATE());
+				set v_credit_amount = v_credit_amount + v_in_amount;
+			end if;
+		until done end repeat;
+		CLOSE mycursor;
+
+		set done=0;
+		OPEN mycursor2;
+		repeat
+		FETCH mycursor2 INTO v_id;
+			select count(a.end_amount_credit) into v_count from t_finance_balance a where a.subject = v_id and a.accounting_period=v_period_id;
+			if v_count = 1 THEN
+				select a.end_amount_credit into v_in_amount from t_finance_balance a where a.subject = v_id and a.accounting_period = v_period_id;
+				insert into t_finance_accounting_entry(accounting_date,amount,debit,credit,state,creator,create_time)values(v_end_date,v_in_amount,22,v_id,1,0,SYSDATE());
+				set v_debit_amount = v_debit_amount + v_out_amount;
+			end if;
+		until done end repeat;
+		CLOSE mycursor2;
+	end if;
+	##查看当期的利润科目是否有值，第一期会没有值,更新当期的本年利润
+	select count(*) into v_count from t_finance_balance where subject = 22 and accounting_period=v_period_id;
+	if v_count = 1 then
+		update t_finance_balance b set b.amount_credit = b.amount_credit + v_credit_amount,b.end_amount_credit = b.end_amount_credit + v_credit_amount where b.accounting_period = v_period_id and b.subject=22;
+		update t_finance_balance b set b.amount_debit = b.amount_debit + v_debit_amount,b.end_amount_debit = b.end_amount_debit + v_debit_amount where b.accounting_period = v_period_id and b.subject=22;
+	ELSEIF v_count =0 then
+		insert into t_finance_balance(accounting_period,subject,amount_credit,amount_debit,start_amount_credit,start_amount_debit,end_amount_credit,end_amount_debit,creator,create_time)
+		values(v_period_id,22,v_credit_amount,v_debit_amount,0,0,v_credit_amount,v_debit_amount,0,SYSDATE());
+	end if;
+
+	update t_finance_accounting_period set period_state = 3 where id = v_period_id;
+end

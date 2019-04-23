@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="t_cbs_order_log")
+@Table(name = "t_cbs_order_log")
 public class OrderLog {
     @Id
     @GeneratedValue
@@ -21,6 +21,9 @@ public class OrderLog {
 
     @Column
     private long buttonId;
+
+    @Column
+    private long formatInfoId;
 
     @Column
     private Date operatorTime;
@@ -134,5 +137,13 @@ public class OrderLog {
 
     public void setUpdator(Integer updator) {
         this.updator = updator;
+    }
+
+    public long getFormatInfoId() {
+        return formatInfoId;
+    }
+
+    public void setFormatInfoId(long formatInfoId) {
+        this.formatInfoId = formatInfoId;
     }
 }

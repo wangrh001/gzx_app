@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,12 @@ public interface PerformanceCommDetailRepository extends JpaRepository<Performan
 
     @Query("select p from PerformanceCommDetail  p where p.salerId=:salerId and p.createTime>=:startDate and p.createTime<=:endDate")
     public List<PerformanceCommDetail> findAllByAgentId(@Param(value = "salerId") long salerId,
-                                                        @Param(value="xdate") Date startDate,
+                                       @Param(value="startDate") Date startDate,
+                                       @Param(value = "endDate") Date endDate);
+
+    @Query("select sum(p.interest) from PerformanceCommDetail  p where p.salerId=:salerId and p.createTime>=:startDate and p.createTime<=:endDate")
+    public BigDecimal findAllByAgentIdAndCreateTime(@Param(value = "salerId") long salerId,
+                                                        @Param(value="startDate") Date startDate,
                                                         @Param(value = "endDate") Date endDate);
 
 }

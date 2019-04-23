@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>新增</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/util/formatInfo/edit}" th:object="${formatInfo}" method="post">
+        <table>
+            <input type="hidden" th:field="*{id}"/>
+            <tr>
+                <td>中文名</td>
+                <td><input th:field="*{chName}" value="" class="form-control"/></td>
+                <td>英文名</td>
+                <td><input th:field="*{enName}" value="" class="form-control"/></td>
+                <td>数据类型</td>
+                <td><select th:field="*{dataType}" th:remove="all-but-first">
+                    <option th:each="dataType : ${dataTypes}"
+                            th:value="${dataType.id}" th:text="${dataType.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>业务类型</td>
+                <td><select th:field="*{busiType}" th:remove="all-but-first">
+                    <option th:each="busiType : ${busiTypes}"
+                            th:value="${busiType.id}" th:text="${busiType.name}">Credit card
+                    </option>
+                </select></td>
+                <td>必填阶段</td>
+                <td><select th:field="*{needStep}" th:remove="all-but-first">
+                    <option th:each="needStep : ${needSteps}"
+                            th:value="${needStep.id}" th:text="${needStep.name}">Credit card
+                    </option>
+                </select></td>
+                <td>对象详情</td>
+                <td><select th:field="*{whoObject}" th:remove="all-but-first">
+                    <option th:each="whoObject : ${whoObjects}"
+                            th:value="${whoObject.id}" th:text="${whoObject.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>是否离散值</td>
+                <td><select th:field="*{ifScatter}" th:remove="all-but-first">
+                    <option th:each="ifScatter : ${ifScatters}"
+                            th:value="${ifScatter.id}" th:text="${ifScatter.name}">Credit card
+                    </option>
+                </select></td>
+                <td>离散值对象</td>
+                <td><input th:field="*{scatterObj}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>能看的角色</td>
+                <td><input th:field="*{canSeeRoleSet}" value="" class="form-control"/></td>
+                <td>能修改的角色</td>
+                <td><input th:field="*{canModifyRoleSet}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="保存" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="form-group">
+</div>
+</body>
+</html>

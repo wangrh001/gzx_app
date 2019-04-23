@@ -36,7 +36,7 @@
             order_form.submit()
         }
 
-        function actionLogRecord(actionId){
+        function actionLogRecord(actionId) {
             var order_form = document.getElementById("order_form")
             order_form.action = "/orderLog/add?actionId=" + actionId
             order_form.submit()
@@ -65,8 +65,8 @@
 
         function doButton(buttonId) {
             var order_form = document.getElementById("order_form")
-            order_form.action = "/order/edit?buttonId="+buttonId
-            alert("/order/edit?buttonId="+buttonId)
+            order_form.action = "/order/edit?buttonId=" + buttonId
+            alert("/order/edit?buttonId=" + buttonId)
             order_form.submit()
         }
 
@@ -74,16 +74,17 @@
             /*<![CDATA[*/
             var type = [[${buttonRes}]];
             //这个符号不能删除！！！！
-            var obj=JSON.parse(type);
-            var div =document.getElementById("buttonTable");
-            for(var p in obj){//遍历json数组时，这么写p为索引，0,1
-                var buttonName=obj[p].buttonName
-                var buttonId=obj[p].id
-                var url='/order/edit?buttonId='
-                var input="<input type='button' onclick='doButton("+buttonId+")' class='btn btn-info' value='"+buttonName+"'/>";
-                div.innerHTML+=input;
+            var obj = JSON.parse(type);
+            var div = document.getElementById("buttonTable");
+            for (var p in obj) {//遍历json数组时，这么写p为索引，0,1
+                var buttonName = obj[p].buttonName
+                var buttonId = obj[p].id
+                var url = '/order/edit?buttonId='
+                var input = "<input type='button' onclick='doButton(" + buttonId + ")' class='btn btn-info' value='" + buttonName + "'/>";
+                div.innerHTML += input;
             }
         }
+
         // /*]]>*/
 
     </script>
@@ -108,7 +109,9 @@
                 </select>
             </td>
             <td>签约时间</td>
-            <td><input type="text" class="form-control" id="signDate" name="signDate" th:value="*{order.signDate ne null} ? *{#dates.format(order.signDate,'yyyy-MM-dd')}" placeholder="yyyy-MM-dd"/></td>
+            <td><input type="text" class="form-control" id="signDate" name="signDate"
+                       th:value="*{order.signDate ne null} ? *{#dates.format(order.signDate,'yyyy-MM-dd')}"
+                       placeholder="yyyy-MM-dd"/></td>
             <td>姓名</td>
             <td><input type="text" class="form-control" th:field="*{order.applicantName}" placeholder="姓名"/></td>
         </tr>
@@ -140,7 +143,8 @@
             <td>周期数</td>
             <td><input type="text" class="form-control" th:field="*{order.periodNum}" placeholder="贷款月数"/></td>
             <td>用款日期</td>
-            <td><input type="text" class="form-control" id="demandDate" name="demandDate" th:value="*{order.demandDate ne null} ? *{#dates.format(order.demandDate,'yyyy-MM-dd')}"/></td>
+            <td><input type="text" class="form-control" id="demandDate" name="demandDate"
+                       th:value="*{order.demandDate ne null} ? *{#dates.format(order.demandDate,'yyyy-MM-dd')}"/></td>
         </tr>
 
         <tr>
@@ -148,7 +152,7 @@
             <td><input type="text" class="form-control" th:field="*{orderLog.actionDesc}" placeholder="备注"/></td>
         </tr>
 
-        <input type="hidden" class="form-control" id="orderId" name = "orderId" th:value="*{order.id}"/>
+        <input type="hidden" class="form-control" id="orderId" name="orderId" th:value="*{order.id}"/>
     </table>
     <div id="buttonTable">
 
@@ -186,7 +190,9 @@
             <td th:text="${orderProductForm.productName}">neo</td>
             <td th:text="${orderProductForm.planAmount}">neo</td>
             <td th:text="${orderProductForm.realAmount}">neo</td>
-            <td th:text="${orderProductForm.approveTime ne null}?${#dates.format(orderProductForm.approveTime,'yyyy-MM-dd')}">neo</td>
+            <td th:text="${orderProductForm.approveTime ne null}?${#dates.format(orderProductForm.approveTime,'yyyy-MM-dd')}">
+                neo
+            </td>
             <td th:text="${orderProductForm.serviceName}">neo</td>
             <td th:text="${orderProductForm.stateName}">neo</td>
         </tr>
@@ -231,7 +237,8 @@
                 </select>
             </td>
             <td>抵押次数</td>
-            <td><input type="text" class="form-control" th:field="*{custMortgage.mortgageCount}" placeholder="抵押次数"/></td>
+            <td><input type="text" class="form-control" th:field="*{custMortgage.mortgageCount}" placeholder="抵押次数"/>
+            </td>
             <td>类型</td>
             <td>
                 <select th:field="*{custMortgage.estateType}" th:remove="all-but-first">
@@ -259,7 +266,8 @@
     </table>
 </form>
 
-<form class="form-horizontal" method="post" id="order_product_form" th:action="@{/orderProduct/add(orderId=${order.id})}">
+<form class="form-horizontal" method="post" id="order_product_form"
+      th:action="@{/orderProduct/add(orderId=${order.id})}">
     <!--匹配的产品信息 -->
     <table id="orderProduct" style="display: none">
         <tr>
@@ -295,9 +303,11 @@
         </tr>
         <tr>
             <td>计划匹配金额(万)</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.planAmount}" placeholder="计划匹配金额(万)"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planAmount}" placeholder="计划匹配金额(万)"/>
+            </td>
             <td>计划利率</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.planInterest}" placeholder="计划利率"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planInterest}" placeholder="计划利率"/>
+            </td>
             <td>计划还款方式</td>
             <td>
                 <select th:field="*{orderProduct.planPayWay}" th:remove="all-but-first">
@@ -313,13 +323,16 @@
                 </select>
             </td>
             <td>计划周期数</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.planPeriodNum}" placeholder="计划周期数"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planPeriodNum}" placeholder="计划周期数"/>
+            </td>
         </tr>
         <tr>
             <td>真实匹配金额(万)</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.realAmount}" placeholder="真实匹配金额(万)"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realAmount}" placeholder="真实匹配金额(万)"/>
+            </td>
             <td>真实利率</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.realInterest}" placeholder="真实利率"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realInterest}" placeholder="真实利率"/>
+            </td>
             <td>真实还款方式</td>
             <td>
                 <select th:field="*{orderProduct.realPayWay}" th:remove="all-but-first">
@@ -335,7 +348,8 @@
                 </select>
             </td>
             <td>真实周期数</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.realPeriodNum}" placeholder="真实周期数"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realPeriodNum}" placeholder="真实周期数"/>
+            </td>
         </tr>
     </table>
 </form>

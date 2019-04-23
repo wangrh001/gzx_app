@@ -53,9 +53,11 @@
         </tr>
         <tr>
             <td>计划匹配金额(万)</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.planAmount}" placeholder="计划匹配金额(万)"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planAmount}" placeholder="计划匹配金额(万)"/>
+            </td>
             <td>计划利率</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.planInterest}" placeholder="计划利率"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planInterest}" placeholder="计划利率"/>
+            </td>
             <td>计划还款方式</td>
             <td>
                 <select th:field="*{orderProduct.planPayWay}" th:remove="all-but-first">
@@ -71,13 +73,16 @@
                 </select>
             </td>
             <td>计划周期数</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.planPeriodNum}" placeholder="计划周期数"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planPeriodNum}" placeholder="计划周期数"/>
+            </td>
         </tr>
         <tr>
             <td>真实匹配金额(万)</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.realAmount}" placeholder="真实匹配金额(万)"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realAmount}" placeholder="真实匹配金额(万)"/>
+            </td>
             <td>真实利率</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.realInterest}" placeholder="真实利率"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realInterest}" placeholder="真实利率"/>
+            </td>
             <td>真实还款方式</td>
             <td>
                 <select th:field="*{orderProduct.realPayWay}" th:remove="all-but-first">
@@ -93,11 +98,14 @@
                 </select>
             </td>
             <td>真实周期数</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.realPeriodNum}" placeholder="真实周期数"/></td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realPeriodNum}" placeholder="真实周期数"/>
+            </td>
         </tr>
         <tr>
             <td>批贷时间</td>
-            <td><input type="text" class="form-control" id="approveTime" name="approveTime" th:value="*{orderProduct.approveTime ne null} ? *{#dates.format(orderProduct.approveTime,'yyyy-MM-dd')}" placeholder="yyyy-MM-dd"/></td>
+            <td><input type="text" class="form-control" id="approveTime" name="approveTime"
+                       th:value="*{orderProduct.approveTime ne null} ? *{#dates.format(orderProduct.approveTime,'yyyy-MM-dd')}"
+                       placeholder="yyyy-MM-dd"/></td>
         </tr>
 
         <tr>

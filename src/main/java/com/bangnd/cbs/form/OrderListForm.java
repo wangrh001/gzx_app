@@ -7,7 +7,7 @@ public class OrderListForm {
     private long orderId;
     private String applicantName;
     private BigDecimal amount;
-    private Date applyDate;
+    private Date demandDate;
     private String orderState;
     private String nextHandler;
 
@@ -43,12 +43,12 @@ public class OrderListForm {
         this.amount = amount;
     }
 
-    public Date getApplyDate() {
-        return applyDate;
+    public Date getDemandDate() {
+        return demandDate;
     }
 
-    public void setApplyDate(Date applyDate) {
-        this.applyDate = applyDate;
+    public void setDemandDate(Date demandDate) {
+        this.demandDate = demandDate;
     }
 
     public String getNextHandler() {

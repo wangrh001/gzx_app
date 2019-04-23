@@ -1,10 +1,6 @@
 package com.bangnd.cbs.entity;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -21,7 +17,7 @@ public class Order {
 
     //可接受利率
     @Column
-    private BigDecimal demandInterest=new BigDecimal(0);
+    private BigDecimal demandInterest = new BigDecimal(0);
 
     //用款开始时间
     @Column
@@ -29,7 +25,7 @@ public class Order {
 
     //支付方式，1、等额本息；2、等额本金；3、月息年本
     @Column
-    private int demandPayWay=0;
+    private int demandPayWay = 0;
 
     //周期类型：1、天；2、周；3、月；4、年
     @Column
@@ -39,17 +35,18 @@ public class Order {
     private int periodNum;
 
     @Column
-    private int nextOrgType=0;
+    private int nextOrgType = 0;
 
+    //@NotEmpty(message="申请人不能为空")
     //申请人
     @Column
-    @NotEmpty(message="申请人不能为空")
     private String applicantName;
 
     //申请人电话
+
+    //@NotEmpty(message="电话不能为空")
+    //@Length(min=6, message="密码长度不能少于六位")
     @Column
-    @NotEmpty(message="电话不能为空")
-    @Length(min=6, message="密码长度不能少于六位")
     private String cellPhone;
 
     //1、居间业务；2、抵押业务；3、垫资过桥；
@@ -75,7 +72,11 @@ public class Order {
 
     //1、一次性付息；2、按周期付息
     @Column(nullable = true)
-    private int payInterestWay=0;
+    private int payInterestWay = 0;
+
+    //如果是从钉钉过来的审批，记录审批id
+    @Column
+    private String approveId;
 
     public BigDecimal getDemandAmount() {
         return demandAmount;
@@ -283,5 +284,13 @@ public class Order {
 
     public void setChannelType(int channelType) {
         this.channelType = channelType;
+    }
+
+    public String getApproveId() {
+        return approveId;
+    }
+
+    public void setApproveId(String approveId) {
+        this.approveId = approveId;
     }
 }

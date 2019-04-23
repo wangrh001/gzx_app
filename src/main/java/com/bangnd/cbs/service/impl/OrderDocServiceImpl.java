@@ -23,4 +23,9 @@ public class OrderDocServiceImpl implements OrderDocService {
     public List<OrderDocument> findAllByOrderId(Long orderId) {
         return orderDocRepository.findAllByOrderId(orderId);
     }
+
+    @Override
+    public List<OrderDocument> findAllByOrderIdAndType(Long orderId, int type) {
+        return orderDocRepository.findAllByOrderIdAndType(orderId,type);
+    }
 }

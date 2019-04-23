@@ -40,6 +40,7 @@ public class ProductController {
 
     /**
      * form表单提交 Date类型数据绑定
+     *
      * @param binder
      */
     @InitBinder
@@ -50,11 +51,11 @@ public class ProductController {
     }
 
     @RequestMapping("/cbs/product")
-    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, ProductSearchForm productSearchForm) {
-        if(pageNum==null){
-            pageNum="1";
+    public String home(Model model, @RequestParam(value = "pageNum", required = false) String pageNum, ProductSearchForm productSearchForm) {
+        if (pageNum == null) {
+            pageNum = "1";
         }
-        Page<Product> pages = productService.getProductList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,productSearchForm);
+        Page<Product> pages = productService.getProductList(Integer.valueOf(pageNum), ConstantCfg.NUM_PER_PAGE, productSearchForm);
         model.addAttribute("bankIds", productBankIdService.getAll());
         model.addAttribute("productTypes", productProductTypeService.getAll());
         model.addAttribute("productStates", productProductStateService.getAll());
@@ -69,12 +70,12 @@ public class ProductController {
             }
         }
 
-        int pagenum=Integer.valueOf(pageNum);
-        model.addAttribute("page",pages);
-        model.addAttribute("pageNum",pagenum);
-        model.addAttribute("totalPages",pages.getTotalPages());
-        System.out.println("totalPages="+pages.getTotalPages());
-        model.addAttribute("totalElements",pages.getTotalElements());
+        int pagenum = Integer.valueOf(pageNum);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", pagenum);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        System.out.println("totalPages=" + pages.getTotalPages());
+        model.addAttribute("totalElements", pages.getTotalElements());
         model.addAttribute("productVOs", productVOs);
         return "/cbs/productList";
     }

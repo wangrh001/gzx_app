@@ -72,7 +72,6 @@ public class EmployeeController {
                 employeeVOs.add(employeeVO);
             }
         }
-
         int pagenum = Integer.valueOf(pageNum);
         model.addAttribute("page", pages);
         model.addAttribute("pageNum", pagenum);

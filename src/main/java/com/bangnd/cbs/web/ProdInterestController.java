@@ -23,7 +23,6 @@ import java.util.Date;
 import java.util.List;
 
 
-
 @Controller
 public class ProdInterestController {
     @Resource
@@ -35,6 +34,7 @@ public class ProdInterestController {
 
     /**
      * form表单提交 Date类型数据绑定
+     *
      * @param binder
      */
     @InitBinder
@@ -45,13 +45,13 @@ public class ProdInterestController {
     }
 
     @RequestMapping("/cbs/prodInterest")
-    public String home(Model model, @RequestParam(value="pageNum",required=false) String pageNum, ProdInterestSearchForm prodInterestSearchForm) {
-        if(pageNum==null){
-            pageNum="1";
+    public String home(Model model, @RequestParam(value = "pageNum", required = false) String pageNum, ProdInterestSearchForm prodInterestSearchForm) {
+        if (pageNum == null) {
+            pageNum = "1";
         }
-        Page<ProdInterest> pages = prodInterestService.getProdInterestList(Integer.valueOf(pageNum),ConstantCfg.NUM_PER_PAGE,prodInterestSearchForm);
+        Page<ProdInterest> pages = prodInterestService.getProdInterestList(Integer.valueOf(pageNum), ConstantCfg.NUM_PER_PAGE, prodInterestSearchForm);
         model.addAttribute("periodTypes", periodTypeService.getAll());
-        model.addAttribute("products",productService.getInterestProduct());
+        model.addAttribute("products", productService.getInterestProduct());
         List<ProdInterestVO> prodInterestVOs = new ArrayList<>();
         if (pages != null) {
             for (ProdInterest prodInterest : pages) {
@@ -64,12 +64,12 @@ public class ProdInterestController {
             }
         }
 
-        int pagenum=Integer.valueOf(pageNum);
-        model.addAttribute("page",pages);
-        model.addAttribute("pageNum",pagenum);
-        model.addAttribute("totalPages",pages.getTotalPages());
-        System.out.println("totalPages="+pages.getTotalPages());
-        model.addAttribute("totalElements",pages.getTotalElements());
+        int pagenum = Integer.valueOf(pageNum);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", pagenum);
+        model.addAttribute("totalPages", pages.getTotalPages());
+        System.out.println("totalPages=" + pages.getTotalPages());
+        model.addAttribute("totalElements", pages.getTotalElements());
         model.addAttribute("prodInterestVOs", prodInterestVOs);
         return "/cbs/prodInterestList";
     }
@@ -79,7 +79,7 @@ public class ProdInterestController {
         ProdInterest prodInterest = new ProdInterest();
         model.addAttribute("prodInterest", prodInterest);
         model.addAttribute("periodTypes", periodTypeService.getAll());
-        model.addAttribute("products",productService.getInterestProduct());
+        model.addAttribute("products", productService.getInterestProduct());
         return "/cbs/prodInterestAdd";
     }
 
@@ -97,7 +97,7 @@ public class ProdInterestController {
         ProdInterest prodInterest = prodInterestService.getProdInterestById(id);
         model.addAttribute("prodInterest", prodInterest);
         model.addAttribute("periodTypes", periodTypeService.getAll());
-        model.addAttribute("products",productService.getInterestProduct());
+        model.addAttribute("products", productService.getInterestProduct());
         return "/cbs/prodInterestEdit";
     }
 

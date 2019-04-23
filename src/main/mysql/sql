@@ -1,0 +1,486 @@
+
+
+select * from BATCH_STEP_EXECUTION;
+# BATCH_JOB_EXECUTION
+# BATCH_JOB_EXECUTION_CONTEXT
+# BATCH_JOB_EXECUTION_PARAMS
+# BATCH_JOB_EXECUTION_SEQ
+# BATCH_JOB_INSTANCE
+# BATCH_JOB_SEQ
+# BATCH_STEP_EXECUTION
+# BATCH_STEP_EXECUTION_CONTEXT
+# BATCH_STEP_EXECUTION_SEQ
+
+select * from t_util_format_info where ch_name in('卷齐日期','证件收押日期');
+select a.big_data_date from t_format_info_obj a where order_id = 90;
+update t_util_format_info set state = 100 where id = 64;
+select *  from t_cbs_order where id = 90;
+
+select * from t_util_format_info where ch_name like '%下家%';
+
+
+
+select * from t_hr_employee;
+update cfg_group_grade set id = 0  where id =3;
+update t_hr_dept set name = '全部'  where id = 0;
+insert into cfg_cbs_period_type values (3,'七天');
+select * from t_hr_position;
+select * from cfg_cbs_prod_bank;
+select * from cfg_cbs_period_type;
+select * from t_sales_performance_commission;
+select * from cfg_group_grade;
+select * from t_util_format_info where can_modify_role_set like '%8%' and need_step not like '%102%';
+select * from t_util_format_info where need_step like '%102%' and state =1 ;
+update t_util_format_info t set data_type = 3 where ch_name in ('房屋坐落','产权证号','解押材料');
+
+select * from information_schema.tables where table_schema='gzx' and table_type='BASE TABLE';
+
+select * from cfg_cbs_order_state;
+select * from cfg_cbs_business_type;
+select * from t_ums_resource where type = 2;
+select * from t_cbs_order order by id desc;
+select * from cfg_cbs_business_type;
+select house_type from t_format_info_obj where order_id=86;
+update cfg_cbs_order_state set id = 0 where id = 130;
+
+select * from t_cbs_order_pool where user_id in(13,15,16) and do_state = 2;
+
+select * from t_hr_position where state = 1;
+
+select * from t_sales_agent where channel_type =2;
+update t_sales_agent set name = '全部' where id=0;
+update t_sales_agent set user_id = 15 where id = 8;
+select * from t_hr_employee where user_id = 16;
+select * from t_hr_employee where position = 11;
+select * from t_ums_user where state =1;
+
+update t_hr_employee set name = '张小溪' where id = 15;
+
+select * from t_cbs_order_pool where order_id = 89;
+update t_cbs_order_pool set user_id = 15 where id = 233;
+
+select * from t_finance_payment where order_id = 89;
+
+select * from t_hr_employee where position = 11;
+select * from t_sales_agent where channel_type = 1;
+
+select * from t_util_format_info where need_step = 122;
+update t_util_format_info set need_step = -1 where id in (52,55,56,62)
+ALTER TABLE t_format_info_obj MODIFY title_certificateno varchar(500);
+select * from cfg_order_doc_type;
+select * from t_cbs_order where id in(71,87,88,89,90);
+select * from t_format_info_obj where order_id = 89;
+select * from t_cbs_order_doc where order_id = 88 and doc_type =1 ;
+delete from t_cbs_order_doc where id = 104;
+update t_cbs_order_doc set doc_type = 1 where order_id = 88;
+
+select * from t_util_format_info where ch_name like '%展期%';
+update t_util_format_info set need_step = -1 where id in (36,37);
+update t_sales_agent set dd_user_name = 'manager8154' where id = 8;
+
+
+select * from t_sales_agent;
+select * From t_util_work_flow where after_state = 102 and button_id = 72;
+select * from t_cbs_order_log where order_id in (79,80);
+select * from t_cbs_order_pool where order_id in (91);
+select * from t_cbs_order_doc where order_id in (79,80);
+select * from t_ums_user where id = 14;
+select * from t_ums_resource where parent_id=0;
+select * from cfg_format_info_who_object;
+update cfg_format_info_who_object set id = 0 where id = 1;
+select * from t_ums_user;
+select * from t_format_info_obj;
+insert into cfg_format_info_who_object(id,name)values(0,'全部');
+insert into cfg_format_info_who_object(id,name)values(1,'Order');
+insert into cfg_forma_info_who_object(id,name)values(2,'否');
+insert into cfg_format_info_data_type(id,name)values(3,'String');
+insert into cfg_format_info_data_type(id,name)values(4,'Date');
+insert into cfg_format_info_data_type(id,name)values(5,'BigDecimal');
+
+select concat('update t_format_info_obj set ',en_name,'=1') from t_util_format_info where if_scatter=1;
+
+update t_util_format_info set if_scatter = 1 where id = 73;
+update t_util_format_info set can_modify_role_set = '(1,2,4,5,6,7,9,10,11,12,13)',can_see_role_set= '(1,2,4,5,6,7,9,10,11,12,13)';
+
+select * from cfg_certificate_type;
+select * from cfg_certificate_certi_state;
+update cfg_certificate_certi_state set id = 0 where id = 1;
+insert into cfg_certificate_type(id,name)values(0,'全部');
+insert into cfg_certificate_type(id,name)values(1,'身份证');
+insert into cfg_certificate_type(id,name)values(2,'房产证');
+insert into cfg_certificate_certi_state (id,name)values(0,'全部');
+insert into cfg_certificate_certi_state (id,name)values(1,'收押中');
+insert into cfg_certificate_certi_state (id,name)values(2,'出借中');
+insert into cfg_certificate_certi_state (id,name)values(3,'已归还');
+insert into cfg_certificate_certi_state (id,name)values(4,'免归还');
+
+select * from t_ums_role;
+update t_ums_role set id = 0 where id = 14;
+
+delete from t_cbs_order where id in (77,78);
+delete from t_cbs_order_pool where order_id in (91);
+delete from t_cbs_order_log where order_id in (77,78);
+delete from t_cbs_order_doc where order_id in (77,78);
+
+select * from cfg_cbs_business_type;
+select * from t_util_format_info where ch_name like '%签约%';
+select * from BATCH_JOB_EXECUTION;
+
+update t_util_format_info set state = 100 where id = 53;
+
+select * from t_format_info_obj where order_id = 84;
+update t_format_info_obj set state = 1;
+select * from t_util_work_flow where before_state = 101 and busi_type =2;
+select * from cfg_order_doc_type;
+insert into cfg_order_doc_type(ch_name,en_name) values('身份证明','certificate');
+insert into cfg_order_doc_type(ch_name,en_name) values('婚姻证明','marriage');
+insert into cfg_order_doc_type(ch_name,en_name) values('户口本','householdRegister');
+insert into cfg_order_doc_type(ch_name,en_name) values('诉讼材料','litigationMaterials');
+insert into cfg_order_doc_type(ch_name,en_name) values('征信','creditReporting');
+insert into cfg_order_doc_type(ch_name,en_name) values('房产证','propertyOwnership');
+
+select * from t_cbs_certi_log;
+select * from t_cbs_order order by id desc;
+update t_format_info_obj set marital_status=1;
+update t_format_info_obj set house_type=1;
+update t_format_info_obj set if_extension=1;
+update t_format_info_obj set up_if_overdue=1;
+update t_format_info_obj set up_if_house_deposit=1;
+update t_format_info_obj set next_if_limit_purpose=1;
+update t_format_info_obj set next_if_notarization=1;
+update t_format_info_obj set next_loan_way=1;
+update t_format_info_obj set next_capital_account_provider=1;
+
+select pay_interest_alert_date from t_format_info_obj where order_id = 80;
+delete from t_cbs_order_doc where order_id = 84;
+select * from cfg_order_doc_type;
+update t_cbs_order_doc set doc_type=1 where order_id= 80;
+select * from t_format_info_obj where order_id = 84 and state = 1;
+select * from t_util_format_info where data_type=1 and if_scatter = 2;
+update t_util_format_info set can_modify_role_set = '1,2,4,5,6,7,9,10,11,12,13',can_see_role_set='1,2,4,5,6,7,9,10,11,12,13' where can_modify_role_set is null;
+select
+  case
+  when data_type=1 then CONCAT('private int ',en_name,';')
+  when data_type=2 then CONCAT('private long ',en_name,';')
+  when data_type=3 then CONCAT('private String ',en_name,';')
+  when data_type=4 then CONCAT('private Date ',en_name,';')
+  when data_type=5 then CONCAT('private BigDecimal ',en_name,';')
+  end data_type
+from t_util_format_info
+where create_time > sysdate()-1000;
+
+
+select * from cfg_format_info_client_mapping;
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)values()
+
+update t_util_format_info set scatter_obj='YesNo' where ch_name like '%是否%';
+update t_util_format_info set ch_name = '是否带用途批' where id = 70;
+update t_util_format_info set ch_name = '房本是否收押' where id = 63;
+
+select * from t_util_format_info where ch_name like '%下家机构%';
+
+select * from t_util_format_info where need_step = 0 and state = 1;
+update t_util_format_info set need_step = -1 where id in (49);
+
+delete from t_util_format_info where id = 84;
+update t_util_format_info set state=100 where id = 82;
+
+ALTER TABLE t_format_info_obj MODIFY house_address varchar(500);
+
+select * from t_format_info_obj where order_id = 80;
+update t_cbs_order_log set format_info_id = 0;
+
+#谁都不能修改的字段,只能系统自动生成
+update t_util_format_info set can_see_role_set = '2,7,16,14,6,11,12,8';
+select * from t_util_format_info where can_modify_role_set like '%8%';
+select creator from t_format_info_obj where order_id = 85;
+update t_format_info_obj set updator = 0 where order_id  = 85;
+
+update t_format_info_obj set next_organ_type = 1;
+select * from cfg_cbs_period_type;
+
+select * from cfg_cbs_order_state;
+select * from t_ums_role;
+select * from t_util_work_flow where before_state in(104);
+select * from t_hr_position;
+select * from t_ums_user;
+select distinct position from t_hr_employee where user_id is not null;
+select * from t_sales_agent where user_id is not null;
+
+update t_util_format_info set need_step='102',can_modify_role_set='8' where ch_name in ('评估日期','链家评估日期','大数据日期','大数据结论','评估总价','链家快出总价');
+update t_util_format_info set need_step='123',can_modify_role_set='7' where ch_name in ('预约还款日');
+update t_util_format_info set need_step='111',can_modify_role_set='7' where ch_name in ('上家核实到期日期','上家核实日期','下家核实批贷日期','下家核实公证日期','下家放款账户提供日期','下家核实日期','上家名称','剩余本金','剩余利息','罚息/其他','是否逾期','逾期天数','房本是否收押');
+update t_util_format_info set need_step='111',can_modify_role_set='7' where ch_name in ('上家本金收款户名','上家本金收款开户行','上家本金收款账号','下家名称','批贷额','是否带用途批','是否公证','放款形式','下家放款账户提供方','下家放款户名','下家放款开户行','房本是否收押');
+update t_util_format_info set need_step='(112,114)',can_modify_role_set='7' where ch_name in ('签约日期','报信托天数','客户首付天数');
+update t_util_format_info set need_step='117',can_modify_role_set='8' where ch_name in ('卷齐日期','证件收押日期');
+update t_util_format_info set need_step='118',can_modify_role_set='8' where ch_name in ('批贷日期');
+update t_util_format_info set need_step='121',can_modify_role_set='12' where ch_name in ('上家扣款日期');
+update t_util_format_info set need_step='122',can_modify_role_set='7' where ch_name in ('上家房本预计领取日期','逾期天数');
+update t_util_format_info set need_step='122',can_modify_role_set='7' where ch_name in ('上家房本预计领取日期','解压材料预计领取日期','解压材料解押日期','垫资是否展期','展期收费');
+update t_util_format_info set need_step='123',can_modify_role_set='7' where ch_name in ('下家房本送至日期','下家房本抵押日期','下家房本他证领取日期');
+update t_util_format_info set need_step='124',can_modify_role_set='12' where ch_name in ('下家放款预计放款日期','下家放款实际放款日期');
+update t_util_format_info set need_step='104',can_modify_role_set='11' where ch_name in ('产权人','身份证号','是否已婚','配偶姓名','配偶身份证号','客户本金收款户名','客户本金收款账号','客户本金收款开户行','产权证号','房屋坐落','建筑面积','房屋类型','申请天数');
+update t_util_format_info set need_step='0',can_modify_role_set='11' where ch_name in ('垫资金额','预计天数');
+
+
+insert into t_util_format_info (busi_type, ch_name, create_time, creator, data_type, en_name, if_scatter, need_step, scatter_obj, state,  updator, who_object, can_modify_role_set, can_see_role_set)
+values (2,'下家机构类型',sysdate(),0,1,'nextOrganType',1,111,'',1,0,1,7,'2,7,16,14,6,11,12,8');
+insert into t_util_format_info (busi_type, ch_name, create_time, creator, data_type, en_name, if_scatter, need_step, scatter_obj, state,  updator, who_object, can_modify_role_set, can_see_role_set)
+values (2,'申请人电话',sysdate(),0,3,'applyTel',2,-1,'',1,0,1,11,'2,7,16,14,6,11,12,8');
+
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'付息提醒日',sysdate(),0,4,'payInterestAlertDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下次付息日',sysdate(),0,4,'nextInterestPaymentDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'提醒日期',sysdate(),0,4,'reminderDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'评估日期',sysdate(),0,4,'assessmentDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'链家评估日期',sysdate(),0,4,'chainFamilyEvaluationDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'大数据日期',sysdate(),0,4,'bigDataDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'预约还款日',sysdate(),0,4,'reservedRepaymentDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'上家核实到期日期',sysdate(),0,4,'checkExpirationDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'上家核实日期',sysdate(),0,4,'verificationDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家核实批贷日期',sysdate(),0,4,'verificationApprovalDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家核实公证日期',sysdate(),0,4,'verificationNotarizationDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家放款账户提供日期',sysdate(),0,4,'accountProvisionDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家核实日期',sysdate(),0,4,'nextVerificationDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'签约日期',sysdate(),0,4,'reContractDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'卷齐日期',sysdate(),0,4,'fileCollectionDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'报卷日期',sysdate(),0,4,'fileReportDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'批贷日期',sysdate(),0,4,'approvedDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'证件收押日期',sysdate(),0,4,'depositCertificatesDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'垫资放款日期',sysdate(),0,4,'loanDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'上家扣款日期',sysdate(),0,4,'deductionDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'收费日期',sysdate(),0,4,'feeDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'上家房本预计领取日期',sysdate(),0,4,'houseOwnershipExpectedReceiveDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'上家房本实际领取日期',sysdate(),0,4,'houseOwnershipRealReceiveDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'解压材料预计领取日期',sysdate(),0,4,'unzipDocExpectedReceiveDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'解压材料实际领取日期',sysdate(),0,4,'unzipDocRealReceiveDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'解压材料解押日期',sysdate(),0,4,'unzipDocUndepositDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家房本送至日期',sysdate(),0,4,'nextHouseOwnershipSendDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家房本抵押日期',sysdate(),0,4,'nextHouseOwnershipDepositDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家房本他证领取日期',sysdate(),0,4,'nextHouseOtherReceiveDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家放款预计放款日期',sysdate(),0,4,'nextExceptionLoanDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家放款实际放款日期',sysdate(),0,4,'nextRealLoanDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'完结日期',sysdate(),0,4,'finishDate',2,0,'',1,0,1);
+
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'产权人',sysdate(),0,3,'propertyOwner',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'身份证号',sysdate(),0,3,'certiNO',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'婚姻状况',sysdate(),0,1,'maritalStatus',1,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'配偶姓名',sysdate(),0,3,'spouseName',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'身份证号',sysdate(),0,3,'spouseCertiNO',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'大数据结论',sysdate(),0,3,'bigDateConclusion',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'客户本金收款户名',sysdate(),0,3,'customerCapitalAccountName',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'客户本金收款账号',sysdate(),0,3,'customerCapitalAccountNO',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'客户本金收款开户行',sysdate(),0,3,'customerCapitalBank',2,0,'',1,0,1);
+
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'产权证号',sysdate(),0,4,'titleCertificateNO',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'房屋坐落',sysdate(),0,4,'houseAddress',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'建筑面积',sysdate(),0,5,'houseSquare',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'房屋类型',sysdate(),0,1,'houseType',1,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'评估总价',sysdate(),0,5,'houseEvaluatePrice',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'链家快出总价',sysdate(),0,5,'chainFamilyFastOutPrice',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'垫资金额',sysdate(),0,5,'amount',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'预计天数',sysdate(),0,1,'exceptionDays',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'报信托天数',sysdate(),0,1,'tellUpDays',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'客户首付天数',sysdate(),0,1,'customerFirstPayDays',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'逾期天数',sysdate(),0,1,'overdueDays',2,0,'',1,0,1);
+
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'申请天数',sysdate(),0,1,'applyDays',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'垫资是否展期',sysdate(),0,1,'ifExtension',1,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'首展天数',sysdate(),0,1,'firstExtensionDays',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'展期收费',sysdate(),0,5,'extensionFee',2,0,'',1,0,1);
+
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'上家名称',sysdate(),0,3,'upName',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'剩余本金',sysdate(),0,5,'upResidueCapital',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'剩余利息',sysdate(),0,5,'upResidueInterest',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'罚息/其他',sysdate(),0,5,'upPenaltyInterest',2,0,'',1,0,1);
+
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'是否逾期',sysdate(),0,1,'upIfOverdue',1,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'逾期天数',sysdate(),0,1,'upOverdueDays',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'房本收押',sysdate(),0,1,'upIfHouseDeposit',1,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'解押材料',sysdate(),0,4,'upUnzipDoc',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'上家本金收款户名',sysdate(),0,3,'upCapitalAccountName',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'上家本金收款开户行',sysdate(),0,3,'upCapitalBank',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'上家本金收款账号',sysdate(),0,3,'upCapitalAccountNO',2,0,'',1,0,1);
+
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家名称',sysdate(),0,3,'nextName',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'批贷额',sysdate(),0,5,'nextAount',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'带用途批',sysdate(),0,1,'nextIfLimitPurpose',1,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'是否公证',sysdate(),0,1,'nextIfNotarization',1,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'放款形式',sysdate(),0,1,'nextLoanWay',1,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家放款账户提供方',sysdate(),0,3,'nextCapitalAccountProvider',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家放款户名',sysdate(),0,3,'nextCapitalAccountName',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'下家放款开户行',sysdate(),0,3,'nextCapitalBank',2,0,'',1,0,1);
+
+
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('address','发证地址',1);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('nationality','民族',1);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('start_date','身份证有效期起',1);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('end_date','身份证有效期止',1);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('issue','发证地址',1);
+
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'民族',sysdate(),0,3,'nationality',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'发证地址',sysdate(),0,3,'certiAddress',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'身份证有效期起',sysdate(),0,4,'certiStartDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'身份证有效期止',sysdate(),0,4,'certiEndDate',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'发证机关',sysdate(),0,3,'certiIssue',2,0,'',1,0,1);
+
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('房产证号','发证地址',6);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('权利人','民族',6);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('共有情况','发证地址',6);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('坐落','民族',6);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('不动产单元号','发证地址',6);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('土地权利类型','民族',6);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('房屋权利类型','发证地址',6);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('土地权利性质/取得方式','土地权利性质/取得方式',6);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('房屋权利性质/取得方式','房屋权利性质/取得方式',6);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('土地用途','土地用途',6);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('房屋用途','房屋用途',6);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('建筑面积','建筑面积',6);
+insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
+values('使用期限','使用期限',6);
+
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'房产证号',sysdate(),0,3,'houseCertiNo',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'权利人',sysdate(),0,3,'houseOwnership',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'共有情况',sysdate(),0,3,'belongType',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'坐落',sysdate(),0,3,'houseAddress',2,0,'certiIssue',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'不动产单元号',sysdate(),0,3,'houseUnitNo',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'土地权利类型',sysdate(),0,3,'landRightType',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'房屋权利类型',sysdate(),0,3,'houseRigthType',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'土地权利性质/取得方式',sysdate(),0,3,'landGetWay',2,0,'certiIssue',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'房屋权利性质/取得方式',sysdate(),0,3,'houseGetWay',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'土地用途',sysdate(),0,3,'landPurpose',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'房屋用途',sysdate(),0,3,'housePurpose',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'建筑面积',sysdate(),0,5,'coveredArea',2,0,'',1,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'使用期限',sysdate(),0,3,'serviceLife',2,0,'',1,0,1);
+
+
+
+#以下字段不需要保存
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'业务类型',sysdate(),0,1,'busiType',1,0,'',100,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'业务状态',sysdate(),0,1,'orderState',1,0,'',100,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'最新提醒事项',sysdate(),0,3,'latestReminders',2,0,'',100,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'提醒事项办理人',sysdate(),0,1,'reminderPeople',2,0,'',100,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'业务员',sysdate(),0,1,'salerId',2,0,'',100,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'风控专员',sysdate(),0,1,'riskController',2,0,'',100,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'合作渠道/个人',sysdate(),0,4,'channelName',2,0,'',100,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'贷款类型',sysdate(),0,1,'upLoanType',2,0,'',100,0,1);
+insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
+values(2,'房本领取日期',sysdate(),0,4,'upHouseReceiveDate',2,0,'',100,0,1);
+

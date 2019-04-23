@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+
+    <script th:inline="javascript">
+        function addCheckBox() {
+            /*<![CDATA[*/
+            var certiTypes = [[${certiTypes}]];
+            console.log("certiTypes:"+certiTypes);
+            var certiList = JSON.parse(certiTypes);
+            var checkListField=document.getElementById("checkboxList");
+            for(var p in certiList){
+                var name = certiList[p].str
+                var strValue =certiList[p].strValue
+                if (p % 4 == 0) {
+                    console.log("enter p%4==0; p = "+p);
+                    var row = checkListField.insertRow()
+                }
+                var input = row.insertCell()
+                input.innerHTML="<input type='checkbox' name='typeList' value="+strValue+" />"+name;
+            }
+
+            // /*]]>*/
+        }
+
+    </script>
+
+</head>
+<body class="container" onload="addCheckBox()">
+<br/>
+<h4>新增</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/cbs/certificate/batchAdd}" th:object="${certificate}" method="post">
+        <table>
+            <tr>
+                <td>订单ID</td>
+                <td><input th:field="*{orderId}" value="" class="form-control"/></td>
+                <td>档案盒号</td>
+                <td><input th:field="*{boxNo}" value="" class="form-control"/></td>
+            </tr>
+
+
+            <tr>
+                <td><input type="submit" value="保存" class="btn btn-info"/></td>
+            </tr>
+        </table>
+        <table id ="checkboxList">
+        </table>
+    </form>
+</div>
+<div class="form-group">
+</div>
+</body>
+</html>

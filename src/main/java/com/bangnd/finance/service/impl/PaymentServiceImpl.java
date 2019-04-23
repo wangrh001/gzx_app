@@ -128,37 +128,91 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public BigDecimal getSumIncome(Date date) {
-        String feeType = "(1,3,9,10,11,30)";
+        List<Integer> feeType = new ArrayList<>();
+        feeType.add(1);
+        feeType.add(3);
+        feeType.add(9);
+        feeType.add(10);
+        feeType.add(11);
+        feeType.add(30);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_YEAR,1);
-        return paymentRepository.findAllByDateAndFeeType(date,calendar.getTime(),feeType);
+        BigDecimal sum = paymentRepository.findAllByDateAndFeeType(date,calendar.getTime(),feeType);
+        if(sum==null){
+            sum=new BigDecimal(0);
+        }
+        System.out.println(date);
+        System.out.println(calendar.getTime());
+        System.out.println(sum);
+        return sum;
     }
 
     @Override
     public BigDecimal getSumExpend(Date date) {
-        String feeType = "(2,5,6,7)";
+        List<Integer> feeType = new ArrayList<>();
+        feeType.add(2);
+        feeType.add(5);
+        feeType.add(6);
+        feeType.add(7);
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_YEAR,1);
-        return paymentRepository.findAllByDateAndFeeType(date,calendar.getTime(),feeType);
+        BigDecimal sum = paymentRepository.findAllByDateAndFeeType(date,calendar.getTime(),feeType);
+        if(sum==null){
+            sum=new BigDecimal(0);
+        }
+        System.out.println(date);
+        System.out.println(calendar.getTime());
+        System.out.println(sum);
+        return sum;
     }
 
     @Override
     public BigDecimal getSumCashIn(Date date) {
-        String feeType = "(13,14,15,16,17,18,28,31)";
+        List<Integer> feeType = new ArrayList<>();
+        feeType.add(13);
+        feeType.add(14);
+        feeType.add(15);
+        feeType.add(16);
+        feeType.add(17);
+        feeType.add(18);
+        feeType.add(28);
+        feeType.add(31);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_YEAR,1);
-        return paymentRepository.findAllByDateAndFeeType(date,calendar.getTime(),feeType);
+        BigDecimal sum = paymentRepository.findAllByDateAndFeeType(date,calendar.getTime(),feeType);
+        if(sum==null){
+            sum=new BigDecimal(0);
+        }
+        System.out.println(date);
+        System.out.println(calendar.getTime());
+        System.out.println(sum);
+        return sum;
     }
 
     @Override
     public BigDecimal getSumCashOut(Date date) {
-        String feeType = "(8,12,19,23,24,25,29)";
+        List<Integer> feeType = new ArrayList<>();
+        feeType.add(8);
+        feeType.add(12);
+        feeType.add(19);
+        feeType.add(23);
+        feeType.add(24);
+        feeType.add(25);
+        feeType.add(29);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DAY_OF_YEAR,1);
-        return paymentRepository.findAllByDateAndFeeType(date,calendar.getTime(),feeType);
+        BigDecimal sum = paymentRepository.findAllByDateAndFeeType(date,calendar.getTime(),feeType);
+        if(sum==null){
+            sum=new BigDecimal(0);
+        }
+        System.out.println(date);
+        System.out.println(calendar.getTime());
+        System.out.println(sum);
+        return sum;
     }
 }

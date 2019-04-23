@@ -36,10 +36,10 @@ public class CustMortgage {
     @Column
     private int belongType;
     @Column
-    private int mortgageCount=0;
+    private int mortgageCount = 0;
 
     @Column
-    private int estateAge=0;
+    private int estateAge = 0;
     @Column
     private Date createTime;
     @Column

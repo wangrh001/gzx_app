@@ -11,9 +11,7 @@ import com.bangnd.util.service.RuleEngineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -81,13 +79,21 @@ public class PerformanceCommDetailServiceImpl implements PerformanceCommDetailSe
     }
 
     @Override
-    public List<PerformanceCommDetail> findByOneDayAndAgentId(long agentId, String xdate) throws Exception{
+    public BigDecimal findByOneDayAndAgentId(long agentId, String xdate) throws Exception{
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         Date sd = sdf.parse(xdate);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(sd);
-        calendar.set(Calendar.DAY_OF_YEAR,1);
+        calendar.add(Calendar.DAY_OF_YEAR,1);
         Date ed = calendar.getTime();
-        return performanceCommDetailRepository.findAllByAgentId(agentId,sd,ed);
+        System.out.println("agent_id = "+agentId);
+        System.out.println("sd = "+sd);
+        System.out.println("ed = "+ed);
+        BigDecimal sumPerformance = performanceCommDetailRepository.findAllByAgentIdAndCreateTime(agentId,sd,ed);
+        if(sumPerformance==null){
+            sumPerformance=new BigDecimal(0.0);
+        }
+        System.out.println("sumPerformance="+sumPerformance);
+        return sumPerformance;
     }
 }

@@ -7,6 +7,7 @@ import com.bangnd.hr.service.ActionService;
 import com.bangnd.ums.service.ResourceService;
 import com.bangnd.ums.service.UserService;
 import com.bangnd.util.cfg.ConstantCfg;
+import com.bangnd.util.service.FormatInfoService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,11 +29,13 @@ public class OrderLogController {
     ActionService actionService;
     @Resource
     ResourceService resourceService;
+    @Resource
+    FormatInfoService formatInfoService;
 
     @RequestMapping("/orderLog/list")
-    public String list(Model model, @RequestParam(value="pageNum",required=false) String pageNum, long orderId) {
+    public String list(Model model, @RequestParam(value = "pageNum", required = false) String pageNum, long orderId) {
 
-        Page<OrderLog> pages = orderLogService.getAllLogByOrderId(Integer.valueOf(pageNum==null?"1":pageNum),ConstantCfg.NUM_PER_PAGE,orderId);
+        Page<OrderLog> pages = orderLogService.getAllLogByOrderId(Integer.valueOf(pageNum == null ? "1" : pageNum), ConstantCfg.NUM_PER_PAGE, orderId);
         List<OrderLogListForm> orderLogListForms = new ArrayList<OrderLogListForm>();
         if (pages != null) {
             for (OrderLog orderLog : pages) {
@@ -40,24 +43,28 @@ public class OrderLogController {
                 orderLogListForm.setId(orderLog.getId());
                 orderLogListForm.setUserName((userService.getUserByUserId(orderLog.getUserId()).getUserName()));
                 orderLogListForm.setActionTime(orderLog.getOperatorTime());
-                orderLogListForm.setButtonName(resourceService.getResourceById(orderLog.getButtonId()).getName());
+                if(orderLog.getButtonId()!=0){
+                    orderLogListForm.setButtonName(resourceService.getResourceById(orderLog.getButtonId()).getName());
+                }else if(orderLog.getFormatInfoId()!=0){
+                    orderLogListForm.setButtonName(formatInfoService.getFormatInfoById(orderLog.getFormatInfoId()).getChName());
+                }
                 orderLogListForm.setActionDesc(orderLog.getActionDesc());
                 orderLogListForms.add(orderLogListForm);
             }
         }
-        int pagenum=Integer.valueOf(pageNum==null?"1":pageNum);
-        model.addAttribute("orderId",orderId);
-        model.addAttribute("page",pages);
-        model.addAttribute("pageNum",pagenum);
-        model.addAttribute("totalPages","共"+String.valueOf(pages.getTotalPages())+"页");
-        model.addAttribute("totalElements","共"+pages.getTotalElements()+"条");
+        int pagenum = Integer.valueOf(pageNum == null ? "1" : pageNum);
+        model.addAttribute("orderId", orderId);
+        model.addAttribute("page", pages);
+        model.addAttribute("pageNum", Integer.valueOf(pageNum == null ? "1" : pageNum));
+        model.addAttribute("totalPages", pages.getTotalPages());
+        model.addAttribute("totalElements", "共" + pages.getTotalElements() + "条");
         model.addAttribute("orderLogListForms", orderLogListForms);
         return "/cbs/orderLogList";
     }
 
     @RequestMapping("/orderLog/add")
-    public String add(OrderLog orderLog, int buttonId,long orderId) {
-        System.out.println("actionId="+buttonId);
+    public String add(OrderLog orderLog, int buttonId, long orderId) {
+        System.out.println("actionId=" + buttonId);
         orderLog.setButtonId(buttonId);
         orderLog.setOrderId(orderId);
         orderLog.setUserId(1);

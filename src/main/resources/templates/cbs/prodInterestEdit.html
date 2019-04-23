@@ -36,9 +36,13 @@
             </tr>
             <tr>
                 <td>开始时间</td>
-                <td><input id="beginDate" name="beginDate" th:value="*{beginDate ne null} ? *{#dates.format(beginDate,'yyyy-MM-dd')}" placeholder="yyyy-MM-dd"  class="form-control"/></td>
+                <td><input id="beginDate" name="beginDate"
+                           th:value="*{beginDate ne null} ? *{#dates.format(beginDate,'yyyy-MM-dd')}"
+                           placeholder="yyyy-MM-dd" class="form-control"/></td>
                 <td>结束时间</td>
-                <td><input id="endDate" name="endDate" th:value="*{endDate ne null} ? *{#dates.format(endDate,'yyyy-MM-dd')}" placeholder="yyyy-MM-dd"  class="form-control"/></td>
+                <td><input id="endDate" name="endDate"
+                           th:value="*{endDate ne null} ? *{#dates.format(endDate,'yyyy-MM-dd')}"
+                           placeholder="yyyy-MM-dd" class="form-control"/></td>
             </tr>
             <tr>
                 <td><input type="submit" value="保存" class="btn btn-info"/></td>

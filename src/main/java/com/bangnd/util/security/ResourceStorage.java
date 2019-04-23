@@ -1,14 +1,11 @@
 package com.bangnd.util.security;
 
 import com.bangnd.ums.entity.Resource;
-import com.mysql.cj.xdevapi.JsonArray;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ResourceStorage {

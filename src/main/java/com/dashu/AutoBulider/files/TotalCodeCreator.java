@@ -111,12 +111,11 @@ public class TotalCodeCreator {
     }
 
     public static void main(String[] args) {
-
         List<DataModel> dataModels = new ArrayList<DataModel>();
         DataModel dataModel = new DataModel();
-        dataModel.setSysName("sales");
-        dataModel.setTableNames("group");
-        dataModel.setColumnNameCh("组名");
+        dataModel.setSysName("cbs");
+        dataModel.setTableNames("certificate");
+        dataModel.setColumnNameCh("证件名称");
         dataModel.setColumnNameEn("name");
         dataModel.setColumnType(3);
         dataModel.setIfBusinessDate(0);
@@ -127,8 +126,8 @@ public class TotalCodeCreator {
         dataModels.add(dataModel);
 
         DataModel dataModel1 = new DataModel();
-        dataModel1.setColumnNameCh("级别");
-        dataModel1.setColumnNameEn("grade");
+        dataModel1.setColumnNameCh("证件类型");
+        dataModel1.setColumnNameEn("type");
         dataModel1.setColumnType(1);
         dataModel1.setIfBusinessDate(0);
         dataModel1.setIfScatter(1);
@@ -138,28 +137,72 @@ public class TotalCodeCreator {
         dataModels.add(dataModel1);
 
         DataModel dataModel2 = new DataModel();
-        dataModel2.setColumnNameCh("父组");
-        dataModel2.setColumnNameEn("parentId");
-        dataModel2.setColumnType(1);
+        dataModel2.setColumnNameCh("订单ID");
+        dataModel2.setColumnNameEn("orderId");
+        dataModel2.setColumnType(2);
         dataModel2.setIfBusinessDate(0);
-        dataModel2.setIfScatter(1);
+        dataModel2.setIfScatter(0);
         dataModel2.setIfSearchColumn(1);
         dataModel2.setIfShowColumn(1);
         dataModel2.setIfModifyable(1);
         dataModels.add(dataModel2);
 
         DataModel dataModel3 = new DataModel();
-        dataModel3.setColumnNameCh("负责人");
-        dataModel3.setColumnNameEn("employeeId");
-        dataModel3.setColumnType(2);
+        dataModel3.setColumnNameCh("档案盒号");
+        dataModel3.setColumnNameEn("boxNo");
+        dataModel3.setColumnType(1);
         dataModel3.setIfBusinessDate(0);
-        dataModel3.setIfScatter(1);
+        dataModel3.setIfScatter(0);
         dataModel3.setIfSearchColumn(1);
-        dataModel3.setIfShowColumn(1);
+        dataModel3.setIfShowColumn(0);
         dataModel3.setIfModifyable(1);
-        dataModels.add(dataModel);
+        dataModels.add(dataModel3);
+
+        DataModel dataModel4 = new DataModel();
+        dataModel4.setColumnNameCh("收押时间");
+        dataModel4.setColumnNameEn("receiveTime");
+        dataModel4.setColumnType(4);
+        dataModel4.setIfBusinessDate(0);
+        dataModel4.setIfScatter(0);
+        dataModel4.setIfSearchColumn(0);
+        dataModel4.setIfShowColumn(0);
+        dataModel4.setIfModifyable(0);
+        dataModels.add(dataModel4);
+
+        DataModel dataModel5 = new DataModel();
+        dataModel5.setColumnNameCh("归还时间");
+        dataModel5.setColumnNameEn("returnTime");
+        dataModel5.setColumnType(4);
+        dataModel5.setIfBusinessDate(0);
+        dataModel5.setIfScatter(0);
+        dataModel5.setIfSearchColumn(0);
+        dataModel5.setIfShowColumn(0);
+        dataModel5.setIfModifyable(0);
+        dataModels.add(dataModel5);
+
+        DataModel dataModel6 = new DataModel();
+        dataModel6.setColumnNameCh("接收人");
+        dataModel6.setColumnNameEn("userId");
+        dataModel6.setColumnType(2);
+        dataModel6.setIfBusinessDate(0);
+        dataModel6.setIfScatter(0);
+        dataModel6.setIfSearchColumn(1);
+        dataModel6.setIfShowColumn(0);
+        dataModel6.setIfModifyable(0);
+        dataModels.add(dataModel6);
+
+        DataModel dataModel7 = new DataModel();
+        dataModel7.setColumnNameCh("证件状态");
+        dataModel7.setColumnNameEn("certiState");
+        dataModel7.setColumnType(1);
+        dataModel7.setIfBusinessDate(0);
+        dataModel7.setIfScatter(1);
+        dataModel7.setIfSearchColumn(1);
+        dataModel7.setIfShowColumn(1);
+        dataModel7.setIfModifyable(0);
+        dataModels.add(dataModel7);
 
         TotalCodeCreator totalCodeCreator = new TotalCodeCreator();
-        totalCodeCreator.create(dataModels, "bangnd", "sales", "group");
+        totalCodeCreator.create(dataModels, "bangnd", "cbs", "certificate");
     }
 }

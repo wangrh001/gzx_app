@@ -1,0 +1,42 @@
+begin
+	declare v_id,v_pay_type,v_debit,v_credit,v_count,v_period_id INT;
+	declare v_accounting_period VARCHAR(10);
+	declare v_pay_date,v_period_end DATE;
+	declare v_amount DECIMAL;
+	declare done boolean default 0;
+	#正常每日进行记账
+	DECLARE mycursor CURSOR FOR select p.id,p.amount,p.pay_type,p.pay_date from t_finance_payment p where p.posted='N';
+	declare continue handler for sqlstate '02000' set done=1;
+	OPEN mycursor;
+	repeat
+	FETCH mycursor INTO v_id,v_amount,v_pay_type,v_pay_date;
+		update t_finance_payment set posted='Y' where id=v_id;
+		select count(*) into v_count from t_finance_accounting_rule r where r.fee_type = v_pay_type;
+		if v_count=1 then
+			#根据记账规则记账
+			select r.debit_side,r.credit_side into v_debit,v_credit from t_finance_accounting_rule r where r.fee_type = v_pay_type;
+			insert into t_finance_accounting_entry(accounting_date,amount,debit,credit,creator,create_time,state)values(SYSDATE(),v_amount,v_debit,v_credit,0,SYSDATE(),1);
+
+			select count(*) into v_count from t_finance_accounting_period p where p.start_date <= SYSDATE() and p.end_date>= SYSDATE()  and p.period_state =1 and p.state <> 100;
+			if v_count=1 THEN
+				select id into v_period_id from t_finance_accounting_period p where p.start_date <= SYSDATE()  and p.end_date>= SYSDATE()  and p.period_state =1 and p.state <> 100;
+				select count(*) into v_count from t_finance_balance b where b.accounting_period = v_period_id and b.subject = v_credit;
+ 				if v_count =1 then
+					update t_finance_balance b set b.amount_credit = b.amount_credit + v_amount,b.end_amount_credit = b.end_amount_credit + v_amount,update_time =SYSDATE() where b.accounting_period = v_period_id and b.subject=v_credit;
+				ELSE
+					insert into t_finance_balance(accounting_period,subject,amount_credit,amount_debit,start_amount_credit,start_amount_debit,end_amount_credit,end_amount_debit,creator,create_time)
+					values(v_period_id,v_credit,v_amount,0,0,0,v_amount,0,0,SYSDATE());
+				end if;
+				select count(*) into v_count from t_finance_balance b where b.accounting_period = v_period_id and b.subject = v_debit;
+				if v_count=1 THEN
+					update t_finance_balance b set b.amount_debit = b.amount_debit + v_amount,b.end_amount_debit = b.end_amount_debit + v_amount where b.accounting_period = v_period_id and b.subject=v_debit;
+				ELSE
+					insert into t_finance_balance(accounting_period,subject,amount_credit,amount_debit,start_amount_credit,start_amount_debit,end_amount_credit,end_amount_debit,creator,create_time)
+					values(v_period_id,v_debit,0,v_amount,0,0,0,v_amount,0,SYSDATE());
+				end if;
+			end if;
+		end if;
+		commit;
+	until done end repeat;
+	CLOSE mycursor;
+END

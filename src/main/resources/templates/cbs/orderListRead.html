@@ -71,7 +71,7 @@
             <th>序号</th>
             <th>客户姓名</th>
             <th>金额</th>
-            <th>申请日期</th>
+            <th>用款时间</th>
             <th>当前进度</th>
             <th>下个处理人</th>
             <th>查看轨迹</th>
@@ -83,7 +83,8 @@
             <td th:text="${orderListForm.orderId}">1</td>
             <td th:text="${orderListForm.applicantName}">neo</td>
             <td th:text="${orderListForm.amount}">6</td>
-            <td th:text="${orderListForm.applyDate ne null}?${#dates.format(orderListForm.applyDate,'yyyy-MM-dd')}">6</td>
+            <td th:text="${orderListForm.demandDate ne null}?${#dates.format(orderListForm.demandDate,'yyyy-MM-dd')}">6
+            </td>
             <td th:text="${orderListForm.orderState}"></td>
             <td th:text="${orderListForm.nextHandler}"></td>
             <td><a th:href="@{/orderLog/list(orderId=${orderListForm.orderId})}">查看轨迹</a></td>

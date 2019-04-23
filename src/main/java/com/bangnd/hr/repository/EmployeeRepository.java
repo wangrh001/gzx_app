@@ -16,7 +16,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
     @Query("select e from Employee e where e.state<>100")
     public List<Employee> findAll();
 
-    @Query("select e from Employee e where e.userId=:userId")
+    @Query("select e from Employee e where e.userId=:userId and e.state <> 100")
     public Employee findOneByUserId(@Param(value = "userId") long userId);
 
     @Query("select e from Employee e where e.name like %:name% and state <> 100")

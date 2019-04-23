@@ -11,9 +11,10 @@ public interface OrderPoolService {
      * 1、判断入哪个岗位的池中；
      * 2、判断入哪个人的池中；比如A的池中
      * 3、进到A池中，维护池的状态
+     *
      * @param orderId
      */
-    public void intoPool(long orderId,int fromState,int toState,long userId,int busiType) throws Exception;
+    public void intoPool(long orderId, int fromState, int toState, long userId, int busiType) throws Exception;
 
     public List<Long> getOrderListString(long userId);
 

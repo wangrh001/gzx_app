@@ -60,6 +60,9 @@ public class User {
     @Column
     private Date updateTime;
 
+    @Column
+    private String DDUserName;
+
     public int getState() {
         return state;
     }
@@ -98,5 +101,13 @@ public class User {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getDDUserName() {
+        return DDUserName;
+    }
+
+    public void setDDUserName(String DDUserName) {
+        this.DDUserName = DDUserName;
     }
 }

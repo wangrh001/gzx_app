@@ -25,7 +25,7 @@
             content = '<div role="tabpanel" class="tab-pane" id="' + id + '" style="height:100%">' + options.content + '</div>';
         } else {//没有内容，使用IFRAME打开链接
             content = '<div role="tabpanel" class="tab-pane" id="' + id + '" style="height:100%"><iframe id="iframe_'+id+'" src="' + options.url + 
-				'" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" scrolling="no" marginheight="0" scrolling="yes" allowtransparency="yes"></iframe></div>';
+				'" width="100%" height="100%" frameborder="no" border="0" marginwidth="0"  marginheight="0" scrolling="yes" allowtransparency="yes"></iframe></div>';
         }
         //加入TABS
         $(".nav-tabs").append(title);
