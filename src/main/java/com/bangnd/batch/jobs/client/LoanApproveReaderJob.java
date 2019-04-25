@@ -60,6 +60,8 @@ public class LoanApproveReaderJob {
 //                            System.out.println(vo.getValue());
 //                    }
 
+                    //调用alibaba的ai服务，格式化这个图片
+
                 }
             }
         }

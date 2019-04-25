@@ -57,63 +57,30 @@
             <version>1.2.7</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.alibaba</groupId>-->
-            <!--<artifactId>fastjson</artifactId>-->
-            <!--<version>1.2.15</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5.2</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.apache.httpcomponents</groupId>-->
-            <!--<artifactId>httpcore</artifactId>-->
-            <!--<version>4.4.5</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
             <version>4.4.5</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.eclipse.jetty</groupId>-->
-            <!--<artifactId>jetty-util</artifactId>-->
-            <!--<version>9.3.7.v20160115</version>-->
-        <!--</dependency>-->
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <version>2.4</version>
-        </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>org.apache.httpcomponents</groupId>-->
-            <!--<artifactId>httpclient</artifactId>-->
-            <!--<version>4.5</version>-->
-            <!--<systemPath>/Users/wrh/Documents/wrh/work/repository/httpcomponents-client-4.5.8/lib/httpclient-4.5.8.jar</systemPath>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.apache.httpcomponents</groupId>-->
-            <!--<artifactId>httpcore</artifactId>-->
-            <!--<version>4.5</version>-->
-            <!--<systemPath>/Users/wrh/Documents/wrh/work/repository/httpcomponents-core-4.4.11/lib/httpcore-4.4.11.jar</systemPath>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>com.taobao</groupId>
             <artifactId>openapi</artifactId>
             <scope>system</scope>
             <version>1.0</version>
-            <systemPath>/Users/wrh/Documents/wrh/work/repository/dingtalk-sdk-java/taobao-sdk-java-auto_1479188381469-20190408.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/lib/taobao-sdk-java-auto_1479188381469-20190408.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -121,17 +88,7 @@
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
         </dependency>
-        <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <version>2.4</version>
-        </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-configuration-processor</artifactId>-->
-            <!--<optional>true</optional>-->
-        <!--</dependency>-->
     </dependencies>
     <build>
         <plugins>
@@ -139,9 +96,36 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <fork>true</fork>
+                    <includeSystemScope>true</includeSystemScope>
                 </configuration>
             </plugin>
         </plugins>
+
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<artifactId>maven-compiler-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<source>1.8</source>-->
+                    <!--<target>1.8</target>-->
+                    <!--<encoding>UTF-8</encoding>-->
+                    <!--<compilerArguments>-->
+                        <!--<extdirs>${project.basedir}/lib</extdirs>-->
+                    <!--</compilerArguments>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--<targetPath>lib/</targetPath>-->
+                <!--<includes>-->
+                    <!--<include>**/*.jar</include>-->
+                <!--</includes>-->
+            <!--</resource>-->
+        <!--</resources>-->
     </build>
 </project>

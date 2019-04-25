@@ -5,6 +5,7 @@ import com.bangnd.cbs.form.OrderListForm;
 import com.bangnd.cbs.form.OrderProductForm;
 import com.bangnd.cbs.form.OrderSearchForm;
 import com.bangnd.cbs.service.*;
+import com.bangnd.hr.entity.Action;
 import com.bangnd.hr.entity.Employee;
 import com.bangnd.hr.service.EmployeeService;
 import com.bangnd.sales.entity.Agent;
@@ -88,6 +89,8 @@ public class OrderController {
     FormatInfoObjService formatInfoObjService;
     @Resource
     CertificateService certificateService;
+    @Resource
+    BusinessReminderService businessReminderService;
 
     /**
      * form表单提交 Date类型数据绑定
@@ -177,6 +180,35 @@ public class OrderController {
         model.addAttribute("totalPages", pages.getTotalPages());
         model.addAttribute("totalElements", pages.getTotalElements());
         model.addAttribute("orderListForms", orderListForms);
+    }
+
+    @RequestMapping("/order/read")
+    public String read(Model model, Long orderId, HttpServletRequest request) throws Exception {
+        int positionId = (Integer) request.getSession().getAttribute("positionId");
+        Order order = orderService.findOrderById(orderId);
+        //拿到这个用户可以操作的输入域，拿到的是能看见的，有属性是否可修改，是否必录
+        List<FormatInfoReturnVO> formatInfoReturnVOS = formatInfoService.getFormatInfoByUserIdAndStepAndOrderId(order.getBusinessType(), orderId, positionId, order.getOrderState());
+        JSONArray jsonArray = new JSONArray();
+        transObjListToJSONArray(formatInfoReturnVOS, jsonArray);
+        //拿到这个用户可以操作的输入域，拿到的是能看见的，有属性是否可修改，是否必录
+        model.addAttribute("formatInfos", jsonArray.toString());
+        model.addAttribute("order", order);
+        return "/cbs/orderRead";
+    }
+
+    private void setOrderProductForm(List<OrderProduct> orderProductList, List<OrderProductForm> orderProductForms) {
+        for (OrderProduct orderProduct : orderProductList) {
+            OrderProductForm opForm = new OrderProductForm();
+            opForm.setId(orderProduct.getId());
+            opForm.setProductName((productService.getProductById(orderProduct.getProductId()).getProductName()));
+            opForm.setBorrowerName((orderProdCustRelationService.findCustomerByOrderProductId(orderProduct.getId(), ConstantCfg.CUSTOMER_IDENTITY_TYPE_1)).getName());
+            opForm.setPlanAmount(orderProduct.getPlanAmount());
+            opForm.setRealAmount(orderProduct.getRealAmount());
+            opForm.setServiceName("");
+            opForm.setStateName((orderStateService.getOrderState(orderProduct.getOrderProdState())).getName());
+            opForm.setApproveTime(orderProduct.getApproveTime());
+            orderProductForms.add(opForm);
+        }
     }
 
     @RequestMapping("/order/toAdd")
@@ -277,10 +309,8 @@ public class OrderController {
 
     @RequestMapping("/order/toEdit")
     public String toEdit(Model model, Long orderId, HttpServletRequest request) throws Exception {
-        //long userId = ((User) request.getSession().getAttribute("user")).getId();
         int positionId = (Integer) request.getSession().getAttribute("positionId");
         Order order = orderService.findOrderById(orderId);
-        FormatInfoObject formatInfoObject = formatInfoObjService.getFormatInfoObjByOrderId(orderId);
         order.setDemandAmount(order.getDemandAmount().divide(new BigDecimal(10000)));
         OrderProduct orderProductInit = new OrderProduct();
         Customer customer = new Customer();
@@ -324,75 +354,11 @@ public class OrderController {
         transObjListToJSONArray(formatInfoReturnVOS, jsonArray);
         //拿到这个用户可以操作的输入域，拿到的是能看见的，有属性是否可修改，是否必录
         model.addAttribute("formatInfos", jsonArray.toString());
-        model.addAttribute("formatInfoObj", formatInfoObject);
 
         String buttonRes = workFlowService.getButtonRes(order.getOrderState(), positionId, order.getBusinessType());
         System.out.println("buttonRes=" + buttonRes);
         model.addAttribute("buttonRes", buttonRes);
-
         return "/cbs/orderEdit";
-    }
-
-    @RequestMapping("/order/read")
-    public String read(Model model, Long orderId, HttpServletRequest request) throws Exception {
-
-        Order order = orderService.findOrderById(orderId);
-        order.setDemandAmount(order.getDemandAmount().divide(new BigDecimal(10000)));
-        OrderProduct orderProductInit = new OrderProduct();
-        Customer customer = new Customer();
-        List<Customer> customerList = customerService.findCustomerByOrderId(orderId);
-        List<OrderProduct> orderProductList = orderProductService.getOrderProductList(orderId);
-        List<OrderProductForm> orderProductForms = new ArrayList<OrderProductForm>();
-        CustMortgage custMortgage = new CustMortgage();
-        CustCredit custCredit = new CustCredit();
-        OrderLog orderLog = new OrderLog();
-        if (order != null) {
-            model.addAttribute("products", productService.getProductsByType(order.getBusinessType()));
-        }
-        //显示订单下所有客户信息
-        if (customerList != null && customerList.size() > 0) {
-            model.addAttribute("customerList", customerList);
-        }
-        if (orderProductList != null) {
-            setOrderProductForm(orderProductList, orderProductForms);
-            model.addAttribute("orderProductForms", orderProductForms);
-        }
-        model.addAttribute("orderLog", orderLog);
-        model.addAttribute("areaList", areaConfService.getAll());
-        model.addAttribute("estateType", stateTypeService.getAll());
-        model.addAttribute("payWays", payWayService.getAll());
-        model.addAttribute("payInterestWays", payInterestWayService.getAll());
-        model.addAttribute("businessTypes", businessTypeService.getAll());
-        model.addAttribute("productType", productTypeService.getAll());
-        model.addAttribute("periodTypes", periodTypeService.getAll());
-        model.addAttribute("identityTypes", identityTypeService.getAll());
-        model.addAttribute("banks", bankService.getAll());
-        model.addAttribute("organTypes", organTypeService.getAll());
-        model.addAttribute("order", order);
-        model.addAttribute("orderProduct", orderProductInit);
-        model.addAttribute("customer", customer);
-        model.addAttribute("custMortgage", custMortgage);
-        model.addAttribute("custCredit", custCredit);
-        //int positionId = (Integer) request.getSession().getAttribute("positionId");
-        //String buttonRes = workFlowService.getButtonRes(order.getOrderState(), positionId, order.getBusinessType());
-        //System.out.println("buttonRes=" + buttonRes);
-        //model.addAttribute("buttonRes", buttonRes);
-        return "/cbs/orderRead";
-    }
-
-    private void setOrderProductForm(List<OrderProduct> orderProductList, List<OrderProductForm> orderProductForms) {
-        for (OrderProduct orderProduct : orderProductList) {
-            OrderProductForm opForm = new OrderProductForm();
-            opForm.setId(orderProduct.getId());
-            opForm.setProductName((productService.getProductById(orderProduct.getProductId()).getProductName()));
-            opForm.setBorrowerName((orderProdCustRelationService.findCustomerByOrderProductId(orderProduct.getId(), ConstantCfg.CUSTOMER_IDENTITY_TYPE_1)).getName());
-            opForm.setPlanAmount(orderProduct.getPlanAmount());
-            opForm.setRealAmount(orderProduct.getRealAmount());
-            opForm.setServiceName("");
-            opForm.setStateName((orderStateService.getOrderState(orderProduct.getOrderProdState())).getName());
-            opForm.setApproveTime(orderProduct.getApproveTime());
-            orderProductForms.add(opForm);
-        }
     }
 
     @Transactional
@@ -410,24 +376,33 @@ public class OrderController {
 
         orderOld.setUpdateTime(new Date());
         orderOld.setUpdator(Long.valueOf(updaterId).intValue());
-
+        //根据订单之前状态，加上前端操作按钮，就知道订单之后的状态；
         WorkFlow workFlow = flowService.getNextWorkFlowBy(orderOld.getOrderState(), buttonId, orderOld.getBusinessType());
         orderOld.setOrderState(workFlow.getAfterState());
         //保存订单主要信息
         orderService.flush(orderOld);
+
         //更新订单其他信息
         formatInfoObjService.save(new Long(orderId).longValue(),formatInfoObject,updaterId);
+
         //根据不同的阶段，写入不同的费用，完结写佣金
         orderService.halderFeeByDiffStep(workFlow.getAfterState(),orderOld,updaterId);
-        //写入池子
+
+        //写日志
+        orderLogService.recordLog(new Long(orderId).longValue(), updaterId, buttonId,formatInfoObject);
         try {
-            orderPoolService.intoPool(new Long(orderId).longValue(), workFlow.getBeforeState(), workFlow.getAfterState(), updaterId, orderOld.getBusinessType());
+            //写入池子
+            OrderPool orderPool = orderPoolService.intoPool(new Long(orderId).longValue(), workFlow.getBeforeState(), workFlow.getAfterState(), updaterId, orderOld.getBusinessType());
+
+            //再将之后的状态，作为工作流的beforstate，可以拿到下一个的actionid（一个action可以有多个button，比如审批通过、不通过、上报等）
+            if(orderOld.getOrderState()!=ConstantCfg.ORDER_STATE_127){
+            Action action = flowService.getNextActionByBeforState(workFlow.getAfterState(),orderOld.getBusinessType());
+                //发送消息提醒下一个人：updaterId操作了buttonId，提醒下一个人，该去做action
+                businessReminderService.remindNextOperator(updaterId,buttonId,orderPool,action.getName());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        //写日志
-        orderLogService.recordLog(new Long(orderId).longValue(), updaterId, buttonId,formatInfoObject);
-
         //材料已交接：将材料的抵押状态修改为归还状态
         if(orderOld.getOrderState()==ConstantCfg.ORDER_STATE_126){
             certificateService.returnCustomer(orderOld.getId());

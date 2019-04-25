@@ -1,13 +1,10 @@
 package com.bangnd.util.service.impl;
 
-import com.bangnd.cbs.entity.CustMortgage;
-import com.bangnd.cbs.entity.Customer;
 import com.bangnd.cbs.entity.Order;
 import com.bangnd.cbs.service.CustMortgageService;
 import com.bangnd.cbs.service.CustomerService;
 import com.bangnd.cbs.service.OrderService;
 import com.bangnd.finance.entity.Payment;
-import com.bangnd.finance.service.PaymentPayStateService;
 import com.bangnd.finance.service.PaymentService;
 import com.bangnd.sales.entity.Agent;
 import com.bangnd.sales.entity.PerformanceCommission;
@@ -16,11 +13,12 @@ import com.bangnd.sales.service.GroupService;
 import com.bangnd.sales.service.PerformanceCommissionService;
 import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.date.DateUtil;
+import com.bangnd.util.entity.FormatInfoObject;
+import com.bangnd.util.service.FormatInfoObjService;
 import com.bangnd.util.service.ParamEngineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,6 +41,8 @@ public class ParamEngineServiceImpl implements ParamEngineService {
     GroupService groupService;
     @Autowired
     PerformanceCommissionService performanceCommissionService;
+    @Autowired
+    FormatInfoObjService formatInfoObjService;
 
     @Override
     public String getMathodName(String param) {
@@ -52,18 +52,28 @@ public class ParamEngineServiceImpl implements ParamEngineService {
     /**
      * @return
      */
+//    public Integer getOrderArea(long orderId) {
+//        Integer orderArea = 0;
+//        List<Customer> customerList = customerService.findCustomerByOrderId(orderId);
+//        if (customerList != null && customerList.size() > 0) {
+//            for (Customer customer : customerList) {
+//                CustMortgage custMortgages = custMortgageService.findMortgageByCustomerId(customer.getId());
+//                //只要有一个远郊的抵押物，该单子就按照远郊进行处理
+//                if (custMortgages.getEstateArea() == 4) {
+//                    orderArea = 4;
+//                    break;
+//                } else orderArea = custMortgages.getEstateArea();
+//            }
+//        }
+//        System.out.println("orderArea=" + orderArea);
+//        return orderArea;
+//    }
+
     public Integer getOrderArea(long orderId) {
         Integer orderArea = 0;
-        List<Customer> customerList = customerService.findCustomerByOrderId(orderId);
-        if (customerList != null && customerList.size() > 0) {
-            for (Customer customer : customerList) {
-                CustMortgage custMortgages = custMortgageService.findMortgageByCustomerId(customer.getId());
-                //只要有一个远郊的抵押物，该单子就按照远郊进行处理
-                if (custMortgages.getEstateArea() == 4) {
-                    orderArea = 4;
-                    break;
-                } else orderArea = custMortgages.getEstateArea();
-            }
+        FormatInfoObject formatInfoObject = formatInfoObjService.getFormatInfoObjByOrderId(orderId);
+        if(formatInfoObject!=null){
+            orderArea=formatInfoObject.getHouseArea();
         }
         System.out.println("orderArea=" + orderArea);
         return orderArea;
@@ -202,14 +212,11 @@ public class ParamEngineServiceImpl implements ParamEngineService {
     }
 
     public Integer getMortgageNum1(long orderId) {
-        List<Customer> customerList = customerService.findCustomerByOrderId(orderId);
         Integer num = 0;
-        if (customerList != null && customerList.size() > 0) {
-            for (Customer customer : customerList) {
-                CustMortgage custMortgage = custMortgageService.findMortgageByCustomerId(customer.getId());
-                if (custMortgage.getMortgageCount() == 1) {
-                    num = num + 1;
-                }
+        FormatInfoObject formatInfoObject = formatInfoObjService.getFormatInfoObjByOrderId(orderId);
+        if(formatInfoObject!=null){
+            if(formatInfoObject.getMortgageNum()==1){
+                num=1;
             }
         }
         System.out.println("num1=" + num);
@@ -217,19 +224,46 @@ public class ParamEngineServiceImpl implements ParamEngineService {
     }
 
     public Integer getMortgageNum2(long orderId) {
-        List<Customer> customerList = customerService.findCustomerByOrderId(orderId);
         Integer num = 0;
-        if (customerList != null && customerList.size() > 0) {
-            for (Customer customer : customerList) {
-                CustMortgage custMortgage = custMortgageService.findMortgageByCustomerId(customer.getId());
-                if (custMortgage.getMortgageCount() == 2) {
-                    num = num + 1;
-                }
+        FormatInfoObject formatInfoObject = formatInfoObjService.getFormatInfoObjByOrderId(orderId);
+        if(formatInfoObject!=null){
+            if(formatInfoObject.getMortgageNum()==2){
+                num=1;
             }
         }
         System.out.println("num2=" + num);
         return num;
     }
+
+//    public Integer getMortgageNum1(long orderId) {
+//        List<Customer> customerList = customerService.findCustomerByOrderId(orderId);
+//        Integer num = 0;
+//        if (customerList != null && customerList.size() > 0) {
+//            for (Customer customer : customerList) {
+//                CustMortgage custMortgage = custMortgageService.findMortgageByCustomerId(customer.getId());
+//                if (custMortgage.getMortgageCount() == 1) {
+//                    num = num + 1;
+//                }
+//            }
+//        }
+//        System.out.println("num1=" + num);
+//        return num;
+//    }
+//
+//    public Integer getMortgageNum2(long orderId) {
+//        List<Customer> customerList = customerService.findCustomerByOrderId(orderId);
+//        Integer num = 0;
+//        if (customerList != null && customerList.size() > 0) {
+//            for (Customer customer : customerList) {
+//                CustMortgage custMortgage = custMortgageService.findMortgageByCustomerId(customer.getId());
+//                if (custMortgage.getMortgageCount() == 2) {
+//                    num = num + 1;
+//                }
+//            }
+//        }
+//        System.out.println("num2=" + num);
+//        return num;
+//    }
 
     //获得该订单的业务员，该月的所有利息之和
     public BigDecimal getMonthInterest(long orderId) {

@@ -3,6 +3,7 @@ package com.bangnd.cbs.service.impl;
 import com.bangnd.batch.jobs.client.AlibabaAiService;
 import com.bangnd.cbs.entity.Order;
 import com.bangnd.cbs.entity.OrderDocument;
+import com.bangnd.cbs.entity.OrderPool;
 import com.bangnd.cbs.form.OrderSearchForm;
 import com.bangnd.cbs.repository.OrderRepository;
 import com.bangnd.cbs.service.*;
@@ -73,6 +74,8 @@ public class OrderServiceImpl implements OrderService {
     OrderDocTypeService orderDocTypeService;
     @Autowired
     FormatInfoObjService formatInfoObjService;
+    @Autowired
+    BusinessReminderService businessReminderService;
 
     @Override
     public void save(Order order) {
@@ -235,7 +238,8 @@ public class OrderServiceImpl implements OrderService {
                 Agent agent = agentRepository.getAgentByDdUserName(response.getProcessInstance().getOriginatorUserid());
                 orderRepository.save(order);
                 WorkFlow workFlow = workFlowService.getNextWorkFlowBy(ConstantCfg.ORDER_STATE_102, buttonId, order.getBusinessType());
-                orderPoolService.intoPool(order.getId(), workFlow.getBeforeState(), workFlow.getAfterState(), agent.getUserId(), order.getBusinessType());
+                OrderPool orderPool = orderPoolService.intoPool(order.getId(), workFlow.getBeforeState(), workFlow.getAfterState(), agent.getUserId(), order.getBusinessType());
+                businessReminderService.remindNextOperator(agent.getUserId(),buttonId,orderPool,"补充资料");
                 orderLogService.recordLog(order.getId(), agent.getUserId(), buttonId);
             }
         } else {
@@ -285,7 +289,10 @@ public class OrderServiceImpl implements OrderService {
             savePics(housePicUrls,ConstantCfg.DOC_TYPE_6,newOrder.getId());
 
             buttonId = ConstantCfg.BUTTON_ID_72;
-            orderPoolService.intoPool(newOrder.getId(), 0, newOrder.getOrderState(), agent.getUserId(), newOrder.getBusinessType());
+            //进池
+            OrderPool orderPool = orderPoolService.intoPool(newOrder.getId(), 0, newOrder.getOrderState(), agent.getUserId(), newOrder.getBusinessType());
+            //提醒
+            businessReminderService.remindNextOperator(agent.getUserId(),buttonId,orderPool,"初审");
             orderLogService.recordLog(newOrder.getId(), agent.getUserId(), buttonId);
         }
 

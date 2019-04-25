@@ -10,98 +10,54 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
     <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
     <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <style>
+        .required-field::after {
+            content: "*";
+            color: red;
+            margin-left: 2px
+        }
+    </style>
+
     <script th:inline="javascript">
-        //显示添加客户页面
-        function showAddCustomerPage() {
-            var borrower = document.getElementById("borrower")
-            borrower.style.display = borrower.style.display == 'none' ? "block" : "none"
-        }
-
-        function showAddProductPage() {
-            var orderProduct = document.getElementById("orderProduct")
-            orderProduct.style.display = orderProduct.style.display == 'none' ? "block" : "none"
-        }
-
-        function formActionSetValue(actionType) {
-            var order_form = document.getElementById("order_form")
-            //提交表单数据
-            if (actionType == 1) {
-                order_form.action = "/order/edit"
-                //单独提交文件
-            } else if (actionType == 2) {
-                order_form.action = "/doc/upload"
-            } else if (actionType == 3) {
-                order_form.action = "/doc/showAllPic"
-            }
-            order_form.submit()
-        }
-
-        function actionLogRecord(actionId) {
-            var order_form = document.getElementById("order_form")
-            order_form.action = "/orderLog/add?actionId=" + actionId
-            order_form.submit()
-        }
-
-        // function AddButton() {
-        //     /*<![CDATA[*/
-        //     var type = [[${buttonRes}]];
-        //     //这个符号不能删除！！！！
-        //     // /*]]>*/
-        //     var obj=JSON.parse(type);
-        //     for(var p in obj){//遍历json数组时，这么写p为索引，0,1
-        //         var orderTable =document.getElementById("buttonTable");
-        //         var bt =document.createElement("button");           //createElement生成button对象
-        //         bt.className="btn btn-info"
-        //         bt.innerHTML = obj[p].buttonName;
-        //         bt.onclick = function () {                          //绑定点击事件
-        //             var order_form = document.getElementById("order_form")
-        //             order_form.action = obj[p].ResUrl+"?buttonId="+obj[p].id
-        //             alert(obj[p].ResUrl+"?buttonId="+obj[p].id)
-        //             //order_form.submit()
-        //         };
-        //         orderTable.appendChild(bt);                         //添加到页面
-        //     }
-        // }
-
-        function doButton(buttonId) {
-            var order_form = document.getElementById("order_form")
-            order_form.action = "/order/edit?buttonId=" + buttonId
-            alert("/order/edit?buttonId=" + buttonId)
-            order_form.submit()
-        }
 
         function AddButton() {
             /*<![CDATA[*/
-            var type = [[${buttonRes}]];
-            //这个符号不能删除！！！！
-            var obj = JSON.parse(type);
-            var div = document.getElementById("buttonTable");
-            for (var p in obj) {//遍历json数组时，这么写p为索引，0,1
-                var buttonName = obj[p].buttonName
-                var buttonId = obj[p].id
-                var url = '/order/edit?buttonId='
-                var input = "<input type='button' onclick='doButton(" + buttonId + ")' class='btn btn-info' value='" + buttonName + "'/>";
-                div.innerHTML += input;
-            }
-        }
+            //生成输入框
+            var inputFiled = [[${formatInfos}]];
+            console.log(inputFiled)
+            var infoList = JSON.parse(inputFiled);
+            var inputTable=document.getElementById("inputTable");
+            /*<![CDATA[*/
+            for (var p in infoList) {//遍历json数组时，这么写p为索引，从0开始
+                var chName = infoList[p].chName;
+                var enName = infoList[p].enName;
+                var dataValue = infoList[p].dataValue;
 
-        // /*]]>*/
+                if (p % 3 == 0) {
+                    var row = inputTable.insertRow()
+                }
+                var title = row.insertCell();
+                title.innerHTML = chName
+                var input = row.insertCell();
+                input.innerHTML = "<input disabled='disabled' type='text' class='form-control' id=" + enName + " name=" + enName + " value=" + dataValue + ">"
+            }
+            /*]]>*/
+        }
 
     </script>
 </head>
 
 <body class="container" onload="AddButton()">
 <br/>
-<h4>添加订单</h4>
+<h4>维护订单</h4>
 
 <form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data">
-
     <table>
         <th>订单信息</th>
         <tr>
             <td>业务类型</td>
             <td>
-                <select th:field="*{order.businessType}" th:remove="all-but-first">
+                <select disabled = "disabled" th:field="*{order.businessType}" th:remove="all-but-first">
                     <option th:each="businessType : ${businessTypes}"
                             th:value="${businessType.id}" th:text="${businessType.name}"
                             th:selected="${businessType.id eq order.businessType}">Credit card
@@ -109,249 +65,25 @@
                 </select>
             </td>
             <td>签约时间</td>
-            <td><input type="text" class="form-control" id="signDate" name="signDate"
+            <td><input disabled = "disabled" type="text" class="form-control" id="signDate" name="signDate"
                        th:value="*{order.signDate ne null} ? *{#dates.format(order.signDate,'yyyy-MM-dd')}"
-                       placeholder="yyyy-MM-dd"/></td>
+                       onclick="signDateCheck()" placeholder="yyyy-MM-dd"/></td>
             <td>姓名</td>
             <td><input type="text" class="form-control" th:field="*{order.applicantName}" placeholder="姓名"/></td>
         </tr>
-        <!--客户诉求 -->
-        <th>请录入贷款诉求</th>
+
         <tr>
             <td>金额(万元)</td>
-            <td><input type="text" class="form-control" th:field="*{order.demandAmount}" placeholder="金额"/></td>
-            <td>下家机构类型</td>
-            <td>
-                <select th:field="*{order.nextOrgType}" th:remove="all-but-first">
-                    <option th:each="organType : ${organTypes}"
-                            th:value="${organType.id}" th:text="${organType.name}"
-                            th:selected="${organType.id eq order.nextOrgType}">Credit card
-                    </option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>周期类型</td>
-            <td>
-                <select th:field="*{order.periodType}" th:remove="all-but-first">
-                    <option th:each="periodType : ${periodTypes}"
-                            th:value="${periodType.id}" th:text="${periodType.name}"
-                            th:selected="${periodType.id eq order.periodType}">Credit card
-                    </option>
-                </select>
-            </td>
-            <td>周期数</td>
-            <td><input type="text" class="form-control" th:field="*{order.periodNum}" placeholder="贷款月数"/></td>
+            <td><input disabled = "disabled" type="text" class="form-control" th:field="*{order.demandAmount}" placeholder="金额"/></td>
+            <td>用款天数</td>
+            <td><input disabled = "disabled" type="text" class="form-control" th:field="*{order.periodNum}" placeholder="贷款月数"/></td>
             <td>用款日期</td>
-            <td><input type="text" class="form-control" id="demandDate" name="demandDate"
+            <td><input disabled = "disabled" type="text" class="form-control" id="demandDate" name="demandDate"
                        th:value="*{order.demandDate ne null} ? *{#dates.format(order.demandDate,'yyyy-MM-dd')}"/></td>
         </tr>
-
-        <tr>
-            <td>备注</td>
-            <td><input type="text" class="form-control" th:field="*{orderLog.actionDesc}" placeholder="备注"/></td>
-        </tr>
-
-        <input type="hidden" class="form-control" id="orderId" name="orderId" th:value="*{order.id}"/>
     </table>
-    <div id="buttonTable">
 
-    </div>
-    <!--显示订单下的客户信息 -->
-    <table th:if="${customerList} !=null">
-        <tr>
-            <th>姓名</th>
-            <th>电话</th>
-            <th>地址</th>
-        </tr>
-        <!--显示该订单下的所有客户，并可以点击进去修改客户详情 -->
-        <tr th:each="customer : ${customerList}">
-            <!--onclick="'javascript:showAddCustomerPage('+${customer.id}+')'"-->
-            <td th:text="${customer.name}"></td>
-            <td th:text="${customer.phone}">neo</td>
-            <td th:text="${customer.address}">6</td>
-        </tr>
-    </table>
-    <!--显示订单下匹配的产品 -->
-    <table th:if="${orderProductForms.size()} !=0">
-        <tr>
-            <th>序号</th>
-            <th>贷款人</th>
-            <th>产品名称</th>
-            <th>申请金额</th>
-            <th>批贷金额</th>
-            <th>批贷时间</th>
-            <th>服务人员</th>
-            <th>状态</th>
-        </tr>
-        <tr th:each="orderProductForm : ${orderProductForms}">
-            <td th:text="${orderProductForm.id}">1</td>
-            <td th:text="${orderProductForm.borrowerName}">neo</td>
-            <td th:text="${orderProductForm.productName}">neo</td>
-            <td th:text="${orderProductForm.planAmount}">neo</td>
-            <td th:text="${orderProductForm.realAmount}">neo</td>
-            <td th:text="${orderProductForm.approveTime ne null}?${#dates.format(orderProductForm.approveTime,'yyyy-MM-dd')}">
-                neo
-            </td>
-            <td th:text="${orderProductForm.serviceName}">neo</td>
-            <td th:text="${orderProductForm.stateName}">neo</td>
-        </tr>
-    </table>
-</form>
-
-<form class="form-horizontal" method="post" id="customer_form" th:action="@{/customer/add(orderId=${order.id})}">
-    <!--贷款人基本信息 -->
-    <table id="borrower" style="display: none">
-        <th>客户</th>
-        <tr>
-            <td>姓名</td>
-            <td><input type="text" class="form-control" th:field="*{customer.name}" placeholder="姓名"/></td>
-            <td>银行</td>
-            <td>
-                <select th:field="*{customer.bankId}" th:remove="all-but-first">
-                    <option th:each="bank : ${banks}"
-                            th:value="${bank.id}" th:text="${bank.name}"
-                            th:selected="${bank.id eq customer.bankId}">Credit card
-                    </option>
-                </select>
-            </td>
-            <td>银行卡号</td>
-            <td><input type="text" class="form-control" th:field="*{customer.bankCode}" placeholder="银行卡号"/></td>
-        </tr>
-        <tr>
-            <td>性别</td>
-            <td><input type="text" class="form-control" th:field="*{customer.gender}" placeholder="性别"/></td>
-            <td>年龄</td>
-            <td><input type="text" class="form-control" th:field="*{customer.age}" placeholder="年龄"/></td>
-        </tr>
-        <!--客户抵押物信息 -->
-        <th>抵押物</th>
-        <tr>
-            <td>区域</td>
-            <td>
-                <select th:field="*{custMortgage.estateArea}" th:remove="all-but-first">
-                    <option th:each="area : ${areaList}"
-                            th:value="${area.id}" th:text="${area.name}"
-                            th:selected="${area.id eq custMortgage.estateArea}">Credit card
-                    </option>
-                </select>
-            </td>
-            <td>抵押次数</td>
-            <td><input type="text" class="form-control" th:field="*{custMortgage.mortgageCount}" placeholder="抵押次数"/>
-            </td>
-            <td>类型</td>
-            <td>
-                <select th:field="*{custMortgage.estateType}" th:remove="all-but-first">
-                    <option th:each="estateType : ${estateType}"
-                            th:value="${estateType.id}" th:text="${estateType.name}"
-                            th:selected="${estateType.id eq custMortgage.estateType}">Credit card
-                    </option>
-                </select>
-            </td>
-            <td>评估金额(万元)</td>
-            <td><input type="text" class="form-control" th:field="*{custMortgage.estatePrice}" placeholder="评估金额"/></td>
-        </tr>
-        <!--客户征信信息 -->
-        <th>客户征信</th>
-        <tr>
-            <td>两年内连超(次)</td>
-            <td><input type="text" class="form-control" th:field="*{custCredit.contD2Times2Y}" placeholder="连超"/></td>
-            <td>两年内总超(次)</td>
-            <td><input type="text" class="form-control" th:field="*{custCredit.DDays2Y}" placeholder="累超"/></td>
-            <td>最长逾期(天)</td>
-            <td><input type="text" class="form-control" th:field="*{custCredit.maxDelay}" placeholder="逾期"/></td>
-            <td>信用卡冻结余额(元)</td>
-            <td><input type="text" class="form-control" th:field="*{custCredit.freezeAmount}" placeholder="冻结金额"/></td>
-        </tr>
-    </table>
-</form>
-
-<form class="form-horizontal" method="post" id="order_product_form"
-      th:action="@{/orderProduct/add(orderId=${order.id})}">
-    <!--匹配的产品信息 -->
-    <table id="orderProduct" style="display: none">
-        <tr>
-            <td>产品名称</td>
-            <td>
-                <select th:field="*{orderProduct.productId}" th:remove="all-but-first">
-                    <option th:each="product : ${products}"
-                            th:value="${product.id}" th:text="${product.productName}"></option>
-                </select>
-            </td>
-
-            <td>贷款人</td>
-            <td>
-                <select name="customer1" th:remove="all-but-first">
-                    <option th:each="customer : ${customerList}"
-                            th:value="${customer.id}" th:text="${customer.name}"></option>
-                </select>
-            </td>
-            <td>抵押人</td>
-            <td>
-                <select name="customer2" th:remove="all-but-first">
-                    <option th:each="customer : ${customerList}"
-                            th:value="${customer.id}" th:text="${customer.name}"></option>
-                </select>
-            </td>
-            <td>连带贷款人</td>
-            <td>
-                <select name="customer3" th:remove="all-but-first">
-                    <option th:each="customer : ${customerList}"
-                            th:value="${customer.id}" th:text="${customer.name}"></option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>计划匹配金额(万)</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.planAmount}" placeholder="计划匹配金额(万)"/>
-            </td>
-            <td>计划利率</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.planInterest}" placeholder="计划利率"/>
-            </td>
-            <td>计划还款方式</td>
-            <td>
-                <select th:field="*{orderProduct.planPayWay}" th:remove="all-but-first">
-                    <option th:each="payWay : ${payWays}"
-                            th:value="${payWay.id}" th:text="${payWay.name}"></option>
-                </select>
-            </td>
-            <td>计划周期类型</td>
-            <td>
-                <select th:field="*{orderProduct.planPeriodType}" th:remove="all-but-first">
-                    <option th:each="periodType : ${periodTypes}"
-                            th:value="${periodType.id}" th:text="${periodType.name}"></option>
-                </select>
-            </td>
-            <td>计划周期数</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.planPeriodNum}" placeholder="计划周期数"/>
-            </td>
-        </tr>
-        <tr>
-            <td>真实匹配金额(万)</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.realAmount}" placeholder="真实匹配金额(万)"/>
-            </td>
-            <td>真实利率</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.realInterest}" placeholder="真实利率"/>
-            </td>
-            <td>真实还款方式</td>
-            <td>
-                <select th:field="*{orderProduct.realPayWay}" th:remove="all-but-first">
-                    <option th:each="payWay : ${payWays}"
-                            th:value="${payWay.id}" th:text="${payWay.name}"></option>
-                </select>
-            </td>
-            <td>真实周期类型</td>
-            <td>
-                <select th:field="*{orderProduct.realPeriodType}" th:remove="all-but-first">
-                    <option th:each="periodType : ${periodTypes}"
-                            th:value="${periodType.id}" th:text="${periodType.name}"></option>
-                </select>
-            </td>
-            <td>真实周期数</td>
-            <td><input type="text" class="form-control" th:field="*{orderProduct.realPeriodNum}" placeholder="真实周期数"/>
-            </td>
-        </tr>
-    </table>
+    <table id="inputTable"><th id="needTh">必录项</th></table>
 </form>
 
 </body>

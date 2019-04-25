@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.bangnd.util.string.StringUtil;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 
@@ -121,6 +122,7 @@ public class AlibabaAiService {
             }
             String res = EntityUtils.toString(response.getEntity());
             JSONObject res_obj = JSON.parseObject(res);
+            System.out.println("res_obj.toJSONString()="+res_obj.toJSONString());
             if(is_old_format) {
                 JSONArray outputArray = res_obj.getJSONArray("outputs");
                 String output = outputArray.getJSONObject(0).getJSONObject("outputValue").getString("dataValue");
@@ -164,9 +166,13 @@ public class AlibabaAiService {
     }
 
     public static void main(String[] args){
-//        AlibabaAiService alibabaAiService = new AlibabaAiService();
-//        String imgFile = "/Users/wrh/Documents/wrh/work/gzx_app/uploadfile/raw/byOrder/80/1111.jpeg";
-//        System.out.println(alibabaAiService.certiCodeOCR(imgFile,"face"));
+        AlibabaAiService alibabaAiService = new AlibabaAiService();
+        String certiimgFileFace = "/Users/wrh/Documents/wrh/work/gzx_app/uploadfile/raw/byOrder/92/身份证明/lADPDgQ9qoteJv3NAULNAfA_496_322.jpg";
+        System.out.println(StringUtil.toJsonObjByJsonStr(alibabaAiService.certiCodeOCR(certiimgFileFace,"face")).toString());
+        String certiimgFileback = "/Users/wrh/Documents/wrh/work/gzx_app/uploadfile/raw/byOrder/92/身份证明/lADPDgQ9qoteJwLNAq3NBA8_1039_685.jpg";
+        System.out.println(StringUtil.toJsonObjByJsonStr(alibabaAiService.certiCodeOCR(certiimgFileback,"back")).toString());
+        String imgFile = "/Users/wrh/Documents/wrh/work/gzx_app/uploadfile/raw/byOrder/92/房产证/lADPDgQ9qoteJwzNA0vNBdw_1500_843.jpg";
+        System.out.println(StringUtil.toJsonObjByJsonStr(alibabaAiService.houseOCR(imgFile)).toString());
     }
 }
 

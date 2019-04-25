@@ -23,6 +23,11 @@ public class FormatInfoObject {
     @Column
     private BigDecimal houseSquare;
     @Column
+    private Integer houseArea;
+    @Column
+    private Integer mortgageNum;
+
+    @Column
     private BigDecimal nextAount;
     @Column
     private BigDecimal upPenaltyInterest;
@@ -1020,5 +1025,21 @@ public class FormatInfoObject {
 
     public void setApplyTel(String applyTel) {
         this.applyTel = applyTel;
+    }
+
+    public Integer getHouseArea() {
+        return houseArea;
+    }
+
+    public void setHouseArea(Integer houseArea) {
+        this.houseArea = houseArea;
+    }
+
+    public Integer getMortgageNum() {
+        return mortgageNum;
+    }
+
+    public void setMortgageNum(Integer mortgageNum) {
+        this.mortgageNum = mortgageNum;
     }
 }

@@ -1,6 +1,5 @@
 package com.bangnd.cbs.service.impl;
 
-import com.bangnd.batch.jobs.client.SendWorkMessageJob;
 import com.bangnd.cbs.entity.OrderPool;
 import com.bangnd.cbs.service.OrderPoolRepository;
 import com.bangnd.cbs.service.OrderPoolService;
@@ -8,7 +7,6 @@ import com.bangnd.cbs.service.OrderService;
 import com.bangnd.hr.entity.Employee;
 import com.bangnd.hr.service.EmployeeService;
 import com.bangnd.sales.service.AgentService;
-import com.bangnd.ums.entity.User;
 import com.bangnd.ums.service.UserService;
 import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.exception.AppException;
@@ -46,7 +44,7 @@ public class OrderPoolServiceImpl implements OrderPoolService {
      * @throws Exception
      */
     @Override
-    public void intoPool(long orderId, int fromState, int toState, long userId, int busiType) throws Exception {
+    public OrderPool intoPool(long orderId, int fromState, int toState, long userId, int busiType) throws Exception {
         int fromPositionId = workFlowService.getPositionIdByBeforState(fromState, busiType);
         long giveUserId = 0;
         int intoPoolNo = 0;
@@ -81,10 +79,10 @@ public class OrderPoolServiceImpl implements OrderPoolService {
                     } else {
                         //如果销售人员没有经过暂存就直接提交，那么池中是没有这个记录的，初审通过后，再回到销售，应该找这个订单的销售人员
                         //即：如果要去的岗位是11，那么直接找这个订单的销售.
-                        if(toPositionId==11){
+                        if (toPositionId == 11) {
                             //根据订单id，拿到订单，在拿到这个订单的销售id，根据销售id，拿到销售，再拿到这个销售的userid
                             giveUserId = agentService.getAgentById((orderService.findOrderById(orderId)).getSalerId()).getUserId();
-                        }else {
+                        } else {
                             giveUserId = getUserIdMinTask(toPositionId);
                         }
                         intoPoolNo = 1;
@@ -101,14 +99,10 @@ public class OrderPoolServiceImpl implements OrderPoolService {
                 orderPool.setIntoPoolNo(intoPoolNo);
                 orderPool.setState(ConstantCfg.PUBLIC_VALID_STATE);
                 orderPoolRepository.save(orderPool);
-
-                //发送钉钉信息给待处理人
-                User user = userService.getUserById(orderPool.getUserId());
-                if (user != null && user.getDDUserName() != null && !"".equals(user.getDDUserName())) {
-                    SendWorkMessageJob.sendMessage(user.getDDUserName(), "请尽快处理" + orderPool.getOrderId() + "订单，谢谢！");
-                }
             }
+            return orderPool;
         }
+        return null;
     }
 
     /**

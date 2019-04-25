@@ -1,3 +1,243 @@
+select * from t_ums_user;
+select * from t_util_format_info where need_step = -1;
+select * from cfg_cbs_order_state;
+select * from t_util_work_flow where before_state = 117;
+
+update t_util_work_flow set state = 1 where id = 25;
+update t_util_work_flow set before_state = 128 where id in (26,27);
+insert into t_util_work_flow (after_state, before_state, create_time, creator, state, trans_condition, updator, work_type, action_id, busi_type, position_id, button_id) values
+  (128,118,sysdate(),0,1,'',0,1,56,2,8,117);
+insert into t_hr_action (create_time, creator, name, state, updator, busi_type) values
+  (sysdate(),0,'确认机构通过',1,0,2);
+update t_ums_resource set name = '上报机构' where id = 91;
+insert t_ums_resource (create_time, creator, name, parent_id, res_url, state, type, updator, column_name, value_set, grade)
+    values (sysdate(),0,'确认机构通过',2,'/order/edit',1,2,0,'','',3);
+update t_util_work_flow set action_id = 13 where before_state = 128;
+
+select * from t_hr_action where before_state = 128;
+select * from t_cbs_order_log where order_id = 96 and button_id <>0;
+select * from t_cbs_order_log where order_id = 96 and format_info_id  <>0;
+
+update t_util_work_flow set action_id = 1 where before_state = 102; #初审
+update t_util_work_flow set action_id = 2 where before_state = 103; #检查订单或关闭
+update t_util_work_flow set action_id = 3 where before_state = 105; #初审复核
+update t_util_work_flow set action_id = 4 where before_state = 104; #补充资料
+update t_util_work_flow set action_id = 5 where before_state = 107; #复审
+update t_util_work_flow set action_id = 6 where before_state = 108; #收下户费
+update t_util_work_flow set action_id = 2 where before_state = 109; #检查订单或关闭
+update t_util_work_flow set action_id = 4 where before_state = 110; #补充资料
+update t_util_work_flow set action_id = 7 where before_state = 111; #下户
+update t_util_work_flow set action_id = 8 where before_state = 112; #签约
+update t_util_work_flow set action_id = 9 where before_state = 113; #汇审
+update t_util_work_flow set action_id = 8 where before_state = 114; #签约
+update t_util_work_flow set action_id = 10 where before_state = 115; #关闭
+update t_util_work_flow set action_id = 11 where before_state = 116; #收利息和律师费
+update t_util_work_flow set action_id = 12 where before_state = 117; #上报机构
+update t_util_work_flow set action_id = 13 where before_state = 118; #终审
+update t_util_work_flow set action_id = 14 where before_state = 119; #放款
+update t_util_work_flow set action_id = 10 where before_state = 120; #关闭
+update t_util_work_flow set action_id = 15 where before_state = 121; #关注上家扣款
+update t_util_work_flow set action_id = 16 where before_state = 122; #领解抵押材料
+update t_util_work_flow set action_id = 17 where before_state = 123; #去下家抵押
+update t_util_work_flow set action_id = 18 where before_state = 124; #关注下家放款
+update t_util_work_flow set action_id = 19 where before_state = 125; #和客户交接材料
+update t_util_work_flow set action_id = 20 where before_state = 126; #给客户打印交接单，完结订单
+
+delete from  t_hr_action  where id <>0;
+
+select * from t_cbs_order where id = 96;
+select distinct(before_state) from t_util_work_flow;
+select * from t_hr_action where id = 5;
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (1,sysdate(),0,'初审',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (2,sysdate(),0,'检查订单或关闭',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (3,sysdate(),0,'初审复核',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (4,sysdate(),0,'补充资料',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (5,sysdate(),0,'复审',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (6,sysdate(),0,'收下户费',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (7,sysdate(),0,'下户',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (8,sysdate(),0,'签约',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (9,sysdate(),0,'汇审',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (10,sysdate(),0,'关闭',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (11,sysdate(),0,'收利息和律师费',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (12,sysdate(),0,'上报机构',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (13,sysdate(),0,'终审',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (14,sysdate(),0,'放款',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (15,sysdate(),0,'关注上家扣款',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (16,sysdate(),0,'领解抵押材料',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (17,sysdate(),0,'去下家抵押',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (18,sysdate(),0,'关注下家放款',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (19,sysdate(),0,'和客户交接材料',1,0,2);
+insert into  t_hr_action (id,create_time, creator, name, state, updator, busi_type)values (20,sysdate(),0,'给客户打印交接单，完结订单',1,0,2);
+
+update t_hr_action set name = '下家抵押' where id = 17;
+
+select * from t_hr_action;
+select * from t_util_work_flow;
+select * from cfg_cbs_order_state;
+select * from t_ums_resource where id = 72;
+
+
+
+update t_ums_resource set name = '确认领取解押材料' where id = 96;
+update t_ums_resource set name = '确认材料完成交接' where id = 99;
+select * from t_util_format_info where ch_name like '%身份证号%';
+select * from t_ums_resource where name like '%交接%';
+
+select * from t_hr_action;
+delete from t_hr_action where state =100;
+
+select * from t_sales_performance_comm_detail where order_id = 94;
+select * from t_sales_performance_commission;
+select * from t_cbs_order where id = 94;
+
+update cfg_account_account_state set id = 0 where name='全部';
+update cfg_account_balance set id = 0 where name='全部';
+update cfg_account_bank set id = 0 where name='全部';
+update cfg_account_company set id = 0 where name='全部';
+update cfg_accounting_period_period_state set id = 0 where name='全部';
+update cfg_accounting_rule_fee_type set id = 0 where name='全部';
+update cfg_agent_business_type set id = 0 where name='全部';
+update cfg_agent_channel_type set id = 0 where name='全部';
+update cfg_attendance_ask_type set id = 0 where name='全部';
+update cfg_balance_credit set id = 0 where name='全部';
+update cfg_balance_debit set id = 0 where name='全部';
+update cfg_btask_result set id = 0 where name='全部';
+update cfg_calc_formula_type set id = 0 where name='全部';
+update cfg_cbs_business_type set id = 0 where name='全部';
+update cfg_cbs_cust_city set id = 0 where name='全部';
+update cfg_cbs_estate_area set id = 0 where name='全部';
+update cfg_cbs_estate_type set id = 0 where name='全部';
+update cfg_cbs_identity_type set id = 0 where name='全部';
+update cfg_cbs_order_state set id = 0 where name='全部';
+update cfg_cbs_pay_interest_way set id = 0 where name='全部';
+update cfg_cbs_pay_way set id = 0 where name='全部';
+update cfg_cbs_period_type set id = 0 where name='全部';
+update cfg_cbs_prod_bank set id = 0 where name='全部';
+update cfg_cbs_prod_type set id = 0 where name='全部';
+update cfg_cbs_rend_object set id = 0 where name='全部';
+update cfg_certificate_certi_state set id = 0 where name='全部';
+update cfg_certificate_type set id = 0 where name='全部';
+update cfg_commission_base_type set id = 0 where name='全部';
+update cfg_commission_business_type set id = 0 where name='全部';
+update cfg_commission_channel_type set id = 0 where name='全部';
+update cfg_commission_level set id = 0 where name='全部';
+update cfg_commission_product_type set id = 0 where name='全部';
+update cfg_commission_type set id = 0 where name='全部';
+update cfg_commission_way set id = 0 where name='全部';
+update cfg_cswork_cs_state set id = 0 where name='全部';
+update cfg_cswork_cstype set id = 0 where name='全部';
+update cfg_curriculum_pos_id set id = 0 where name='全部';
+update cfg_curriculum_type set id = 0 where name='全部';
+update cfg_cust_city set id = 0 where name='全部';
+update cfg_cust_info_original set id = 0 where name='全部';
+update cfg_cust_is_new_stockholder set id = 0 where name='全部';
+update cfg_cust_job set id = 0 where name='全部';
+update cfg_cust_sales_state set id = 0 where name='全部';
+update cfg_cust_sex set id = 0 where name='全部';
+update cfg_cust_why_borrow set id = 0 where name='全部';
+update cfg_employee_city set id = 0 where name='全部';
+update cfg_employee_manage_grade set id = 0 where name='全部';
+update cfg_employee_position_type set id = 0 where name='全部';
+update cfg_employee_tech_grade set id = 0 where name='全部';
+update cfg_format_info_client_mapping set id = 0 where name='全部';
+update cfg_format_info_data_type set id = 0 where name='全部';
+update cfg_format_info_if_scatter set id = 0 where name='全部';
+update cfg_format_info_who_object set id = 0 where name='全部';
+update cfg_group_grade set id = 0 where name='全部';
+update cfg_job_type set id = 0 where name='全部';
+update cfg_knowledge_question_type set id = 0 where name='全部';
+update cfg_order_doc_type set id = 0 where name='全部';
+update cfg_organ_type set id = 0 where name='全部';
+update cfg_paraters set id = 0 where name='全部';
+update cfg_payment_in_out set id = 0 where name='全部';
+update cfg_payment_offset set id = 0 where name='全部';
+update cfg_payment_pay_data_type set id = 0 where name='全部';
+update cfg_payment_pay_state set id = 0 where name='全部';
+update cfg_payment_pay_type set id = 0 where name='全部';
+update cfg_performance_commission_process set id = 0 where name='全部';
+update cfg_position_dept_id set id = 0 where name='全部';
+update cfg_position_is_commission set id = 0 where name='全部';
+update cfg_prod_interest_period_type set id = 0 where name='全部';
+update cfg_product_bank_id set id = 0 where name='全部';
+update cfg_product_end_date set id = 0 where name='全部';
+update cfg_product_interest_way set id = 0 where name='全部';
+update cfg_product_product_state set id = 0 where name='全部';
+update cfg_product_product_type set id = 0 where name='全部';
+update cfg_resource_parent_id set id = 0 where name='全部';
+update cfg_resource_type set id = 0 where name='全部';
+update cfg_role_resource_type set id = 0 where name='全部';
+update cfg_salary_extend_state set id = 0 where name='全部';
+update cfg_task_end_date set id = 0 where name='全部';
+update cfg_task_task_period set id = 0 where name='全部';
+update cfg_task_task_state set id = 0 where name='全部';
+update cfg_task_type set id = 0 where name='全部';
+update cfg_tel_sales_result set id = 0 where name='全部';
+update cfg_tel_sales_task_delay set id = 0 where name='全部';
+update cfg_work_flow_after_state set id = 0 where name='全部';
+update cfg_work_flow_befor_state set id = 0 where name='全部';
+update cfg_work_flow_work_type set id = 0 where name='全部';
+update cfg_work_order_cs_state set id = 0 where name='全部';
+update cfg_work_order_cstype set id = 0 where name='全部';
+update t_bank set id = 0 where name='全部';
+update t_batch_btask set id = 0 where name='全部';
+update t_batch_job set id = 0 where name='全部';
+update t_cbs_certi_log set id = 0 where name='全部';
+update t_cbs_certificate set id = 0 where name='全部';
+update t_cbs_order set id = 0 where name='全部';
+update t_cbs_order_doc set id = 0 where name='全部';
+update t_cbs_order_log set id = 0 where name='全部';
+update t_cbs_order_pool set id = 0 where name='全部';
+update t_cbs_order_prod_cust set id = 0 where name='全部';
+update t_cbs_order_product set id = 0 where name='全部';
+update t_cbs_prod_interest set id = 0 where name='全部';
+update t_cbs_product set id = 0 where name='全部';
+update t_cbs_product_rule set id = 0 where name='全部';
+update t_crm_cust set id = 0 where name='全部';
+update t_cs_knowledge set id = 0 where name='全部';
+update t_cs_work_order set id = 0 where name='全部';
+update t_cust_company set id = 0 where name='全部';
+update t_cust_credit set id = 0 where name='全部';
+update t_cust_mortgage set id = 0 where name='全部';
+update t_customer set id = 0 where name='全部';
+update t_finance_account set id = 0 where name='全部';
+update t_finance_accounting_entry set id = 0 where name='全部';
+update t_finance_accounting_period set id = 0 where name='全部';
+update t_finance_accounting_rule set id = 0 where name='全部';
+update t_finance_balance set id = 0 where name='全部';
+update t_finance_payment set id = 0 where name='全部';
+update t_format_info_obj set id = 0 where name='全部';
+update t_hr_action set id = 0 where name='全部';
+update t_hr_attendance set id = 0 where name='全部';
+update t_hr_curriculum set id = 0 where name='全部';
+update t_hr_dept set id = 0 where name='全部';
+update t_hr_emp_log set id = 0 where name='全部';
+update t_hr_employee set id = 0 where name='全部';
+update t_hr_employee_position set id = 0 where name='全部';
+update t_hr_position set id = 0 where name='全部';
+update t_hr_salary set id = 0 where name='全部';
+update t_mis_period set id = 0 where name='全部';
+update t_mis_task set id = 0 where name='全部';
+update t_order_paras set id = 0 where name='全部';
+update t_prod_bank set id = 0 where name='全部';
+update t_sales_agent set id = 0 where name='全部';
+update t_sales_commission set id = 0 where name='全部';
+update t_sales_group set id = 0 where name='全部';
+update t_sales_performance_comm_detail set id = 0 where name='全部';
+update t_sales_performance_commission set id = 0 where name='全部';
+update t_sales_tel_sales set id = 0 where name='全部';
+update t_ums_resource set id = 0 where name='全部';
+update t_ums_role set id = 0 where name='全部';
+update t_ums_role_privilege set id = 0 where name='全部';
+update t_ums_role_resource set id = 0 where name='全部';
+update t_ums_user set id = 0 where name='全部';
+update t_ums_user_role set id = 0 where name='全部';
+update t_user_behavior_log set id = 0 where name='全部';
+update t_user_role set id = 0 where name='全部';
+update t_util_calc_formula set id = 0 where name='全部';
+update t_util_calc_param set id = 0 where name='全部';
+update t_util_format_info set id = 0 where name='全部';
+update t_util_work_flow set id = 0 where name='全部';
+
 
 
 select * from BATCH_STEP_EXECUTION;
@@ -78,7 +318,7 @@ select * from t_util_format_info where ch_name like '%展期%';
 update t_util_format_info set need_step = -1 where id in (36,37);
 update t_sales_agent set dd_user_name = 'manager8154' where id = 8;
 
-
+select * from t_cust_mortgage where order_id = 91;
 select * from t_sales_agent;
 select * From t_util_work_flow where after_state = 102 and button_id = 72;
 select * from t_cbs_order_log where order_id in (79,80);
@@ -169,7 +409,7 @@ select
 from t_util_format_info
 where create_time > sysdate()-1000;
 
-
+select * From t_util_calc_formula where expression like '%%';
 select * from cfg_format_info_client_mapping;
 insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)values()
 
@@ -182,22 +422,41 @@ select * from t_util_format_info where ch_name like '%下家机构%';
 select * from t_util_format_info where need_step = 0 and state = 1;
 update t_util_format_info set need_step = -1 where id in (49);
 
+select * from cfg_cbs_estate_area;
+update cfg_cbs_estate_area set id = 0 where id = 23;
+
 delete from t_util_format_info where id = 84;
 update t_util_format_info set state=100 where id = 82;
 
 ALTER TABLE t_format_info_obj MODIFY house_address varchar(500);
 
-select * from t_format_info_obj where order_id = 80;
-update t_cbs_order_log set format_info_id = 0;
+update t_format_info_obj set house_area = 1;
+
+select * from t_format_info_obj where order_id = 92;
+select * from t_cbs_order where id = 92;
+update t_util_format_info set can_see_role_set =  11 where ch_name='申请人电话';
+
+select ch_name from t_util_format_info group by ch_name having count(*) >1;
+select * from t_util_format_info where ch_name in ('建筑面积','逾期天数');
+update t_util_format_info set state = 100 where id = 92;
+update t_util_format_info set ch_name = '上家逾期天数' where id = 62;
+select * from cfg_format_info_who_object;
+select * from t_cbs_order_doc where order_id= 92;
+insert into cfg_format_info_who_object (id, name) values ();
+select * from t_format_info_obj where order_id = 93;
 
 #谁都不能修改的字段,只能系统自动生成
 update t_util_format_info set can_see_role_set = '2,7,16,14,6,11,12,8';
-select * from t_util_format_info where can_modify_role_set like '%8%';
+select * from t_util_format_info where state =1;
 select creator from t_format_info_obj where order_id = 85;
-update t_format_info_obj set updator = 0 where order_id  = 85;
+update t_format_info_obj set house_area = 2;
 
 update t_format_info_obj set next_organ_type = 1;
-select * from cfg_cbs_period_type;
+select * from t_format_info_obj where house_area = 1;
+
+select * from cfg_format_info_client_mapping;
+
+select concat("update gzx.",table_name," set id = 0 where name='全部';") from information_schema.tables where table_schema = 'gzx' and table_name not like '%cfg%';
 
 select * from cfg_cbs_order_state;
 select * from t_ums_role;
@@ -206,7 +465,8 @@ select * from t_hr_position;
 select * from t_ums_user;
 select distinct position from t_hr_employee where user_id is not null;
 select * from t_sales_agent where user_id is not null;
-
+select * from t_hr_position;
+select * from cfg_cbs_business_type;
 update t_util_format_info set need_step='102',can_modify_role_set='8' where ch_name in ('评估日期','链家评估日期','大数据日期','大数据结论','评估总价','链家快出总价');
 update t_util_format_info set need_step='123',can_modify_role_set='7' where ch_name in ('预约还款日');
 update t_util_format_info set need_step='111',can_modify_role_set='7' where ch_name in ('上家核实到期日期','上家核实日期','下家核实批贷日期','下家核实公证日期','下家放款账户提供日期','下家核实日期','上家名称','剩余本金','剩余利息','罚息/其他','是否逾期','逾期天数','房本是否收押');
@@ -227,6 +487,11 @@ insert into t_util_format_info (busi_type, ch_name, create_time, creator, data_t
 values (2,'下家机构类型',sysdate(),0,1,'nextOrganType',1,111,'',1,0,1,7,'2,7,16,14,6,11,12,8');
 insert into t_util_format_info (busi_type, ch_name, create_time, creator, data_type, en_name, if_scatter, need_step, scatter_obj, state,  updator, who_object, can_modify_role_set, can_see_role_set)
 values (2,'申请人电话',sysdate(),0,3,'applyTel',2,-1,'',1,0,1,11,'2,7,16,14,6,11,12,8');
+
+insert into t_util_format_info (busi_type, ch_name, create_time, creator, data_type, en_name, if_scatter, need_step, scatter_obj, state,  updator, who_object, can_modify_role_set, can_see_role_set)
+values (2,'房屋区域',sysdate(),0,1,'houseArea',1,104,'',1,0,1,11,'2,7,16,14,6,11,12,8');
+insert into t_util_format_info (busi_type, ch_name, create_time, creator, data_type, en_name, if_scatter, need_step, scatter_obj, state,  updator, who_object, can_modify_role_set, can_see_role_set)
+values (2,'几抵',sysdate(),0,1,'mortgageNum',2,104,'',1,0,1,11,'2,7,16,14,6,11,12,8');
 
 insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
 values(2,'付息提醒日',sysdate(),0,4,'payInterestAlertDate',2,0,'',1,0,1);
@@ -395,7 +660,19 @@ values('start_date','身份证有效期起',1);
 insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
 values('end_date','身份证有效期止',1);
 insert into cfg_format_info_client_mapping(client_key,format_info_key,ocr_file_type)
-values('issue','发证地址',1);
+values('issue','',1);
+
+update cfg_format_info_client_mapping set format_info_key = '发证机关' where id = 5;
+update cfg_format_info_client_mapping set format_info_key = '房产证号' where id = 6;
+update cfg_format_info_client_mapping set format_info_key = '产权人' where id = 7;
+update cfg_format_info_client_mapping set format_info_key = '共有情况' where id = 8;
+update cfg_format_info_client_mapping set format_info_key = '房屋坐落' where id = 9;
+update cfg_format_info_client_mapping set format_info_key = '不动产单元号' where id = 10;
+update cfg_format_info_client_mapping set format_info_key = '土地权利类型' where id = 11;
+update cfg_format_info_client_mapping set format_info_key = '房屋权利类型' where id = 12;
+
+select * from cfg_format_info_client_mapping;
+update t_cbs_order set state = 100  where id < 94;
 
 insert into t_util_format_info (busi_type,ch_name,create_time,creator,data_type,en_name,if_scatter,need_step,scatter_obj,state,updator,who_object)
 values(2,'民族',sysdate(),0,3,'nationality',2,0,'',1,0,1);

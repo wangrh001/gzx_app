@@ -79,7 +79,7 @@
             order_form.submit()
             // /*]]>*/
         }
-        
+
         function createInputFileHtml(inputData,inputType) {
             console.log('enter the createInputFileHtml------- ')
             if(inputType==1){
@@ -166,17 +166,7 @@
                         } else if (dataValue == 2) {
                             input.innerHTML = "<select name='" + enName + "' id='" + enName + "'> <OPTION value=0>未知</OPTION> <OPTION value=1>银行</OPTION> <OPTION value=2 selected>机构</OPTION></select><span style='color:red; float:left; height:24px'>*</span> "
                         }
-                    }else if(enName=='houseArea'){
-                        if (dataValue == 0) {
-                            input.innerHTML = "<select name='" + enName + "' id='" + enName + "'> <OPTION value=0 selected>未知</OPTION> <OPTION value=2>城六区</OPTION> <OPTION value=3>近郊</OPTION> <OPTION value=4>远郊</OPTION></select><span style='color:red; float:left; height:24px'>*</span> "
-                        } else if (dataValue == 2) {
-                            input.innerHTML = "<select name='" + enName + "' id='" + enName + "'> <OPTION value=0>未知</OPTION> <OPTION value=2 selected>城六区</OPTION> <OPTION value=3>近郊</OPTION><OPTION value=4>远郊</OPTION></select><span style='color:red; float:left; height:24px'>*</span> "
-                        } else if (dataValue == 3) {
-                            input.innerHTML = "<select name='" + enName + "' id='" + enName + "'> <OPTION value=0>未知</OPTION> <OPTION value=2>城六区</OPTION> <OPTION value=3 selected>近郊</OPTION><OPTION value=4>远郊</OPTION></select><span style='color:red; float:left; height:24px'>*</span> "
-                        } else if(dataValue == 4){
-                            input.innerHTML = "<select name='" + enName + "' id='" + enName + "'> <OPTION value=0>未知</OPTION> <OPTION value=2>城六区</OPTION> <OPTION value=3>近郊</OPTION><OPTION value=4 selected>远郊</OPTION></select><span style='color:red; float:left; height:24px'>*</span> "
-                        }
-                    }else {
+                    } else {
                         if (dataValue == 0) {
                             input.innerHTML = "<select name='" + enName + "' id='" + enName + "'> <OPTION value=0 selected>未知</OPTION> <OPTION value=1>是</OPTION> <OPTION value=2>否</OPTION></select><span style='color:red; float:left; height:24px'>*</span> "
                         } else if (dataValue == 1) {
@@ -230,17 +220,7 @@
                         } else if (dataValue == 2) {
                             input.innerHTML = "<select name='" + enName + "' id='" + enName + "'> <OPTION value=0>未知</OPTION> <OPTION value=1>银行</OPTION> <OPTION value=2 selected>机构</OPTION> "
                         }
-                    }else if (enName == 'houseArea') {
-                        if (dataValue == 0) {
-                            input.innerHTML = "<select name='" + enName + "' id='" + enName + "'> <OPTION value=0 selected>未知</OPTION> <OPTION value=2>城六区</OPTION> <OPTION value=3>近郊</OPTION> <OPTION value=4>远郊</OPTION> </select> "
-                        } else if (dataValue == 2) {
-                            input.innerHTML = "<select name='" + enName + "' id='" + enName + "'> <OPTION value=0 >未知</OPTION> <OPTION value=2 selected>城六区</OPTION> <OPTION value=3>近郊</OPTION> <OPTION value=4>远郊</OPTION> </select> "
-                        } else if (dataValue == 3) {
-                            input.innerHTML = "<select name='" + enName + "' id='" + enName + "'> <OPTION value=0 >未知</OPTION> <OPTION value=2>城六区</OPTION> <OPTION value=3 selected>近郊</OPTION> <OPTION value=4>远郊</OPTION> </select> "
-                        } else if (dataValue == 4) {
-                            input.innerHTML = "<select name='" + enName + "' id='" + enName + "'> <OPTION value=0 >未知</OPTION> <OPTION value=2>城六区</OPTION> <OPTION value=3>近郊</OPTION> <OPTION value=4 selected>远郊</OPTION> </select> "
-                        }
-                    }else {
+                    } else {
                         if (dataValue == 0) {
                             input.innerHTML = "<select name='" + enName + "' id='" + enName + "'> <OPTION value=0 selected>未知</OPTION> <OPTION value=1>是</OPTION> <OPTION value=2>否</OPTION> "
                         } else if (dataValue == 1) {
@@ -293,16 +273,6 @@
                         } else if (dataValue == 2) {
                             input.innerHTML = "<select disabled='disabled' name='" + enName + "' id='" + enName + "'> <OPTION value=0>未知</OPTION> <OPTION value=1>银行</OPTION> <OPTION value=2 selected>机构</OPTION> "
                         }
-                    }else if (enName == 'houseArea') {
-                        if (dataValue == 0) {
-                            input.innerHTML = "<select disabled='disabled' name='" + enName + "' id='" + enName + "'> <OPTION value=0 selected>未知</OPTION> <OPTION value=2>城六区</OPTION> <OPTION value=3>近郊</OPTION> <OPTION value=4>远郊</OPTION> </select> "
-                        } else if (dataValue == 2) {
-                            input.innerHTML = "<select disabled='disabled' name='" + enName + "' id='" + enName + "'> <OPTION value=0 >未知</OPTION> <OPTION value=2 selected>城六区</OPTION> <OPTION value=3>近郊</OPTION> <OPTION value=4>远郊</OPTION> </select> "
-                        } else if (dataValue == 3) {
-                            input.innerHTML = "<select disabled='disabled' name='" + enName + "' id='" + enName + "'> <OPTION value=0 >未知</OPTION> <OPTION value=2>城六区</OPTION> <OPTION value=3 selected>近郊</OPTION> <OPTION value=4>远郊</OPTION> </select> "
-                        } else if (dataValue == 4) {
-                            input.innerHTML = "<select disabled='disabled' name='" + enName + "' id='" + enName + "'> <OPTION value=0 >未知</OPTION> <OPTION value=2>城六区</OPTION> <OPTION value=3>近郊</OPTION> <OPTION value=4 selected>远郊</OPTION> </select> "
-                        }
                     }else {
                         if (dataValue == 0) {
                             input.innerHTML = "<select disabled='disabled' name='" + enName + "' id='" + enName + "'> <OPTION value=0 selected>未知</OPTION> <OPTION value=1>是</OPTION> <OPTION value=2>否</OPTION> "
@@ -331,7 +301,7 @@
             }
             /*]]>*/
         }
-        
+
         function AddButton() {
             /*<![CDATA[*/
             var type = [[${buttonRes}]];
@@ -370,13 +340,13 @@
                         onlySeeData.push(infoList[p])
                     }
                 }
-             }
+            }
             createInputFileHtml(needInpuData,1);
             createInputFileHtml(canModifyData,2);
             createInputFileHtml(onlySeeData,3);
-             /*]]>*/
+            /*]]>*/
         }
-        
+
         function uploadFiles() {
             var orderId = document.getElementById("orderId").value
             var form = document.getElementById("order_form")
@@ -388,9 +358,12 @@
 
 <body class="container" onload="AddButton()">
 <br/>
-<h4>维护订单</h4>
+<h4>添加订单</h4>
 
 <form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data">
+    <!--填写订单相关信息 -->
+    <!--var htm="<a href="+url+buttonId+">"+buttonName+"</a>";-->
+    <!--div.innerHTML+=htm;-->
     <table>
         <th>订单信息</th>
         <tr>
@@ -425,7 +398,7 @@
             <td><input type="text" class="form-control" th:field="*{orderLog.actionDesc}" placeholder="备注"/></td>
         </tr>
         <tr>
-            <!--<td><input type="button" value="添加抵押物" class="btn btn-info" onclick="showAddCustomerPage()"/></td>-->
+            <td><input type="button" value="添加抵押物" class="btn btn-info" onclick="showAddCustomerPage()"/></td>
             <!--<td><input type="button" value="添加产品" class="btn btn-info" onclick="showAddProductPage()"/></td>-->
             <td><button type="submit" class="btn btn-info" onclick="uploadFiles()">上传客户资料</button></td>
         </tr>
@@ -436,7 +409,182 @@
     <table id="needInputTable" style="display: none"><th style="display:none" id="needTh">必录项</th></table>
     <table id="canModifyTable" style="display: none"><th style="display:none" id="canModifyTh">可录项</th></table>
     <table id="onlySeeTable"  style="display: none"><th style="display:none" id="onlySeeTh">只读项</th></table>
+
     <div id="buttonTable"></div>
+    <!--显示订单下的客户信息 -->
+    <table th:if="${customerList} !=null">
+        <tr>
+            <th>姓名</th>
+            <th>电话</th>
+            <th>地址</th>
+            <th>修改</th>
+            <th>删除</th>
+        </tr>
+        <!--显示该订单下的所有客户，并可以点击进去修改客户详情 -->
+        <tr th:each="customer : ${customerList}">
+            <!--onclick="'javascript:showAddCustomerPage('+${customer.id}+')'"-->
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.phone}">neo</td>
+            <td th:text="${customer.address}">6</td>
+            <td><a th:href="@{/customer/toModify(id=${customer.id})}">修改</a></td>
+            <td><a th:href="@{/customer/delete(id=${customer.id})}">删除</a></td>
+        </tr>
+    </table>
+    <!--显示订单下匹配的产品 -->
+    <table th:if="${orderProductForms.size()} !=0">
+        <tr>
+            <th>序号</th>
+            <th>贷款人</th>
+            <th>产品名称</th>
+            <th>申请金额</th>
+            <th>批贷金额</th>
+            <th>批贷时间</th>
+            <th>服务人员</th>
+            <th>状态</th>
+            <th>修改</th>
+            <th>删除</th>
+        </tr>
+        <tr th:each="orderProductForm : ${orderProductForms}">
+            <td th:text="${orderProductForm.id}">1</td>
+            <td th:text="${orderProductForm.borrowerName}">neo</td>
+            <td th:text="${orderProductForm.productName}">neo</td>
+            <td th:text="${orderProductForm.planAmount}">neo</td>
+            <td th:text="${orderProductForm.realAmount}">neo</td>
+            <td th:text="${orderProductForm.approveTime ne null}?${#dates.format(orderProductForm.approveTime,'yyyy-MM-dd')}">neo</td>
+            <td th:text="${orderProductForm.serviceName}">neo</td>
+            <td th:text="${orderProductForm.stateName}">neo</td>
+            <td><a th:href="@{/orderProduct/toModify(id=${orderProductForm.id})}">修改</a></td>
+            <td><a th:href="@{/orderProduct/delete(id=${orderProductForm.id})}">删除</a></td>
+        </tr>
+    </table>
+</form>
+
+<form class="form-horizontal" method="post" id="customer_form" th:action="@{/customer/add(orderId=${order.id})}">
+    <!--贷款人基本信息 -->
+    <table id="borrower" style="display: none">
+        <!--客户抵押物信息 -->
+        <th>抵押物</th>
+        <tr>
+            <td>区域</td>
+            <td>
+                <select th:field="*{custMortgage.estateArea}" th:remove="all-but-first">
+                    <option th:each="area : ${areaList}"
+                            th:value="${area.id}" th:text="${area.name}"
+                            th:selected="${area.id eq custMortgage.estateArea}">Credit card
+                    </option>
+                </select>
+            </td>
+            <td>抵押次数</td>
+            <td><input type="text" class="form-control" th:field="*{custMortgage.mortgageCount}" placeholder="抵押次数"/>
+            </td>
+            <td>类型</td>
+            <td>
+                <select th:field="*{custMortgage.estateType}" th:remove="all-but-first">
+                    <option th:each="estateType : ${estateType}"
+                            th:value="${estateType.id}" th:text="${estateType.name}"
+                            th:selected="${estateType.id eq custMortgage.estateType}">Credit card
+                    </option>
+                </select>
+            </td>
+            <td>评估金额(万元)</td>
+            <td><input type="text" class="form-control" th:field="*{custMortgage.estatePrice}" placeholder="评估金额"/></td>
+        </tr>
+
+        <tr>
+            <td><input type="submit" value="保存客户" class="btn btn-info"/></td>
+        </tr>
+    </table>
+</form>
+
+<form class="form-horizontal" method="post" id="order_product_form"
+      th:action="@{/orderProduct/add(orderId=${order.id})}">
+    <!--匹配的产品信息 -->
+    <table id="orderProduct" style="display: none">
+        <tr>
+            <td>产品名称</td>
+            <td>
+                <select th:field="*{orderProduct.productId}" th:remove="all-but-first">
+                    <option th:each="product : ${products}"
+                            th:value="${product.id}" th:text="${product.productName}"></option>
+                </select>
+            </td>
+
+            <td>贷款人</td>
+            <td>
+                <select name="customer1" th:remove="all-but-first">
+                    <option th:each="customer : ${customerList}"
+                            th:value="${customer.id}" th:text="${customer.name}"></option>
+                </select>
+            </td>
+            <td>抵押人</td>
+            <td>
+                <select name="customer2" th:remove="all-but-first">
+                    <option th:each="customer : ${customerList}"
+                            th:value="${customer.id}" th:text="${customer.name}"></option>
+                </select>
+            </td>
+            <td>连带贷款人</td>
+            <td>
+                <select name="customer3" th:remove="all-but-first">
+                    <option th:each="customer : ${customerList}"
+                            th:value="${customer.id}" th:text="${customer.name}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>计划匹配金额(万)</td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planAmount}" placeholder="计划匹配金额(万)"/>
+            </td>
+            <td>计划利率</td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planInterest}" placeholder="计划利率"/>
+            </td>
+            <td>计划还款方式</td>
+            <td>
+                <select th:field="*{orderProduct.planPayWay}" th:remove="all-but-first">
+                    <option th:each="payWay : ${payWays}"
+                            th:value="${payWay.id}" th:text="${payWay.name}"></option>
+                </select>
+            </td>
+            <td>计划周期类型</td>
+            <td>
+                <select th:field="*{orderProduct.planPeriodType}" th:remove="all-but-first">
+                    <option th:each="periodType : ${periodTypes}"
+                            th:value="${periodType.id}" th:text="${periodType.name}"></option>
+                </select>
+            </td>
+            <td>计划周期数</td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.planPeriodNum}" placeholder="计划周期数"/>
+            </td>
+        </tr>
+        <tr>
+            <td>真实匹配金额(万)</td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realAmount}" placeholder="真实匹配金额(万)"/>
+            </td>
+            <td>真实利率</td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realInterest}" placeholder="真实利率"/>
+            </td>
+            <td>真实还款方式</td>
+            <td>
+                <select th:field="*{orderProduct.realPayWay}" th:remove="all-but-first">
+                    <option th:each="payWay : ${payWays}"
+                            th:value="${payWay.id}" th:text="${payWay.name}"></option>
+                </select>
+            </td>
+            <td>真实周期类型</td>
+            <td>
+                <select th:field="*{orderProduct.realPeriodType}" th:remove="all-but-first">
+                    <option th:each="periodType : ${periodTypes}"
+                            th:value="${periodType.id}" th:text="${periodType.name}"></option>
+                </select>
+            </td>
+            <td>真实周期数</td>
+            <td><input type="text" class="form-control" th:field="*{orderProduct.realPeriodNum}" placeholder="真实周期数"/>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="保存方案" class="btn btn-info"/></td>
+        </tr>
+    </table>
 </form>
 
 </body>

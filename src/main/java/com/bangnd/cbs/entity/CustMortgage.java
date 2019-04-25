@@ -13,6 +13,10 @@ public class CustMortgage {
     private long mortgageId;
     @Column
     private long customerId;
+    @Column
+    private long orderId;
+    @Column
+    private long orderProductId;
     //抵押物类型：1/房；2/车；3/保单；
     @Column
     private int mortgageType;
@@ -159,5 +163,21 @@ public class CustMortgage {
 
     public void setMortgageCount(int mortgageCount) {
         this.mortgageCount = mortgageCount;
+    }
+
+    public long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
+    }
+
+    public long getOrderProductId() {
+        return orderProductId;
+    }
+
+    public void setOrderProductId(long orderProductId) {
+        this.orderProductId = orderProductId;
     }
 }

@@ -14,7 +14,7 @@ public interface OrderPoolService {
      *
      * @param orderId
      */
-    public void intoPool(long orderId, int fromState, int toState, long userId, int busiType) throws Exception;
+    public OrderPool intoPool(long orderId, int fromState, int toState, long userId, int busiType) throws Exception;
 
     public List<Long> getOrderListString(long userId);
 
