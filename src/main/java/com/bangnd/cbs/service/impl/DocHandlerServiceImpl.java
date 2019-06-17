@@ -106,10 +106,14 @@ public class DocHandlerServiceImpl implements DocHandlerService {
             Date begindate = new Date();
             for (String url : listImgSrc) {
                 System.out.println("url=" + url);
+                if(url==null||"".equals(url)){
+                    return null;
+                }
                 //开始时间
                 Date begindate2 = new Date();
                 String imageName = url.substring(url.lastIndexOf("/") + 1, url.length());
                 fileNameMapping.put(imageName, imageName);
+
                 URL uri = new URL(url);
                 InputStream in = uri.openStream();
 
@@ -138,7 +142,7 @@ public class DocHandlerServiceImpl implements DocHandlerService {
             double time = overdate.getTime() - begindate.getTime();
             System.out.println("总耗时：" + time / 1000 + "s");
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             System.out.println("下载失败");
         }
         return fileNameMapping;

@@ -24,4 +24,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, JpaSp
 
     @Query("select e from Employee e where e.position=:position and state <> 100")
     public List<Employee> findAllByPosition(@Param(value="position") int position);
+
+    @Query("select e from Employee e where e.ddUserName=:ddUserName and state <> 100")
+    public Employee findByDdUserName(@Param(value = "ddUserName") String ddUserName);
 }

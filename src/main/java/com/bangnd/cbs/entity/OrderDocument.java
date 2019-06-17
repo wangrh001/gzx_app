@@ -31,6 +31,10 @@ public class OrderDocument {
     @Column
     private int docType;
 
+    //1、jpg;2、pdf
+    @Column
+    private String docFormat;
+
     @Column
     private int state;
 
@@ -148,5 +152,13 @@ public class OrderDocument {
 
     public void setDocType(int docType) {
         this.docType = docType;
+    }
+
+    public String getDocFormat() {
+        return docFormat;
+    }
+
+    public void setDocFormat(String docFormat) {
+        this.docFormat = docFormat;
     }
 }

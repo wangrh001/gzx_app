@@ -2313,5 +2313,132 @@ public class TotalEntityData {
 //        dataModel7.setIfShowColumn(1);
 //        dataModel7.setIfModifyable(0);
 //        dataModels.add(dataModel7);
+
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("util");
+//        dataModel.setTableNames("reminder");
+//        dataModel.setColumnNameCh("提醒名称");
+//        dataModel.setColumnNameEn("name");
+//        dataModel.setColumnType(3);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(0);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("提醒类型");
+//        dataModel1.setColumnNameEn("type");
+//        dataModel1.setColumnType(1);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(1);
+//        dataModel1.setIfSearchColumn(1);
+//        dataModel1.setIfShowColumn(1);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel5 = new DataModel();
+//        dataModel5.setColumnNameCh("提醒方式");
+//        dataModel5.setColumnNameEn("way");
+//        dataModel5.setColumnType(1);
+//        dataModel5.setIfBusinessDate(0);
+//        dataModel5.setIfScatter(1);
+//        dataModel5.setIfSearchColumn(1);
+//        dataModel5.setIfShowColumn(1);
+//        dataModel5.setIfModifyable(1);
+//        dataModels.add(dataModel5);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("提醒规则");
+//        dataModel2.setColumnNameEn("condition");
+//        dataModel2.setColumnType(3);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(0);
+//        dataModel2.setIfSearchColumn(0);
+//        dataModel2.setIfShowColumn(1);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//
+//        DataModel dataModel3 = new DataModel();
+//        dataModel3.setColumnNameCh("提醒人");
+//        dataModel3.setColumnNameEn("users");
+//        dataModel3.setColumnType(3);
+//        dataModel3.setIfBusinessDate(0);
+//        dataModel3.setIfScatter(0);
+//        dataModel3.setIfSearchColumn(1);
+//        dataModel3.setIfShowColumn(0);
+//        dataModel3.setIfModifyable(1);
+//        dataModels.add(dataModel3);
+//
+//        DataModel dataModel4 = new DataModel();
+//        dataModel4.setColumnNameCh("提醒语言");
+//        dataModel4.setColumnNameEn("sayWhat");
+//        dataModel4.setColumnType(3);
+//        dataModel4.setIfBusinessDate(0);
+//        dataModel4.setIfScatter(0);
+//        dataModel4.setIfSearchColumn(0);
+//        dataModel4.setIfShowColumn(0);
+//        dataModel4.setIfModifyable(1);
+//        dataModels.add(dataModel4);
+
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("util");
+//        dataModel.setTableNames("reminderLog");
+//        dataModel.setColumnNameCh("订单ID");
+//        dataModel.setColumnNameEn("orderId");
+//        dataModel.setColumnType(2);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(0);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(0);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("提醒类型");
+//        dataModel1.setColumnNameEn("type");
+//        dataModel1.setColumnType(1);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(1);
+//        dataModel1.setIfSearchColumn(1);
+//        dataModel1.setIfShowColumn(1);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("提醒方式");
+//        dataModel2.setColumnNameEn("way");
+//        dataModel2.setColumnType(1);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(1);
+//        dataModel2.setIfSearchColumn(1);
+//        dataModel2.setIfShowColumn(0);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//
+//        DataModel dataModel3 = new DataModel();
+//        dataModel3.setColumnNameCh("提醒人");
+//        dataModel3.setColumnNameEn("users");
+//        dataModel3.setColumnType(3);
+//        dataModel3.setIfBusinessDate(0);
+//        dataModel3.setIfScatter(0);
+//        dataModel3.setIfSearchColumn(1);
+//        dataModel3.setIfShowColumn(0);
+//        dataModel3.setIfModifyable(1);
+//        dataModels.add(dataModel3);
+//
+//        DataModel dataModel4 = new DataModel();
+//        dataModel4.setColumnNameCh("提醒语言");
+//        dataModel4.setColumnNameEn("sayWhat");
+//        dataModel4.setColumnType(3);
+//        dataModel4.setIfBusinessDate(0);
+//        dataModel4.setIfScatter(0);
+//        dataModel4.setIfSearchColumn(0);
+//        dataModel4.setIfShowColumn(0);
+//        dataModel4.setIfModifyable(1);
+//        dataModels.add(dataModel4);
     }
 }

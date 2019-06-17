@@ -16,6 +16,26 @@ public class DateUtil {
     public static String DATETIME_PATTERN_YEARMONTH = "yyyyMM";
 
 
+    public static float getDaysByBetweenDates(Date startDate,Date endDate){
+        float days=0;
+        if(startDate.after(endDate) || startDate == null || endDate ==null ){
+            return days;
+        }
+
+        long time1 = startDate.getTime();
+        long time2 = endDate.getTime();
+
+        long diff;
+        if (time1 < time2) {
+            diff = time2 - time1;
+        } else {
+            diff = time1 - time2;
+        }
+        days = (int) (diff / (24 * 60 * 60 * 1000))+1;
+        return days;
+
+    }
+
     public static Date getMonthStart(Date date) {
         SimpleDateFormat format = new SimpleDateFormat(DateUtil.DATETIME_PATTERN_DATE);
         Calendar calendar = Calendar.getInstance();

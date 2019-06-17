@@ -1,6 +1,6 @@
 package com.bangnd.util.service.impl;
 
-import com.bangnd.util.entity.EstateType;
+import com.bangnd.bridgecbs.entity.MortgageEstateType;
 import com.bangnd.util.repository.StateTypeConfRepository;
 import com.bangnd.util.service.StateTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ public class StateTypeServiceImpl implements StateTypeService {
     StateTypeConfRepository stateTypeConfRepository;
 
     @Override
-    public List<EstateType> getAll() {
+    public List<MortgageEstateType> getAll() {
         return stateTypeConfRepository.findAll();
     }
 }

@@ -27,4 +27,76 @@ public class CustCompany {
     @Column
     private BigDecimal sharePercent;
 
+    @Column
+    private String licenceCode;
+
+    @Column
+    private String legalPerson;
+
+    @Column
+    private String phoneNo;
+
+    public long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(long companyId) {
+        this.companyId = companyId;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public BigDecimal getCapital() {
+        return Capital;
+    }
+
+    public void setCapital(BigDecimal capital) {
+        Capital = capital;
+    }
+
+    public Date getRegisteredDate() {
+        return registeredDate;
+    }
+
+    public void setRegisteredDate(Date registeredDate) {
+        this.registeredDate = registeredDate;
+    }
+
+    public BigDecimal getSharePercent() {
+        return sharePercent;
+    }
+
+    public void setSharePercent(BigDecimal sharePercent) {
+        this.sharePercent = sharePercent;
+    }
+
+    public String getLicenceCode() {
+        return licenceCode;
+    }
+
+    public void setLicenceCode(String licenceCode) {
+        this.licenceCode = licenceCode;
+    }
+
+    public String getLegalPerson() {
+        return legalPerson;
+    }
+
+    public void setLegalPerson(String legalPerson) {
+        this.legalPerson = legalPerson;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
 }

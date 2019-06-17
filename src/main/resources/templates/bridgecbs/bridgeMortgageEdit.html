@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+    <script th:inline="javascript">
+        function submitMortgage() {
+            /*<![CDATA[*/
+            if(mortgage_form.propertyType.value==1){
+                alert('物业业务类型：必须选择一个，谢谢！')
+                mortgage_form.propertyType.focus()
+                return false
+            }
+            if(mortgage_form.propertyName.value==''){
+                alert('物业名称：不能为空，请填写，谢谢！')
+                mortgage_form.propertyName.focus()
+                return false
+            }
+            if(mortgage_form.square.value==''){
+                alert('面积：不能为空，请填写，谢谢！')
+                mortgage_form.square.focus()
+                return false
+            }
+            if(mortgage_form.propertyNO.value==''){
+                alert('房产证号：不能为空，请填写，谢谢！')
+                mortgage_form.propertyNO.focus()
+                return false
+            }
+            if(mortgage_form.estateArea.value==''){
+                alert('物业所在地：不能为空，请填写，谢谢！')
+                mortgage_form.estateArea.focus()
+                return false
+            }
+            if(mortgage_form.propertyUse.value==''){
+                alert('用途：不能为空，请填写，谢谢！')
+                mortgage_form.propertyUse.focus()
+                return false
+            }
+            if(mortgage_form.estimatePrice.value==''){
+                alert('评估价：不能为空，请填写，谢谢！')
+                mortgage_form.estimatePrice.focus()
+                return false
+            }
+            if(mortgage_form.percent.value==''){
+                alert('可贷比例：不能为空，请填写，谢谢！')
+                mortgage_form.percent.focus()
+                return false
+            }
+            var form = document.getElementById("mortgage_form")
+            form.action="/bridgecbs/mortgage/add?modify"
+            form.submit()
+            /*]]>*/
+        }
+
+        function showPropertyPage() {
+            var borrower = document.getElementById("property")
+            borrower.style.display = borrower.style.display == 'none' ? "block" : "none"
+        }
+        function submitProperty() {
+            /*<![CDATA[*/
+            var orderId = document.getElementById("orderId").value
+            var mortgageId = document.getElementById("mortgageId").value
+            var form = document.getElementById("property_form")
+            form.action="/bridgecbs/customer/add?orderId="+orderId+"&mortgageId="+mortgageId
+            form.submit()
+            /*]]>*/
+        }
+    </script>
+
+
+</head>
+<body>
+<form class="form-horizontal" method="post" id="mortgage_form" th:action="@{/bridgecbs/mortgage/modify}" th:object="${mortgage}" >
+    <table  id="mortgage">
+        <input type="hidden" th:field="*{mortgageId}"/>
+        <input type="hidden" th:field="*{orderId}"/>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>物业名称:</td>
+            <td><input th:field="*{propertyName}" value="" class="form-control"/></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>面积:</td>
+            <td><input th:field="*{square}" value="" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>房产证号:</td>
+            <td><input th:field="*{propertyNO}" value="" class="form-control"/></td>
+            <td>登记价(元):</td>
+            <td><input th:field="*{registerPrice}" value="" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>评估价(元):</td>
+            <td><input th:field="*{estimatePrice}" value="" class="form-control"/></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>用途:</td>
+            <td><input th:field="*{propertyUse}" value="" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>物业业务类型:</td>
+            <td><select th:field="*{propertyType}" th:remove="all-but-first">
+                <option th:each="propertyType : ${propertyTypes}"
+                        th:value="${propertyType.id}" th:text="${propertyType.name}">Credit card
+                </option>
+            </select></td>
+            <td>产权状态:</td>
+            <td><select th:field="*{propertyState}" th:remove="all-but-first">
+                <option th:each="propertyState : ${propertyStates}"
+                        th:value="${propertyState.id}" th:text="${propertyState.name}">Credit card
+                </option>
+            </select></td>
+        </tr>
+        <tr>
+            <td>房屋类型:</td>
+            <td><select th:field="*{estateType}" th:remove="all-but-first">
+                <option th:each="estateType : ${estateTypes}"
+                        th:value="${estateType.id}" th:text="${estateType.name}">Credit card
+                </option>
+            </select></td>
+        </tr>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>物业所在地:</td>
+            <td><input th:field="*{estateArea}" value="" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="保存" onclick="submitMortgage()" class="btn btn-info"/></td>
+        </tr>
+        <tr><td><input type="button" value="添加产权人" onclick="showPropertyPage()" class="btn btn-info"/></td></tr>
+    </table>
+</form>
+
+<form class="form-horizontal" method="post" id="property_form" th:object="${customer}">
+    <table th:if="${bridgeCustomerList} !=null">
+        <tr>
+            <th>序号</th>
+            <th>姓名</th>
+            <th>占比(%)</th>
+            <th>证件类型</th>
+            <th>证件号码</th>
+            <th>删除</th>
+        </tr>
+        <!--显示该订单下的所有客户，并可以点击进去修改客户详情 -->
+        <tr th:each="customer : ${bridgeCustomerList}">
+            <!--onclick="'javascript:showAddCustomerPage('+${customer.id}+')'"-->
+            <td th:text="${customer.id}"></td>
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.percent}"></td>
+            <td th:text="${customer.certiType}"></td>
+            <td th:text="${customer.certiCode}"></td>
+            <td><a th:href="@{/bridgecbs/customer/delete(id=${customer.id})}">删除</a></td>
+        </tr>
+    </table>
+    <table id="property" style="display: none">
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>姓名</td>
+            <td><input th:field="*{name}" value="" class="form-control"/></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>证件类型</td>
+            <td><select th:field="*{certiType}" th:remove="all-but-first">
+                <option th:each="certiType : ${certiTypes}"
+                        th:value="${certiType.id}" th:text="${certiType.name}">Credit card
+                </option>
+            </select></td>
+        </tr>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>证件号码</td>
+            <td><input th:field="*{certiCode}" value="" class="form-control"/></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>占比（%）:</td>
+            <td><input th:field="*{percent}" value="" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="保存" onclick="submitProperty()" class="btn btn-info"/></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

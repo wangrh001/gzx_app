@@ -2,9 +2,11 @@ package com.bangnd.cbs.service;
 
 import com.bangnd.cbs.entity.OrderPool;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public interface OrderPoolRepository extends JpaRepository<OrderPool, Long> {
@@ -33,4 +35,8 @@ public interface OrderPoolRepository extends JpaRepository<OrderPool, Long> {
 
     public OrderPool findOrderPoolByOrderIdAndDoState(@Param(value = "orderId") long orderId,
                                                       @Param(value = "doState") int doState);
+    @Transactional
+    @Modifying
+    @Query("update OrderPool set userId = :userId where orderId=:orderId and doState = 2")
+    public void updateDoingHandler(@Param(value = "userId") long userId,@Param(value = "orderId") long orderId);
 }

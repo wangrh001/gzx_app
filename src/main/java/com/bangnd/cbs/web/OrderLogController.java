@@ -47,6 +47,8 @@ public class OrderLogController {
                     orderLogListForm.setButtonName(resourceService.getResourceById(orderLog.getButtonId()).getName());
                 }else if(orderLog.getFormatInfoId()!=0){
                     orderLogListForm.setButtonName(formatInfoService.getFormatInfoById(orderLog.getFormatInfoId()).getChName());
+                }else if(orderLog.getActionId()!=0){
+                    orderLogListForm.setButtonName(actionService.getActionById(orderLog.getActionId()).getName());
                 }
                 orderLogListForm.setActionDesc(orderLog.getActionDesc());
                 orderLogListForms.add(orderLogListForm);

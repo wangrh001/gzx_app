@@ -25,41 +25,48 @@
                             th:value="${workType.id}" th:text="${workType.name}">Credit card
                     </option>
                 </select></td>
-                <td>转前状态</td>
-                <td><select th:field="*{beforState}" th:remove="all-but-first">
-                    <option th:each="beforState : ${beforStates}"
-                            th:value="${beforState.id}" th:text="${beforState.name}">Credit card
-                    </option>
-                </select></td>
-                <td>流转条件</td>
-                <td><input th:field="*{transCondition}" value="" class="form-control"/></td>
-            </tr>
-            <tr>
-                <td>转后状态</td>
-                <td><select th:field="*{afterState}" th:remove="all-but-first">
-                    <option th:each="afterState : ${afterStates}"
-                            th:value="${afterState.id}" th:text="${afterState.name}">Credit card
-                    </option>
-                </select></td>
-            </tr>
-
-            <tr>
                 <td>业务类型</td>
                 <td><select th:field="*{busiType}" th:remove="all-but-first">
                     <option th:each="busiType : ${busiTypes}"
                             th:value="${busiType.id}" th:text="${busiType.name}">Credit card
                     </option>
                 </select></td>
+                <td>流转条件</td>
+                <td><input th:field="*{transCondition}" value="" class="form-control"/></td>
+            </tr>
+
+            <tr>
                 <td>岗位</td>
                 <td><select th:field="*{positionId}" th:remove="all-but-first">
                     <option th:each="position : ${positions}"
                             th:value="${position.id}" th:text="${position.name}">Credit card
                     </option>
                 </select></td>
+                <td>工作描述</td>
+                <td><select th:field="*{actionId}" th:remove="all-but-first">
+                    <option th:each="action : ${actions}"
+                            th:value="${action.id}" th:text="${action.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+
+            <tr>
+                <td>转前状态</td>
+                <td><select th:field="*{beforeState}" th:remove="all-but-first">
+                    <option th:each="beforeState : ${beforStates}"
+                            th:value="${beforeState.id}" th:text="${beforeState.name}">Credit card
+                    </option>
+                </select></td>
                 <td>按钮</td>
                 <td><select th:field="*{buttonId}" th:remove="all-but-first">
                     <option th:each="button : ${buttons}"
                             th:value="${button.id}" th:text="${button.name}">Credit card
+                    </option>
+                </select></td>
+                <td>转后状态</td>
+                <td><select th:field="*{afterState}" th:remove="all-but-first">
+                    <option th:each="afterState : ${afterStates}"
+                            th:value="${afterState.id}" th:text="${afterState.name}">Credit card
                     </option>
                 </select></td>
             </tr>

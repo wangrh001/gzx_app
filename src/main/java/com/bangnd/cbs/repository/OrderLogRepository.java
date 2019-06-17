@@ -19,4 +19,7 @@ public interface OrderLogRepository extends JpaRepository<OrderLog, Long> {
 
     @Query("select o from OrderLog o where o.orderId=:orderId and o.formatInfoId=:formatInfoId")
     public OrderLog findByOrderIdAndFormatInfoId(@Param("orderId") long orderId,@Param("formatInfoId") long formatInfoId);
+
+    @Query("select distinct o.userId from OrderLog o where o.orderId=:orderId")
+    public List<Long> findDistinctUserByOrderId(@Param("orderId") long orderId);
 }

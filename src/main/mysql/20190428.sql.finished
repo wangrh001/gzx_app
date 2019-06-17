@@ -1,0 +1,16 @@
+insert into t_util_format_info (busi_type, ch_name, create_time, creator, data_type, en_name, if_scatter, need_step, scatter_obj, state, updator, who_object, can_modify_role_set, can_see_role_set) values
+(2,'渠道金额',sysdate(),0,5,'organAmount',2,107,'',1,0,'',6,'2,7,16,14,6,11,12,8');
+insert into t_util_format_info (busi_type, ch_name, create_time, creator, data_type, en_name, if_scatter, need_step, scatter_obj, state, updator, who_object, can_modify_role_set, can_see_role_set) values
+(2,'自有金额',sysdate(),0,5,'selfAmount',2,107,'',1,0,'',6,'2,7,16,14,6,11,12,8');
+
+insert into t_util_work_flow
+(after_state, before_state, create_time, creator, state, trans_condition, updator, work_type, action_id, busi_type, position_id, button_id) values
+(119,117,sysdate(),0,1,'organAmount==0?1:0',0,1,13,2,14,92);
+insert into t_util_work_flow
+(after_state, before_state, create_time, creator, state, trans_condition, updator, work_type, action_id, busi_type, position_id, button_id) values
+(120,117,sysdate(),0,1,'organAmount==0?1:0',0,1,13,2,14,93);
+
+update t_util_work_flow set trans_condition = 'organAmount!=0?1:0' where id = 25;
+
+update t_util_calc_formula a set a.expression = replace(a.expression,'amount','selfAmount')  where a.expression like '%amount%';
+

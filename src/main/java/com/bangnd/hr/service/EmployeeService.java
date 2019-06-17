@@ -24,4 +24,6 @@ public interface EmployeeService {
     public List<Employee> getEmployeeByEmployeeName(String employeeName);
 
     public List<Employee> getEmployeeByPositionId(int positionId);
+
+    public Employee getEmployeeByDdUserName(String ddUserName);
 }

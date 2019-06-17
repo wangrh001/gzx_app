@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+    <script th:inline="javascript">
+
+        function submitNewLoan() {
+            /*<![CDATA[*/
+            if(new_loan_form.organType.value==1){
+                alert('新贷款方：不能为空，请选择一个，谢谢！')
+                original_loan_form.organType.focus()
+                return false
+            }
+            if(new_loan_form.organCode.value==-1){
+                alert('新贷款银行：不能为空，请选择一个，谢谢！')
+                original_loan_form.organCode.focus()
+                return false
+            }
+            if(new_loan_form.ifOtherPart.value==''){
+                alert('是否第三方回款：不能为空，请填写，谢谢！')
+                original_loan_form.ifOtherPart.focus()
+                return false
+            }
+            if(new_loan_form.approveAmount.value==''){
+                alert('批复金额：不能为空，请填写，谢谢！')
+                original_loan_form.approveAmount.focus()
+                return false
+            }
+            if(new_loan_form.loanType.value==1){
+                alert('贷款方式：不能为空，请选择一个，谢谢！')
+                original_loan_form.loanType.focus()
+                return false
+            }
+            if(new_loan_form.loanCondition.value==1){
+                alert('放款添件：不能为空，请选择一个，谢谢！')
+                original_loan_form.loanCondition.focus()
+                return false
+            }
+            if(new_loan_form.contactName.value==''){
+                alert('新贷款联系人：不能为空，请填写，谢谢！')
+                original_loan_form.contactName.focus()
+                return false
+            }
+            if(new_loan_form.contactPhone.value==''){
+                alert('新贷款联系电话：不能为空，请填写，谢谢！')
+                original_loan_form.contactPhone.focus()
+                return false
+            }
+            var form = document.getElementById("new_loan_form")
+            form.action="/bridgecbs/newLoan/modify"
+            form.submit()
+            /*]]>*/
+        }
+
+        function showBackCardPage() {
+            var borrower = document.getElementById("backCard")
+            borrower.style.display = borrower.style.display == 'none' ? "block" : "none"
+        }
+        function submitBackCard(){
+            /*<![CDATA[*/
+            var orderId = document.getElementById("orderId").value
+            var newLoanId = document.getElementById("id").value
+            var form = document.getElementById("backCard_form")
+            form.action="/bridgecbs/bankAccount/add?orderId="+orderId+"&newLoanId="+newLoanId+"&type=4"
+            form.submit()
+            /*]]>*/
+        }
+    </script>
+
+</head>
+<body>
+<form class="form-horizontal" method="post" id="new_loan_form" th:action="@{/bridgecbs/newLoan/modify}" th:object="${newLoanInfo}" >
+    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{orderId}"/>
+    <table id="newLoan">
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>新贷款方:</td>
+            <td><select form="new_loan_form" th:field="*{organType}" th:remove="all-but-first">
+                <option th:each="organType : ${organTypes}"
+                        th:value="${organType.id}" th:text="${organType.name}">Credit card
+                </option>
+            </select></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>新贷款银行:</td>
+            <td><select form="new_loan_form" th:field="*{organCode}" th:remove="all-but-first">
+                <option th:each="bankId : ${organCodes}"
+                        th:value="${bankId.id}" th:text="${bankId.name}">Credit card
+                </option>
+            </select></td>
+        </tr>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>是否第三方回款:</td>
+            <td><input form="new_loan_form" th:field="*{ifOtherPart}" value="" class="form-control"/></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>批复金额(元):</td>
+            <td><input form="new_loan_form" th:field="*{approveAmount}" value="" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>贷款方式:</td>
+            <td><select form="new_loan_form" th:field="*{loanType}" th:remove="all-but-first">
+                <option th:each="loanType : ${loanTypes}"
+                        th:value="${loanType.id}" th:text="${loanType.name}">Credit card
+                </option>
+            </select></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>放款条件:</td>
+            <td><select form="new_loan_form" th:field="*{loanCondition}" th:remove="all-but-first">
+                <option th:each="loanCondition : ${loanConditions}"
+                        th:value="${loanCondition.id}" th:text="${loanCondition.name}">Credit card
+                </option>
+            </select></td>
+        </tr>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>新贷款联系人:</td>
+            <td><input form="new_loan_form" th:field="*{contactName}" value="" class="form-control"/></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>联系电话:</td>
+            <td><input form="new_loan_form" th:field="*{contactPhone}" value="" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="保存" onclick="submitNewLoan()" class="btn btn-info"/></td>
+        </tr>
+        <tr><td><input type="button" value="添加回款账号" onclick="showBackCardPage()" class="btn btn-info"/></td></tr>
+    </table>
+</form>
+
+<form class="form-horizontal" method="post" th:object="${bankAccount}" id = "backCard_form">
+    <table th:if="${bankAccountsList} !=null">
+        <tr>
+            <th>回款卡号户名</th>
+            <th>回款卡号开户行</th>
+            <th>回款卡号</th>
+            <th>回款人证件号</th>
+            <th>回款金额</th>
+            <th>删除</th>
+        </tr>
+        <!--显示该订单下的所有客户，并可以点击进去修改客户详情 -->
+        <tr th:each="newLoanCard : ${bankAccountsList}">
+            <!--onclick="'javascript:showAddCustomerPage('+${customer.id}+')'"-->
+            <td th:text="${newLoanCard.accountName}"></td>
+            <td th:text="${newLoanCard.bankId}"></td>
+            <td th:text="${newLoanCard.accountCode}"></td>
+            <td th:text="${newLoanCard.accountCertiCode}"></td>
+            <td th:text="${newLoanCard.amount}"></td>
+            <td><a th:href="@{/bridgecbs/bankAccount/delete(id=${newLoanCard.id})}">删除</a></td>
+        </tr>
+    </table>
+    <table  id="backCard" style="display: none">
+        <input type="hidden" th:id="*{type}" th:name="*{type}" value="4" class="form-control"/>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>回款卡号户名:</td>
+            <td><input th:field="*{accountName}" value="" class="form-control"/></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>回款卡号开户行:</td>
+            <td><select id = "bankId2" name = "bankId" th:value="*{bankId}" th:remove="all-but-first">
+                <option th:each="bankId : ${organCodes}"
+                        th:value="${bankId.id}" th:text="${bankId.name}">Credit card
+                </option>
+            </select></td>
+        </tr>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>回款卡号:</td>
+            <td><input th:field="*{accountCode}" value="" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td>回款人证件号:</td>
+            <td><input th:field="*{accountCertiCode}" value="" class="form-control"/></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>回款金额(元):</td>
+            <td><input th:field="*{amount}" value="" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="保存" onclick="submitBackCard()" class="btn btn-info"/></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

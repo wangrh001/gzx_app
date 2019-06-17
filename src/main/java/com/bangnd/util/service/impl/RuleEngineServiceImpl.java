@@ -42,7 +42,7 @@ public class RuleEngineServiceImpl implements RuleEngineService {
 
                             //从ApplicationContext,获取这个对象
                             Object obj = ctx.getBean(clazz);
-                            String methodName = paramEngineService.getMathodName(param);
+                            String methodName = paramEngineService.getMethodName(param);
                             System.out.println("methodName=" + methodName);
                             env.put(param, (clazz.getMethod(methodName, new Class[]{long.class})).invoke(obj, new Object[]{orderId}));
                         }
@@ -69,4 +69,27 @@ public class RuleEngineServiceImpl implements RuleEngineService {
         }
         return result;
     }
+
+    @Override
+    public boolean workFlowCondition(long orderId, String condition) throws Exception {
+        Class clazz = Class.forName("com.bangnd.util.service.impl.ParamEngineServiceImpl");
+        Expression expression = AviatorEvaluator.compile(condition);
+        List<String> params = expression.getVariableNames();
+        Map<String, Object> env = new HashMap<String, Object>();
+        if (params != null && params.size() > 0) {
+            for (String param : params) {
+                Object obj = ctx.getBean(clazz);
+                String methodName = paramEngineService.getMethodName(param);
+                env.put(param, (clazz.getMethod(methodName, new Class[]{long.class})).invoke(obj, new Object[]{orderId}));
+            }
+        }
+        Long result = (Long) expression.execute(env);
+        if(result==1){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 }
+

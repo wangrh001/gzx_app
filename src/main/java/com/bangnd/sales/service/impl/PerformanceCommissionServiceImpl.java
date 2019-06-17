@@ -1,6 +1,5 @@
 package com.bangnd.sales.service.impl;
 
-import com.bangnd.cbs.entity.Order;
 import com.bangnd.cbs.service.OrderService;
 import com.bangnd.sales.entity.PerformanceCommDetail;
 import com.bangnd.sales.entity.PerformanceCommission;
@@ -9,7 +8,6 @@ import com.bangnd.sales.repository.PerformanceCommDetailRepository;
 import com.bangnd.sales.repository.PerformanceCommissionRepository;
 import com.bangnd.sales.service.AgentService;
 import com.bangnd.sales.service.PerformanceCommissionService;
-import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -124,6 +122,7 @@ public class PerformanceCommissionServiceImpl implements PerformanceCommissionSe
             pc.setState(1);
             pc.setMonth(yearMonth);
             pc.setSalerId(agentId);
+            pc.setProcess(1);
             pc.setSalerName(agentService.getAgentById(agentId).getName());
             pc.setPerformance(performance);
             pc.setInterest(interest);

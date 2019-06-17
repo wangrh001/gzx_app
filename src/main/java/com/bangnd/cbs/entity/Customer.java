@@ -17,6 +17,11 @@ public class Customer {
     private int age;
     @Column
     private Date birthday;
+
+    //1、身份证；2、回乡证（仅港澳）；3、营业执照
+    @Column
+    private int certiType;
+
     @Column
     private String certiCode;
     @Column
@@ -36,6 +41,16 @@ public class Customer {
     private String bankCode;
     @Column
     private int bankId;
+
+    //1、卖方；2、新贷款共借人；3、共借人；4、担保方；5、承保方；6、买方
+    @Column
+    private int custType;
+    //如果是产权人，需要知道，这个产权人对产权的占比
+    @Column
+    private int percent;
+    //如果是产权人，需要关联产权ID；
+    @Column
+    private long mortgageId;
 
     //成为新股东月数
     @Column
@@ -199,5 +214,37 @@ public class Customer {
 
     public void setBankId(int bankId) {
         this.bankId = bankId;
+    }
+
+    public int getCertiType() {
+        return certiType;
+    }
+
+    public void setCertiType(int certiType) {
+        this.certiType = certiType;
+    }
+
+    public int getCustType() {
+        return custType;
+    }
+
+    public void setCustType(int custType) {
+        this.custType = custType;
+    }
+
+    public int getPercent() {
+        return percent;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
+    }
+
+    public long getMortgageId() {
+        return mortgageId;
+    }
+
+    public void setMortgageId(long mortgageId) {
+        this.mortgageId = mortgageId;
     }
 }

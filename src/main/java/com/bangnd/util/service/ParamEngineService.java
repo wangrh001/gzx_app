@@ -7,5 +7,7 @@ public interface ParamEngineService {
      * @param param
      * @return
      */
-    public String getMathodName(String param);
+    public String getMethodName(String param);
+
+    public String getReminderMethodName(String param);
 }

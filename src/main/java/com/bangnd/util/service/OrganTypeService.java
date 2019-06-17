@@ -8,4 +8,6 @@ public interface OrganTypeService {
     public List<OrganType> getAll();
 
     public OrganType getOrganType(int id);
+
+    public OrganType getOrganTypeByName(String name);
 }

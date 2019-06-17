@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+
+    <script th:inline="javascript">
+        function submitOriginalCard() {
+            /*<![CDATA[*/
+            if(original_card_form.accountName.value==''){
+                alert('过账卡号户名：不能为空，请填写，谢谢！')
+                original_card_form.accountName.focus()
+                return false
+            }
+            if(original_card_form.bankId.value==-1){
+                alert('过账卡号开户行：不能为空，请填写，谢谢！')
+                original_card_form.bankId.focus()
+                return false
+            }
+            if(original_card_form.accountCode.value==''){
+                alert('过账卡号：不能为空，请填写，谢谢！')
+                original_card_form.accountCode.focus()
+                return false
+            }
+            var form = document.getElementById("original_card_form")
+            form.action="/bridgecbs/bankAccount/modify"
+            form.submit()
+            /*]]>*/
+        }
+
+    </script>
+
+</head>
+<body>
+<form class="form-horizontal" method="post" id="original_card_form" th:action="@{/bridgecbs/bankAccount/modify}" th:object="${bankAccount}" >
+    <input type="hidden" th:field="*{id}"/>
+    <table  id="originalCard">
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>过账卡号户名:</td>
+            <td><input th:field="*{accountName}" value="" class="form-control"/></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>过账卡号开户行:</td>
+            <td><select th:field="*{bankId}" th:remove="all-but-first">
+                <option th:each="bankId : ${bankIds}"
+                        th:value="${bankId.id}" th:text="${bankId.name}">Credit card
+                </option>
+            </select></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>过账卡号:</td>
+            <td><input th:field="*{accountCode}" value="" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td>过账户证件号:</td>
+            <td><input th:field="*{accountCertiCode}" value="" class="form-control"/></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>过账金额(元):</td>
+            <td><input th:field="*{amount}" value="" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td><input type="button" value="保存" onclick="submitOriginalCard()" class="btn btn-info"/></td>
+        </tr>
+        <input type="hidden" th:id="*{type}" th:name="*{type}" value="1" class="form-control"/>
+    </table>
+</form>
+</body>
+</html>

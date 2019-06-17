@@ -8,4 +8,7 @@ public interface OrderStateService {
     public List<OrderState> getAll();
 
     public OrderState getOrderState(long id);
+
+    public List<OrderState> getAllByBusiType(int busiType);
+
 }

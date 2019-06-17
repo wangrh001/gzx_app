@@ -45,29 +45,27 @@ public class OrderPoolServiceImpl implements OrderPoolService {
      */
     @Override
     public OrderPool intoPool(long orderId, int fromState, int toState, long userId, int busiType) throws Exception {
-        int fromPositionId = workFlowService.getPositionIdByBeforState(fromState, busiType);
+        int fromPositionId = 0;
+
+        if(fromState!=0){
+            fromPositionId = workFlowService.getPositionIdByBeforState(orderId,fromState, busiType);
+        }
         long giveUserId = 0;
         int intoPoolNo = 0;
         //如果订单最后一个状态，就不再找下一个工作岗位了，只离开当前工作池就可以了
-        if (toState == ConstantCfg.ORDER_STATE_127) {
-            leavePool(orderId, fromPositionId, userId);
+        if (toState == ConstantCfg.ORDER_STATE_157 || toState == ConstantCfg.ORDER_STATE_136) {
+            if(fromState!=0){
+                leavePool(orderId, fromPositionId, userId);
+            }
         } else {
-            int toPositionId = workFlowService.getPositionIdByBeforState(toState, busiType);
+            int toPositionId = workFlowService.getPositionIdByBeforState(orderId,toState, busiType);
             OrderPool orderPool = new OrderPool();
             //只有一种可能，原来暂存，补充完资料，又点击了暂存，这种情况，不对订单池有任何影响；
             if (fromState != toState) {
-                //第一次入池
-                if (fromState == 0) {
-                    //如果是订单暂存，那么分配的用户，还是这个用户
-                    if (toState == ConstantCfg.ORDER_STATE_101) {
-                        giveUserId = userId;
-                        intoPoolNo = 1;
-                        //不是订单暂存，则是订单提交
-                    } else {
-                        //那么就找到订单提交后需要的岗位，在这个岗位上工作量最少的那个人
-                        giveUserId = getUserIdMinTask(toPositionId);
-                        intoPoolNo = 1;
-                    }
+                //第一次入池,应该分给运营岗
+                if (fromState == 0 && toState == ConstantCfg.ORDER_STATE_131) {
+                    giveUserId = getUserIdMinTask(ConstantCfg.POSITION_OPERTION_8);
+                    intoPoolNo = 1;
                     //非第一次入池
                 } else {
                     //如果不是第一次入池，就去看看，要去的那个岗位上，订单之前是否去过，去过还找原来的人
@@ -117,11 +115,13 @@ public class OrderPoolServiceImpl implements OrderPoolService {
         try {
             OrderPool orderPool = orderPoolRepository.findOrderPoolByOrderIdAndPositionIdAndDoState(
                     orderId, fromPositionId, ConstantCfg.POOL_DOSTATE_2);
-            orderPool.setDoState(ConstantCfg.POOL_DOSTATE_3);
-            orderPool.setLeaveTime(new Date());
-            orderPool.setUpdateTime(new Date());
-            orderPool.setUpdator(Long.valueOf(userId).intValue());
-            orderPoolRepository.save(orderPool);
+            if(orderPool!=null){
+                orderPool.setDoState(ConstantCfg.POOL_DOSTATE_3);
+                orderPool.setLeaveTime(new Date());
+                orderPool.setUpdateTime(new Date());
+                orderPool.setUpdator(Long.valueOf(userId).intValue());
+                orderPoolRepository.save(orderPool);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             throw new AppException("同一个岗位同时有多个人正在处理该订单，请联系管理员处理！");
@@ -191,5 +191,10 @@ public class OrderPoolServiceImpl implements OrderPoolService {
     @Override
     public OrderPool getHandling(long orderId) {
         return orderPoolRepository.findOrderPoolByOrderIdAndDoState(orderId, ConstantCfg.POOL_DOSTATE_2);
+    }
+
+    @Override
+    public void allocationHandler(long userId, long orderId) {
+        orderPoolRepository.updateDoingHandler(userId,orderId);
     }
 }

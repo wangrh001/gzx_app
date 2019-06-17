@@ -23,11 +23,14 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
 
     public Order findById(@Param(value = "id") long id);
 
-    @Query("select o from Order o where o.salerId=:salerId and o.signDate>=:startDate and o.signDate<=:endDate and o.state<>100")
+    @Query("select o from Order o,FormatInfoObject f where o.salerId=:salerId and f.signDate>=:startDate and f.signDate<=:endDate and o.state<>100 and o.id = f.orderId")
     List<Order> findAllBySalsesId(@Param(value = "salerId") long salerId,
                                   @Param(value = "startDate") Date startDate,
                                   @Param(value = "endDate") Date date);
 
     @Query("select o from Order o where o.approveId=:approveId")
     public Order getOrderByApproveId(@Param(value = "approveId") String approveId);
+
+    @Query("select o from Order o where o.state<>100 and o.orderState not in (127,106)")
+    public List<Order> findDoingOrders();
 }

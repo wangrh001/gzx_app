@@ -28,6 +28,8 @@ public class Resource {
     private long parentId;
     @Column
     private int grade;
+    @Column
+    private int busiType;
 
     public String getName() {
         return name;
@@ -138,5 +140,13 @@ public class Resource {
 
     public void setGrade(int grade) {
         this.grade = grade;
+    }
+
+    public int getBusiType() {
+        return busiType;
+    }
+
+    public void setBusiType(int busiType) {
+        this.busiType = busiType;
     }
 }

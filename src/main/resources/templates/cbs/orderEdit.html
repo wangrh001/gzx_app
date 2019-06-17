@@ -60,7 +60,7 @@
                 var needInput = infoList[p].needInput
                 var enName = infoList[p].enName
                 var chName = infoList[p].chName
-                var ifScatter = infoList[p].ifScatter;
+                var ifScatter = infoList[p].ifScatter
                 if(needInput==1){
                     var inputValue = document.getElementById(enName).value
                     if(inputValue==''){
@@ -376,7 +376,20 @@
             createInputFileHtml(onlySeeData,3);
              /*]]>*/
         }
-        
+
+        //显示添加抵押物页面
+        function showAddMortgagePage() {
+            var mortgage = document.getElementById("mortgage")
+            mortgage.style.display = mortgage.style.display == 'none' ? "block" : "none"
+        }
+
+        //显示添加客户页面
+        function showAddCustomerPage() {
+            var orderProduct = document.getElementById("orderProduct")
+            orderProduct.style.display = orderProduct.style.display == 'none' ? "block" : "none"
+        }
+
+
         function uploadFiles() {
             var orderId = document.getElementById("orderId").value
             var form = document.getElementById("order_form")
@@ -394,40 +407,37 @@
     <table>
         <th>订单信息</th>
         <tr>
-            <td>业务类型</td>
-            <td>
-                <select th:field="*{order.businessType}" th:remove="all-but-first">
-                    <option th:each="businessType : ${businessTypes}"
-                            th:value="${businessType.id}" th:text="${businessType.name}"
-                            th:selected="${businessType.id eq order.businessType}">Credit card
-                    </option>
-                </select>
-            </td>
-            <td>签约时间</td>
-            <td><input type="text" class="form-control" id="signDate" name="signDate"
-                       th:value="*{order.signDate ne null} ? *{#dates.format(order.signDate,'yyyy-MM-dd')}"
-                       onclick="signDateCheck()" placeholder="yyyy-MM-dd"/></td>
-            <td>姓名</td>
-            <td><input type="text" class="form-control" th:field="*{order.applicantName}" placeholder="姓名"/></td>
+            <td>客户姓名</td>
+            <td><input type="text" class="form-control" th:field="*{order.applicantName}" /></td>
+            <td>上家名称</td>
+            <td><input type="text" class="form-control" th:field="*{order.lastOrgName}" /></td>
+            <td>下家名称</td>
+            <td><input type="text" class="form-control" th:field="*{order.nextOrgName}" /></td>
         </tr>
 
         <tr>
-            <td>金额(万元)</td>
-            <td><input type="text" class="form-control" th:field="*{order.demandAmount}" placeholder="金额"/></td>
-            <td>用款天数</td>
-            <td><input type="text" class="form-control" th:field="*{order.periodNum}" placeholder="贷款月数"/></td>
+            <td>上家垫资金额</td>
+            <td><input type="text" class="form-control" th:field="*{order.lastAmount}" /></td>
+            <td>下家批贷金额</td>
+            <td><input type="text" class="form-control" th:field="*{order.nextAmount}" /></td>
             <td>用款日期</td>
             <td><input type="text" class="form-control" id="demandDate" name="demandDate"
                        th:value="*{order.demandDate ne null} ? *{#dates.format(order.demandDate,'yyyy-MM-dd')}"/></td>
         </tr>
+
         <tr>
+            <td>销售人员</td>
+            <td><input disabled="disabled" type="text" class="form-control" id="saleName" th:value="${agentName}" /></td>
+            <td>所在部门</td>
+            <td><input disabled="disabled" type="text" class="form-control" id="deptName" th:value="${deptName}" /></td>
             <td>备注</td>
-            <td><input type="text" class="form-control" th:field="*{orderLog.actionDesc}" placeholder="备注"/></td>
+            <td><input disabled="disabled" type="text" class="form-control" th:field="*{order.comments}" /></td>
         </tr>
+
         <tr>
-            <!--<td><input type="button" value="添加抵押物" class="btn btn-info" onclick="showAddCustomerPage()"/></td>-->
-            <!--<td><input type="button" value="添加产品" class="btn btn-info" onclick="showAddProductPage()"/></td>-->
-            <td><button type="submit" class="btn btn-info" onclick="uploadFiles()">上传客户资料</button></td>
+            <!--<td><input type="button" value="添加抵押物" class="btn btn-info" onclick="showAddMortgagePage()"/></td>-->
+            <!--<td><input type="button" value="添加客户" class="btn btn-info" onclick="showAddCustomerPage()"/></td>-->
+            <td><input type="button" value="上传客户资料" class="btn btn-info" onclick="uploadFiles()"/></td>
         </tr>
         <input type="hidden" class="form-control" id="orderId" name="orderId" th:value="*{order.id}"/>
         <input type="hidden" class="form-control" id="periodType" name="periodType" value="1"/>
@@ -436,7 +446,49 @@
     <table id="needInputTable" style="display: none"><th style="display:none" id="needTh">必录项</th></table>
     <table id="canModifyTable" style="display: none"><th style="display:none" id="canModifyTh">可录项</th></table>
     <table id="onlySeeTable"  style="display: none"><th style="display:none" id="onlySeeTh">只读项</th></table>
+
+    <table>
+        <tr>
+            <td>备注</td>
+            <td><textarea cols="120" rows="2" th:field="*{orderLog.actionDesc}" ></textarea></td>
+        </tr>
+    </table>
     <div id="buttonTable"></div>
+</form>
+
+<form class="form-horizontal" method="post" id="customer_form" th:action="@{/mortgage/add(orderId=${order.id})}">
+    <table id="mortgage" style="display: none">
+        <!--客户抵押物信息 -->
+        <th>抵押物</th>
+        <tr>
+            <td>区域</td>
+            <td>
+                <select th:field="*{custMortgage.estateArea}" th:remove="all-but-first">
+                    <option th:each="area : ${areaList}"
+                            th:value="${area.id}" th:text="${area.name}"
+                            th:selected="${area.id eq custMortgage.estateArea}">Credit card
+                    </option>
+                </select>
+            </td>
+            <td>抵押次数</td>
+            <td><input type="text" class="form-control" th:field="*{custMortgage.mortgageCount}" placeholder="抵押次数"/></td>
+            <td>类型</td>
+            <td>
+                <select th:field="*{custMortgage.estateType}" th:remove="all-but-first">
+                    <option th:each="estateType : ${estateType}"
+                            th:value="${estateType.id}" th:text="${estateType.name}"
+                            th:selected="${estateType.id eq custMortgage.estateType}">Credit card
+                    </option>
+                </select>
+            </td>
+            <td>评估金额(万元)</td>
+            <td><input type="text" class="form-control" th:field="*{custMortgage.estatePrice}" placeholder="评估金额"/></td>
+        </tr>
+
+        <tr>
+            <td><input type="submit" value="保存" class="btn btn-info"/></td>
+        </tr>
+    </table>
 </form>
 
 </body>

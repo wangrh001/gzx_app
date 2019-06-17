@@ -26,7 +26,7 @@
 //    @Override
 //    public List<Product> recommendProducts(long orderId) {
 //        Order order = orderService.findOrderById(orderId);
-////        Customer customer = customerService.findCustomerById(order.getBorrowerId());
+////        BridgeCustomer customer = customerService.findCustomerById(order.getBorrowerId());
 ////        CustMortgage mortgage = mortgageService.findMortgageById(order.getMortgageId());
 //        //CustomerCredit customerCredit = customerCreditService.findCustCreditById(customer.getCreditId());
 //
@@ -84,7 +84,7 @@
 //    @Override
 //    public List<Product> recommendProducts(long orderId) {
 //        Order order = orderService.findOrderById(orderId);
-////        Customer customer = customerService.findCustomerById(order.getBorrowerId());
+////        BridgeCustomer customer = customerService.findCustomerById(order.getBorrowerId());
 ////        CustMortgage mortgage = mortgageService.findMortgageById(order.getMortgageId());
 //        //CustomerCredit customerCredit = customerCreditService.findCustCreditById(customer.getCreditId());
 //

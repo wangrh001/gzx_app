@@ -56,6 +56,8 @@ public class Employee {
     public long userId;
     @Column
     public String userName;
+    @Column
+    private String ddUserName;
 
     public long getUserId() {
         return userId;
@@ -250,5 +252,13 @@ public class Employee {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getDdUserName() {
+        return ddUserName;
+    }
+
+    public void setDdUserName(String ddUserName) {
+        this.ddUserName = ddUserName;
     }
 }

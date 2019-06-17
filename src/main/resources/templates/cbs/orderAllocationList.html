@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]
+    <script type="text/javascript" src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script type="text/javascript" src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    -->
+</head>
+
+<body class="container">
+<br/>
+<h4>订单列表</h4>
+
+<!--查询条件-->
+<div>
+    <form class="form-horizontal" th:action="@{/order/readList}" th:object="${orderSearchForm}" method="post">
+        <table>
+            <tr>
+                <td>客户姓名</td>
+                <td><input th:field="*{applicantName}" value="" class="form-control"/></td>
+                <td>订单进度</td>
+                <td>
+                    <select th:field="*{orderState}" value="" th:remove="all-but-first">
+                        <option th:each="orderStates : ${orderStates}"
+                                th:value="${orderStates.id}" th:text="${orderStates.name}">Credit card
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Search" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div class="with:80%">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>客户姓名</th>
+            <th>金额</th>
+            <th>用款时间</th>
+            <th>当前进度</th>
+            <th>下个处理人</th>
+            <th>修改</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderListForm : ${orderListForms}">
+            <td th:text="${orderListForm.orderId}">1</td>
+            <td th:text="${orderListForm.applicantName}">neo</td>
+            <td th:text="${orderListForm.amount}">6</td>
+            <td th:text="${orderListForm.demandDate ne null}?${#dates.format(orderListForm.demandDate,'yyyy-MM-dd')}">6
+            </td>
+            <td th:text="${orderListForm.orderState}"></td>
+            <td th:text="${orderListForm.nextHandler}"></td>
+            <td><a th:href="@{/order/toModifyHandler(orderId=${orderListForm.orderId})}">修改处理人</a></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <table>
+        <tr>
+            <td><a th:href="@{/order/readList(pageNum=1)}">首页</a></td>
+            <td th:switch="${pageNum}">
+                <p th:case="1"><a th:href="@{/order/readList(pageNum=1)}">上一页</a></p>
+                <p th:case="*"><a th:href="@{/order/readList(pageNum=${pageNum-1})}">上一页</a></p>
+            </td>
+            <td th:switch="${pageNum}">
+                <p th:case="${totalPages}"><a th:href="@{/order/readList(pageNum=${totalPages})}">下一页</a></p>
+                <p th:case="*"><a th:href="@{/order/readList(pageNum=${pageNum+1})}">下一页</a></p>
+            </td>
+            <td><a th:href="@{/order/readList(pageNum=${totalPages})}">尾页</a></td>
+        </tr>
+    </table>
+</div>
+
+<!--<div class="form-group">-->
+<!--<div class="col-sm-2 control-label">-->
+<!--<a href="/order/toAdd" th:href="@{/order/toAdd}" class="btn btn-info">add</a>-->
+<!--</div>-->
+<!--</div>-->
+
+</body>
+</html>

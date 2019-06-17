@@ -9,6 +9,7 @@ import com.bangnd.cbs.service.OrderLogService;
 import com.bangnd.ums.entity.User;
 import com.bangnd.util.cfg.ConstantCfg;
 import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -90,7 +91,36 @@ public class DocHandlerController {
         }
         model.addAttribute("files", fileNames);
         model.addAttribute("orderId", orderId);
-        return "/cbs/docUpload";
+        return "/bridgecbs/showDoc";
+    }
+
+    @RequestMapping("/doc/showPics")
+    public String showPics(Model model, Long orderId) throws Exception {
+        List<OrderDocType> orderDocTypes = orderDocTypeService.getAll();
+        JSONArray jsonArray = new JSONArray();
+        if(orderDocTypes!=null && orderDocTypes.size()>0){
+            for(OrderDocType orderDocType:orderDocTypes){
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("chName",orderDocType.getChName());
+                jsonObject.put("enName",orderDocType.getEnName());
+                setFilesPaths(orderId, orderDocType, jsonObject);
+                jsonArray.put(jsonObject);
+            }
+        }
+        model.addAttribute("typeFiles", jsonArray.toString());
+        model.addAttribute("orderId", orderId);
+        return "/bridgecbs/showDoc";
+    }
+
+    private void setFilesPaths(Long orderId, OrderDocType orderDocType, JSONObject jsonObject) throws JSONException {
+        List<OrderDocument> orderDocuments = orderDocService.findAllByOrderIdAndType(orderId,orderDocType.getId());
+        if(orderDocuments!=null && orderDocuments.size()>0){
+            List<String> fileNames = new ArrayList<>();
+            for(OrderDocument orderDocument:orderDocuments){
+                fileNames.add("/files/" + orderId+"/"+orderDocType.getChName()+ "/" + orderDocument.getUUIDName());
+            }
+            jsonObject.put("filesPath",fileNames);
+        }
     }
 
     //查看已经上传的文件
@@ -110,22 +140,18 @@ public class DocHandlerController {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("chName",orderDocType.getChName());
                 jsonObject.put("enName",orderDocType.getEnName());
+                jsonObject.put("fileDesc",orderDocType.getFileDesc());
+                jsonObject.put("fileType",orderDocType.getFileType());
                 jsonObject.put("typeId",orderDocType.getId());
-                List<OrderDocument> orderDocuments = orderDocService.findAllByOrderIdAndType(orderId,orderDocType.getId());
-                if(orderDocuments!=null && orderDocuments.size()>0){
-                    List<String> fileNames = new ArrayList<>();
-                    for(OrderDocument orderDocument:orderDocuments){
-                        fileNames.add("/files/" + orderId+"/"+orderDocType.getChName()+ "/" + orderDocument.getUUIDName());
-                    }
-                    jsonObject.put("filesPath",fileNames);
-                }
+                jsonObject.put("needUpload",true);
+                setFilesPaths(orderId, orderDocType, jsonObject);
                 jsonArray.put(jsonObject);
             }
         }
         System.out.println("jsonArray.toString()="+jsonArray.toString());
         model.addAttribute("typeFiles", jsonArray.toString());
         model.addAttribute("orderId", orderId);
-        return "/cbs/docUpload";
+        return "/bridgecbs/uploadDoc";
     }
 
     @RequestMapping("/doc/uploadTypeFile")
@@ -146,6 +172,8 @@ public class DocHandlerController {
             for (String uuidName : fileNameMapping.keySet()) {
                 OrderDocument orderDocument = new OrderDocument();
                 orderDocument.setOrderId(orderId);
+                String fileNamestr = fileNameMapping.get(uuidName);
+                orderDocument.setDocFormat(fileNamestr.substring(fileNamestr.length()-3,fileNamestr.length()));
                 orderDocument.setOriginaName(fileNameMapping.get(uuidName));
                 orderDocument.setOriginalFilePath(ConstantCfg.ORDER_DOC_FIXED_PATH + orderId +"/"+typeName+ "/" + fileNameMapping.get(uuidName));
                 orderDocument.setUUIDName(uuidName);
@@ -157,7 +185,7 @@ public class DocHandlerController {
                 orderDocument.setDocType(typeId);
                 orderDocService.save(orderDocument);
             }
-            orderLogService.recordLog(orderId, userId, ConstantCfg.ORDER_BUTTON_UPLOADDOC);
+            orderLogService.recordLog(orderId, userId, ConstantCfg.ORDER_BUTTON_UPLOADDOC,0,"");
             model.addAttribute("message", "文件： " + files.length + "个上传成功!");
             model.addAttribute("files", files);
         }

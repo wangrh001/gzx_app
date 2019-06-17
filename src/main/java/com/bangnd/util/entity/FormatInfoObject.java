@@ -15,6 +15,10 @@ public class FormatInfoObject {
     @Column
     private BigDecimal amount;
     @Column
+    private BigDecimal organAmount;
+    @Column
+    private BigDecimal selfAmount;
+    @Column
     private BigDecimal chainFamilyFastOutPrice;
     @Column
     private BigDecimal extensionFee;
@@ -26,7 +30,6 @@ public class FormatInfoObject {
     private Integer houseArea;
     @Column
     private Integer mortgageNum;
-
     @Column
     private BigDecimal nextAount;
     @Column
@@ -105,6 +108,10 @@ public class FormatInfoObject {
     private Date verificationDate;
     @Column
     private Date verificationNotarizationDate;
+
+    @Column
+    private Date signDate;
+
     @Column
     private String bigDateConclusion;
     @Column
@@ -177,7 +184,6 @@ public class FormatInfoObject {
     private Date updateTime;
     @Column(nullable = true, unique = false)
     private int updator;
-
     @Column
     private BigDecimal coveredArea;
     @Column
@@ -1042,4 +1048,30 @@ public class FormatInfoObject {
     public void setMortgageNum(Integer mortgageNum) {
         this.mortgageNum = mortgageNum;
     }
+
+    public BigDecimal getOrganAmount() {
+        return organAmount;
+    }
+
+    public void setOrganAmount(BigDecimal organAmount) {
+        this.organAmount = organAmount;
+    }
+
+    public BigDecimal getSelfAmount() {
+        return selfAmount;
+    }
+
+    public void setSelfAmount(BigDecimal selfAmount) {
+        this.selfAmount = selfAmount;
+    }
+
+    public Date getSignDate() {
+        return signDate;
+    }
+
+    public void setSignDate(Date signDate) {
+        this.signDate = signDate;
+    }
+
+
 }

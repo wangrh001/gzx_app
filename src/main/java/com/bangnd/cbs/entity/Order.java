@@ -27,15 +27,26 @@ public class Order {
     @Column
     private int demandPayWay = 0;
 
-    //周期类型：1、天；2、周；3、月；4、年
     @Column
-    private int periodType;
-
-    @Column
-    private int periodNum;
+    private int lastOrgType=0;
 
     @Column
     private int nextOrgType = 0;
+
+    @Column
+    private String lastOrgName;
+
+    @Column
+    private String nextOrgName;
+
+    @Column
+    private BigDecimal lastAmount;
+
+    @Column
+    private BigDecimal nextAmount;
+
+    @Column
+    private String comments;
 
     //@NotEmpty(message="申请人不能为空")
     //申请人
@@ -61,10 +72,6 @@ public class Order {
     private long salerId;
     @Column
     private int channelType;
-
-    //服务合同签订时间
-    @Column(nullable = true, unique = false)
-    private Date signDate;
 
     //订单产品配置完成时间
     @Column
@@ -108,22 +115,6 @@ public class Order {
 
     public void setDemandPayWay(int demandPayWay) {
         this.demandPayWay = demandPayWay;
-    }
-
-    public int getPeriodType() {
-        return periodType;
-    }
-
-    public void setPeriodType(int periodType) {
-        this.periodType = periodType;
-    }
-
-    public int getPeriodNum() {
-        return periodNum;
-    }
-
-    public void setPeriodNum(int periodNum) {
-        this.periodNum = periodNum;
     }
 
     //订单状态：0/建议书阶段；1/收集资料；2/审批通过；3/签订合同；4/支付完成；5/完结；6/订单取消
@@ -174,13 +165,6 @@ public class Order {
         this.salerId = salerId;
     }
 
-    public Date getSignDate() {
-        return signDate;
-    }
-
-    public void setSignDate(Date signDate) {
-        this.signDate = signDate;
-    }
 
     public int getOrderState() {
         return orderState;
@@ -292,5 +276,53 @@ public class Order {
 
     public void setApproveId(String approveId) {
         this.approveId = approveId;
+    }
+
+    public int getLastOrgType() {
+        return lastOrgType;
+    }
+
+    public void setLastOrgType(int lastOrgType) {
+        this.lastOrgType = lastOrgType;
+    }
+
+    public String getLastOrgName() {
+        return lastOrgName;
+    }
+
+    public void setLastOrgName(String lastOrgName) {
+        this.lastOrgName = lastOrgName;
+    }
+
+    public String getNextOrgName() {
+        return nextOrgName;
+    }
+
+    public void setNextOrgName(String nextOrgName) {
+        this.nextOrgName = nextOrgName;
+    }
+
+    public BigDecimal getLastAmount() {
+        return lastAmount;
+    }
+
+    public void setLastAmount(BigDecimal lastAmount) {
+        this.lastAmount = lastAmount;
+    }
+
+    public BigDecimal getNextAmount() {
+        return nextAmount;
+    }
+
+    public void setNextAmount(BigDecimal nextAmount) {
+        this.nextAmount = nextAmount;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

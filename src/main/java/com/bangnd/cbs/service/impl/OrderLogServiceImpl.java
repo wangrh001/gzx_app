@@ -62,9 +62,9 @@ public class OrderLogServiceImpl implements OrderLogService {
     }
 
     @Override
-    public void recordLog(long orderId, long userId, int buttonId,FormatInfoObject formatInfoObject) {
+    public void recordLog(long orderId, long userId, int buttonId,int actionId,FormatInfoObject formatInfoObject,String desc) {
         //先保存按钮产生的操作时间
-        recordLog(orderId,userId,buttonId);
+        recordLog(orderId,userId,buttonId,actionId,desc);
 
         //再保存填写的时间
         if(formatInfoObject!=null){
@@ -102,11 +102,18 @@ public class OrderLogServiceImpl implements OrderLogService {
     }
 
     @Override
-    public void recordLog(long orderId, long userId, int buttonId) {
+    public List<Long> getAllLogByOrderId(long orderId) {
+        return orderLogRepository.findDistinctUserByOrderId(orderId);
+    }
+
+    @Override
+    public void recordLog(long orderId, long userId, int buttonId,int actionId,String desc) {
         OrderLog orderLog = new OrderLog();
         orderLog.setOrderId(orderId);
         orderLog.setUserId(userId);
+        orderLog.setActionId(actionId);
         orderLog.setButtonId(buttonId);
+        orderLog.setActionDesc(desc);
         orderLog.setFormatInfoId(0);
         orderLog.setState(1);
         orderLog.setOperatorTime(new Date());

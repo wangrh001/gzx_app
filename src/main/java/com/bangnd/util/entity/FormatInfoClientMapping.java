@@ -3,7 +3,7 @@ package com.bangnd.util.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="cfg_format_info_client_mapping")
+@Table(name = "cfg_format_info_client_mapping")
 public class FormatInfoClientMapping {
 
     @Id

@@ -7,4 +7,6 @@ import org.springframework.data.repository.query.Param;
 public interface OrganTypeRepository extends JpaRepository<OrganType, Integer> {
 
     public OrganType getOrganTypeById(@Param(value = "id") int id);
+
+    public OrganType getOrganTypeByName(@Param(value = "name") String name);
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>user</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+
+</head>
+
+<body class="container">
+<br/>
+<h4>添加订单</h4>
+
+<form class="form-horizontal" method="post" id="order_form" th:object="${orderAllocationForm}" action="/order/modifyHandler" enctype="multipart/form-data">
+    <!--填写订单相关信息 -->
+    <table th:id="orderTable">
+        <th>订单信息</th>
+        <tr>
+            <td>下一个处理人</td>
+            <td>
+                <select th:field="*{handler}" th:remove="all-but-first">
+                    <option th:each="handlerEmployee : ${canHandler}"
+                            th:value="${handlerEmployee.id}" th:text="${handlerEmployee.name}"
+                            th:selected="${handlerEmployee.id eq handler}">Credit card
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>修改原因</td>
+            <td><input type="text" class="form-control" th:field="*{desc}" placeholder="备注"/></td>
+        </tr>
+
+        <input type="hidden" class="form-control"  th:field="*{orderId}"/>
+        <tr>
+            <td><input type="submit" value="保存" class="btn btn-info"/></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

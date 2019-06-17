@@ -49,41 +49,42 @@
 
 <body class="container" onload="AddButton()">
 <br/>
-<h4>维护订单</h4>
+<h4>订单信息</h4>
 
 <form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data">
     <table>
-        <th>订单信息</th>
         <tr>
             <td>业务类型</td>
             <td>
                 <select disabled = "disabled" th:field="*{order.businessType}" th:remove="all-but-first">
                     <option th:each="businessType : ${businessTypes}"
                             th:value="${businessType.id}" th:text="${businessType.name}"
-                            th:selected="${businessType.id eq order.businessType}">Credit card
+                            th:selected="${businessType.id eq order.businessType}">
                     </option>
                 </select>
             </td>
-            <td>签约时间</td>
-            <td><input disabled = "disabled" type="text" class="form-control" id="signDate" name="signDate"
-                       th:value="*{order.signDate ne null} ? *{#dates.format(order.signDate,'yyyy-MM-dd')}"
-                       onclick="signDateCheck()" placeholder="yyyy-MM-dd"/></td>
             <td>姓名</td>
-            <td><input type="text" class="form-control" th:field="*{order.applicantName}" placeholder="姓名"/></td>
+            <td><input disabled = "disabled" type="text" class="form-control" th:field="*{order.applicantName}" /></td>
+            <td>销售姓名</td>
+            <td><input disabled = "disabled" type="text" class="form-control" id="saleName" th:value="${agentName}" /></td>
+            <td>部门</td>
+            <td><input disabled = "disabled" type="text" class="form-control" id="deptName" th:value="${deptName}" /></td>
         </tr>
 
         <tr>
-            <td>金额(万元)</td>
-            <td><input disabled = "disabled" type="text" class="form-control" th:field="*{order.demandAmount}" placeholder="金额"/></td>
-            <td>用款天数</td>
-            <td><input disabled = "disabled" type="text" class="form-control" th:field="*{order.periodNum}" placeholder="贷款月数"/></td>
+            <td>垫资金额</td>
+            <td><input disabled = "disabled" type="text" class="form-control" th:field="*{order.lastAmount}" /></td>
+            <td>批贷金额</td>
+            <td><input disabled = "disabled" type="text" class="form-control" th:field="*{order.nextAmount}" /></td>
             <td>用款日期</td>
             <td><input disabled = "disabled" type="text" class="form-control" id="demandDate" name="demandDate"
                        th:value="*{order.demandDate ne null} ? *{#dates.format(order.demandDate,'yyyy-MM-dd')}"/></td>
+            <td>备注</td>
+            <td><input disabled = "disabled" type="text" class="form-control" th:field="*{order.comments}" /></td>
         </tr>
     </table>
 
-    <table id="inputTable"><th id="needTh">必录项</th></table>
+    <table id="inputTable"><th id="needTh">详细信息</th></table>
 </form>
 
 </body>

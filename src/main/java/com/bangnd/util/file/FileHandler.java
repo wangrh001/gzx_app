@@ -8,7 +8,7 @@ public class FileHandler {
      * @return
      */
     public static Boolean isImageFile(String fileName) {
-        String[] img_type = new String[]{".jpg", ".jpeg", ".png", ".gif", ".bmp"};
+        String[] img_type = new String[]{".jpg", ".jpeg", ".png", ".gif", ".bmp","pdf"};
         if (fileName == null) {
             return false;
         }

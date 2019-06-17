@@ -123,4 +123,9 @@ public class AgentServiceImpl implements AgentService {
     public List<Agent> getAgentByGroupId(long groupId) {
         return agentRepository.findAllByGroupId(groupId);
     }
+
+    @Override
+    public Agent getAgentByDdName(String ddName) {
+        return agentRepository.getAgentByDdUserName(ddName);
+    }
 }

@@ -19,7 +19,7 @@ public class JobInvokerController {
     @Autowired
     Job testJob;
 
-    //每20秒执行一次
+    //每20分执行一次
     @Scheduled(cron = "0 0/20 *  * * * ")
     public void handle() throws Exception {
         JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())

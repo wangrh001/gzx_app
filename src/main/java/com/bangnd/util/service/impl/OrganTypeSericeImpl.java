@@ -22,4 +22,9 @@ public class OrganTypeSericeImpl implements OrganTypeService {
     public OrganType getOrganType(int id) {
         return organTypeRepository.getOrganTypeById(id);
     }
+
+    @Override
+    public OrganType getOrganTypeByName(String name) {
+        return organTypeRepository.getOrganTypeByName(name);
+    }
 }

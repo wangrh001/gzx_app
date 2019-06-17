@@ -1,8 +1,8 @@
 package com.bangnd.cbs.service.impl;
 
-import com.bangnd.batch.jobs.client.SendWorkMessageJob;
 import com.bangnd.cbs.entity.OrderPool;
 import com.bangnd.cbs.service.BusinessReminderService;
+import com.bangnd.gw.DingDingGWService;
 import com.bangnd.hr.entity.Employee;
 import com.bangnd.hr.service.EmployeeService;
 import com.bangnd.sales.entity.Agent;
@@ -24,6 +24,8 @@ public class BusinessReminderServiceImpl implements BusinessReminderService {
     AgentService agentService;
     @Autowired
     ResourceService resourceService;
+    @Autowired
+    DingDingGWService dingDingGWService;
 
     @Override
     public void remindNextOperator(long userId,int buttonId,OrderPool orderPool,String actionName) throws Exception {
@@ -36,14 +38,12 @@ public class BusinessReminderServiceImpl implements BusinessReminderService {
             String ctx="";
             Employee employee = employeeService.getEmployeeByUserId(orderPool.getUserId());
             if(employee!=null) {
-                ctx = employee.getName() + "：您好！" + operatorEmployee.getName() + "已经" + resource.getName() + ",请您对" + orderPool.getOrderId() + "号订单尽快进行"+actionName+"，谢谢！";
+                ctx = employee.getName() + "：您好！" + operatorEmployee.getName() + "已经" + resource.getName() + "，请您对" + orderPool.getOrderId() + "号订单尽快进行"+actionName+"，谢谢！";
             }else {
                 Agent agent = agentService.getAgentByUserId(orderPool.getUserId());
-                ctx = agent.getName() + "：您好！" + operatorEmployee.getName() + "已经" + resource.getName() + ",请您对" + orderPool.getOrderId() + "号订单尽快进行"+actionName+"，谢谢！";
+                ctx = agent.getName() + "：您好！" + operatorEmployee.getName() + "已经" + resource.getName() + "，请您对" + orderPool.getOrderId() + "号订单尽快进行"+actionName+"，谢谢！";
             }
-            SendWorkMessageJob.sendMessage(user.getDDUserName(), ctx);
+            dingDingGWService.sendMessage(user.getDDUserName(), ctx);
         }
     }
-    //对一个关键时间节点，进行应该某一个操作的提醒：比如，提醒去拿解抵押材料；提醒回款
-    //对在某一个岗位池中超过某一个时间进行提醒
 }

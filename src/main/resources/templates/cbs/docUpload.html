@@ -5,14 +5,12 @@
     <meta charset="utf-8"/>
     <title>Bootstrap 实例 - 模态框（Modal）插件</title>
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <!--<link rel="stylesheet" th:href="@{/css/table.css}"/>-->
-
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
     <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script th:inline="javascript">
 
         function createFilesHtml(files,typeName,chName) {
-
             console.log('enter the createFilesHtml----'+ typeof files)
             /*<![CDATA[*/
             var div = document.getElementById("filesDiv");
@@ -31,17 +29,26 @@
                     var tr = document.createElement("tr");
                     for (var j = 0; j < 5; j++) {
                         var td = document.createElement("td");
-                        var img = document.createElement("img");
-                        if (5 * i + j >= files.length) {
-                            break;
+                        var filePathString = files[5 * i + j];
+
+                        if(filePathString!=undefined && filePathString.indexOf('pdf')!=-1){
+                            var a = document.createElement("a");
+                            a.href=filePathString;
+                            a.innerHTML="PDF File"
+                            td.appendChild(a);
+                        }else {
+                            var img = document.createElement("img");
+                            if (5 * i + j >= files.length) {
+                                break;
+                            }
+                            img.src = filePathString;
+                            img.width = "150"
+                            img.height = "150"
+                            img.onclick = function () {
+                                imgZoomIn(this.src);
+                            }
+                            td.appendChild(img);
                         }
-                        img.src = files[5 * i + j];
-                        img.width = "150"
-                        img.height = "150"
-                        img.onclick = function () {
-                            imgZoomIn(this.src);
-                        }
-                        td.appendChild(img);
                         tr.appendChild(td);
                     }
                     fileTable.appendChild(tr);
@@ -80,10 +87,11 @@
                 for(var p in fileJson){
                     var chName = fileJson[p].chName;
                     var enName = fileJson[p].enName;
+                    var fileDesc = fileJson[p].fileDesc;
                     var typeId = fileJson[p].typeId;
                     var fileList = fileJson[p].filesPath;
 
-                    if(p % 3 == 0){
+                    if(p % 1 == 0){
                         var outRow = outTable.insertRow();
                     }
                     var outCell = outRow.insertCell()
@@ -92,22 +100,21 @@
                     fileForm.id=typeId;
                     fileForm.method='post';
                     fileForm.enctype='multipart/form-data';
-                    //fileForm.class='form-horizontal';
-                    //fileForm.class = 'uploadButton';
-                    fileForm.style = 'float:center;';
-                    // fileForm.weight='20%';
+                    //fileForm.style = 'float:center;';
 
                     var table = document.createElement("table")
-                    //table.id=enName
-                    console.log('table.id='+table.id)
-
-                    var th = document.createElement("th")
-                    th.innerHTML=chName
-                    table.appendChild(th)
 
                     var row = table.insertRow()
+
+                    var fileName = row.insertCell()
+                    fileName.innerHTML=chName
+
+                    var fileDescField = row.insertCell()
+                    fileDescField.innerHTML=fileDesc
+
                     var button = row.insertCell()
                     button.innerHTML="<input id = 'files' class='fileinput' name='files' type='file' multiple='true'/><button type='submit'  onclick='uploadFileByType("+typeId+")'>确定上传</button>";
+
                     //生成现有文件
                     if(fileList){
                         createFilesHtml(fileList,enName,chName)
@@ -117,7 +124,6 @@
                     document.body.appendChild(outTable);
                 }
             }
-
             console.log('enter end function----')
             //这个符号不能删除！！！！
             // /*]]>*/
@@ -126,9 +132,8 @@
 </head>
 <body class="container" onload="AddButton()">
 
-<form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data" th:action="@{/order/toEdit(orderId=${orderId})}">
+<form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data" th:action="@{/bridgecbs/bridgeOrder/toModify(id=${orderId})}">
     <input type="hidden" id="orderId" th:value="*{orderId}"/>
-
     <div class="row">
         <div class="col-md-12 " id="filesDiv">
             <!--图片放大 模态框（Modal） -->

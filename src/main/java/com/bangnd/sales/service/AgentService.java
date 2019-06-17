@@ -27,5 +27,7 @@ public interface AgentService {
 
     public List<Agent> getAgentByGroupId(long groupId);
 
+    public Agent getAgentByDdName(String ddName);
+
 
 }

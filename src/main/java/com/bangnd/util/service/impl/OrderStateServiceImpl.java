@@ -22,4 +22,9 @@ public class OrderStateServiceImpl implements OrderStateService {
     public OrderState getOrderState(long id) {
         return orderStateRepository.findOne(id);
     }
+
+    @Override
+    public List<OrderState> getAllByBusiType(int busiType) {
+        return orderStateRepository.findAllByBusiType(busiType);
+    }
 }

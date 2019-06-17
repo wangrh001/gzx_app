@@ -22,4 +22,7 @@ public interface ResourceRepository extends JpaRepository<Resource, Long>, JpaSp
     @Query("select r from Resource  r where r.type = :type and r.state = 1")
     public List<Resource> findAllByType(@Param(value="type") int type);
 
+    @Query("select r from Resource  r where r.busiType = :busiType and r.state = 1")
+    public List<Resource> findAllByBusiType(@Param(value="busiType") int busiType);
+
 }

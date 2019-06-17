@@ -18,11 +18,12 @@
             for (var i = 0; i < Math.ceil(fileSize / 5); i++) {
                 var tr = document.createElement("tr");
                 for (var j = 0; j < 5; j++) {
-                    var td = document.createElement("td");
-                    var img = document.createElement("img");
                     if (5 * i + j >= files.length) {
                         break;
                     }
+                    var td = document.createElement("td");
+                    console.log(files[5 * i + j])
+                    var img = document.createElement("img");
                     img.src = files[5 * i + j];
                     img.width = "150"
                     img.height = "150"
@@ -30,6 +31,7 @@
                         imgZoomIn(this.src);
                     }
                     td.appendChild(img);
+
                     tr.appendChild(td);
                 }
                 imgFileTable.appendChild(tr);
@@ -45,6 +47,7 @@
 
 <form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data"
       th:action="@{/order/toEdit(orderId=${orderId})}">
+
     <div class="row">
         <div class="col-md-12 ">
             <div>

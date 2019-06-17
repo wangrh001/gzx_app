@@ -7,6 +7,7 @@ import com.bangnd.sales.repository.PerformanceCommDetailRepository;
 import com.bangnd.sales.service.PerformanceCommDetailService;
 import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.date.DateUtil;
+import com.bangnd.util.service.FormatInfoObjService;
 import com.bangnd.util.service.RuleEngineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,8 @@ public class PerformanceCommDetailServiceImpl implements PerformanceCommDetailSe
     PerformanceCommDetailRepository performanceCommDetailRepository;
     @Autowired
     PerformanceCommDetailService performanceCommDetailService;
+    @Autowired
+    FormatInfoObjService formatInfoObjService;
 
     @Override
     public void save(PerformanceCommDetail performanceCommDetail) {
@@ -49,8 +52,9 @@ public class PerformanceCommDetailServiceImpl implements PerformanceCommDetailSe
     @Override
     public void reCalc(long orderId) {
         Order order = orderService.findOrderById(orderId);
-        Date startDate = DateUtil.getMonthStart(order.getSignDate());
-        Date endDate = DateUtil.getMonthEnd(order.getSignDate());
+        Date signDate = formatInfoObjService.getSignDate(orderId);
+        Date startDate = DateUtil.getMonthStart(signDate);
+        Date endDate = DateUtil.getMonthEnd(signDate);
         List<Order> orders = orderService.findOrderBySalesId(order.getSalerId(), startDate, endDate);
         if (orders != null && orders.size() > 0) {
             for (Order order1 : orders) {

@@ -55,7 +55,7 @@ public class OrderProductController {
         orderProduct.setOrderProdState(order.getOrderState());
         orderProductService.save(orderProduct);
         //
-        orderLogService.recordLog(new Long(orderId).longValue(), userId, ConstantCfg.ORDER_BUTTON_ADDPROD);
+        orderLogService.recordLog(new Long(orderId).longValue(), userId, ConstantCfg.ORDER_BUTTON_ADDPROD,0,"");
 
         //这里才确认客户是什么身份
         System.out.println("customer1=" + customer1 + ";productId=" + orderProduct.getId());

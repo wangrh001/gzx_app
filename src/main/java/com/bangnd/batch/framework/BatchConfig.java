@@ -45,7 +45,7 @@ public class BatchConfig {
     public JobExecutionListener listener() {
         return new JobCompletionListener();
     }
-    //下面这种方式也可以
+//下面这种方式也可以
 //    @Bean
 //    public JobRepository jobRepository(DataSource dataSource, PlatformTransactionManager transactionManager)
 //            throws Exception {

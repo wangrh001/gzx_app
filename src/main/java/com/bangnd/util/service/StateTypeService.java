@@ -1,9 +1,9 @@
 package com.bangnd.util.service;
 
-import com.bangnd.util.entity.EstateType;
+import com.bangnd.bridgecbs.entity.MortgageEstateType;
 
 import java.util.List;
 
 public interface StateTypeService {
-    public List<EstateType> getAll();
+    public List<MortgageEstateType> getAll();
 }

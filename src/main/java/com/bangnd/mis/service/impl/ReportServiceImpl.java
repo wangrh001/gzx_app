@@ -1,12 +1,10 @@
 package com.bangnd.mis.service.impl;
 
-import com.bangnd.cbs.service.impl.B;
 import com.bangnd.finance.service.PaymentService;
 import com.bangnd.mis.entity.ReportDate;
 import com.bangnd.mis.service.ReportService;
 import com.bangnd.sales.entity.Agent;
 import com.bangnd.sales.entity.Group;
-import com.bangnd.sales.entity.PerformanceCommDetail;
 import com.bangnd.sales.service.AgentService;
 import com.bangnd.sales.service.GroupService;
 import com.bangnd.sales.service.PerformanceCommDetailService;

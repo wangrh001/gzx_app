@@ -1,12 +1,15 @@
 package com.bangnd.cbs.web;
 
 import com.bangnd.cbs.entity.*;
+import com.bangnd.cbs.form.OrderAllocationForm;
 import com.bangnd.cbs.form.OrderListForm;
 import com.bangnd.cbs.form.OrderProductForm;
 import com.bangnd.cbs.form.OrderSearchForm;
 import com.bangnd.cbs.service.*;
 import com.bangnd.hr.entity.Action;
+import com.bangnd.hr.entity.Dept;
 import com.bangnd.hr.entity.Employee;
+import com.bangnd.hr.service.DeptService;
 import com.bangnd.hr.service.EmployeeService;
 import com.bangnd.sales.entity.Agent;
 import com.bangnd.sales.service.AgentService;
@@ -91,6 +94,8 @@ public class OrderController {
     CertificateService certificateService;
     @Resource
     BusinessReminderService businessReminderService;
+    @Resource
+    DeptService deptService;
 
     /**
      * form表单提交 Date类型数据绑定
@@ -159,7 +164,7 @@ public class OrderController {
                 OrderListForm orderListForm = new OrderListForm();
                 orderListForm.setOrderId(order.getId());
                 orderListForm.setApplicantName(order.getApplicantName());
-                orderListForm.setAmount(order.getDemandAmount().divide(new BigDecimal(10000)));
+                orderListForm.setAmount(order.getLastAmount().divide(new BigDecimal(10000)));
                 orderListForm.setDemandDate(order.getDemandDate());
                 orderListForm.setOrderState((orderStateService.getOrderState(order.getOrderState())).getName());
                 OrderPool orderPool = orderPoolService.getHandling(order.getId());
@@ -192,6 +197,9 @@ public class OrderController {
         transObjListToJSONArray(formatInfoReturnVOS, jsonArray);
         //拿到这个用户可以操作的输入域，拿到的是能看见的，有属性是否可修改，是否必录
         model.addAttribute("formatInfos", jsonArray.toString());
+        Agent agent = agentService.getAgentById(order.getSalerId());
+        setSalerAndDept(model, agent);
+        model.addAttribute("businessTypes", businessTypeService.getAll());
         model.addAttribute("order", order);
         return "/cbs/orderRead";
     }
@@ -273,7 +281,8 @@ public class OrderController {
     public String saveOrder(HttpServletRequest request,
                             Order order,
                             FormatInfoObject formatInfoObject,
-                            Integer buttonId) {
+                            Integer buttonId,
+                            OrderLog orderLog) {
         long userId = ((User) request.getSession().getAttribute("user")).getId();
         Agent agent = agentService.getAgentByUserId(userId);
         if (agent != null) {
@@ -303,7 +312,7 @@ public class OrderController {
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
-        orderLogService.recordLog(order.getId(), userId, buttonId);
+        orderLogService.recordLog(order.getId(), userId, buttonId,0,orderLog.getActionDesc());
         return "redirect:/order/list";
     }
 
@@ -311,43 +320,13 @@ public class OrderController {
     public String toEdit(Model model, Long orderId, HttpServletRequest request) throws Exception {
         int positionId = (Integer) request.getSession().getAttribute("positionId");
         Order order = orderService.findOrderById(orderId);
-        order.setDemandAmount(order.getDemandAmount().divide(new BigDecimal(10000)));
-        OrderProduct orderProductInit = new OrderProduct();
-        Customer customer = new Customer();
-        List<Customer> customerList = customerService.findCustomerByOrderId(orderId);
-        List<OrderProduct> orderProductList = orderProductService.getOrderProductList(orderId);
-        List<OrderProductForm> orderProductForms = new ArrayList<OrderProductForm>();
+        Agent agent = agentService.getAgentById(order.getSalerId());
+        setSalerAndDept(model, agent);
         CustMortgage custMortgage = new CustMortgage();
-        CustCredit custCredit = new CustCredit();
         OrderLog orderLog = new OrderLog();
-        if (order != null) {
-            model.addAttribute("products", productService.getProductsByType(order.getBusinessType()));
-        }
-        //显示订单下所有客户信息
-        if (customerList != null && customerList.size() > 0) {
-            model.addAttribute("customerList", customerList);
-        }
-        if (orderProductList != null) {
-            setOrderProductForm(orderProductList, orderProductForms);
-            model.addAttribute("orderProductForms", orderProductForms);
-        }
-        model.addAttribute("orderLog", orderLog);
-        model.addAttribute("areaList", areaConfService.getAll());
-        model.addAttribute("estateType", stateTypeService.getAll());
-        model.addAttribute("payWays", payWayService.getAll());
-        model.addAttribute("payInterestWays", payInterestWayService.getAll());
-        model.addAttribute("businessTypes", businessTypeService.getAll());
-        model.addAttribute("productType", productTypeService.getAll());
-        model.addAttribute("periodTypes", periodTypeService.getAll());
-        model.addAttribute("identityTypes", identityTypeService.getAll());
-        model.addAttribute("banks", bankService.getAll());
-        model.addAttribute("organTypes", organTypeService.getAll());
-        model.addAttribute("order", order);
-        model.addAttribute("orderProduct", orderProductInit);
-        model.addAttribute("customer", customer);
         model.addAttribute("custMortgage", custMortgage);
-        model.addAttribute("custCredit", custCredit);
-
+        model.addAttribute("order", order);
+        model.addAttribute("orderLog", orderLog);
         //拿到这个用户可以操作的输入域，拿到的是能看见的，有属性是否可修改，是否必录
         List<FormatInfoReturnVO> formatInfoReturnVOS = formatInfoService.getFormatInfoByUserIdAndStepAndOrderId(order.getBusinessType(), orderId, positionId, order.getOrderState());
         JSONArray jsonArray = new JSONArray();
@@ -361,13 +340,27 @@ public class OrderController {
         return "/cbs/orderEdit";
     }
 
+    private void setSalerAndDept(Model model, Agent agent) {
+        if(agent!=null){
+            model.addAttribute("agentName", agent.getName());
+            Employee employee = employeeService.getEmployeeById(agent.getEmployeeId());
+            if(employee!=null){
+                Dept dept = deptService.getDeptById(employee.getDept());
+                if(dept!=null){
+                    model.addAttribute("deptName", dept.getName());
+                }
+            }
+        }
+    }
+
     @Transactional
     @RequestMapping("/order/edit")
     public String edit(HttpServletRequest request,
                        Order order,
                        FormatInfoObject formatInfoObject,
                        String orderId,
-                       Integer buttonId) {
+                       Integer buttonId,
+                       OrderLog orderLog) {
         System.out.println("buttonId=" + buttonId);
         Order orderOld = orderService.findOrderById(new Long(orderId).longValue());
         long updaterId = ((User) request.getSession().getAttribute("user")).getId();
@@ -383,20 +376,20 @@ public class OrderController {
         orderService.flush(orderOld);
 
         //更新订单其他信息
-        formatInfoObjService.save(new Long(orderId).longValue(),formatInfoObject,updaterId);
+        FormatInfoObject fio = formatInfoObjService.save(new Long(orderId).longValue(),formatInfoObject,updaterId);
 
         //根据不同的阶段，写入不同的费用，完结写佣金
-        orderService.halderFeeByDiffStep(workFlow.getAfterState(),orderOld,updaterId);
+        orderService.halderFeeByDiffStep(workFlow.getAfterState(),orderOld,updaterId,fio.getSelfAmount());
 
         //写日志
-        orderLogService.recordLog(new Long(orderId).longValue(), updaterId, buttonId,formatInfoObject);
+        orderLogService.recordLog(new Long(orderId).longValue(), updaterId, buttonId,0,formatInfoObject,orderLog.getActionDesc());
         try {
             //写入池子
             OrderPool orderPool = orderPoolService.intoPool(new Long(orderId).longValue(), workFlow.getBeforeState(), workFlow.getAfterState(), updaterId, orderOld.getBusinessType());
 
             //再将之后的状态，作为工作流的beforstate，可以拿到下一个的actionid（一个action可以有多个button，比如审批通过、不通过、上报等）
             if(orderOld.getOrderState()!=ConstantCfg.ORDER_STATE_127){
-            Action action = flowService.getNextActionByBeforState(workFlow.getAfterState(),orderOld.getBusinessType());
+                Action action = flowService.getNextActionByBeforState(new Long(orderId).longValue(),workFlow.getAfterState(),orderOld.getBusinessType());
                 //发送消息提醒下一个人：updaterId操作了buttonId，提醒下一个人，该去做action
                 businessReminderService.remindNextOperator(updaterId,buttonId,orderPool,action.getName());
             }
@@ -412,16 +405,57 @@ public class OrderController {
 
     private void copyNewOrderToOldOrder(Order orderOld,Order order){
         orderOld.setApplicantName(order.getApplicantName());
-        orderOld.setCellPhone(order.getCellPhone());
-        orderOld.setBusinessType(order.getBusinessType());
-        orderOld.setDemandAmount(order.getDemandAmount().multiply(new BigDecimal(10000)));
-        orderOld.setDemandPayWay(order.getDemandPayWay());
-        orderOld.setDemandInterest(order.getDemandInterest());
-        orderOld.setPeriodType(order.getPeriodType());
-        orderOld.setPeriodNum(order.getPeriodNum());
+        orderOld.setNextAmount(order.getNextAmount());
+        orderOld.setLastAmount(order.getLastAmount());
+        orderOld.setNextOrgName(order.getNextOrgName());
+        orderOld.setLastOrgName(order.getLastOrgName());
         orderOld.setDemandDate(order.getDemandDate());
-        orderOld.setSignDate(order.getSignDate());
-        orderOld.setPayInterestWay(order.getPayInterestWay());
+    }
+
+    @RequestMapping("/order/allocation")
+    public String allocation(Model model,
+                             @RequestParam(value = "pageNum", required = false) String pageNum,
+                             OrderSearchForm orderSearchForm){
+        if (orderSearchForm != null) {
+            Page<Order> pages = orderService.getAllOrderList(Integer.valueOf(pageNum == null ? "1" : pageNum),
+                    ConstantCfg.NUM_PER_PAGE,
+                    orderSearchForm);
+            List<OrderListForm> orderListForms = new ArrayList<OrderListForm>();
+            setReturnObj(pages, model, orderListForms);
+        }
+        model.addAttribute("pageNum", Integer.valueOf(pageNum == null ? "1" : pageNum));
+        model.addAttribute("orderStates", orderStateService.getAll());
+        return "/cbs/orderAllocationList";
+    }
+
+    @RequestMapping("/order/toModifyHandler")
+    public String toModifyHandler(Model model,Long orderId){
+        System.out.println("orderId="+orderId);
+        OrderPool orderPool = orderPoolService.getHandling(orderId);
+        if(orderPool!=null){
+            List<Employee> employees = employeeService.getEmployeeByPositionId(orderPool.getPositionId());
+            if(employees!=null){
+                model.addAttribute("canHandler",employees);
+            }
+        }
+        OrderAllocationForm orderAllocationForm=new OrderAllocationForm();
+        orderAllocationForm.setOrderId(orderId);
+        //model.addAttribute("orderId",orderId);
+        model.addAttribute("orderAllocationForm",orderAllocationForm);
+        return "/cbs/orderAllocation";
+    }
+
+    @Transactional
+    @RequestMapping("/order/modifyHandler")
+    public String modifyHandler(Long orderId,Long handler,String desc,HttpServletRequest request){
+        System.out.println("orderId="+orderId+"handler="+handler+"desc="+desc);
+        long updaterId = ((User) request.getSession().getAttribute("user")).getId();
+        Employee employee = employeeService.getEmployeeById(handler);
+        if(employee!=null){
+            orderPoolService.allocationHandler(employee.getUserId(),orderId);
+            orderLogService.recordLog(updaterId,orderId,0,ConstantCfg.ACTION_ALLOCATION_HANDLER,desc);
+        }
+        return "redirect:/order/allocation";
     }
 
     @RequestMapping("/order/delete")

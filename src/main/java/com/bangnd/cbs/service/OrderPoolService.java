@@ -20,4 +20,6 @@ public interface OrderPoolService {
 
     public OrderPool getHandling(long orderId);
 
+    public void allocationHandler(long userId,long orderId);
+
 }

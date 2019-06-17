@@ -1,7 +1,6 @@
 package com.bangnd.hr.service.impl;
 
 import com.bangnd.hr.entity.Employee;
-import com.bangnd.hr.entity.EmployeePosition;
 import com.bangnd.hr.form.EmployeeSearchForm;
 import com.bangnd.hr.repository.EmployeePositionRepository;
 import com.bangnd.hr.repository.EmployeeRepository;
@@ -148,6 +147,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getEmployeeByPositionId(int posId) {
         List<Employee> employees = employeeRepository.findAllByPosition(posId);
         return employees;
+    }
+
+    @Override
+    public Employee getEmployeeByDdUserName(String ddUserName) {
+        return employeeRepository.findByDdUserName(ddUserName);
     }
 
 }

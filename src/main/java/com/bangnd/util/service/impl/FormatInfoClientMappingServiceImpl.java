@@ -11,12 +11,13 @@ public class FormatInfoClientMappingServiceImpl implements FormatInfoClientMappi
 
     @Autowired
     FormatInfoClientMappingRepository formatInfoClientMappingRepository;
+
     @Override
     public String getFormatInfoKeyByClientKeyAndType(String clientKey, int ocrType) {
-         FormatInfoClientMapping formatInfoClientMapping = formatInfoClientMappingRepository.findByClientKeyAndType(clientKey,ocrType);
-         if(formatInfoClientMapping!=null){
-             return formatInfoClientMapping.getFormatInfoKey();
-         }
-         return null;
+        FormatInfoClientMapping formatInfoClientMapping = formatInfoClientMappingRepository.findByClientKeyAndType(clientKey, ocrType);
+        if (formatInfoClientMapping != null) {
+            return formatInfoClientMapping.getFormatInfoKey();
+        }
+        return null;
     }
 }

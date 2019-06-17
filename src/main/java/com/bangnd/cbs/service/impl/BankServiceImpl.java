@@ -12,7 +12,7 @@ import java.util.List;
 public class BankServiceImpl implements BankService {
 
     @Autowired
-    BankRepository bankRepository;
+    public BankRepository bankRepository;
 
     @Override
     public List<Bank> getAll() {

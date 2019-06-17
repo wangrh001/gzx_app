@@ -5,6 +5,7 @@ import com.bangnd.cbs.form.OrderSearchForm;
 import com.dingtalk.api.response.OapiProcessinstanceGetResponse;
 import org.springframework.data.domain.Page;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -25,5 +26,7 @@ public interface OrderService {
 
     public void saveClientApprove(String approveId, OapiProcessinstanceGetResponse response) throws Exception;
 
-    public void halderFeeByDiffStep(int afterState,Order order,long updatorId);
+    public void halderFeeByDiffStep(int afterState,Order order,long updatorId,BigDecimal selfAmount);
+
+    public List<Order> getNotFinishOrders();
 }

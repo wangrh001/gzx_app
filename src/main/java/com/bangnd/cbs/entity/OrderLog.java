@@ -23,6 +23,9 @@ public class OrderLog {
     private long buttonId;
 
     @Column
+    private long actionId;
+
+    @Column
     private long formatInfoId;
 
     @Column
@@ -145,5 +148,13 @@ public class OrderLog {
 
     public void setFormatInfoId(long formatInfoId) {
         this.formatInfoId = formatInfoId;
+    }
+
+    public long getActionId() {
+        return actionId;
+    }
+
+    public void setActionId(long actionId) {
+        this.actionId = actionId;
     }
 }

@@ -9,4 +9,6 @@ public interface RuleEngineService {
      * @param orderId,type
      */
     public BigDecimal calc(long orderId, int type);
+
+    public boolean workFlowCondition(long orderId, String condition) throws Exception;
 }

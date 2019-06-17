@@ -24,4 +24,6 @@ public interface ResourceService {
     public List<Resource> getParentResource();
 
     public List<Resource> getAllButtonRes();
+
+    public List<Resource> getAllByBusiType(int busiType);
 }

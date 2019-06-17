@@ -73,7 +73,7 @@ public class CustomerController {
         customer.setCreator(0);
         customer.setOrderId(new Long(orderId).longValue());
         customerService.save(customer);
-        orderLogService.recordLog(new Long(orderId).longValue(), userId, ConstantCfg.ORDER_BUTTON_ADDCUST);
+        orderLogService.recordLog(new Long(orderId).longValue(), userId, ConstantCfg.ORDER_BUTTON_ADDCUST,0,"");
         //保存抵押物信息
         custMortgage.setCreateTime(new Date());
         custMortgage.setCreator(0);

@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>过桥订单</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/pdf/jquery-1.8.3.min.js}"/>
+    <script type="text/javascript" th:src="@{/pdf/jquery.media.js}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+
+    <script th:inline="javascript">
+        function showCustomerPage() {
+            var customer1 = document.getElementById("customer1")
+            var customer2 = document.getElementById("customer2")
+            var customer3 = document.getElementById("customer3")
+            customer1.style.display = customer1.style.display == 'none' ? "block" : "none"
+            customer2.style.display = customer2.style.display == 'none' ? "block" : "none"
+            console.log(customer3.style.display)
+            customer3.style.display = customer3.style.display == 'block' ? "none" : "none"
+            if(customer1.style.display=="none"){
+                customer2.style.display = "none"
+                customer_form.customerChose.value=1
+            }
+
+        }
+        function showMortgagePage() {
+            var borrower = document.getElementById("mortgage")
+            borrower.style.display = borrower.style.display == 'none' ? "block" : "none"
+        }
+        function showOriginalLoanPage() {
+            var borrower = document.getElementById("originalLoan")
+            borrower.style.display = borrower.style.display == 'none' ? "block" : "none"
+        }
+        function showNewLoanPage() {
+            var borrower = document.getElementById("newLoan")
+            borrower.style.display = borrower.style.display == 'none' ? "block" : "none"
+        }
+        function showOriginalCardPage() {
+            var borrower = document.getElementById("originalCard")
+            borrower.style.display = borrower.style.display == 'none' ? "block" : "none"
+        }
+        function showNewCardPage() {
+            var borrower = document.getElementById("newCard")
+            borrower.style.display = borrower.style.display == 'none' ? "block" : "none"
+        }
+        function showDays() {
+            var prostorageDays =document.getElementById("prostorageDays")
+            prostorageDays.style.display = "block"
+        }
+        function noShowDays() {
+            var prostorageDays =document.getElementById("prostorageDays")
+            prostorageDays.style.display = "none"
+        }
+        function showPerson() {
+            var customer2 =document.getElementById("customer2")
+            var customer3 =document.getElementById("customer3")
+            customer2.style.display = "block"
+            customer3.style.display = "none"
+
+        }
+        function showCompany() {
+            var customer2 =document.getElementById("customer2")
+            var customer3 =document.getElementById("customer3")
+            customer2.style.display = "none"
+            customer3.style.display = "block"
+        }
+        function showDealPage() {
+            var busiType = document.getElementById("busiType")
+            if(busiType.value==2){
+                var dealPage = document.getElementById("dealPage")
+                dealPage.style.display="block"
+            }else {
+                var dealPage = document.getElementById("dealPage")
+                dealPage.style.display="none"
+            }
+
+        }
+
+        function submitCustomer() {
+            /*<![CDATA[*/
+            if(customer_form.custType.value==1){
+                alert('关系人类型：必须选择一个，谢谢！')
+                customer_form.custType.focus()
+                return false
+            }
+            if(customer_form.customerChose.value==1){
+                if(customer_form.name.value==''){
+                    alert('姓名：不能为空，请填写！')
+                    customer_form.name.focus()
+                    return false
+                }
+                if(customer_form.certiType.value==1){
+                    alert('证件类型：必须选择一个，谢谢！')
+                    customer_form.certiType.focus()
+                    return false
+                }
+                if(customer_form.certiCode.value==''){
+                    alert('证件号码：不能为空，请填写！')
+                    customer_form.certiCode.focus()
+                    return false
+                }
+                if(customer_form.phone.value==''){
+                    alert('联系电话：不能为空，请填写！')
+                    customer_form.phone.focus()
+                    return false
+                }
+            }
+            if(customer_form.customerChose.value==2){
+                if(customer_form.companyName.value==''){
+                    alert('公司名称：不能为空，请填写！')
+                    customer_form.companyName.focus()
+                    return false
+                }
+                if(customer_form.licenseCode.value==''){
+                    alert('营业执照：不能为空，请填写！')
+                    customer_form.licenseCode.focus()
+                    return false
+                }
+                if(customer_form.lowPerson.value==''){
+                    alert('公司法人：不能为空，请填写！')
+                    customer_form.lowPerson.focus()
+                    return false
+                }
+                if(customer_form.companyPhone.value==''){
+                    alert('公司联系电话：不能为空，请填写！')
+                    customer_form.companyPhone.focus()
+                    return false
+                }
+            }
+            var orderId = document.getElementById("orderId").value
+            var form = document.getElementById("customer_form")
+            form.action="/bridgecbs/customer/add?orderId="+orderId
+            form.submit()
+            /*]]>*/
+        }
+        function submitMortgage() {
+            /*<![CDATA[*/
+            if(mortgage_form.propertyType.value==1){
+                alert('物业业务类型：必须选择一个，谢谢！')
+                mortgage_form.propertyType.focus()
+                return false
+            }
+            if(mortgage_form.propertyName.value==''){
+                alert('物业名称：不能为空，请填写，谢谢！')
+                mortgage_form.propertyName.focus()
+                return false
+            }
+            if(mortgage_form.square.value==''){
+                alert('面积：不能为空，请填写，谢谢！')
+                mortgage_form.square.focus()
+                return false
+            }
+            if(mortgage_form.propertyNO.value==''){
+                alert('房产证号：不能为空，请填写，谢谢！')
+                mortgage_form.propertyNO.focus()
+                return false
+            }
+            if(mortgage_form.estateArea.value==''){
+                alert('物业所在地：不能为空，请填写，谢谢！')
+                mortgage_form.estateArea.focus()
+                return false
+            }
+            if(mortgage_form.propertyUse.value==''){
+                alert('用途：不能为空，请填写，谢谢！')
+                mortgage_form.propertyUse.focus()
+                return false
+            }
+            if(mortgage_form.estimatePrice.value==''){
+                alert('评估价：不能为空，请填写，谢谢！')
+                mortgage_form.estimatePrice.focus()
+                return false
+            }
+            if(mortgage_form.percent.value==''){
+                alert('可贷比例：不能为空，请填写，谢谢！')
+                mortgage_form.percent.focus()
+                return false
+            }
+            var orderId = document.getElementById("orderId").value
+            var form = document.getElementById("mortgage_form")
+            form.action="/bridgecbs/mortgage/add?orderId="+orderId
+            form.submit()
+            /*]]>*/
+        }
+        function submitOriginalLoan() {
+            /*<![CDATA[*/
+            if(original_loan_form.type.value==1){
+                alert('原贷款类型：不能为空，请选择一个，谢谢！')
+                original_loan_form.type.focus()
+                return false
+            }
+            if(original_loan_form.organType.value==1){
+                alert('原贷款方：不能为空，请选择一个，谢谢！')
+                original_loan_form.organType.focus()
+                return false
+            }
+            if(original_loan_form.organCode.value==-1){
+                alert('原贷款银行：不能为空，请选择一个，谢谢！')
+                original_loan_form.organCode.focus()
+                return false
+            }
+            if(original_loan_form.amount.value==''){
+                alert('原贷款金额：不能为空，请填写，谢谢！')
+                original_loan_form.amount.focus()
+                return false
+            }
+            if(original_loan_form.capitalInterest.value==''){
+                alert('原贷款本息余额：不能为空，请填写，谢谢！')
+                original_loan_form.capitalInterest.focus()
+                return false
+            }
+            if(original_loan_form.endDate.value==''){
+                alert('原贷款结束时间：不能为空，请填写，谢谢！')
+                original_loan_form.endDate.focus()
+                return false
+            }
+            if(original_loan_form.accountNO.value==''){
+                alert('原贷款还款账号：不能为空，请填写，谢谢！')
+                original_loan_form.accountNO.focus()
+                return false
+            }
+            if(original_loan_form.bankCode.value==1){
+                alert('原贷款开户行：不能为空，请选择一个，谢谢！')
+                original_loan_form.bankCode.focus()
+                return false
+            }
+
+            if(original_loan_form.accountName.value==''){
+                alert('原贷款户名：不能为空，请填写，谢谢！')
+                original_loan_form.accountName.focus()
+                return false
+            }
+            if(original_loan_form.contactName.value==''){
+                alert('原贷款联系人：不能为空，请填写，谢谢！')
+                original_loan_form.contactName.focus()
+                return false
+            }
+
+            if(original_loan_form.contactPhone.value==''){
+                alert('原贷款联系电话：不能为空，请填写，谢谢！')
+                original_loan_form.contactPhone.focus()
+                return false
+            }
+            if(original_loan_form.foreclosureType.value==1){
+                alert('原贷款赎楼方式：不能为空，请选择一个，谢谢！')
+                original_loan_form.foreclosureType.focus()
+                return false
+            }
+            var orderId = document.getElementById("orderId").value
+            var form = document.getElementById("original_loan_form")
+            form.action="/bridgecbs/originalLoan/add?orderId="+orderId
+            form.submit()
+            /*]]>*/
+        }
+        function submitNewLoan() {
+            /*<![CDATA[*/
+            if(new_loan_form.organType.value==1){
+                alert('新贷款方：不能为空，请选择一个，谢谢！')
+                original_loan_form.organType.focus()
+                return false
+            }
+            if(new_loan_form.organCode.value==-1){
+                alert('新贷款银行：不能为空，请选择一个，谢谢！')
+                original_loan_form.organCode.focus()
+                return false
+            }
+            if(new_loan_form.ifOtherPart.value==''){
+                alert('是否第三方回款：不能为空，请填写，谢谢！')
+                original_loan_form.ifOtherPart.focus()
+                return false
+            }
+            if(new_loan_form.approveAmount.value==''){
+                alert('批复金额：不能为空，请填写，谢谢！')
+                original_loan_form.approveAmount.focus()
+                return false
+            }
+            if(new_loan_form.loanType.value==1){
+                alert('贷款方式：不能为空，请选择一个，谢谢！')
+                original_loan_form.loanType.focus()
+                return false
+            }
+            if(new_loan_form.loanCondition.value==1){
+                alert('放款添件：不能为空，请选择一个，谢谢！')
+                original_loan_form.loanCondition.focus()
+                return false
+            }
+            if(new_loan_form.contactName.value==''){
+                alert('新贷款联系人：不能为空，请填写，谢谢！')
+                original_loan_form.contactName.focus()
+                return false
+            }
+            if(new_loan_form.contactPhone.value==''){
+                alert('新贷款联系电话：不能为空，请填写，谢谢！')
+                original_loan_form.contactPhone.focus()
+                return false
+            }
+            var orderId = document.getElementById("orderId").value
+            var form = document.getElementById("new_loan_form")
+            form.action="/bridgecbs/newLoan/add?orderId="+orderId
+            form.submit()
+            /*]]>*/
+        }
+        function submitOriginalCard() {
+            /*<![CDATA[*/
+            if(original_card_form.accountName.value==''){
+                alert('过账卡号户名：不能为空，请填写，谢谢！')
+                original_card_form.accountName.focus()
+                return false
+            }
+            if(original_card_form.bankId.value==-1){
+                alert('过账卡号开户行：不能为空，请填写，谢谢！')
+                original_card_form.bankId.focus()
+                return false
+            }
+            if(original_card_form.accountCode.value==''){
+                alert('过账卡号：不能为空，请填写，谢谢！')
+                original_card_form.accountCode.focus()
+                return false
+            }
+            var orderId = document.getElementById("orderId").value
+            var form = document.getElementById("original_card_form")
+            form.action="/bridgecbs/bankAccount/add?orderId="+orderId+"&type=1"
+            form.submit()
+            /*]]>*/
+        }
+        function submitNewCard() {
+            /*<![CDATA[*/
+            if(new_card_form.accountName.value==''){
+                alert('过账卡号户名：不能为空，请填写，谢谢！')
+                new_card_form.accountName.focus()
+                return false
+            }
+            if(new_card_form.bankId.value==-1){
+                alert('过账卡号开户行：不能为空，请选一个，谢谢！')
+                new_card_form.bankId.focus()
+                return false
+            }
+            if(new_card_form.accountCode.value==''){
+                alert('过账卡号：不能为空，请填写，谢谢！')
+                new_card_form.accountCode.focus()
+                return false
+            }
+            if(new_card_form.amount.value==''){
+                alert('过账金额：不能为空，请填写，谢谢！')
+                new_card_form.amount.focus()
+                return false
+            }
+            var orderId = document.getElementById("orderId").value
+            var form = document.getElementById("new_card_form")
+            form.action="/bridgecbs/bankAccount/add?orderId="+orderId+"&type=2"
+            form.submit()
+            /*]]>*/
+        }
+
+        function uploadFiles() {
+            var orderId = document.getElementById("orderId").value
+            var form = document.getElementById("order_form")
+            form.action="/doc/showAllTypePic?orderId="+orderId
+            form.submit()
+        }
+        function showFiles() {
+            var orderId = document.getElementById("orderId").value
+            var form = document.getElementById("order_form")
+            form.action="/doc/showPics?orderId="+orderId
+            form.submit()
+        }
+
+        //检查输入域
+        function checkNeedFieldsByButtons(buttonId) {
+            /*<![CDATA[*/
+            var needFields = [[${needFields}]];
+            var obj = JSON.parse(needFields);
+            for (var p in obj) {
+                var button = obj[p].button
+                if(button==buttonId){
+                    console.log('enter the button'+button)
+                    var fieldList = obj[p].fields
+                    var fieldArray = fieldList.toString().split(',')
+                    for(var i=0;i<fieldArray.length;i++){
+                        var fieldNameSum = fieldArray[i]
+                        var fieldEnName = fieldNameSum.substr(0,fieldNameSum.indexOf('+'))
+                        var fieldChName = fieldNameSum.substr(fieldNameSum.indexOf('+')+1,fieldNameSum.length)
+                        var inputValue = document.getElementById(fieldEnName).value
+                        var inputId = document.getElementById(fieldEnName).id
+                        if(inputValue==''){
+                            console.log('inputId='+inputId)
+                            if(inputId=='totalDealPrice'||inputId=='frontMoney'||inputId=='firstAmount')
+                            {
+                                console.log('dealPage.style='+document.getElementById('dealPage').style.display)
+                                if(document.getElementById('dealPage').style.display!='none'){
+                                    alert(fieldChName+':不能为空，请录入数据！')
+                                    document.getElementById(fieldEnName).focus()
+                                    return false
+                                }
+                            }else {
+                                alert(fieldChName+':不能为空，请录入数据！')
+                                document.getElementById(fieldEnName).focus()
+                                return false
+                            }
+                        }
+                    }
+                }
+            }
+            return true
+            // /*]]>*/
+        }
+
+        function doButton(buttonId) {
+            /*<![CDATA[*/
+            console.log('enter the do button')
+            var order_form = document.getElementById("order_form")
+            order_form.action = "/bridgecbs/bridgeOrder/modify?buttonId=" + buttonId
+            if(!checkNeedFieldsByButtons(buttonId))
+                return false
+            order_form.submit()
+            // /*]]>*/
+        }
+        function AddButton() {
+            /*<![CDATA[*/
+            var type = [[${buttonRes}]];
+            //这个符号不能删除！！！！
+            var obj = JSON.parse(type);
+            var div = document.getElementById("buttonTable");
+            for (var p in obj) {//遍历json数组时，这么写p为索引，0,1
+                var buttonName = obj[p].buttonName
+                var buttonId = obj[p].id
+                var buttonInput = "<input type='button' onclick='doButton(" + buttonId + ")' class='btn btn-info' value='" + buttonName + "'/>";
+                div.innerHTML += buttonInput;
+            }
+            var busiType = document.getElementById("busiType")
+            if(busiType==2){
+                var dealPage = document.getElementById("dealPage")
+                dealPage.style.display="block"
+            }
+
+            /*]]>*/
+        }
+
+        function checkCertiCode(id) {
+            /*<![CDATA[*/
+            console.log("enter the checkCertiCode"+id)
+            // 1 "验证通过!", 0 //校验不通过 // id为身份证号码
+            var format = /^(([1][1-5])|([2][1-3])|([3][1-7])|([4][1-6])|([5][0-4])|([6][1-5])|([7][1])|([8][1-2]))\d{4}(([1][9]\d{2})|([2]\d{3}))(([0][1-9])|([1][0-2]))(([0][1-9])|([1-2][0-9])|([3][0-1]))\d{3}[0-9xX]$/;
+            //号码规则校验
+            if(!format.test(id)){
+                alert('身份证号码不合规')
+                document.getElementById("certiCode").focus()
+            }
+            // //区位码校验
+            // //出生年月日校验  前正则限制起始年份为1900;
+            // var year = id.substr(6,4),//身份证年
+            //     month = id.substr(10,2),//身份证月
+            //     date = id.substr(12,2),//身份证日
+            //     time = Date.parse(month+'-'+date+'-'+year),//身份证日期时间戳date
+            //     now_time = Date.parse(new Date()),//当前时间戳
+            //     dates = (new Date(year,month,0)).getDate();//身份证当月天数
+            // if(time>now_time||date>dates){
+            //     return {'status':0,'msg':'出生日期不合规'}
+            // }
+            // //校验码判断
+            // var c = new Array(7,9,10,5,8,4,2,1,6,3,7,9,10,5,8,4,2);  //系数
+            // var b = new Array('1','0','X','9','8','7','6','5','4','3','2'); //校验码对照表
+            // var id_array = id.split("");
+            // var sum = 0;
+            // for(var k=0;k<17;k++){
+            //     sum+=parseInt(id_array[k])*parseInt(c[k]);
+            // }
+            // if(id_array[17].toUpperCase() != b[sum%11].toUpperCase()){
+            //     alert('身份证号码不合规')
+            //     document.getElementById("certiCode").focus()
+            // }
+            // return {'status':1,'msg':'校验通过'}
+            /*]]>*/
+        }
+
+        function checkPhone(value){
+            if(!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(value))){
+                alert("手机号码有误，请重填");
+                return false;
+            }
+        }
+    </script>
+
+</head>
+<body class="container" onload="AddButton()">
+<br/>
+<h4>新增</h4>
+<div>
+    <form class="form-horizontal" id="order_form" th:action="@{/bridgecbs/bridgeOrder/add}" th:object="${bridgeOrder}" method="post">
+        <table>
+            <th>报单信息</th>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>业务类型</td>
+                <td><select onchange="showDealPage();" form="order_form" th:field="*{busiType}" th:remove="all-but-first">
+                    <option th:each="busiType : ${busiTypes}"
+                            th:value="${busiType.id}" th:text="${busiType.name}">Credit card
+                    </option>
+                </select></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>产品名称</td>
+                <td><select form="order_form" th:field="*{productId}" th:remove="all-but-first">
+                    <option th:each="productId : ${productIds}"
+                            th:value="${productId.id}" th:text="${productId.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>上家机构</td>
+                <td><input form="order_form" th:field="*{lastOrganName}" value="" class="form-control" readonly="readonly"/></td>
+                <td>下家机构</td>
+                <td><input form="order_form" th:field="*{nextOrganName}" value="" class="form-control" readonly="readonly"/></td>
+                <td>用款时间</td>
+                <td><input form="order_form" type="text" class="form-control" id="demandDate" name="demandDate"
+                           th:value="*{demandDate ne null} ? *{#dates.format(demandDate,'yyyy-MM-dd')}" readonly="readonly"/></td>
+            </tr>
+            <tr>
+                <td>垫资金额</td>
+                <td><input form="order_form" th:field="*{lastAmount}" value="" class="form-control" readonly="readonly"/></td>
+                <td>批贷金额</td>
+                <td><input form="order_form" th:field="*{nextAmount}" value="" class="form-control" readonly="readonly"/></td>
+                <td>销售人员</td>
+                <td><input form="order_form" th:field="*{salerName}" value="" class="form-control" readonly="readonly"/></td>
+            </tr>
+        </table>
+
+        <table>
+            <input form="order_form" type="hidden" name="orderId" id = "orderId" th:value="*{id}" class="form-control"/>
+            <th>订单信息</th>
+            <tr>
+                <td>订单名称</td>
+                <td><input form="order_form" th:field="*{projectName}" value="" class="form-control"/></td>
+                <td>订单编号</td>
+                <td><input form="order_form" th:field="*{orderCode}" value="" class="form-control"/></td>
+
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>收费类型</td>
+                <td><select form="order_form" th:field="*{payType}" th:remove="all-but-first">
+                    <option th:each="payType : ${payTypes}"
+                            th:value="${payType.id}" th:text="${payType.name}">Credit card
+                    </option>
+                </select></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>所属城市</td>
+                <td><select form="order_form" th:field="*{city}" th:remove="all-but-first">
+                    <option th:each="city : ${citys}"
+                            th:value="${city.id}" th:text="${city.name}">Credit card
+                    </option>
+                </select></td>
+                <td>现居住地址</td>
+                <td><input form="order_form" th:field="*{address}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>借款人</td>
+                <td><input form="order_form" th:field="*{loanName}" value="" class="form-control"/></td>
+                <td>性别</td>
+                <td><select form="order_form" th:field="*{sex}" th:remove="all-but-first">
+                    <option th:each="sex : ${sexs}"
+                            th:value="${sex.id}" th:text="${sex.name}">Credit card
+                    </option>
+                </select></td>
+                <td>婚姻状况</td>
+                <td><select form="order_form" th:field="*{marriage}" th:remove="all-but-first">
+                    <option th:each="marriage : ${marriages}"
+                            th:value="${marriage.id}" th:text="${marriage.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>证件类型</td>
+                <td><select form="order_form" th:field="*{certiType}" th:remove="all-but-first">
+                    <option th:each="certiType : ${certiTypes}"
+                            th:value="${certiType.id}" th:text="${certiType.name}">Credit card
+                    </option>
+                </select></td>
+                <td>手机号码</td>
+                <td><input form="order_form" th:field="*{phoneNO}" onchange="checkPhone(this)" value="" class="form-control"/></td>
+                <td>证件号码</td>
+                <td><input form="order_form" th:field="*{certiCode}" onchange="checkCertiCode(this)" value="" class="form-control"/></td>
+            </tr>
+        </table>
+
+    </form>
+
+    <input type="button" value="添加关系人" onclick="showCustomerPage()" class="btn btn-info"/>
+    <input type="button" value="添加房产" onclick="showMortgagePage()" class="btn btn-info"/>
+    <input type="button" value="上传资料" onclick="uploadFiles()" class="btn btn-info"/>
+    <input type="button" value="查看资料" onclick="showFiles()" class="btn btn-info"/>
+
+    <form class="form-horizontal" method="post" id="customer_form" th:object="${customer}">
+        <table th:if="${customerList.size()} !=0">
+            <tr>
+                <th>序号</th>
+                <th>关系类型</th>
+                <th>姓名/公司</th>
+                <th>证件类型</th>
+                <th>证件号码</th>
+                <th>联系电话</th>
+                <th>修改</th>
+                <th>删除</th>
+            </tr>
+            <!--显示该订单下的所有客户，并可以点击进去修改客户详情 -->
+            <tr th:each="customer : ${customerList}">
+                <!--onclick="'javascript:showAddCustomerPage('+${customer.id}+')'"-->
+                <td th:text="${customer.id}"></td>
+                <td th:text="${customer.custTypeName}"></td>
+                <td th:switch="${customer.name} ne ''">
+                    <div th:case="true" th:text="${customer.name}"></div>
+                    <div th:case="false" th:text="${customer.companyName}"></div>
+                </td>
+                <td th:switch="${customer.certiType}==1">
+                    <div th:case="true" th:text="营业执照"></div>
+                    <div th:case="false" th:text="${customer.certiTypeName}"></div>
+                </td>
+                <td th:switch="${customer.certiCode} ne '' ">
+                    <div th:case="true" th:text="${customer.certiCode}"></div>
+                    <div th:case="false" th:text="${customer.licenseCode}"></div>
+                </td>
+                <td th:switch="${customer.phone} ne '' ">
+                    <div th:case="true" th:text="${customer.phone}"></div>
+                    <div th:case="false" th:text="${customer.companyPhone}"></div>
+                </td>
+                <td><a th:href="@{/bridgecbs/customer/toModify(id=${customer.id})}">修改</a></td>
+                <td><a th:href="@{/bridgecbs/customer/delete(id=${customer.id})}">删除</a></td>
+            </tr>
+        </table>
+
+        <table  id="customer1" style="display: none">
+            <th>关系人信息</th>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>关系人类型</td>
+                <td><select th:field="*{custType}" th:remove="all-but-first">
+                    <option th:each="custRelationType : ${custRelationTypes}"
+                            th:value="${custRelationType.id}" th:text="${custRelationType.name}">Credit card
+                    </option>
+                </select></td>
+                <td>
+                    <input type="radio" style="margin-right:10px; vertical-align:middle; margin-top:-2px; margin-bottom:1px;" onclick="showPerson()" name="customerChose" value="1" checked="true"/>个人
+                </td>
+                <td>
+                    <input type="radio" style="margin-right:10px; vertical-align:middle; margin-top:-2px; margin-bottom:1px;" onclick="showCompany()" name="customerChose" value="2"/>企业
+                </td>
+            </tr>
+        </table>
+
+        <table id="customer2" style="display: none">
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>姓名</td>
+                <td><input th:field="*{name}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>证件类型</td>
+                <td><select th:field="*{certiType}" th:remove="all-but-first">
+                    <option th:each="certiType : ${certiTypes}"
+                            th:value="${certiType.id}" th:text="${certiType.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>证件号码</td>
+                <td><input th:field="*{certiCode}" value="" onchange="checkCertiCode(this)" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>联系电话</td>
+                <td><input th:field="*{phone}" value="" onchange="checkPhone(this)" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="保存" onclick="submitCustomer()" class="btn btn-info"/></td>
+            </tr>
+        </table>
+
+        <table id="customer3" style="display: none">
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>公司名称</td>
+                <td><input th:field="*{companyName}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>营业执照号码</td>
+                <td><input th:field="*{licenseCode}" value="" class="form-control"/></td>
+            </tr>
+
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>法定代表人</td>
+                <td><input th:field="*{lowPerson}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>联系电话</td>
+                <td><input th:field="*{companyPhone}" onchange="checkPhone(this)" value="" class="form-control"/></td>
+            </tr>
+
+            <tr>
+                <td><input type="button" value="保存" onclick="submitCustomer()" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+
+    <form class="form-horizontal" method="post" id="mortgage_form" th:object="${mortgage}" >
+        <table th:if="${mortgageList.size()} !=0">
+            <tr>
+                <th>序号</th>
+                <th>业主信息</th>
+                <!--<th>物业信息</th>-->
+                <th>面积(平米)</th>
+                <th>房产证号</th>
+                <th>登记价(元)</th>
+                <th>评估价(元)</th>
+                <th>物业业务类型</th>
+                <th>用途</th>
+                <th>修改</th>
+                <th>删除</th>
+            </tr>
+            <!--显示该订单下的所有客户，并可以点击进去修改客户详情 -->
+            <tr th:each="mortgage : ${mortgageList}">
+                <!--onclick="'javascript:showAddCustomerPage('+${customer.id}+')'"-->
+                <td th:text="${mortgage.mortgageId}"></td>
+                <td th:text="${mortgage.propertyName}"></td>
+                <!--<td th:text="${mortgage.propertyType}"></td>-->
+                <td th:text="${mortgage.square}"></td>
+                <td th:text="${mortgage.propertyNO}"></td>
+                <td th:text="${mortgage.registerPrice}"></td>
+                <td th:text="${mortgage.estimatePrice}"></td>
+                <td th:text="${mortgage.propertyTypeName}"></td>
+                <td th:text="${mortgage.propertyUse}"></td>
+                <td><a th:href="@{/bridgecbs/mortgage/toModify(id=${mortgage.mortgageId})}">修改</a></td>
+                <td><a th:href="@{/bridgecbs/mortgage/delete(id=${mortgage.mortgageId})}">删除</a></td>
+            </tr>
+        </table>
+
+        <table  id="mortgage" style="display: none">
+            <input type="hidden" id = "mortgageId" name="mortgageId" th:value="*{mortgageId}" value="" class="form-control"/>
+            <th>抵押物</th>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>物业业务类型:</td>
+                <td><select th:field="*{propertyType}" th:remove="all-but-first">
+                    <option th:each="propertyType : ${propertyTypes}"
+                            th:value="${propertyType.id}" th:text="${propertyType.name}">Credit card
+                    </option>
+                </select></td>
+                <td>产权状态:</td>
+                <td><select th:field="*{propertyState}" th:remove="all-but-first">
+                    <option th:each="propertyState : ${propertyStates}"
+                            th:value="${propertyState.id}" th:text="${propertyState.name}">Credit card
+                    </option>
+                </select></td>
+                <td>房屋类型:</td>
+                <td><select th:field="*{estateType}" th:remove="all-but-first">
+                    <option th:each="estateType : ${estateTypes}"
+                            th:value="${estateType.id}" th:text="${estateType.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>物业名称:</td>
+                <td><input th:field="*{propertyName}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>面积:</td>
+                <td><input th:field="*{square}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>房产证号:</td>
+                <td><input th:field="*{propertyNO}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>物业所在地:</td>
+                <td><input th:field="*{estateArea}" value="" class="form-control"/></td>
+                <td>登记价(元):</td>
+                <td><input th:field="*{registerPrice}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>用途:</td>
+                <td><input th:field="*{propertyUse}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>评估价(元):</td>
+                <td><input th:field="*{estimatePrice}" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>可贷比例(%):</td>
+                <td><input th:field="*{percent}" class="form-control"/></td>
+                <td>可贷金额(元):</td>
+                <td><input th:field="*{canLoanAmount}" class="form-control"/></td>
+            </tr>
+
+            <tr>
+                <td><input type="button" value="保存" onclick="submitMortgage()" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+
+    <form th:object="${bridgeOrder}">
+        <table>
+            <tr>
+                <td>总登记价(元)</td>
+                <td><input form="order_form" th:field="*{totalRegisterPrice}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>总评估价(元)</td>
+                <td><input form="order_form" th:field="*{totalEstimatePrice}" value="" class="form-control"/></td>
+            </tr>
+        </table>
+    </form>
+
+    <input type="button" value="添加原贷款" onclick="showOriginalLoanPage()" class="btn btn-info"/>
+
+    <form class="form-horizontal" method="post" id="original_loan_form" th:object="${originalLoanInfo}" >
+        <table th:if="${originalLoanList.size()} !=0">
+            <tr>
+                <th>序号</th>
+                <th>原贷款类型</th>
+                <th>原贷款方</th>
+                <th>原贷款金额(元)</th>
+                <th>原贷款本息余额(元)</th>
+                <th>原贷款结束时间</th>
+                <th>原贷款还款账号</th>
+                <th>开户行</th>
+                <th>户名</th>
+                <th>赎楼方式</th>
+                <th>预存天数</th>
+                <th>原贷款联系人</th>
+                <th>原贷款联系电话</th>
+                <th>修改</th>
+                <th>删除</th>
+            </tr>
+            <!--显示该订单下的所有客户，并可以点击进去修改客户详情 -->
+            <tr th:each="originalLoan : ${originalLoanList}">
+                <!--onclick="'javascript:showAddCustomerPage('+${customer.id}+')'"-->
+                <td th:text="${originalLoan.id}"></td>
+                <td th:text="${originalLoan.typeName}">neo</td>
+                <td th:text="${originalLoan.organTypeName}">6</td>
+                <td th:text="${originalLoan.amount}"></td>
+                <td th:text="${originalLoan.capitalInterest}">neo</td>
+                <td th:text="${originalLoan.endDate ne null}?${#dates.format(originalLoan.endDate,'yyyy-MM-dd')}"></td>
+                <td th:text="${originalLoan.accountNO}"></td>
+                <td th:text="${originalLoan.organCodeName}">neo</td>
+                <td th:text="${originalLoan.accountName}">6</td>
+                <td th:text="${originalLoan.foreclosureTypeName}"></td>
+                <td th:text="${originalLoan.prostorageDays}">neo</td>
+                <td th:text="${originalLoan.contactName}">6</td>
+                <td th:text="${originalLoan.contactPhone}"></td>
+                <td><a th:href="@{/bridgecbs/originalLoan/toModify(id=${originalLoan.id})}">修改</a></td>
+                <td><a th:href="@{/bridgecbs/originalLoan/delete(id=${originalLoan.id})}">删除</a></td>
+            </tr>
+        </table>
+
+        <table  id="originalLoan" style="display: none">
+            <th>原贷款</th>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款类型:</td>
+                <td><select th:field="*{type}" th:remove="all-but-first">
+                    <option th:each="type : ${types}"
+                            th:value="${type.id}" th:text="${type.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款方:</td>
+                <td><select th:field="*{organType}" th:remove="all-but-first">
+                    <option th:each="organType : ${organTypes}"
+                            th:value="${organType.id}" th:text="${organType.name}">Credit card
+                    </option>
+                </select></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款银行:</td>
+                <td><select th:field="*{organCode}" th:remove="all-but-first">
+                    <option th:each="organCode : ${organCodes}"
+                            th:value="${organCode.id}" th:text="${organCode.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款金额(元):</td>
+                <td><input th:field="*{amount}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款本息余额(元):</td>
+                <td><input th:field="*{capitalInterest}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款结束时间:</td>
+                <td><input type="text" class="form-control" id="endDate" name="endDate"
+                           th:value="*{endDate ne null} ? *{#dates.format(endDate,'yyyy-MM-dd')}"/></td>
+
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款还款账号:</td>
+                <td><input th:field="*{accountNO}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>有无预存:</td>
+                <td>
+                    <label><input type="radio" style="margin-right:10px; vertical-align:middle; margin-top:-2px; margin-bottom:1px;" th:id="*{hasPreStorage}" onclick="noShowDays()" th:name="*{hasPreStorage}" value="1" checked="true"/>无</label>
+                    <label><input type="radio" style="margin-right:10px; vertical-align:middle; margin-top:-2px; margin-bottom:1px;" th:id="*{hasPreStorage}" onclick="showDays()" th:name="*{hasPreStorage}" value="2"/>预存天数</label>
+                </td>
+                <!--<td><input th:field="*{hasPreStorage}" value="" class="form-control"/></td>-->
+
+                <td>预存天数:</td>
+                <td><input style="display: none" th:field="*{prostorageDays}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款开户行:</td>
+                <td><select th:field="*{bankCode}" th:remove="all-but-first">
+                    <option th:each="bankCode : ${bankCodes}"
+                            th:value="${bankCode.id}" th:text="${bankCode.name}">Credit card
+                    </option>
+                </select></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款户名:</td>
+                <td><input th:field="*{accountName}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款联系人:</td>
+                <td><input th:field="*{contactName}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款联系电话:</td>
+                <td><input th:field="*{contactPhone}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>赎楼方式:</td>
+                <td><select th:field="*{foreclosureType}" th:remove="all-but-first">
+                    <option th:each="foreclosureType : ${foreclosureTypes}"
+                            th:value="${foreclosureType.id}" th:text="${foreclosureType.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>关联物业:</td>
+            </tr>
+            <tr>
+                <td><input type="button" value="保存" onclick="submitOriginalLoan()" class="btn btn-info"/></td>
+            </tr>
+
+        </table>
+    </form>
+
+    <form th:object="${bridgeOrder}">
+        <table>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款总金额(元)</td>
+                <td><input form="order_form" th:field="*{originalLoadAmount}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>原贷款本息总余额(元)</td>
+                <td><input form="order_form" th:field="*{originalCaptialInterest}" value="" class="form-control"/></td>
+            </tr>
+        </table>
+    </form>
+
+    <input type="button" value="添加原贷款过账卡号" onclick="showOriginalCardPage()" class="btn btn-info"/>
+
+    <form class="form-horizontal" method="post" id="original_card_form" th:object="${bankAccount1}" >
+        <table th:if="${bankAccountsList1.size()} !=0">
+            <tr>
+                <th>序号</th>
+                <th>过账卡号户名</th>
+                <th>过账卡号开户行</th>
+                <th>过账卡号</th>
+                <th>修改</th>
+                <th>删除</th>
+            </tr>
+            <!--显示该订单下的所有客户，并可以点击进去修改客户详情 -->
+            <tr th:each="originalCard : ${bankAccountsList1}">
+                <!--onclick="'javascript:showAddCustomerPage('+${customer.id}+')'"-->
+                <td th:text="${originalCard.id}"></td>
+                <td th:text="${originalCard.accountName}"></td>
+                <td th:text="${originalCard.bankIdName}"></td>
+                <td th:text="${originalCard.accountCode}"></td>
+                <td><a th:href="@{/bridgecbs/bankAccount/toModify(id=${originalCard.id})}">修改</a></td>
+                <td><a th:href="@{/bridgecbs/bankAccount/delete(id=${originalCard.id})}">删除</a></td>
+            </tr>
+        </table>
+        <table  id="originalCard" style="display: none">
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>过账卡号户名:</td>
+                <td><input th:field="*{accountName}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>过账卡号开户行:</td>
+                <td><select th:field="*{bankId}" th:remove="all-but-first">
+                    <option th:each="bankId : ${bankIds}"
+                            th:value="${bankId.id}" th:text="${bankId.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>过账卡号:</td>
+                <td><input th:field="*{accountCode}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="保存" onclick="submitOriginalCard()" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+
+
+    <form th:object="${bridgeOrder}">
+        <table>
+            <th>收款信息</th>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>收款户名</td>
+                <td><input form="order_form" th:field="*{acceptionAccountName}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>收款卡号</td>
+                <td><input form="order_form" th:field="*{acceptionCardNO}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>收款开户行</td>
+                <td><select form="order_form" th:field="*{acceptionBankCode}" th:remove="all-but-first">
+                    <option th:each="acceptionBankCode : ${acceptionBankCodes}"
+                            th:value="${acceptionBankCode.id}" th:text="${acceptionBankCode.name}">Credit card
+                    </option>
+                </select></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>收款开户行支行</td>
+                <td><input form="order_form" th:field="*{acceptionBranchBank}" value="" class="form-control"/></td>
+            </tr>
+        </table>
+
+    </form>
+
+    <input type="button" value="添加新贷款" onclick="showNewLoanPage()" class="btn btn-info"/>
+    <form class="form-horizontal" method="post" id="new_loan_form" th:object="${newLoanInfo}" >
+        <table th:if="${newLoanList.size()} !=0">
+            <tr>
+                <th>序号</th>
+                <th>回款账户信息</th>
+                <th>新贷款方</th>
+                <th>批复金额（元）</th>
+                <th>贷款方式</th>
+                <th>放款条件</th>
+                <th>是否第三方回款</th>
+                <th>新贷款联系人</th>
+                <th>联系电话</th>
+                <th>修改</th>
+                <th>删除</th>
+            </tr>
+            <!--显示该订单下的所有客户，并可以点击进去修改客户详情 -->
+            <tr th:each="newLoan : ${newLoanList}">
+                <!--onclick="'javascript:showAddCustomerPage('+${customer.id}+')'"-->
+                <td th:text="${newLoan.id}"></td>
+                <td th:text="${newLoan.id}"></td>
+                <td th:text="${newLoan.organTypeName}"></td>
+                <td th:text="${newLoan.approveAmount}"></td>
+                <td th:text="${newLoan.loanType}"></td>
+                <td th:text="${newLoan.loanConditionName}"></td>
+                <td th:text="${newLoan.ifOtherPart}"></td>
+                <td th:text="${newLoan.contactName}"></td>
+                <td th:text="${newLoan.contactPhone}"></td>
+                <td><a th:href="@{/bridgecbs/newLoan/toModify(id=${newLoan.id})}">修改</a></td>
+                <td><a th:href="@{/bridgecbs/newLoan/delete(id=${newLoan.id})}">删除</a></td>
+            </tr>
+        </table>
+
+        <table id="newLoan" style="display: none">
+            <th>新贷款信息</th>
+            <tr>
+                <input form="new_loan_form" type ="hidden" id = "newLoanId" name="newLoanId" th:value="*{id}" value="" class="form-control"/>
+                <td><b style='color:red; float:left; height:20px'>*</b>新贷款方:</td>
+                <td><select form="new_loan_form" th:field="*{organType}" th:remove="all-but-first">
+                    <option th:each="organType : ${organTypes}"
+                            th:value="${organType.id}" th:text="${organType.name}">Credit card
+                    </option>
+                </select></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>新贷款银行:</td>
+                <td><select form="new_loan_form" th:field="*{organCode}" th:remove="all-but-first">
+                    <option th:each="bankId : ${bankIds}"
+                            th:value="${bankId.id}" th:text="${bankId.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>是否第三方回款:</td>
+                <!--<td><input form="new_loan_form" th:field="*{ifOtherPart}" value="" class="form-control"/></td>-->
+                <td>
+                    <label><input type="radio" style="margin-right:10px; vertical-align:middle; margin-top:-2px; margin-bottom:1px;" th:id="*{ifOtherPart}" th:name="*{ifOtherPart}" value="1" checked="true"/>是</label>
+                    <label><input type="radio" style="margin-right:10px; vertical-align:middle; margin-top:-2px; margin-bottom:1px;" th:id="*{ifOtherPart}" th:name="*{ifOtherPart}" value="2"/>否</label>
+                </td>
+
+                <td><b style='color:red; float:left; height:20px'>*</b>批复金额(元):</td>
+                <td><input form="new_loan_form" th:field="*{approveAmount}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>贷款方式:</td>
+                <td><select form="new_loan_form" th:field="*{loanType}" th:remove="all-but-first">
+                    <option th:each="loanType : ${loanTypes}"
+                            th:value="${loanType.id}" th:text="${loanType.name}">Credit card
+                    </option>
+                </select></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>放款条件:</td>
+                <td><select form="new_loan_form" th:field="*{loanCondition}" th:remove="all-but-first">
+                    <option th:each="loanCondition : ${loanConditions}"
+                            th:value="${loanCondition.id}" th:text="${loanCondition.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>新贷款联系人:</td>
+                <td><input form="new_loan_form" th:field="*{contactName}"  class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>联系电话:</td>
+                <td><input form="new_loan_form" th:field="*{contactPhone}" onchange="checkPhone(this)" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="保存" onclick="submitNewLoan()" class="btn btn-info"/></td>
+            </tr>
+
+        </table>
+    </form>
+
+    <form th:object="${bridgeOrder}">
+        <table>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>总批复金额(元)</td>
+                <td><input form="order_form" th:field="*{totalApproveAmount}" value="" class="form-control"/></td>
+            </tr>
+        </table>
+    </form>
+
+    <input type="button" value="添加新贷款过账卡号" onclick="showNewCardPage()" class="btn btn-info"/>
+
+    <form class="form-horizontal" method="post" id="new_card_form" th:object="${bankAccount2}" >
+        <table th:if="${bankAccountsList2.size()} !=0">
+            <tr>
+                <th>序号</th>
+                <th>过账卡号户名</th>
+                <th>过账卡号开户行</th>
+                <th>过账卡号</th>
+                <th>过账户证件号</th>
+                <th>过账金额</th>
+                <th>修改</th>
+                <th>删除</th>
+            </tr>
+            <!--显示该订单下的所有客户，并可以点击进去修改客户详情 -->
+            <tr th:each="newLoanCard : ${bankAccountsList2}">
+                <!--onclick="'javascript:showAddCustomerPage('+${customer.id}+')'"-->
+                <td th:text="${newLoanCard.id}"></td>
+                <td th:text="${newLoanCard.accountName}"></td>
+                <td th:text="${newLoanCard.bankIdName}"></td>
+                <td th:text="${newLoanCard.accountCode}"></td>
+                <td th:text="${newLoanCard.accountCertiCode}"></td>
+                <td th:text="${newLoanCard.amount}"></td>
+                <td><a th:href="@{/bridgecbs/bankAccount/toModify(id=${newLoanCard.id})}">修改</a></td>
+                <td><a th:href="@{/bridgecbs/bankAccount/delete(id=${newLoanCard.id})}">删除</a></td>
+            </tr>
+        </table>
+        <table  id="newCard" style="display: none">
+            <th>账户信息</th>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>过账卡号户名:</td>
+                <td><input th:field="*{accountName}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>过账卡号开户行:</td>
+                <td><select id = "bankId" name = "bankId" th:value="*{bankId}" th:remove="all-but-first">
+                    <option th:each="bankId : ${bankIds}"
+                            th:value="${bankId.id}" th:text="${bankId.name}">Credit card
+                    </option>
+                </select></td>
+                <input type="hidden" id="type2" name="type" value="2" class="form-control"/>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>过账卡号:</td>
+                <td><input th:field="*{accountCode}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>过账户证件号:</td>
+                <td><input th:field="*{accountCertiCode}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>过账金额(元):</td>
+                <td><input th:field="*{amount}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><input type="button" value="保存" onclick="submitNewCard()" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+
+    <form th:object="${bridgeOrder}">
+        <table>
+            <th>借款信息及费用</th>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>借款金额(元)</td>
+                <td><input form="order_form" th:field="*{loanAmount}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>借款天数</td>
+                <td><input form="order_form" th:field="*{loanDays}" value="" class="form-control"/></td>
+
+                <td><b style='color:red; float:left; height:20px'>*</b>计划放款日期</td>
+                <td><input form="order_form" type="text" class="form-control" id="planLoanDate" name="planLoanDate"
+                           th:value="*{planLoanDate ne null} ? *{#dates.format(planLoanDate,'yyyy-MM-dd')}"/></td>
+
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>赎楼成数</td>
+                <td><input form="order_form" th:field="*{percent}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>咨询费(元)</td>
+                <td><input form="order_form" th:field="*{consultFee}" value="" class="form-control"/></td>
+
+                <td>手续费(元)</td>
+                <td><input th:field="*{fee}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>手续费补贴(元)</td>
+                <td><input form="order_form" th:field="*{feeAllowance}" value="" class="form-control"/></td>
+                <td>应付佣金(元)</td>
+                <td><input form="order_form" th:field="*{commission}" value="" class="form-control"/></td>
+                <td>待收费用(元)</td>
+                <td><input form="order_form" th:field="*{dueFee}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>计划机构放款(元)</td>
+                <td><input form="order_form" th:field="*{planOrganAmount}" value="" class="form-control"/></td>
+                <td>自己放款(元)</td>
+                <td><input form="order_form" th:field="*{selfAmount}" value="" class="form-control"/></td>
+                <td>实际机构放款(元)</td>
+                <td><input form="order_form" th:field="*{organAmount}" value="" class="form-control"/></td>
+            </tr>
+
+        </table>
+
+        <table id="dealPage" style="display: none">
+            <th>交易类信息</th>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>总成交价(元)</td>
+                <td><input form="order_form" th:field="*{totalDealPrice}" value="" class="form-control"/></td>
+                <td><b style='color:red; float:left; height:20px'>*</b>定金(元)</td>
+                <td><input form="order_form" th:field="*{frontMoney}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td><b style='color:red; float:left; height:20px'>*</b>首付款金额(元</td>
+                <td><input form="order_form" th:field="*{firstAmount}" value="" class="form-control"/></td>
+                <td>资金监管金额(元)</td>
+                <td><input form="order_form" th:field="*{captialWatchAmount}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>资金监管收款账号</td>
+                <td><input form="order_form" th:field="*{captialWatchAccount}" value="" class="form-control"/></td>
+                <td>监管账号开户行</td>
+                <td><input form="order_form" th:field="*{watchAccountBank}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>资金监管银行</td>
+                <td><select form="order_form" th:field="*{watchBank}" th:remove="all-but-first">
+                    <option th:each="watchBank : ${watchBanks}"
+                            th:value="${watchBank.id}" th:text="${watchBank.name}">Credit card
+                    </option>
+                </select></td>
+                <td>资金监管解冻收款户名</td>
+                <td><input form="order_form" th:field="*{watchUnfreezeAccount}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>公积金贷款金额(元)</td>
+                <td><input form="order_form" th:field="*{publicFundAmount}" value="" class="form-control"/></td>
+
+                <td>公积金户名</td>
+                <td><input form="order_form" th:field="*{publicFundName}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>公积金开户行</td>
+                <td><input form="order_form" th:field="*{publicFundAccountBank}" value="" class="form-control"/></td>
+                <td>公积金卡号</td>
+                <td><input form="order_form" th:field="*{publicFundCardNO}" value="" class="form-control"/></td>
+            </tr>
+
+            <tr>
+                <td>公积金银行</td>
+                <td><select form="order_form" th:field="*{publicFundBank}" th:remove="all-but-first">
+                    <option th:each="publicFundBank : ${publicFundBanks}"
+                            th:value="${publicFundBank.id}" th:text="${publicFundBank.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+        </table>
+    </form>
+
+    <form th:object="${bridgeOrder}">
+        <table>
+            <th>对外原因</th>
+            <tr>
+                <td>初审不通过原因</td>
+                <td><input form="order_form" th:field="*{firstTrialNoCause}" value="" class="form-control"/></td>
+                <td>终审不通过原因</td>
+                <td><input form="order_form" th:field="*{secondTrialNoCause}" value="" class="form-control"/></td>
+                <td>审批不通过原因</td>
+                <td><input form="order_form" th:field="*{thirdTrialNoCause}" value="" class="form-control"/></td>
+            </tr>
+        </table>
+    </form>
+
+    <table>
+        <tr>
+            <td>备注（内部人看）</td>
+            <td><textarea form="order_form" cols="110" rows="2" th:field="*{orderLog.actionDesc}" ></textarea></td>
+        </tr>
+    </table>
+    <div id="buttonTable"></div>
+</div>
+<div class="form-group">
+</div>
+</body>
+</html>

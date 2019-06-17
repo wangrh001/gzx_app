@@ -1,6 +1,5 @@
 package com.bangnd.cbs.service.impl;
 
-import com.bangnd.batch.jobs.client.AlibabaAiService;
 import com.bangnd.cbs.entity.Order;
 import com.bangnd.cbs.entity.OrderDocument;
 import com.bangnd.cbs.entity.OrderPool;
@@ -9,6 +8,7 @@ import com.bangnd.cbs.repository.OrderRepository;
 import com.bangnd.cbs.service.*;
 import com.bangnd.finance.entity.Payment;
 import com.bangnd.finance.service.PaymentService;
+import com.bangnd.gw.AlibabaAiService;
 import com.bangnd.sales.entity.Agent;
 import com.bangnd.sales.entity.Group;
 import com.bangnd.sales.entity.PerformanceCommDetail;
@@ -21,6 +21,7 @@ import com.bangnd.util.cfg.ConstantCfg;
 import com.bangnd.util.entity.WorkFlow;
 import com.bangnd.util.exception.AppException;
 import com.bangnd.util.service.FormatInfoObjService;
+import com.bangnd.util.service.OrganTypeService;
 import com.bangnd.util.service.RuleEngineService;
 import com.bangnd.util.service.WorkFlowService;
 import com.dingtalk.api.response.OapiProcessinstanceGetResponse;
@@ -76,6 +77,8 @@ public class OrderServiceImpl implements OrderService {
     FormatInfoObjService formatInfoObjService;
     @Autowired
     BusinessReminderService businessReminderService;
+    @Autowired
+    OrganTypeService organTypeService;
 
     @Override
     public void save(Order order) {
@@ -205,6 +208,7 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.saveAndFlush(order);
     }
 
+
     @Transactional
     @Override
     public void saveClientApprove(String approveId, OapiProcessinstanceGetResponse response) throws Exception {
@@ -240,38 +244,55 @@ public class OrderServiceImpl implements OrderService {
                 WorkFlow workFlow = workFlowService.getNextWorkFlowBy(ConstantCfg.ORDER_STATE_102, buttonId, order.getBusinessType());
                 OrderPool orderPool = orderPoolService.intoPool(order.getId(), workFlow.getBeforeState(), workFlow.getAfterState(), agent.getUserId(), order.getBusinessType());
                 businessReminderService.remindNextOperator(agent.getUserId(),buttonId,orderPool,"补充资料");
-                orderLogService.recordLog(order.getId(), agent.getUserId(), buttonId);
+                orderLogService.recordLog(order.getId(), agent.getUserId(), buttonId,0,"");
             }
         } else {
             //第一次提交审批
-            BigDecimal demandAmount = new BigDecimal(0);
             Date demandDate = new Date();
-            int daysUsing=0;
             String certiPicUrls = "";
             String housePicUrls = "";
+            String customerName = "";
+            String nextOrgan = "";
+            String lastOrgan = "";
+            BigDecimal lastAmount = new BigDecimal(0);
+            BigDecimal nextAmount = new BigDecimal(0);
+            String comments = "";
 
             List<OapiProcessinstanceGetResponse.FormComponentValueVo> vos = response.getProcessInstance().getFormComponentValues();
             for (OapiProcessinstanceGetResponse.FormComponentValueVo vo : vos) {
-                if (ConstantCfg.DD_RESPONSE_AMOUNTNAME.equals(vo.getName())) {
-                    demandAmount = new BigDecimal(vo.getValue());
-                } else if (ConstantCfg.DD_RESPONSE_DATEINPUTNAME.equals(vo.getName())) {
+                if (ConstantCfg.DD_RESPONSE_USEDATE.equals(vo.getName())) {
                     demandDate = sdf.parse(vo.getValue());
-                }else if(ConstantCfg.DD_RESPONSE_DAYS_USING.equals(vo.getName())){
-                    daysUsing=Integer.valueOf(vo.getValue());
-                } else if (ConstantCfg.DD_RESPONSE_CERTI_PIC.equals(vo.getName())) {
+                }else if(ConstantCfg.DD_RESPONSE_NEXT_ORGAN.equals(vo.getName())){
+                    nextOrgan = vo.getValue();
+                }else if(ConstantCfg.DD_RESPONSE_LAST_ORGAN.equals(vo.getName())){
+                    lastOrgan = vo.getValue();
+                }else if(ConstantCfg.DD_RESPONSE_CUSTOMER_NAME.equals(vo.getName())){
+                    customerName = vo.getValue();
+                }else if (ConstantCfg.DD_RESPONSE_CERTI_PIC.equals(vo.getName())) {
                     certiPicUrls = vo.getValue();
                 } else if(ConstantCfg.DD_RESPONSE_HOUSE_PIC.equals(vo.getName())){
                     housePicUrls = vo.getValue();
+                }else if(ConstantCfg.DD_RESPONSE_LAST_AMOUNT.equals(vo.getName())){
+                    lastAmount = new BigDecimal(vo.getValue());
+                }else if(ConstantCfg.DD_RESPONSE_NEXT_AMOUNT.equals(vo.getName())){
+                    nextAmount = new BigDecimal(vo.getValue());
+                }else if(ConstantCfg.DD_RESPONSE_COMMENTS.equals(vo.getName())){
+                    comments = vo.getValue();
                 }
             }
             Order newOrder = new Order();
             newOrder.setOrderState(ConstantCfg.ORDER_STATE_102);
-            newOrder.setDemandAmount(demandAmount);
+            newOrder.setDemandAmount(new BigDecimal(0));
             newOrder.setDemandDate(demandDate);
-            newOrder.setPeriodType(ConstantCfg.PERIOD_TYPE_BY_DAY);
-            newOrder.setPeriodNum(daysUsing);
             newOrder.setBusinessType(ConstantCfg.BUSI_TYPE_2);
             newOrder.setApplyTime(new Date());
+            newOrder.setApplicantName(customerName);
+            newOrder.setLastOrgName(lastOrgan);
+            newOrder.setNextOrgName(nextOrgan);
+            newOrder.setLastAmount(lastAmount);
+            newOrder.setNextAmount(nextAmount);
+            newOrder.setComments(comments);
+            newOrder.setState(ConstantCfg.STATE_1);
             newOrder.setCreator(0);
             newOrder.setCreateTime(new Date());
             newOrder.setApproveId(approveId);
@@ -293,7 +314,7 @@ public class OrderServiceImpl implements OrderService {
             OrderPool orderPool = orderPoolService.intoPool(newOrder.getId(), 0, newOrder.getOrderState(), agent.getUserId(), newOrder.getBusinessType());
             //提醒
             businessReminderService.remindNextOperator(agent.getUserId(),buttonId,orderPool,"初审");
-            orderLogService.recordLog(newOrder.getId(), agent.getUserId(), buttonId);
+            orderLogService.recordLog(newOrder.getId(), agent.getUserId(), buttonId,0,"");
         }
 
         System.out.println(approveId + " have been inserted db!");
@@ -332,7 +353,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void halderFeeByDiffStep(int afterState, Order order,long updatorId) {
+    public void halderFeeByDiffStep(int afterState, Order order,long updatorId,BigDecimal selfAmount) {
+        Date signDate = formatInfoObjService.getSignDate(order.getId());
         //根据不同的状态节点，写入费用
         if (afterState == ConstantCfg.ORDER_STATE_108) {
             BigDecimal downFee = ruleEngineService.calc(order.getId(), ConstantCfg.CALC_TYPE_2);
@@ -342,13 +364,13 @@ public class OrderServiceImpl implements OrderService {
             paymentService.save(setPaymentAttr(order.getId(), interestFee, updatorId, ConstantCfg.FEE_TYPE_INTEREST));
             BigDecimal lawFee = ruleEngineService.calc(order.getId(), ConstantCfg.CALC_TYPE_3);
             paymentService.save(setPaymentAttr(order.getId(), lawFee, updatorId, ConstantCfg.FEE_TYPE_LAWFEE));
-        } else if (afterState == ConstantCfg.ORDER_STATE_119) {
-            paymentService.save(setPaymentAttr(order.getId(), order.getDemandAmount(), updatorId, ConstantCfg.FEE_TYPE_OUTAMOUNT));
-        } else if (afterState == ConstantCfg.ORDER_STATE_124) {
-            Payment payment = setPaymentAttr(order.getId(), order.getDemandAmount(), updatorId, ConstantCfg.FEE_TYPE_INAMOUNT);
+        } else if (afterState == ConstantCfg.ORDER_STATE_119 && selfAmount.compareTo(new BigDecimal(0))>0) {
+            paymentService.save(setPaymentAttr(order.getId(), selfAmount, updatorId, ConstantCfg.FEE_TYPE_OUTAMOUNT));
+        } else if (afterState == ConstantCfg.ORDER_STATE_124 && selfAmount.compareTo(new BigDecimal(0))>0) {
+            Payment payment = setPaymentAttr(order.getId(), selfAmount, updatorId, ConstantCfg.FEE_TYPE_INAMOUNT);
             payment.setInOut(ConstantCfg.IN_OUT_2);
             paymentService.save(payment);
-        } else if (afterState == ConstantCfg.ORDER_STATE_127) {
+        } else if (afterState == ConstantCfg.ORDER_STATE_127 && selfAmount.compareTo(new BigDecimal(0))>0 ) {
             Payment payment = paymentService.getPaymentByOrderIdAndFeeType(order.getId(), ConstantCfg.FEE_TYPE_INTEREST);
             if (payment != null) {
                 Agent agent = agentService.getAgentById(order.getSalerId());
@@ -359,7 +381,7 @@ public class OrderServiceImpl implements OrderService {
                     payment1.setInOut(ConstantCfg.IN_OUT_2);
                     paymentService.save(payment1);
                     BigDecimal interest = payment.getAmount();
-                    PerformanceCommDetail performanceCommDetail = setPerformanceCommDetail(order.getId(), order.getDemandAmount(), interest);
+                    PerformanceCommDetail performanceCommDetail = setPerformanceCommDetail(order.getId(), selfAmount, interest);
                     performanceCommDetail.setSalerId(order.getSalerId());
                     performanceCommDetail.setMinCommission(commission1);
                     performanceCommDetail.setMaxCommission(commission1);
@@ -370,7 +392,7 @@ public class OrderServiceImpl implements OrderService {
                     BigDecimal commission = ruleEngineService.calc(order.getId(), ConstantCfg.CALC_TYPE_5);
                     BigDecimal maxCommission = ruleEngineService.calc(order.getId(), ConstantCfg.CALC_TYPE_9);
                     BigDecimal interest = payment.getAmount();
-                    PerformanceCommDetail performanceCommDetail = setPerformanceCommDetail(order.getId(), order.getDemandAmount(), interest);
+                    PerformanceCommDetail performanceCommDetail = setPerformanceCommDetail(order.getId(), selfAmount, interest);
                     performanceCommDetail.setSalerId(order.getSalerId());
                     performanceCommDetail.setMinCommission(minCommission);
                     performanceCommDetail.setMaxCommission(maxCommission);
@@ -378,7 +400,8 @@ public class OrderServiceImpl implements OrderService {
                     performanceCommDetailService.save(performanceCommDetail);
                     //回算历史所有佣金明细
                     performanceCommDetailService.reCalc(order.getId());
-                    performanceCommissionService.calcMonthCommission(agent.getId(), order.getSignDate());
+
+                    performanceCommissionService.calcMonthCommission(agent.getId(), signDate);
                 }
                 //计算经理的提成：
                 if (agent != null) {
@@ -391,7 +414,7 @@ public class OrderServiceImpl implements OrderService {
                             BigDecimal commission = ruleEngineService.calc(order.getId(), ConstantCfg.CALC_TYPE_7);
                             BigDecimal maxCommission = ruleEngineService.calc(order.getId(), ConstantCfg.CALC_TYPE_11);
                             BigDecimal interest = payment.getAmount();
-                            PerformanceCommDetail performanceCommDetail = setPerformanceCommDetail(order.getId(), order.getDemandAmount(), interest);
+                            PerformanceCommDetail performanceCommDetail = setPerformanceCommDetail(order.getId(), selfAmount, interest);
                             performanceCommDetail.setSalerId(agent1.getId());
                             performanceCommDetail.setMinCommission(minCommission);
                             performanceCommDetail.setMaxCommission(maxCommission);
@@ -399,12 +422,17 @@ public class OrderServiceImpl implements OrderService {
                             performanceCommDetailService.save(performanceCommDetail);
                             //暂时不回算：回算历史所有佣金明细
                             //performanceCommDetailService.reCalcManagerComm(agent1.getEmployeeId());
-                            performanceCommissionService.calcMonthCommission(agent1.getId(), order.getSignDate());
+                            performanceCommissionService.calcMonthCommission(agent1.getId(), signDate);
                         }
                     }
                 }
             }
         }
+    }
+
+    @Override
+    public List<Order> getNotFinishOrders() {
+        return orderRepository.findDoingOrders();
     }
 
     private Payment setPaymentAttr(long orderId, BigDecimal amount, long updatorId, int feeType) {
