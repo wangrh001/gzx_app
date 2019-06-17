@@ -30,7 +30,7 @@ public class ProdInterestServiceImpl implements ProdInterestService {
             public Predicate toPredicate(Root<ProdInterest> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
                 List<Predicate> predicates = new ArrayList<Predicate>();
                 if (prodInterestSearchForm.getPeriodType() != null && !"".equals(prodInterestSearchForm.getPeriodType())) {
-                    if ("0".equals(prodInterestSearchForm.getPeriodType())) {
+                    if ("-1".equals(prodInterestSearchForm.getPeriodType())) {
                         predicates.add(cb.notEqual(root.get("periodType"), prodInterestSearchForm.getPeriodType()));
                     } else {
                         predicates.add(cb.equal(root.get("periodType"), prodInterestSearchForm.getPeriodType()));

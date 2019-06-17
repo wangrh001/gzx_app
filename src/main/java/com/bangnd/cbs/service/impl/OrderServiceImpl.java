@@ -147,7 +147,7 @@ public class OrderServiceImpl implements OrderService {
 
         if (orderSearchForm.getOrderState() != null && !"".equals(orderSearchForm.getOrderState())) {
             System.out.println("orderState=" + orderSearchForm.getOrderState());
-            if ("0".equals(orderSearchForm.getOrderState())) {
+            if ("-1".equals(orderSearchForm.getOrderState())) {
                 predicates.add(cb.notEqual(root.get("orderState").as(Integer.class), new Integer(orderSearchForm.getOrderState())));
             } else {
                 predicates.add(cb.equal(root.get("orderState").as(Integer.class), new Integer(orderSearchForm.getOrderState())));
@@ -163,7 +163,7 @@ public class OrderServiceImpl implements OrderService {
         }
         if (orderSearchForm.getBusinessType() != null && !"".equals(orderSearchForm.getBusinessType())) {
             System.out.println("businessType=" + orderSearchForm.getBusinessType());
-            if ("0".equals(orderSearchForm.getBusinessType())) {
+            if ("-1".equals(orderSearchForm.getBusinessType())) {
                 predicates.add(cb.notEqual(root.get("businessType"), orderSearchForm.getBusinessType()));
             } else {
                 predicates.add(cb.equal(root.get("businessType"), orderSearchForm.getBusinessType()));

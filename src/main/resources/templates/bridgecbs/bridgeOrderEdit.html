@@ -83,18 +83,18 @@
 
         function submitCustomer() {
             /*<![CDATA[*/
-            if(customer_form.custType.value==1){
+            if(customer_form.custType.value==-1){
                 alert('关系人类型：必须选择一个，谢谢！')
                 customer_form.custType.focus()
                 return false
             }
-            if(customer_form.customerChose.value==1){
+            if(customer_form.customerChose.value==-1){
                 if(customer_form.name.value==''){
                     alert('姓名：不能为空，请填写！')
                     customer_form.name.focus()
                     return false
                 }
-                if(customer_form.certiType.value==1){
+                if(customer_form.certiType.value==-1){
                     alert('证件类型：必须选择一个，谢谢！')
                     customer_form.certiType.focus()
                     return false
@@ -140,7 +140,7 @@
         }
         function submitMortgage() {
             /*<![CDATA[*/
-            if(mortgage_form.propertyType.value==1){
+            if(mortgage_form.propertyType.value==-1){
                 alert('物业业务类型：必须选择一个，谢谢！')
                 mortgage_form.propertyType.focus()
                 return false
@@ -188,12 +188,12 @@
         }
         function submitOriginalLoan() {
             /*<![CDATA[*/
-            if(original_loan_form.type.value==1){
+            if(original_loan_form.type.value==-1){
                 alert('原贷款类型：不能为空，请选择一个，谢谢！')
                 original_loan_form.type.focus()
                 return false
             }
-            if(original_loan_form.organType.value==1){
+            if(original_loan_form.organType.value==-1){
                 alert('原贷款方：不能为空，请选择一个，谢谢！')
                 original_loan_form.organType.focus()
                 return false
@@ -223,7 +223,7 @@
                 original_loan_form.accountNO.focus()
                 return false
             }
-            if(original_loan_form.bankCode.value==1){
+            if(original_loan_form.bankCode.value==-1){
                 alert('原贷款开户行：不能为空，请选择一个，谢谢！')
                 original_loan_form.bankCode.focus()
                 return false
@@ -245,7 +245,7 @@
                 original_loan_form.contactPhone.focus()
                 return false
             }
-            if(original_loan_form.foreclosureType.value==1){
+            if(original_loan_form.foreclosureType.value==-1){
                 alert('原贷款赎楼方式：不能为空，请选择一个，谢谢！')
                 original_loan_form.foreclosureType.focus()
                 return false
@@ -258,7 +258,7 @@
         }
         function submitNewLoan() {
             /*<![CDATA[*/
-            if(new_loan_form.organType.value==1){
+            if(new_loan_form.organType.value==-1){
                 alert('新贷款方：不能为空，请选择一个，谢谢！')
                 original_loan_form.organType.focus()
                 return false
@@ -278,12 +278,12 @@
                 original_loan_form.approveAmount.focus()
                 return false
             }
-            if(new_loan_form.loanType.value==1){
+            if(new_loan_form.loanType.value==-1){
                 alert('贷款方式：不能为空，请选择一个，谢谢！')
                 original_loan_form.loanType.focus()
                 return false
             }
-            if(new_loan_form.loanCondition.value==1){
+            if(new_loan_form.loanCondition.value==-1){
                 alert('放款添件：不能为空，请选择一个，谢谢！')
                 original_loan_form.loanCondition.focus()
                 return false

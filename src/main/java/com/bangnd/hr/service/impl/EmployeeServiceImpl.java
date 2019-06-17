@@ -40,28 +40,28 @@ public class EmployeeServiceImpl implements EmployeeService {
                     predicates.add(cb.like(root.get("birthday").as(String.class), "%" + employeeSearchForm.getBirthday() + "%"));
                 }
                 if (employeeSearchForm.getCity() != null && !"".equals(employeeSearchForm.getCity())) {
-                    if ("0".equals(employeeSearchForm.getCity())) {
+                    if ("-1".equals(employeeSearchForm.getCity())) {
                         predicates.add(cb.notEqual(root.get("city"), employeeSearchForm.getCity()));
                     } else {
                         predicates.add(cb.equal(root.get("city"), employeeSearchForm.getCity()));
                     }
                 }
                 if (employeeSearchForm.getDept() != null && !"".equals(employeeSearchForm.getDept())) {
-                    if ("0".equals(employeeSearchForm.getDept())) {
+                    if ("-1".equals(employeeSearchForm.getDept())) {
                         predicates.add(cb.notEqual(root.get("dept"), employeeSearchForm.getDept()));
                     } else {
                         predicates.add(cb.equal(root.get("dept"), employeeSearchForm.getDept()));
                     }
                 }
                 if (employeeSearchForm.getManageGrade() != null && !"".equals(employeeSearchForm.getManageGrade())) {
-                    if ("0".equals(employeeSearchForm.getManageGrade())) {
+                    if ("-1".equals(employeeSearchForm.getManageGrade())) {
                         predicates.add(cb.notEqual(root.get("manageGrade"), employeeSearchForm.getManageGrade()));
                     } else {
                         predicates.add(cb.equal(root.get("manageGrade"), employeeSearchForm.getManageGrade()));
                     }
                 }
                 if (employeeSearchForm.getTechGrade() != null && !"".equals(employeeSearchForm.getTechGrade())) {
-                    if ("0".equals(employeeSearchForm.getTechGrade())) {
+                    if ("-1".equals(employeeSearchForm.getTechGrade())) {
                         predicates.add(cb.notEqual(root.get("techGrade"), employeeSearchForm.getTechGrade()));
                     } else {
                         predicates.add(cb.equal(root.get("techGrade"), employeeSearchForm.getTechGrade()));

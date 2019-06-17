@@ -34,14 +34,14 @@ public class AgentServiceImpl implements AgentService {
                     predicates.add(cb.like(root.get("name").as(String.class), "%" + agentSearchForm.getName() + "%"));
                 }
                 if (agentSearchForm.getBusinessType() != null && !"".equals(agentSearchForm.getBusinessType())) {
-                    if ("0".equals(agentSearchForm.getBusinessType())) {
+                    if ("-1".equals(agentSearchForm.getBusinessType())) {
                         predicates.add(cb.notEqual(root.get("businessType"), agentSearchForm.getBusinessType()));
                     } else {
                         predicates.add(cb.equal(root.get("businessType"), agentSearchForm.getBusinessType()));
                     }
                 }
                 if (agentSearchForm.getChannelType() != null && !"".equals(agentSearchForm.getChannelType())) {
-                    if ("0".equals(agentSearchForm.getChannelType())) {
+                    if ("-1".equals(agentSearchForm.getChannelType())) {
                         predicates.add(cb.notEqual(root.get("channelType"), agentSearchForm.getChannelType()));
                     } else {
                         predicates.add(cb.equal(root.get("channelType"), agentSearchForm.getChannelType()));

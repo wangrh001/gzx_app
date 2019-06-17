@@ -30,7 +30,7 @@ public class CommissionServiceImpl implements CommissionService {
             public Predicate toPredicate(Root<Commission> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
                 List<Predicate> predicates = new ArrayList<Predicate>();
                 if (commissionSearchForm.getBusinessType() != null && !"".equals(commissionSearchForm.getBusinessType())) {
-                    if ("0".equals(commissionSearchForm.getBusinessType())) {
+                    if ("-1".equals(commissionSearchForm.getBusinessType())) {
                         predicates.add(cb.notEqual(root.get("businessType"), commissionSearchForm.getBusinessType()));
                     } else {
                         predicates.add(cb.equal(root.get("businessType"), commissionSearchForm.getBusinessType()));
@@ -40,7 +40,7 @@ public class CommissionServiceImpl implements CommissionService {
                     predicates.add(cb.equal(root.get("productId").as(String.class), commissionSearchForm.getProductId()));
                 }
                 if (commissionSearchForm.getChannelType() != null && !"".equals(commissionSearchForm.getChannelType())) {
-                    if ("0".equals(commissionSearchForm.getChannelType())) {
+                    if ("-1".equals(commissionSearchForm.getChannelType())) {
                         predicates.add(cb.notEqual(root.get("channelType"), commissionSearchForm.getChannelType()));
                     } else {
                         predicates.add(cb.equal(root.get("channelType"), commissionSearchForm.getChannelType()));

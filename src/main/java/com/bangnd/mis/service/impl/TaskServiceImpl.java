@@ -29,21 +29,21 @@ public class TaskServiceImpl implements TaskService {
                     predicates.add(cb.like(root.get("taskName").as(String.class), "%" + taskSearchForm.getTaskName() + "%"));
                 }
                 if (taskSearchForm.getType() != null && !"".equals(taskSearchForm.getType())) {
-                    if ("0".equals(taskSearchForm.getType())) {
+                    if ("-1".equals(taskSearchForm.getType())) {
                         predicates.add(cb.notEqual(root.get("type"), taskSearchForm.getType()));
                     } else {
                         predicates.add(cb.equal(root.get("type"), taskSearchForm.getType()));
                     }
                 }
                 if (taskSearchForm.getTaskPeriod() != null && !"".equals(taskSearchForm.getTaskPeriod())) {
-                    if ("0".equals(taskSearchForm.getTaskPeriod())) {
+                    if ("-1".equals(taskSearchForm.getTaskPeriod())) {
                         predicates.add(cb.notEqual(root.get("taskPeriod"), taskSearchForm.getTaskPeriod()));
                     } else {
                         predicates.add(cb.equal(root.get("taskPeriod"), taskSearchForm.getTaskPeriod()));
                     }
                 }
                 if (taskSearchForm.getTaskState() != null && !"".equals(taskSearchForm.getTaskState())) {
-                    if ("0".equals(taskSearchForm.getTaskState())) {
+                    if ("-1".equals(taskSearchForm.getTaskState())) {
                         predicates.add(cb.notEqual(root.get("taskState"), taskSearchForm.getTaskState()));
                     } else {
                         predicates.add(cb.equal(root.get("taskState"), taskSearchForm.getTaskState()));

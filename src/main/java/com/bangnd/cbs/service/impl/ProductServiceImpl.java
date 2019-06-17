@@ -33,14 +33,14 @@ public class ProductServiceImpl implements ProductService {
                     predicates.add(cb.like(root.get("productName").as(String.class), "%" + productSearchForm.getProductName() + "%"));
                 }
                 if (productSearchForm.getBankId() != null && !"".equals(productSearchForm.getBankId())) {
-                    if ("0".equals(productSearchForm.getBankId())) {
+                    if ("-1".equals(productSearchForm.getBankId())) {
                         predicates.add(cb.notEqual(root.get("bankId"), productSearchForm.getBankId()));
                     } else {
                         predicates.add(cb.equal(root.get("bankId"), productSearchForm.getBankId()));
                     }
                 }
                 if (productSearchForm.getProductType() != null && !"".equals(productSearchForm.getProductType())) {
-                    if ("0".equals(productSearchForm.getProductType())) {
+                    if ("-1".equals(productSearchForm.getProductType())) {
                         predicates.add(cb.notEqual(root.get("productType"), productSearchForm.getProductType()));
                     } else {
                         predicates.add(cb.equal(root.get("productType"), productSearchForm.getProductType()));

@@ -5,7 +5,6 @@ import com.bangnd.finance.form.PaymentSearchForm;
 import com.bangnd.finance.repository.PaymentRepository;
 import com.bangnd.finance.service.PaymentService;
 import com.bangnd.util.cfg.ConstantCfg;
-import com.bangnd.util.date.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +34,7 @@ public class PaymentServiceImpl implements PaymentService {
             public Predicate toPredicate(Root<Payment> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
                 List<Predicate> predicates = new ArrayList<Predicate>();
                 if (paymentSearchForm.getOffset() != null && !"".equals(paymentSearchForm.getOffset())) {
-                    if ("0".equals(paymentSearchForm.getOffset())) {
+                    if ("-1".equals(paymentSearchForm.getOffset())) {
                         predicates.add(cb.notEqual(root.get("offset"), paymentSearchForm.getOffset()));
                     } else {
                         predicates.add(cb.equal(root.get("offset"), paymentSearchForm.getOffset()));
@@ -46,14 +45,14 @@ public class PaymentServiceImpl implements PaymentService {
                 }
 
                 if (paymentSearchForm.getInOut() != null && !"".equals(paymentSearchForm.getInOut())) {
-                    if ("0".equals(paymentSearchForm.getInOut())) {
+                    if ("-1".equals(paymentSearchForm.getInOut())) {
                         predicates.add(cb.notEqual(root.get("inOut"), paymentSearchForm.getInOut()));
                     } else {
                         predicates.add(cb.equal(root.get("inOut"), paymentSearchForm.getInOut()));
                     }
                 }
                 if (paymentSearchForm.getPayType() != null && !"".equals(paymentSearchForm.getPayType())) {
-                    if ("0".equals(paymentSearchForm.getPayType())) {
+                    if ("-1".equals(paymentSearchForm.getPayType())) {
                         predicates.add(cb.notEqual(root.get("payType"), paymentSearchForm.getPayType()));
                     } else {
                         predicates.add(cb.equal(root.get("payType"), paymentSearchForm.getPayType()));
@@ -66,7 +65,7 @@ public class PaymentServiceImpl implements PaymentService {
                     predicates.add(cb.like(root.get("accountName").as(String.class), "%" + paymentSearchForm.getAccountName() + "%"));
                 }
                 if (paymentSearchForm.getPayState() != null && !"".equals(paymentSearchForm.getPayState())) {
-                    if ("0".equals(paymentSearchForm.getPayState())) {
+                    if ("-1".equals(paymentSearchForm.getPayState())) {
                         predicates.add(cb.notEqual(root.get("payState"), paymentSearchForm.getPayState()));
                     } else {
                         predicates.add(cb.equal(root.get("payState").as(Integer.class), paymentSearchForm.getPayState()));
@@ -75,7 +74,7 @@ public class PaymentServiceImpl implements PaymentService {
                     predicates.add(cb.notEqual(root.get("payState").as(Integer.class), new Integer(7)));
                 }
                 if (paymentSearchForm.getIfReal() != null && !"".equals(paymentSearchForm.getIfReal())) {
-                    if ("0".equals(paymentSearchForm.getIfReal())) {
+                    if ("-1".equals(paymentSearchForm.getIfReal())) {
                         predicates.add(cb.notEqual(root.get("ifReal"), paymentSearchForm.getIfReal()));
                     } else {
                         predicates.add(cb.equal(root.get("ifReal"), paymentSearchForm.getIfReal()));

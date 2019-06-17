@@ -33,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
                     predicates.add(cb.like(root.get("accountNames").as(String.class), "%" + accountSearchForm.getAccountNames() + "%"));
                 }
                 if (accountSearchForm.getBank() != null && !"".equals(accountSearchForm.getBank())) {
-                    if ("0".equals(accountSearchForm.getBank())) {
+                    if ("-1".equals(accountSearchForm.getBank())) {
                         predicates.add(cb.notEqual(root.get("bank"), accountSearchForm.getBank()));
                     } else {
                         predicates.add(cb.equal(root.get("bank"), accountSearchForm.getBank()));

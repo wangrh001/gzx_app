@@ -35,42 +35,42 @@ public class CustServiceImpl implements CustService {
                     predicates.add(cb.like(root.get("phone").as(String.class), "%" + custSearchForm.getPhone() + "%"));
                 }
                 if (custSearchForm.getCity() != null && !"".equals(custSearchForm.getCity())) {
-                    if ("0".equals(custSearchForm.getCity())) {
+                    if ("-1".equals(custSearchForm.getCity())) {
                         predicates.add(cb.notEqual(root.get("city"), custSearchForm.getCity()));
                     } else {
                         predicates.add(cb.equal(root.get("city"), custSearchForm.getCity()));
                     }
                 }
                 if (custSearchForm.getSex() != null && !"".equals(custSearchForm.getSex())) {
-                    if ("0".equals(custSearchForm.getSex())) {
+                    if ("-1".equals(custSearchForm.getSex())) {
                         predicates.add(cb.notEqual(root.get("sex"), custSearchForm.getSex()));
                     } else {
                         predicates.add(cb.equal(root.get("sex"), custSearchForm.getSex()));
                     }
                 }
                 if (custSearchForm.getSalesState() != null && !"".equals(custSearchForm.getSalesState())) {
-                    if ("0".equals(custSearchForm.getSalesState())) {
+                    if ("-1".equals(custSearchForm.getSalesState())) {
                         predicates.add(cb.notEqual(root.get("salesState"), custSearchForm.getSalesState()));
                     } else {
                         predicates.add(cb.equal(root.get("salesState"), custSearchForm.getSalesState()));
                     }
                 }
                 if (custSearchForm.getInfoOriginal() != null && !"".equals(custSearchForm.getInfoOriginal())) {
-                    if ("0".equals(custSearchForm.getInfoOriginal())) {
+                    if ("-1".equals(custSearchForm.getInfoOriginal())) {
                         predicates.add(cb.notEqual(root.get("infoOriginal"), custSearchForm.getInfoOriginal()));
                     } else {
                         predicates.add(cb.equal(root.get("infoOriginal"), custSearchForm.getInfoOriginal()));
                     }
                 }
                 if (custSearchForm.getWhyBorrow() != null && !"".equals(custSearchForm.getWhyBorrow())) {
-                    if ("0".equals(custSearchForm.getWhyBorrow())) {
+                    if ("-1".equals(custSearchForm.getWhyBorrow())) {
                         predicates.add(cb.notEqual(root.get("whyBorrow"), custSearchForm.getWhyBorrow()));
                     } else {
                         predicates.add(cb.equal(root.get("whyBorrow"), custSearchForm.getWhyBorrow()));
                     }
                 }
                 if (custSearchForm.getJob() != null && !"".equals(custSearchForm.getJob())) {
-                    if ("0".equals(custSearchForm.getJob())) {
+                    if ("-1".equals(custSearchForm.getJob())) {
                         predicates.add(cb.notEqual(root.get("job"), custSearchForm.getJob()));
                     } else {
                         predicates.add(cb.equal(root.get("job"), custSearchForm.getJob()));

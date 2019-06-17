@@ -30,7 +30,7 @@ public class AccountingRuleServiceImpl implements AccountingRuleService {
             public Predicate toPredicate(Root<AccountingRule> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder cb) {
                 List<Predicate> predicates = new ArrayList<Predicate>();
                 if (accountingRuleSearchForm.getFeeType() != null && !"".equals(accountingRuleSearchForm.getFeeType())) {
-                    if ("0".equals(accountingRuleSearchForm.getFeeType())) {
+                    if ("-1".equals(accountingRuleSearchForm.getFeeType())) {
                         predicates.add(cb.notEqual(root.get("feeType"), accountingRuleSearchForm.getFeeType()));
                     } else {
                         predicates.add(cb.equal(root.get("feeType"), accountingRuleSearchForm.getFeeType()));

@@ -33,7 +33,7 @@ public class CurriculumServiceImpl implements CurriculumService {
                     predicates.add(cb.like(root.get("name").as(String.class), "%" + curriculumSearchForm.getName() + "%"));
                 }
                 if (curriculumSearchForm.getType() != null && !"".equals(curriculumSearchForm.getType())) {
-                    if ("0".equals(curriculumSearchForm.getType())) {
+                    if ("-1".equals(curriculumSearchForm.getType())) {
                         predicates.add(cb.notEqual(root.get("type"), curriculumSearchForm.getType()));
                     } else {
                         predicates.add(cb.equal(root.get("type"), curriculumSearchForm.getType()));
@@ -43,7 +43,7 @@ public class CurriculumServiceImpl implements CurriculumService {
                     predicates.add(cb.like(root.get("teacherName").as(String.class), "%" + curriculumSearchForm.getTeacherName() + "%"));
                 }
                 if (curriculumSearchForm.getPosId() != null && !"".equals(curriculumSearchForm.getPosId())) {
-                    if ("0".equals(curriculumSearchForm.getPosId())) {
+                    if ("-1".equals(curriculumSearchForm.getPosId())) {
                         predicates.add(cb.notEqual(root.get("posId"), curriculumSearchForm.getPosId()));
                     } else {
                         predicates.add(cb.equal(root.get("posId"), curriculumSearchForm.getPosId()));

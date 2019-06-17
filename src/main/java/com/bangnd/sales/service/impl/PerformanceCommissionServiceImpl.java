@@ -52,7 +52,7 @@ public class PerformanceCommissionServiceImpl implements PerformanceCommissionSe
                     predicates.add(cb.like(root.get("employeeName").as(String.class), "%" + performanceCommissionSearchForm.getEmployeeName() + "%"));
                 }
                 if (performanceCommissionSearchForm.getProcess() != null && !"".equals(performanceCommissionSearchForm.getProcess())) {
-                    if ("0".equals(performanceCommissionSearchForm.getProcess())) {
+                    if ("-1".equals(performanceCommissionSearchForm.getProcess())) {
                         predicates.add(cb.notEqual(root.get("process"), performanceCommissionSearchForm.getProcess()));
                     } else {
                         predicates.add(cb.equal(root.get("process"), performanceCommissionSearchForm.getProcess()));

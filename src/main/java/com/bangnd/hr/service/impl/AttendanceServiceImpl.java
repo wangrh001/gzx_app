@@ -40,7 +40,7 @@ public class AttendanceServiceImpl implements AttendanceService {
                     predicates.add(cb.between(root.get("workDay").as(Date.class), attendanceSearchForm.getWorkDayStart(), attendanceSearchForm.getWorkDayEnd()));
                 }
                 if (attendanceSearchForm.getAskType() != null && !"".equals(attendanceSearchForm.getAskType())) {
-                    if ("0".equals(attendanceSearchForm.getAskType())) {
+                    if ("-1".equals(attendanceSearchForm.getAskType())) {
                         predicates.add(cb.notEqual(root.get("askType"), attendanceSearchForm.getAskType()));
                     } else {
                         predicates.add(cb.equal(root.get("askType"), attendanceSearchForm.getAskType()));

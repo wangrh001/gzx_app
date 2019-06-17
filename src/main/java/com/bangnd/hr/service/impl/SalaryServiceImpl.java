@@ -36,7 +36,7 @@ public class SalaryServiceImpl implements SalaryService {
                     predicates.add(cb.like(root.get("month").as(String.class), "%" + salarySearchForm.getMonth() + "%"));
                 }
                 if (salarySearchForm.getExtendState() != null && !"".equals(salarySearchForm.getExtendState())) {
-                    if ("0".equals(salarySearchForm.getExtendState())) {
+                    if ("-1".equals(salarySearchForm.getExtendState())) {
                         predicates.add(cb.notEqual(root.get("extendState"), salarySearchForm.getExtendState()));
                     } else {
                         predicates.add(cb.equal(root.get("extendState"), salarySearchForm.getExtendState()));
