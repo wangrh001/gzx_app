@@ -1,3 +1,27 @@
+select * from t_util_format_info where  en_name = 'organAmount';
+select * from t_ums_resource where id = 138;
+update t_bridge_order set down_emp_id = '9';
+select order_state from t_bridge_order where id = 16;
+select * from t_hr_employee where position = 7;
+select * from t_cbs_order_pool where order_id = 16;
+delete from t_cbs_order_pool where id = 485;
+update t_cbs_order_pool set leave_time=null,do_state = 2 where id = 482;
+update t_bridge_order set order_state = 139 where id = 16;
+
+select * from t_util_format_info where ch_name="实际机构放款(元)"
+update t_util_format_info set en_name='canLoanPercent' where id = 136;
+ALTER TABLE t_bridge_mortgage DROP percent;
+update t_bridge_mortgage set can_loan_percent = 10;
+
+select * from t_sales_agent;
+SELECT * FROM `cfg_cbs_order_state`;
+ALTER TABLE t_bridge_mortgage CHANGE percent can_loan_percent int(11);
+select * from cfg_organ_type;
+select * from cfg_original_loan_organ_type;
+delete from t_bridge_order where id = 15;
+select * from cfg_bridge_order_busi_type;
+select * from cfg_bridge_order_product_id where name='赎楼贷（非交易）';
+UPDATE t_util_format_info set `need_button` = '131' where `need_button` =123 and `busi_type` =3 and `who_object` ='order';
 select a.product_id,a.busi_type from t_bridge_order a;
 select order_state from t_bridge_order where id = 14;
 update t_bridge_order set product_id = 3 where id = 14;

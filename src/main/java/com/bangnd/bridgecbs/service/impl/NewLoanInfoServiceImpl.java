@@ -4,7 +4,7 @@ import com.bangnd.bridgecbs.entity.NewLoanInfo;
 import com.bangnd.bridgecbs.repository.NewLoanInfoRepository;
 import com.bangnd.bridgecbs.service.NewLoanConditionService;
 import com.bangnd.bridgecbs.service.NewLoanInfoService;
-import com.bangnd.util.service.OrganTypeService;
+import com.bangnd.bridgecbs.service.OriginalLoanOrganTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +18,9 @@ public class NewLoanInfoServiceImpl implements NewLoanInfoService {
     private NewLoanInfoRepository newLoanInfoRepository;
 
     @Autowired
-    private OrganTypeService organTypeService;
-
-    @Autowired
     private NewLoanConditionService newLoanConditionService;
+    @Autowired
+    private OriginalLoanOrganTypeService originalLoanOrganTypeService;
 
     @Override
     public List<NewLoanInfo> getAllByOrderId(Long orderId) {
@@ -35,7 +34,7 @@ public class NewLoanInfoServiceImpl implements NewLoanInfoService {
 
     @Override
     public void save(NewLoanInfo newLoanInfo,Long orderId) {
-        newLoanInfo.setOrganTypeName(organTypeService.getOrganType(newLoanInfo.getOrganType()).getName());
+        newLoanInfo.setOrganTypeName(originalLoanOrganTypeService.getOneById(newLoanInfo.getOrganType()).getName());
         newLoanInfo.setLoanConditionName(newLoanConditionService.getOneById(newLoanInfo.getLoanCondition()).getName());
         newLoanInfo.setOrderId(orderId);
         newLoanInfo.setCreateTime(new Date());

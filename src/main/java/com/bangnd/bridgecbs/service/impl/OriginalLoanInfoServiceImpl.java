@@ -22,6 +22,8 @@ public class OriginalLoanInfoServiceImpl implements OriginalLoanInfoService {
     private BridgeOrderAcceptionBankCodeService bridgeOrderAcceptionBankCodeService;
     @Autowired
     private OriginalLoanForeclosureTypeService originalLoanForeclosureTypeService;
+    @Autowired
+    private OriginalLoanOrganTypeService originalLoanOrganTypeService;
 
     @Override
     public List<OriginalLoanInfo> getAllByOrderId(Long orderId) {
@@ -35,9 +37,8 @@ public class OriginalLoanInfoServiceImpl implements OriginalLoanInfoService {
 
     @Override
     public void save(OriginalLoanInfo originalLoanInfo,Long orderId) {
-
         originalLoanInfo.setTypeName(originalLoanTypeService.getOneById(originalLoanInfo.getType()).getName());
-        originalLoanInfo.setOrganTypeName(organTypeService.getOrganType(originalLoanInfo.getOrganType()).getName());
+        originalLoanInfo.setOrganTypeName(originalLoanOrganTypeService.getOneById(originalLoanInfo.getOrganType()).getName());
         originalLoanInfo.setOrganCodeName(bridgeOrderAcceptionBankCodeService.getBridgeOrderAcceptionBankCodeById(originalLoanInfo.getBankCode()).getName());
         originalLoanInfo.setForeclosureTypeName(originalLoanForeclosureTypeService.getOneById(originalLoanInfo.getForeclosureType()).getName());
         originalLoanInfo.setOrderId(orderId);

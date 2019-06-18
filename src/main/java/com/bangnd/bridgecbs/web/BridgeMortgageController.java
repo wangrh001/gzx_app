@@ -89,6 +89,8 @@ public class BridgeMortgageController {
         mortgage1.setPropertyNO(mortgage.getPropertyNO());
         mortgage1.setRegisterPrice(mortgage.getRegisterPrice());
         mortgage1.setEstimatePrice(mortgage.getEstimatePrice());
+        mortgage1.setCanLoanPercent(mortgage.getCanLoanPercent());
+        mortgage1.setCanLoanAmount(mortgage.getCanLoanAmount());
         mortgage1.setEstatePrice(mortgage.getEstatePrice());
         mortgage1.setPropertyUse(mortgage.getPropertyUse());
         mortgage1.setPropertyState(mortgage.getPropertyState());

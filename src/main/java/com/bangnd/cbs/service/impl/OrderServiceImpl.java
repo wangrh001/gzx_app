@@ -243,7 +243,7 @@ public class OrderServiceImpl implements OrderService {
                 orderRepository.save(order);
                 WorkFlow workFlow = workFlowService.getNextWorkFlowBy(ConstantCfg.ORDER_STATE_102, buttonId, order.getBusinessType());
                 OrderPool orderPool = orderPoolService.intoPool(order.getId(), workFlow.getBeforeState(), workFlow.getAfterState(), agent.getUserId(), order.getBusinessType());
-                businessReminderService.remindNextOperator(agent.getUserId(),buttonId,orderPool,"补充资料");
+                businessReminderService.remindNextOperator(agent.getUserId(),buttonId,orderPool,"补充资料",order.getApplicantName());
                 orderLogService.recordLog(order.getId(), agent.getUserId(), buttonId,0,"");
             }
         } else {
@@ -313,7 +313,7 @@ public class OrderServiceImpl implements OrderService {
             //进池
             OrderPool orderPool = orderPoolService.intoPool(newOrder.getId(), 0, newOrder.getOrderState(), agent.getUserId(), newOrder.getBusinessType());
             //提醒
-            businessReminderService.remindNextOperator(agent.getUserId(),buttonId,orderPool,"初审");
+            businessReminderService.remindNextOperator(agent.getUserId(),buttonId,orderPool,"初审",newOrder.getApplicantName());
             orderLogService.recordLog(newOrder.getId(), agent.getUserId(), buttonId,0,"");
         }
 

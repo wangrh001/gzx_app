@@ -86,6 +86,11 @@ public class ConstantCfg {
     public final static int BUTTON_ID_72 = 72;//提交订单
     public final static int BUTTON_ID_74 = 74;//初审通过
     public final static int BUTTON_ID_73 = 73;//初审不通过
+    public final static int BUTTON_ID_125 = 125;//初审不通过
+    public final static int BUTTON_ID_133 = 133;//终审不通过
+    public final static int BUTTON_ID_141 = 141;//不同意
+    public final static int BUTTON_ID_130 = 130;//已安排下户
+
 
     //数据废弃状态
     public final static int STATE_100 = 100;
@@ -104,6 +109,9 @@ public class ConstantCfg {
 
     //业务员岗位
     public final static int POSITION_OPERTION_8 = 8;
+
+    //风控专员岗
+    public final static int POSITION_RISK_7 = 7;
 
     public final static int DAY = 1;
     public final static int THREEDAY = 2;

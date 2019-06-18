@@ -1,6 +1,7 @@
 package com.bangnd.gw;
 
 import com.bangnd.util.cfg.ConstantCfg;
+import com.bangnd.util.exception.AppException;
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
 import com.dingtalk.api.request.*;
@@ -70,29 +71,42 @@ public class DingDingGWService {
         return client3.execute(request3,accessToken);
     }
 
+
+
     /**
      * 通过钉钉发送消息
      * @param userList
      * @param message
      * @throws ApiException
      */
-    public void sendMessage(String userList,String message) throws ApiException {
-        String accessToken=getAccessToken();
-        DingTalkClient client = new DefaultDingTalkClient(ConstantCfg.DD_SEND_MESSAGE_URL);
+    public void sendMessage(String userList,String message) throws Exception {
+        if(!"".equals(userList)&&userList!=null&&!"".equals(message)&&message!=null){
+            String accessToken=getAccessToken();
+            DingTalkClient client = new DefaultDingTalkClient(ConstantCfg.DD_SEND_MESSAGE_URL);
 
-        OapiMessageCorpconversationAsyncsendV2Request request = new OapiMessageCorpconversationAsyncsendV2Request();
-        request.setUseridList(userList);
-        request.setAgentId(ConstantCfg.DD_AGENT_ID);
-        request.setToAllUser(false);
+            OapiMessageCorpconversationAsyncsendV2Request request = new OapiMessageCorpconversationAsyncsendV2Request();
+            request.setUseridList(userList);
+            request.setAgentId(ConstantCfg.DD_AGENT_ID);
+            request.setToAllUser(false);
 
-        OapiMessageCorpconversationAsyncsendV2Request.Msg msg = new OapiMessageCorpconversationAsyncsendV2Request.Msg();
-        msg.setMsgtype("text");
-        msg.setText(new OapiMessageCorpconversationAsyncsendV2Request.Text());
-        msg.getText().setContent(message);
-        request.setMsg(msg);
+            OapiMessageCorpconversationAsyncsendV2Request.Msg msg = new OapiMessageCorpconversationAsyncsendV2Request.Msg();
+            msg.setMsgtype("text");
+            msg.setText(new OapiMessageCorpconversationAsyncsendV2Request.Text());
+            msg.getText().setContent(message);
+            request.setMsg(msg);
 
-        OapiMessageCorpconversationAsyncsendV2Response response = client.execute(request,accessToken);
-        System.out.println("发送成功!发送内容："+message);
+            OapiMessageCorpconversationAsyncsendV2Response response = client.execute(request,accessToken);
+            System.out.println("发送成功!发送内容："+message);
+        }else {
+            if("".equals(userList)||userList==null){
+                System.out.println("发送人为空，请检查！");
+                throw new AppException("发送人为空，请检查！");
+            }
+            if("".equals(message)||message==null){
+                System.out.println("发送内容为空，请检查");
+                throw new AppException("发送内容为空，请检查！");
+            }
+        }
     }
 
     /**
@@ -151,8 +165,20 @@ public class DingDingGWService {
 //                System.out.println(dduser.getUserid());
 //            }
 //        }
+        DingDingGWService dingDingGWService = new DingDingGWService();
         String a = "abcdef|gehdeth";
-        System.out.println(a.substring(0,a.indexOf("|")));
+
+
+        OapiProcessinstanceGetResponse response = dingDingGWService.getApproveDetail("8baba187-4f5e-4e34-9825-d8e889a153b8",DingDingGWService.getAccessToken());
+
+        List<OapiProcessinstanceGetResponse.FormComponentValueVo> vos = response.getProcessInstance().getFormComponentValues();
+        for (OapiProcessinstanceGetResponse.FormComponentValueVo vo : vos) {
+            System.out.println(vo.getName()+"||"+vo.getValue());
+            if(vo.getName().equals(ConstantCfg.DD_RESPONSE_PROD_TYPE)){
+                System.out.println(vo.getValue().substring(2,vo.getValue().length()-2));
+            }
+        }
+
 
     }
 

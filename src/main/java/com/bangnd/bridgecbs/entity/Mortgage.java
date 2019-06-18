@@ -49,7 +49,7 @@ public class Mortgage {
     private int propertyState;
 
     @Column
-    private int percent;
+    private int canLoanPercent;
 
     @Column
     private BigDecimal canLoanAmount;
@@ -296,12 +296,12 @@ public class Mortgage {
         this.state = state;
     }
 
-    public int getPercent() {
-        return percent;
+    public int getCanLoanPercent() {
+        return canLoanPercent;
     }
 
-    public void setPercent(int percent) {
-        this.percent = percent;
+    public void setCanLoanPercent(int canLoanPercent) {
+        this.canLoanPercent = canLoanPercent;
     }
 
     public BigDecimal getCanLoanAmount() {

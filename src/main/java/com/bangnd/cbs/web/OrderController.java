@@ -391,7 +391,7 @@ public class OrderController {
             if(orderOld.getOrderState()!=ConstantCfg.ORDER_STATE_127){
                 Action action = flowService.getNextActionByBeforState(new Long(orderId).longValue(),workFlow.getAfterState(),orderOld.getBusinessType());
                 //发送消息提醒下一个人：updaterId操作了buttonId，提醒下一个人，该去做action
-                businessReminderService.remindNextOperator(updaterId,buttonId,orderPool,action.getName());
+                businessReminderService.remindNextOperator(updaterId,buttonId,orderPool,action.getName(),orderOld.getApplicantName());
             }
         } catch (Exception e) {
             e.printStackTrace();

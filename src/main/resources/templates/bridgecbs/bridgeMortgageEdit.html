@@ -72,6 +72,10 @@
             form.submit()
             /*]]>*/
         }
+        function calcCanLoanAmount(percent) {
+            var estimatePrice = document.getElementById("estimatePrice").value
+            document.getElementById("canLoanAmount").value=estimatePrice*percent/100
+        }
     </script>
 
 
@@ -120,10 +124,14 @@
                         th:value="${estateType.id}" th:text="${estateType.name}">Credit card
                 </option>
             </select></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>可贷比例(%):</td>
+            <td><input th:field="*{percent}" onchange="calcCanLoanAmount(this.value)" class="form-control"/></td>
         </tr>
         <tr>
             <td><b style='color:red; float:left; height:20px'>*</b>物业所在地:</td>
             <td><input th:field="*{estateArea}" value="" class="form-control"/></td>
+            <td>可贷金额(元):</td>
+            <td><input th:field="*{canLoanAmount}" class="form-control"/></td>
         </tr>
         <tr>
             <td><input type="button" value="保存" onclick="submitMortgage()" class="btn btn-info"/></td>
