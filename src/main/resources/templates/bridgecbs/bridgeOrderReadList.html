@@ -10,12 +10,48 @@
     <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+
+    <script th:inline="javascript">
+        function doQuery(pagePara) {
+            /*<![CDATA[*/
+            var pageNum = [[${pageNum}]];
+            var totalPages = [[${totalPages}]];
+            // /*]]>*/
+            var queryForm = document.getElementById("queryForm")
+            if(pagePara==-1){
+                console.log("enter the -1 page")
+                queryForm.action="/bridgecbs/bridgeOrder/readList?pageNum="+totalPages
+            }else if(pagePara==1){
+                queryForm.action="/bridgecbs/bridgeOrder/readList?pageNum="+pagePara
+            }else {
+                queryForm.action="/bridgecbs/bridgeOrder/readList?pageNum="+pageNum
+            }
+            queryForm.submit();
+        }
+        function doQueryMinus1(pageNum) {
+            /*<![CDATA[*/
+            var pageNum = [[${pageNum}]]-1;
+            // /*]]>*/
+            var queryForm = document.getElementById("queryForm")
+            queryForm.action="/bridgecbs/bridgeOrder/readList?pageNum="+pageNum
+            queryForm.submit();
+        }
+        function doQueryPlus1(pageNum) {
+            /*<![CDATA[*/
+            var pageNum = [[${pageNum}]]+1;
+            // /*]]>*/
+            var queryForm = document.getElementById("queryForm")
+            queryForm.action="/bridgecbs/bridgeOrder/readList?pageNum="+pageNum
+            queryForm.submit();
+        }
+    </script>
+
 </head>
 <body class="container">
 <br/>
 <h4>列表</h4>
 <div>
-    <form class="form-horizontal" th:action="@{/bridgecbs/bridgeOrder/readList}" th:object="${bridgeOrderSearchForm}"
+    <form class="form-horizontal" id="queryForm" th:action="@{/bridgecbs/bridgeOrder/readList}" th:object="${bridgeOrderSearchForm}"
           method="post">
         <table>
             <tr>
@@ -53,6 +89,24 @@
         </tr>
         </tbody>
     </table>
+
+    <table>
+        <tr>
+            <td th:text="*{totalPages}"></td>
+            <td th:text="*{totalElements}"></td>
+            <td><a href="javascript:doQuery(1)">首页</a></td>
+            <td th:switch="${pageNum}">
+                <p th:case="1"><a href="javascript:doQuery(1)">上一页</a></p>
+                <p th:case="*"><a href="javascript:doQueryMinus1(1)">上一页</a></p>
+            </td>
+            <td th:switch="${pageNum}">
+                <p th:case="${totalPages}"><a href="javascript:doQuery(-1)">下一页</a></p>
+                <p th:case="*"><a href="javascript:doQueryPlus1(1)">下一页</a></p>
+            </td>
+            <td><a href="javascript:doQuery(-1)">尾页</a></td>
+        </tr>
+    </table>
+
 </div>
 
 </body>
