@@ -1,55 +1,134 @@
-select * from t_util_format_info where  en_name = 'organAmount';
-select * from t_ums_resource where id = 138;
-update t_bridge_order set down_emp_id = '9';
-select order_state from t_bridge_order where id = 16;
-select * from t_hr_employee where position = 7;
-select * from t_cbs_order_pool where order_id = 16;
-delete from t_cbs_order_pool where id = 485;
-update t_cbs_order_pool set leave_time=null,do_state = 2 where id = 482;
-update t_bridge_order set order_state = 139 where id = 16;
+select position0_.id as id1_157_, position0_.create_time as create_t2_157_, position0_.creator as creator3_157_, position0_.dept_id as dept_id4_157_, position0_.is_commission as is_commi5_157_, position0_.level as level6_157_, position0_.name as name7_157_, position0_.salary_max as salary_m8_157_, position0_.salary_min as salary_m9_157_, position0_.state as state10_157_, position0_.update_time as update_11_157_, position0_.updator as updator12_157_ from t_hr_position position0_ where position0_.dept_id=9  and cast(position0_.state as signed)<>100;
 
-select * from t_util_format_info where ch_name="实际机构放款(元)"
-update t_util_format_info set en_name='canLoanPercent' where id = 136;
-ALTER TABLE t_bridge_mortgage DROP percent;
-update t_bridge_mortgage set can_loan_percent = 10;
 
-select * from t_sales_agent;
-SELECT * FROM `cfg_cbs_order_state`;
-ALTER TABLE t_bridge_mortgage CHANGE percent can_loan_percent int(11);
-select * from cfg_organ_type;
-select * from cfg_original_loan_organ_type;
-delete from t_bridge_order where id = 15;
-select * from cfg_bridge_order_busi_type;
-select * from cfg_bridge_order_product_id where name='赎楼贷（非交易）';
-UPDATE t_util_format_info set `need_button` = '131' where `need_button` =123 and `busi_type` =3 and `who_object` ='order';
-select a.product_id,a.busi_type from t_bridge_order a;
-select order_state from t_bridge_order where id = 14;
-update t_bridge_order set product_id = 3 where id = 14;
-select * from cfg_Bridge_Order_Product_Id;
-select * from t_hr_position where state =1;
+select * from cfg_employee_tech_grade;
+update cfg_employee_tech_grade set id = -1,name='--请选择--' where id = 0;
+update cfg_employee_manage_grade set id = -1,name='--请选择--' where id = 0;
+update cfg_employee_city set id = -1,name='--请选择--' where id = 0;
+update cfg_employee_position_type set id = -1,name='--请选择--' where id = 0;
+
+
+select * from t_ums_resource where grade = 2 and type = 1;
+select * from t_ums_role_resource where res_id  = 160;
+delete from t_ums_resource where id= 160;
+delete from t_ums_role_resource where res_id  = 160;
+select * from t_util_entitys;
+select * from t_util_attribute;
+ALTER TABLE t_util_attribute DROP if_modify_card_key;
+update t_ums_resource set en_name='bridgecbs' where name = '核心业务系统';
+update t_ums_resource set en_name='hr' where name = '人力系统';
+update t_ums_resource set en_name='sales' where name = '销售系统';
+update t_ums_resource set en_name='finance' where name = '财务系统';
+update t_ums_resource set en_name='util' where name = 'IT管理';
+update t_ums_resource set en_name='mis' where name = '决策系统';
+
+select * from t_ums_role_resource;
+select * from cfg_yes_no;
+insert into cfg_attribute_data_type values (-1,'--请选择--');
+insert into cfg_attribute_data_type values (1,'int');
+insert into cfg_attribute_data_type values (2,'long');
+insert into cfg_attribute_data_type values (3,'String');
+insert into cfg_attribute_data_type values (4,'Date');
+insert into cfg_attribute_data_type values (5,'BigDecimal');
+
+select * from t_ums_resource where grade =1 and state <>100 and id <> -1;
+
+select * from t_cbs_order_pool where order_id = 18;
+select * from t_ums_user where id = 19;
+update t_ums_user set dduser_name = 'manager8154' where id = 19;
+select * from t_hr_employee;
+update t_cbs_order_pool set user_id = 19 where id = 526;
+
+update t_ums_user set password = 'C4CA4238A0B923820DCC509A6F75849B' where id = 0;
+select * from t_hr_position where state = 1;
+select * from t_hr_employee where position = 9;
+select * from t_ums_user where id = 18;
+update t_bridge_order set order_state = 140 where id =18;
+delete from t_cbs_order_pool where id = 519;
+update t_cbs_order_pool set do_state = 2,leave_time = null where id = 518;
+select * from cfg_yes_no;
+select * from t_hr_position;
+select order_id,state from t_bridgecbs_card_controller;
+select order_state from t_bridge_order where id =18;
+select * from t_cbs_order_pool where order_id = 18;
+select * from t_ums_user where id = 8;
+select * From t_util_work_flow where before_state = 132 and busi_type = 3 and state <> 100;
+update cfg_bridge_order_product_id set id = -1 where id = 1;
+select * from cfg_cbs_order_state;
+select * from t_util_format_info where busi_type = 3 and need_button ='131';
+update t_util_format_info set busi_type = 2 where id >= 179 and id <= 183;
+
+insert into cfg_card_controller_account_type values (-1,'--请选择--');
+insert into cfg_card_controller_account_type values (1,'赎楼卡');
+insert into cfg_card_controller_account_type values (2,'三方卡');
+insert into cfg_card_controller_account_type values (3,'赎楼过账卡');
+insert into cfg_card_controller_account_type values (4,'三方过账卡');
+
+insert into cfg_card_controller_card_attribute values (-1,'--请选择--');
+insert into cfg_card_controller_card_attribute values (1,'对公全控');
+insert into cfg_card_controller_card_attribute values (2,'对私全控');
+
+insert into cfg_card_controller_controll_state values (-1,'--请选择--');
+insert into cfg_card_controller_controll_state values (1,'已控');
+insert into cfg_card_controller_controll_state values (2,'未控');
+
+insert into cfg_yes_no values (-1,'--请选择--');
+insert into cfg_yes_no values (1,'是');
+insert into cfg_yes_no values (2,'否');
+
+update t_bridge_order set channel_type=0,channel_follow_type=0,customer_fee_tpye=0,three_party_give_type=0,report_organ_days=0;
+
+insert into cfg_bridge_order_channel_follow_type values (-1,'--请选择--');
+insert into cfg_bridge_order_channel_follow_type values (1,'直接转客户');
+insert into cfg_bridge_order_channel_follow_type values (2,'直接转出借人');
+
+insert into cfg_bridge_order_channel_type values (-1,'--请选择--');
+insert into cfg_bridge_order_channel_type values (1,'机构');
+insert into cfg_bridge_order_channel_type values (2,'个人');
+
+insert into cfg_bridge_order_three_part_type values (-1,'--请选择--');
+insert into cfg_bridge_order_three_part_type values (1,'客户自行提供');
+insert into cfg_bridge_order_three_part_type values (2,'我司提供');
+insert into cfg_bridge_order_three_part_type values (3,'渠道提供');
+
+insert into cfg_bridge_order_cust_fee_type values (-1,'--请选择--');
+insert into cfg_bridge_order_cust_fee_type values (1,'按10天/档付息');
+insert into cfg_bridge_order_cust_fee_type values (2,'一次行收齐');
+insert into cfg_bridge_order_cust_fee_type values (3,'其他方式');
+
+
+update t_bridge_original_loan_info set pass_card_bank_id = 0;
+update t_bridge_new_loan_info set pass_card_bank_id =0;
+
 select * from cfg_order_doc_type;
-select * from t_ums_resource where busi_type = 3;
-select * from cfg_cbs_order_state where busi_type = 3 and id = 145;
-select distinct who_object from t_util_format_info where busi_type  = 3;
-update t_util_format_info set if_need = 'N' where busi_type =3 and id = 173;
-select * from t_hr_employee where name = '王海明';
+update cfg_order_doc_type set file_desc = concat('（',file_desc) where id in (9,15,18,19);
 
-select * from t_cbs_order_pool where order_id = 14;
-update t_cbs_order_pool set leave_time=sysdate(),do_state =3 where id = 468;
-insert into t_cbs_order_pool (into_time, leave_time, order_id, do_state, user_id, position_id, into_pool_no, create_time, creator, updator, state)
-values (sysdate(),null,14,2,8,14,1,sysdate(),0,0,1);
+select * from t_hr_action where busi_type = 3 and if_can_expect = 'Y';
+update t_hr_action set if_can_expect = 'Y' where id in (62,68,70,72,73,74,75,76,77,78,79,80);
+ALTER TABLE t_bridge_order DROP tack_clear_prove_time;
+update t_hr_action set expect_action_time_column_name ='supplyDataTime' where id = 59;
+update t_hr_action set expect_action_time_column_name ='firstApproveTime' where id = 60;
+update t_hr_action set expect_action_time_column_name ='specialOrderDealTime' where id = 61;
+update t_hr_action set expect_action_time_column_name ='downFeeTime' where id = 62;
+update t_hr_action set expect_action_time_column_name ='specialPassTime' where id = 63;
+update t_hr_action set expect_action_time_column_name ='downHouseTime' where id = 64;
+update t_hr_action set expect_action_time_column_name ='inputDownInfoTime' where id = 65;
+update t_hr_action set expect_action_time_column_name ='secondApproveTime' where id = 66;
+update t_hr_action set expect_action_time_column_name ='captialDistributeTime' where id = 67;
+update t_hr_action set expect_action_time_column_name ='intrestTime' where id = 68;
+update t_hr_action set expect_action_time_column_name ='reportOrganTime' where id = 69;
+update t_hr_action set expect_action_time_column_name ='inputOrganInfoTime' where id = 70;
+update t_hr_action set expect_action_time_column_name ='thirdApproveTime' where id = 71;
+update t_hr_action set expect_action_time_column_name ='outputMoneyTime' where id = 72;
+update t_hr_action set expect_action_time_column_name ='confirmUpGetMoneyTime' where id = 73;
+update t_hr_action set expect_action_time_column_name ='takeZipDocTime' where id = 74;
+update t_hr_action set expect_action_time_column_name ='giveDownDocTime' where id = 75;
+update t_hr_action set expect_action_time_column_name ='confirmDownGiveMoneyTime' where id = 76;
+update t_hr_action set expect_action_time_column_name ='backMoneyTime' where id = 77;
+update t_hr_action set expect_action_time_column_name ='giveCustomerDocTime' where id = 78;
+update t_hr_action set expect_action_time_column_name ='takeClearProveTime' where id = 79;
+update t_hr_action set expect_action_time_column_name ='takeHouseBookTime' where id = 80;
 
-select * from t_util_format_info where busi_Type = 3 and ch_name='赎楼成数';
-select * from t_hr_action where id in (62,63);
-update t_hr_action set name='收下户费' where id = 62;
-select * from t_util_work_flow where busi_type = 3 and before_state = 133 and button_id = 123 and state <> 100;
-select * from cfg_bridge_order_product_id;
-update t_util_work_flow set action_id = 62 where id in (49,48);
-select busi_type,before_state from t_util_work_flow where busi_type = 3 group by busi_type,before_state having count(distinct action_id)>1
-
-select * from t_util_work_flow where busi_type = 3 and before_state in (145,158) and trans_condition is not null;
-
-select * from t_util_work_flow where busi_type = 3 and before_state = 0;
 update t_util_format_info set need_button = '123' where id in (111,112,113,114,115,203,153,154,158,159,160,161,170,175,176,177,178,179,187,188,189);
 update t_util_format_info set need_button = '125' where id in (200);
 update t_util_format_info set need_button = '133' where id in (201);

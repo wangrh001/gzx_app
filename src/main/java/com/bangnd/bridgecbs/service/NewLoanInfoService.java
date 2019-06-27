@@ -10,7 +10,7 @@ public interface NewLoanInfoService {
 
     public NewLoanInfo getOneById(Long id);
 
-    public void save(NewLoanInfo newLoanInfo,Long orderId);
+    public void save(NewLoanInfo newLoanInfo, Long orderId);
 
     public void merge(NewLoanInfo newLoanInfo);
 

@@ -27,7 +27,6 @@ public class CfgEntityCreator {
         String UpEntityName = Character.toUpperCase(tableName.charAt(0)) + tableName.substring(1);
         stringBuffer.append("public class " + UpEntityName + UpColumn + "{ \n");
         stringBuffer.append("@Id \n");
-        stringBuffer.append("@GeneratedValue \n");
         stringBuffer.append("private int id;\n");
         stringBuffer.append("@Column(nullable = false)\n");
         stringBuffer.append("private String name;\n");

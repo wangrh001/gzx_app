@@ -16,10 +16,9 @@ public class SearchFormCreator {
      * @param dataModels
      * @return
      */
-    public String create(List<DataModel> dataModels, String company, String sys) {
+    public String create(List<DataModel> dataModels, String company, String sys,String entityName) {
         StringBuffer stringBuffer = new StringBuffer();
         if (dataModels != null) {
-            String entityName = dataModels.get(0).getTableNames();
             String UpEntityName = Character.toUpperCase(entityName.charAt(0)) + entityName.substring(1);
             stringBuffer.append("package com." + company + "." + sys + ".form;\n");
             stringBuffer.append("import javax.persistence.*;\n");
@@ -78,6 +77,6 @@ public class SearchFormCreator {
         dataModel1.setIfModifyable(1);
         dataModels.add(dataModel1);
         SearchFormCreator searchFormCreator = new SearchFormCreator();
-        System.out.println(searchFormCreator.create(dataModels, "dashu", "test"));
+        System.out.println(searchFormCreator.create(dataModels, "dashu", "test","test"));
     }
 }

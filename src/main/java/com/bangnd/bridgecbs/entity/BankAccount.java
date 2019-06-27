@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name="t_bridge_bank_account")
+@Table(name = "t_bridge_bank_account")
 public class BankAccount {
     @Id
     @GeneratedValue

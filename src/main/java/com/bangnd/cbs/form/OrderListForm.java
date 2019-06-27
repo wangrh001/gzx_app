@@ -10,6 +10,8 @@ public class OrderListForm {
     private Date demandDate;
     private String orderState;
     private String nextHandler;
+    private String nextWork;
+    private Date nextTime;
 
     public long getOrderId() {
         return orderId;
@@ -57,5 +59,21 @@ public class OrderListForm {
 
     public void setNextHandler(String nextHandler) {
         this.nextHandler = nextHandler;
+    }
+
+    public String getNextWork() {
+        return nextWork;
+    }
+
+    public void setNextWork(String nextWork) {
+        this.nextWork = nextWork;
+    }
+
+    public Date getNextTime() {
+        return nextTime;
+    }
+
+    public void setNextTime(Date nextTime) {
+        this.nextTime = nextTime;
     }
 }

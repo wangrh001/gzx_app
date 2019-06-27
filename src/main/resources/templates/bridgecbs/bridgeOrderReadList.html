@@ -31,13 +31,15 @@
 <div class="with:80%">
     <table class="table table-hover">
         <thead>
-            <tr>
-                <th>序号</th>
-                <th>借款人</th>
-                <th>状态</th>
-                <th>下一个处理人</th>
-                <th>看日志</th>
-            </tr>
+        <tr>
+            <th>序号</th>
+            <th>借款人</th>
+            <th>状态</th>
+            <th>下一个处理人</th>
+            <th>下一步工作</th>
+            <th>下一步预计时间</th>
+            <th>看日志</th>
+        </tr>
         </thead>
         <tbody>
         <tr th:each="orderListForm : ${orderListForms}">
@@ -45,6 +47,8 @@
             <td th:text="${orderListForm.applicantName}">1</td>
             <td th:text="${orderListForm.orderState}">1</td>
             <td th:text="${orderListForm.nextHandler}">1</td>
+            <td th:text="${orderListForm.nextWork}">1</td>
+            <td th:text="${orderListForm.nextTime}">1</td>
             <td><a th:href="@{/orderLog/list(orderId=${orderListForm.orderId})}">查看轨迹</a></td>
         </tr>
         </tbody>

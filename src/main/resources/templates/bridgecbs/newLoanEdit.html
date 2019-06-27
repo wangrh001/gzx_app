@@ -14,48 +14,68 @@
 
         function submitNewLoan() {
             /*<![CDATA[*/
-            if(new_loan_form.organType.value==1){
+            if (new_loan_form.organType.value == 1) {
                 alert('新贷款方：不能为空，请选择一个，谢谢！')
                 original_loan_form.organType.focus()
                 return false
             }
-            if(new_loan_form.organCode.value==-1){
+            if (new_loan_form.organCode.value == -1) {
                 alert('新贷款银行：不能为空，请选择一个，谢谢！')
                 original_loan_form.organCode.focus()
                 return false
             }
-            if(new_loan_form.ifOtherPart.value==''){
+            if (new_loan_form.ifOtherPart.value == '') {
                 alert('是否第三方回款：不能为空，请填写，谢谢！')
                 original_loan_form.ifOtherPart.focus()
                 return false
             }
-            if(new_loan_form.approveAmount.value==''){
+            if (new_loan_form.approveAmount.value == '') {
                 alert('批复金额：不能为空，请填写，谢谢！')
                 original_loan_form.approveAmount.focus()
                 return false
             }
-            if(new_loan_form.loanType.value==1){
+            if (new_loan_form.loanType.value == 1) {
                 alert('贷款方式：不能为空，请选择一个，谢谢！')
                 original_loan_form.loanType.focus()
                 return false
             }
-            if(new_loan_form.loanCondition.value==1){
+            if (new_loan_form.loanCondition.value == 1) {
                 alert('放款添件：不能为空，请选择一个，谢谢！')
                 original_loan_form.loanCondition.focus()
                 return false
             }
-            if(new_loan_form.contactName.value==''){
+            if (new_loan_form.contactName.value == '') {
                 alert('新贷款联系人：不能为空，请填写，谢谢！')
                 original_loan_form.contactName.focus()
                 return false
             }
-            if(new_loan_form.contactPhone.value==''){
+            if (new_loan_form.contactPhone.value == '') {
                 alert('新贷款联系电话：不能为空，请填写，谢谢！')
                 original_loan_form.contactPhone.focus()
                 return false
             }
+            if (new_loan_form.passCardAccountName.value == '') {
+                alert('过账卡号户名：不能为空，请填写，谢谢！')
+                new_card_form.passCardAccountName.focus()
+                return false
+            }
+            if (new_loan_form.passCardBankId.value == -1) {
+                alert('过账卡号开户行：不能为空，请选一个，谢谢！')
+                new_card_form.passCardBankId.focus()
+                return false
+            }
+            if (new_loan_form.passCardAccountCode.value == '') {
+                alert('过账卡号：不能为空，请填写，谢谢！')
+                new_card_form.passCardAccountCode.focus()
+                return false
+            }
+            if (new_loan_form.passCardAmount.value == '') {
+                alert('过账金额：不能为空，请填写，谢谢！')
+                new_card_form.passCardAmount.focus()
+                return false
+            }
             var form = document.getElementById("new_loan_form")
-            form.action="/bridgecbs/newLoan/modify"
+            form.action = "/bridgecbs/newLoan/modify"
             form.submit()
             /*]]>*/
         }
@@ -64,12 +84,13 @@
             var borrower = document.getElementById("backCard")
             borrower.style.display = borrower.style.display == 'none' ? "block" : "none"
         }
-        function submitBackCard(){
+
+        function submitBackCard() {
             /*<![CDATA[*/
             var orderId = document.getElementById("orderId").value
             var newLoanId = document.getElementById("id").value
             var form = document.getElementById("backCard_form")
-            form.action="/bridgecbs/bankAccount/add?orderId="+orderId+"&newLoanId="+newLoanId+"&type=4"
+            form.action = "/bridgecbs/bankAccount/add?orderId=" + orderId + "&newLoanId=" + newLoanId + "&type=4"
             form.submit()
             /*]]>*/
         }
@@ -77,7 +98,8 @@
 
 </head>
 <body>
-<form class="form-horizontal" method="post" id="new_loan_form" th:action="@{/bridgecbs/newLoan/modify}" th:object="${newLoanInfo}" >
+<form class="form-horizontal" method="post" id="new_loan_form" th:action="@{/bridgecbs/newLoan/modify}"
+      th:object="${newLoanInfo}">
     <input type="hidden" th:field="*{id}"/>
     <input type="hidden" th:field="*{orderId}"/>
     <table id="newLoan">
@@ -121,14 +143,41 @@
             <td><b style='color:red; float:left; height:20px'>*</b>联系电话:</td>
             <td><input form="new_loan_form" th:field="*{contactPhone}" value="" class="form-control"/></td>
         </tr>
+
+        <th>账户信息</th>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>过账卡号户名:</td>
+            <td><input th:field="*{passCardAccountName}" value="" class="form-control"/></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>过账卡号开户行:</td>
+            <td><select id="passCardBankId" name="passCardBankId" th:value="*{passCardBankId}"
+                        th:remove="all-but-first">
+                <option th:each="bankId : ${organCodes}"
+                        th:value="${bankId.id}" th:text="${bankId.name}">Credit card
+                </option>
+            </select></td>
+            <input type="hidden" id="type2" name="type" value="2" class="form-control"/>
+        </tr>
+        <tr>
+            <td><b style='color:red; float:left; height:20px'>*</b>过账卡号:</td>
+            <td><input th:field="*{passCardAccountCode}" value="" class="form-control"/></td>
+        </tr>
+        <tr>
+            <td>过账户证件号:</td>
+            <td><input th:field="*{passCardAccountCertiCode}" value="" class="form-control"/></td>
+            <td><b style='color:red; float:left; height:20px'>*</b>过账金额(元):</td>
+            <td><input th:field="*{passCardAmount}" value="" class="form-control"/></td>
+        </tr>
+
         <tr>
             <td><input type="button" value="保存" onclick="submitNewLoan()" class="btn btn-info"/></td>
         </tr>
-        <tr><td><input type="button" value="添加回款账号" onclick="showBackCardPage()" class="btn btn-info"/></td></tr>
+        <tr>
+            <td><input type="button" value="添加回款账号" onclick="showBackCardPage()" class="btn btn-info"/></td>
+        </tr>
     </table>
 </form>
 
-<form class="form-horizontal" method="post" th:object="${bankAccount}" id = "backCard_form">
+<form class="form-horizontal" method="post" th:object="${bankAccount}" id="backCard_form">
     <table th:if="${bankAccountsList} !=null">
         <tr>
             <th>回款卡号户名</th>
@@ -149,13 +198,13 @@
             <td><a th:href="@{/bridgecbs/bankAccount/delete(id=${newLoanCard.id})}">删除</a></td>
         </tr>
     </table>
-    <table  id="backCard" style="display: none">
+    <table id="backCard" style="display: none">
         <input type="hidden" th:id="*{type}" th:name="*{type}" value="4" class="form-control"/>
         <tr>
             <td><b style='color:red; float:left; height:20px'>*</b>回款卡号户名:</td>
             <td><input th:field="*{accountName}" value="" class="form-control"/></td>
             <td><b style='color:red; float:left; height:20px'>*</b>回款卡号开户行:</td>
-            <td><select id = "bankId2" name = "bankId" th:value="*{bankId}" th:remove="all-but-first">
+            <td><select id="bankId2" name="bankId" th:value="*{bankId}" th:remove="all-but-first">
                 <option th:each="bankId : ${organCodes}"
                         th:value="${bankId.id}" th:text="${bankId.name}">Credit card
                 </option>

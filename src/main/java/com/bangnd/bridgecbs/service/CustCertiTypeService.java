@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface CustCertiTypeService {
     public List<CustCertiType> getAll();
+
     public CustCertiType getCertiTypeById(int id);
 }

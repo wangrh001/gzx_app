@@ -8,6 +8,7 @@ import com.bangnd.cbs.service.OrderDocTypeService;
 import com.bangnd.cbs.service.OrderLogService;
 import com.bangnd.ums.entity.User;
 import com.bangnd.util.cfg.ConstantCfg;
+import com.bangnd.util.file.FileHandler;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -19,8 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.*;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class DocHandlerController {
@@ -190,6 +196,81 @@ public class DocHandlerController {
             model.addAttribute("files", files);
         }
         return url;
+    }
+
+    @RequestMapping("/doc/downFiles")
+    public void downFiles(Long orderId,HttpServletResponse resp){
+        DataInputStream in = null;
+        OutputStream out = null;
+        try {
+            resp.reset();// 清空输出流
+            String resultFileName = orderId+ ".zip";
+            resultFileName = URLEncoder.encode(resultFileName, "UTF-8");
+            resp.setCharacterEncoding("UTF-8");
+            resp.setHeader("Content-disposition", "attachment; filename=" + resultFileName);// 设定输出文件头
+            resp.setContentType("application/msexcel");// 定义输出类型
+            //输入流：本地文件路径
+            in = new DataInputStream(new FileInputStream(new File( ConstantCfg.ORDER_DOC_FIXED_PATH+orderId+"/"+ orderId + ".zip")));
+            //输出流
+            out = resp.getOutputStream();
+            //输出文件
+            int bytes = 0;
+            byte[] bufferOut = new byte[1024];
+            while ((bytes = in.read(bufferOut)) != -1) {
+                out.write(bufferOut, 0, bytes);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.reset();
+            try {
+                OutputStreamWriter writer = new OutputStreamWriter(resp.getOutputStream(), "UTF-8");
+                String data = "<script language='javascript'>alert(\"\\u64cd\\u4f5c\\u5f02\\u5e38\\uff01\");</script>";
+                writer.write(data);
+                writer.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            if (null != in) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (null != out) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    @RequestMapping("/doc/zipFiles")
+    public String zipFiles(Long orderId){
+        //先将各个文件夹下面的图片生成pdf
+        File jpgFileDir = new File(ConstantCfg.ORDER_DOC_FIXED_PATH + orderId);
+        System.out.println("======="+jpgFileDir.getAbsolutePath());
+        File[] tempList = jpgFileDir.listFiles();
+        for (int i = 0; i < tempList.length; i++) {
+            System.out.println("=======1");
+            if(tempList[i].isDirectory()){
+                String dirStr = tempList[i].getAbsolutePath();
+                System.out.println(dirStr.substring(dirStr.lastIndexOf("/")+1,dirStr.length()));
+                OrderDocType orderDocType = orderDocTypeService.getOrderDocTypeByName(dirStr.substring(dirStr.lastIndexOf("/")+1,dirStr.length()));
+                if(orderDocType!=null){
+                    System.out.println("=======3");
+                    String fileDesc = orderDocType.getFileDesc();
+                    String pdfFileName = fileDesc.substring(fileDesc.indexOf("A"),fileDesc.indexOf("-")+1)+orderDocType.getChName();
+                    System.out.println(dirStr+":"+ConstantCfg.ORDER_DOC_FIXED_PATH + orderId+"/pdf/"+pdfFileName+".pdf");
+                    FileHandler.toPdf(dirStr,ConstantCfg.ORDER_DOC_FIXED_PATH + orderId+"/pdf/"+pdfFileName+".pdf");
+                }
+            }
+        }
+        //再把pdf压缩成zip文件；
+        FileHandler.compress(ConstantCfg.ORDER_DOC_FIXED_PATH + orderId+"/pdf",ConstantCfg.ORDER_DOC_FIXED_PATH + orderId+"/"+orderId+".zip");
+        return "redirect:/bridgecbs/bridgeOrder/toModify?id=" + orderId;
     }
 
 }

@@ -33,7 +33,7 @@ public class NewLoanInfoServiceImpl implements NewLoanInfoService {
     }
 
     @Override
-    public void save(NewLoanInfo newLoanInfo,Long orderId) {
+    public void save(NewLoanInfo newLoanInfo, Long orderId) {
         newLoanInfo.setOrganTypeName(originalLoanOrganTypeService.getOneById(newLoanInfo.getOrganType()).getName());
         newLoanInfo.setLoanConditionName(newLoanConditionService.getOneById(newLoanInfo.getLoanCondition()).getName());
         newLoanInfo.setOrderId(orderId);
@@ -52,9 +52,9 @@ public class NewLoanInfoServiceImpl implements NewLoanInfoService {
     public BigDecimal getTotalApproveAmount(Long id) {
         BigDecimal totalApproveAmount = new BigDecimal(0);
         List<NewLoanInfo> newLoanInfos = newLoanInfoRepository.findAllByOrderId(id);
-        if(newLoanInfos!=null && newLoanInfos.size()>0){
-            for(NewLoanInfo newLoanInfo :newLoanInfos){
-                if(newLoanInfo.getApproveAmount()!=null){
+        if (newLoanInfos != null && newLoanInfos.size() > 0) {
+            for (NewLoanInfo newLoanInfo : newLoanInfos) {
+                if (newLoanInfo.getApproveAmount() != null) {
                     totalApproveAmount = totalApproveAmount.add(newLoanInfo.getApproveAmount());
                 }
             }

@@ -73,7 +73,7 @@ public class ControllerCreator {
                     String columnName = dataModel.getColumnNameEn();
                     String UpColumn = Character.toUpperCase(columnName.charAt(0)) + columnName.substring(1);
                     controllerCode.append("@Resource\n");
-                    controllerCode.append(UpEntityName + UpColumn + "Service " + entityName + UpColumn + "Service;\n");
+                    controllerCode.append("private "+UpEntityName + UpColumn + "Service " + entityName + UpColumn + "Service;\n");
                 }
             }
         }
@@ -193,7 +193,7 @@ public class ControllerCreator {
                 }
             }
 
-            controllerCode.append("return \"/" + sys + "/" + entityName + "Add\";\n");
+            controllerCode.append("return \"/" + sys + "/" + entityName + "Edit\";\n");
             controllerCode.append("}\n");
         }
         return controllerCode.toString();

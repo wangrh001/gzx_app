@@ -41,6 +41,18 @@ public class NewLoanInfo {
     @Column
     private String loanConditionName;
 
+    @Column
+    private String passCardAccountName;
+    @Column
+    private int passCardBankId;
+    @Column
+    private String passCardBankIdName;
+    @Column
+    private String passCardAccountCode;
+    @Column
+    private String passCardAccountCertiCode;
+    @Column
+    private BigDecimal passCardAmount;
 
     @Column
     private String contactName;
@@ -201,5 +213,53 @@ public class NewLoanInfo {
 
     public void setLoanConditionName(String loanConditionName) {
         this.loanConditionName = loanConditionName;
+    }
+
+    public String getPassCardAccountName() {
+        return passCardAccountName;
+    }
+
+    public void setPassCardAccountName(String passCardAccountName) {
+        this.passCardAccountName = passCardAccountName;
+    }
+
+    public int getPassCardBankId() {
+        return passCardBankId;
+    }
+
+    public void setPassCardBankId(int passCardBankId) {
+        this.passCardBankId = passCardBankId;
+    }
+
+    public String getPassCardAccountCode() {
+        return passCardAccountCode;
+    }
+
+    public void setPassCardAccountCode(String passCardAccountCode) {
+        this.passCardAccountCode = passCardAccountCode;
+    }
+
+    public String getPassCardAccountCertiCode() {
+        return passCardAccountCertiCode;
+    }
+
+    public void setPassCardAccountCertiCode(String passCardAccountCertiCode) {
+        this.passCardAccountCertiCode = passCardAccountCertiCode;
+    }
+
+    public BigDecimal getPassCardAmount() {
+        return passCardAmount;
+    }
+
+    public void setPassCardAmount(BigDecimal passCardAmount) {
+        this.passCardAmount = passCardAmount;
+    }
+
+    public String getPassCardBankIdName() {
+        return passCardBankIdName;
+    }
+
+    public void setPassCardBankIdName(String passCardBankIdName) {
+        this.passCardBankIdName = passCardBankIdName;
     }
 }

@@ -45,10 +45,10 @@ public class MortgageServiceImpl implements MortgageService {
     @Override
     public BigDecimal getTotalRegisterPrice(Long id) {
         BigDecimal totalRegisterPrice = new BigDecimal(0);
-        List<Mortgage> mortgages= mortgageRepository.findAllByOrderId(id);
-        if(mortgages !=null && mortgages.size()>0){
-            for(Mortgage mortgage:mortgages){
-                if(mortgage.getRegisterPrice()!=null){
+        List<Mortgage> mortgages = mortgageRepository.findAllByOrderId(id);
+        if (mortgages != null && mortgages.size() > 0) {
+            for (Mortgage mortgage : mortgages) {
+                if (mortgage.getRegisterPrice() != null) {
                     totalRegisterPrice = totalRegisterPrice.add(mortgage.getRegisterPrice());
                 }
             }
@@ -59,10 +59,10 @@ public class MortgageServiceImpl implements MortgageService {
     @Override
     public BigDecimal getTotalEstimatePrice(Long id) {
         BigDecimal totalEstimatePrice = new BigDecimal(0);
-        List<Mortgage> mortgages= mortgageRepository.findAllByOrderId(id);
-        if(mortgages !=null && mortgages.size()>0){
-            for(Mortgage mortgage:mortgages){
-                if(mortgage.getEstimatePrice()!=null){
+        List<Mortgage> mortgages = mortgageRepository.findAllByOrderId(id);
+        if (mortgages != null && mortgages.size() > 0) {
+            for (Mortgage mortgage : mortgages) {
+                if (mortgage.getEstimatePrice() != null) {
                     totalEstimatePrice = totalEstimatePrice.add(mortgage.getEstimatePrice());
                 }
             }

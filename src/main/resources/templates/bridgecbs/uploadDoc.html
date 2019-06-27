@@ -20,10 +20,10 @@
             console.log('enter the uploadFileByType')
             /*<![CDATA[*/
             var form = document.getElementById(typeId);
-            console.log('form==='+form)
+            console.log('form===' + form)
             var orderId = document.getElementById("orderId").value
-            console.log('orderId==='+orderId)
-            form.action="/doc/uploadTypeFile?typeId="+typeId+"&orderId="+orderId
+            console.log('orderId===' + orderId)
+            form.action = "/doc/uploadTypeFile?typeId=" + typeId + "&orderId=" + orderId
             form.submit();
             //这个符号不能删除！！！！
             // /*]]>*/
@@ -34,9 +34,9 @@
             //生成进入该页面的所有button
             var files = [[${typeFiles}]];
             var table = document.createElement("table")
-            if(files){
+            if (files) {
                 var fileJson = JSON.parse(files)
-                for(var p in fileJson){
+                for (var p in fileJson) {
                     var chName = fileJson[p].chName;
                     var fileDesc = fileJson[p].fileDesc;
                     var typeId = fileJson[p].typeId;
@@ -44,19 +44,19 @@
                     var row = table.insertRow();
 
                     var fileName = row.insertCell()
-                    fileName.innerHTML=chName
+                    fileName.innerHTML = chName
 
                     var fileDescField = row.insertCell()
-                    fileDescField.innerHTML=fileDesc
+                    fileDescField.innerHTML = fileDesc
 
-                    var fileForm =document.createElement("form")
-                    fileForm.id=typeId;
-                    fileForm.method='post';
-                    fileForm.enctype='multipart/form-data';
+                    var fileForm = document.createElement("form")
+                    fileForm.id = typeId;
+                    fileForm.method = 'post';
+                    fileForm.enctype = 'multipart/form-data';
                     //fileForm.style = 'float:center;';
 
                     var button = row.insertCell()
-                    button.innerHTML="<input id = 'files' form="+typeId+" class='fileinput' name='files' type='file' multiple='true'/><button type='submit'  onclick='uploadFileByType("+typeId+")'>确定上传</button>";
+                    button.innerHTML = "<input id = 'files' form=" + typeId + " class='fileinput' name='files' type='file' multiple='true'/><button type='submit'  onclick='uploadFileByType(" + typeId + ")'>确定上传</button>";
 
                     fileForm.appendChild(button)
 
@@ -74,7 +74,8 @@
 </head>
 <body class="container" onload="AddButton()">
 
-<form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data" th:action="@{/bridgecbs/bridgeOrder/toModify(id=${orderId})}">
+<form class="form-horizontal" method="post" id="order_form" enctype="multipart/form-data"
+      th:action="@{/bridgecbs/bridgeOrder/toModify(id=${orderId})}">
     <input type="hidden" id="orderId" th:value="*{orderId}"/>
     <div class="row">
         <div class="col-md-12 " id="filesDiv">

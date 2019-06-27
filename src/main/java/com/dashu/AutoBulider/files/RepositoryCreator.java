@@ -35,7 +35,7 @@ public class RepositoryCreator {
         String UpEntityName = Character.toUpperCase(entityName.charAt(0)) + entityName.substring(1);
         stringBuffer.append("public interface " + UpEntityName + "Repository extends JpaRepository<" + UpEntityName + ", Long>,JpaSpecificationExecutor{\n");
         stringBuffer.append("public " + UpEntityName + " findById(@Param(value=\"id\") long id);");
-        stringBuffer.append("List<" + UpEntityName + "> findByStateNot(@Param(value=\"status\") int status);");
+        stringBuffer.append("public List<" + UpEntityName + "> findByStateNot(@Param(value=\"status\") int status);");
         stringBuffer.append("}");
         return stringBuffer.toString();
     }

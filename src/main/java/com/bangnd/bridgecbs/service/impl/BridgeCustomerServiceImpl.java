@@ -30,7 +30,7 @@ public class BridgeCustomerServiceImpl implements CustomerService {
         customer.setCustTypeName(custRelationTypeService.getCustTypeById(customer.getCustType()).getName());
         customer.setCertiTypeName(custCertiTypeService.getCertiTypeById(customer.getCertiType()).getName());
         //如果是产权人，需要修改类型
-        if(mortgageId!=null&&!"".equals(mortgageId)){
+        if (mortgageId != null && !"".equals(mortgageId)) {
             customer.setMortgageId(mortgageId);
             customer.setCustType(ConstantCfg.CUST_RELATION_PROPERTY);
         }

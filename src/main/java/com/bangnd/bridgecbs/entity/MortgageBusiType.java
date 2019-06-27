@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="cfg_bridge_mortgage_busi_type")
+@Table(name = "cfg_bridge_mortgage_busi_type")
 public class MortgageBusiType {
     @Id
     private int id;

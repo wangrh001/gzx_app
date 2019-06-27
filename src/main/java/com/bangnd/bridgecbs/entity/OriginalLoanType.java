@@ -3,7 +3,7 @@ package com.bangnd.bridgecbs.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name="cfg_original_loan_type")
+@Table(name = "cfg_original_loan_type")
 public class OriginalLoanType {
     @Id
     private int id;

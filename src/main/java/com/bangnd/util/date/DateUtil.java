@@ -16,9 +16,9 @@ public class DateUtil {
     public static String DATETIME_PATTERN_YEARMONTH = "yyyyMM";
 
 
-    public static float getDaysByBetweenDates(Date startDate,Date endDate){
-        float days=0;
-        if(startDate.after(endDate) || startDate == null || endDate ==null ){
+    public static float getDaysByBetweenDates(Date startDate, Date endDate) {
+        float days = 0;
+        if (startDate.after(endDate) || startDate == null || endDate == null) {
             return days;
         }
 
@@ -31,7 +31,7 @@ public class DateUtil {
         } else {
             diff = time1 - time2;
         }
-        days = (int) (diff / (24 * 60 * 60 * 1000))+1;
+        days = (int) (diff / (24 * 60 * 60 * 1000)) + 1;
         return days;
 
     }

@@ -14,23 +14,23 @@
     <script th:inline="javascript">
         function submitOriginalCard() {
             /*<![CDATA[*/
-            if(original_card_form.accountName.value==''){
+            if (original_card_form.accountName.value == '') {
                 alert('过账卡号户名：不能为空，请填写，谢谢！')
                 original_card_form.accountName.focus()
                 return false
             }
-            if(original_card_form.bankId.value==-1){
+            if (original_card_form.bankId.value == -1) {
                 alert('过账卡号开户行：不能为空，请填写，谢谢！')
                 original_card_form.bankId.focus()
                 return false
             }
-            if(original_card_form.accountCode.value==''){
+            if (original_card_form.accountCode.value == '') {
                 alert('过账卡号：不能为空，请填写，谢谢！')
                 original_card_form.accountCode.focus()
                 return false
             }
             var form = document.getElementById("original_card_form")
-            form.action="/bridgecbs/bankAccount/modify"
+            form.action = "/bridgecbs/bankAccount/modify"
             form.submit()
             /*]]>*/
         }
@@ -39,9 +39,10 @@
 
 </head>
 <body>
-<form class="form-horizontal" method="post" id="original_card_form" th:action="@{/bridgecbs/bankAccount/modify}" th:object="${bankAccount}" >
+<form class="form-horizontal" method="post" id="original_card_form" th:action="@{/bridgecbs/bankAccount/modify}"
+      th:object="${bankAccount}">
     <input type="hidden" th:field="*{id}"/>
-    <table  id="originalCard">
+    <table id="originalCard">
         <tr>
             <td><b style='color:red; float:left; height:20px'>*</b>过账卡号户名:</td>
             <td><input th:field="*{accountName}" value="" class="form-control"/></td>

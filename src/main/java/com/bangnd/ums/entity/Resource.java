@@ -21,6 +21,8 @@ public class Resource {
     @Column
     private String name;
     @Column
+    private String enName;
+    @Column
     private String resUrl;
     @Column
     private int type;
@@ -148,5 +150,13 @@ public class Resource {
 
     public void setBusiType(int busiType) {
         this.busiType = busiType;
+    }
+
+    public String getEnName() {
+        return enName;
+    }
+
+    public void setEnName(String enName) {
+        this.enName = enName;
     }
 }

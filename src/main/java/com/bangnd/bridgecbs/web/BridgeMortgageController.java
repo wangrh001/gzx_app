@@ -47,8 +47,8 @@ public class BridgeMortgageController {
     }
 
     @RequestMapping("/bridgecbs/mortgage/add")
-    public String addMortgage(Mortgage mortgage,Long orderId){
-        mortgageService.save(mortgage,orderId);
+    public String addMortgage(Mortgage mortgage, Long orderId) {
+        mortgageService.save(mortgage, orderId);
         BridgeOrder bridgeOrder = bridgeOrderService.getBridgeOrderById(orderId);
         bridgeOrder.setTotalRegisterPrice(mortgageService.getTotalRegisterPrice(orderId));
         bridgeOrder.setTotalEstimatePrice(mortgageService.getTotalEstimatePrice(orderId));
@@ -57,16 +57,16 @@ public class BridgeMortgageController {
     }
 
     @RequestMapping("/bridgecbs/mortgage/toModify")
-    public String toModify(Model model, Long id){
+    public String toModify(Model model, Long id) {
         try {
             Mortgage mortgage = mortgageService.getOneById(id);
-            model.addAttribute("mortgage",mortgage);
-            model.addAttribute("orderId",id);
-            List<BridgeCustomer> bridgeCustomerList =customerService.getAllByOrderMortgageId(id);
-            model.addAttribute("bridgeCustomerList",bridgeCustomerList);
+            model.addAttribute("mortgage", mortgage);
+            model.addAttribute("orderId", id);
+            List<BridgeCustomer> bridgeCustomerList = customerService.getAllByOrderMortgageId(id);
+            model.addAttribute("bridgeCustomerList", bridgeCustomerList);
 
             BridgeCustomer bridgeCustomer = new BridgeCustomer();
-            model.addAttribute("customer",bridgeCustomer);
+            model.addAttribute("customer", bridgeCustomer);
             //物业业务类型
             model.addAttribute("propertyTypes", mortgagePropertyTypeService.getAll());
             //产权状态
@@ -75,14 +75,14 @@ public class BridgeMortgageController {
             model.addAttribute("estateTypes", mortgageEstateTypeService.getAll());
             //证件类型
             model.addAttribute("certiTypes", bridgeOrderCertiTypeService.getAll());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "/bridgecbs/bridgeMortgageEdit";
     }
 
     @RequestMapping("/bridgecbs/mortgage/modify")
-    public String modify(Mortgage mortgage){
+    public String modify(Mortgage mortgage) {
         Mortgage mortgage1 = mortgageService.getOneById(mortgage.getMortgageId());
         mortgage1.setPropertyType(mortgage.getPropertyType());
         mortgage1.setEstateArea(mortgage.getEstateArea());
@@ -107,7 +107,7 @@ public class BridgeMortgageController {
     }
 
     @RequestMapping("/bridgecbs/mortgage/delete")
-    public String delete(Long  id){
+    public String delete(Long id) {
         Mortgage mortgage = mortgageService.getOneById(id);
         mortgage.setState(100);
         mortgageService.merge(mortgage);

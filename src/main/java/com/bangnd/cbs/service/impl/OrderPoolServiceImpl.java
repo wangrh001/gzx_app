@@ -1,5 +1,6 @@
 package com.bangnd.cbs.service.impl;
 
+import com.bangnd.bridgecbs.service.BridgeOrderService;
 import com.bangnd.cbs.entity.OrderPool;
 import com.bangnd.cbs.service.OrderPoolRepository;
 import com.bangnd.cbs.service.OrderPoolService;
@@ -33,6 +34,8 @@ public class OrderPoolServiceImpl implements OrderPoolService {
     OrderService orderService;
     @Autowired
     AgentService agentService;
+    @Autowired
+    private BridgeOrderService bridgeOrderService;
 
     /**
      * 注意！！这里只支持一个状态有一个岗位的人来进行处理，不支持一个状态多个人处理
@@ -79,7 +82,7 @@ public class OrderPoolServiceImpl implements OrderPoolService {
                         //即：如果要去的岗位是11，那么直接找这个订单的销售.
                         if (toPositionId == 11) {
                             //根据订单id，拿到订单，在拿到这个订单的销售id，根据销售id，拿到销售，再拿到这个销售的userid
-                            giveUserId = agentService.getAgentById((orderService.findOrderById(orderId)).getSalerId()).getUserId();
+                            giveUserId = agentService.getAgentById((bridgeOrderService.getBridgeOrderById(orderId)).getSalerId()).getUserId();
                         } else {
                             giveUserId = getUserIdMinTask(toPositionId);
                         }

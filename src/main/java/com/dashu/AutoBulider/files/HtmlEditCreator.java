@@ -25,7 +25,7 @@ public class HtmlEditCreator {
                 }
             }
             //生成搜索区域
-            addHtml.append(HtmlListCreator.createInputArea(addDataModelList, sys, entityName, "add"));
+            addHtml.append(HtmlListCreator.createInputArea(addDataModelList, sys, entityName, "modify"));
 
             addHtml.append("<div class=\"form-group\">\n");
             addHtml.append("</div>\n");

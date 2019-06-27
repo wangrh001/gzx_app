@@ -8,9 +8,9 @@ public class ReportDate {
     //数据序列
     private List<String> series;
     //各个序列的x坐标都是一样的
-    private List<String>  xList;
+    private List<String> xList;
     //每个序列，x坐标的List
-    private Map<String,List<BigDecimal>>  yMap;
+    private Map<String, List<BigDecimal>> yMap;
 
     public List<String> getSeries() {
         return series;

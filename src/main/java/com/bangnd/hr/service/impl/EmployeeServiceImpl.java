@@ -71,6 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                     predicates.add(cb.like(root.get("phone").as(String.class), "%" + employeeSearchForm.getPhone() + "%"));
                 }
                 predicates.add(cb.notEqual(root.get("state").as(Integer.class), new Integer(100)));
+                predicates.add(cb.notEqual(root.get("id").as(Integer.class), new Integer(-1)));
                 predicates.add(cb.notEqual(root.get("id").as(Integer.class), new Integer(0)));
                 Predicate[] p = new Predicate[predicates.size()];
                 return cb.and(predicates.toArray(p));

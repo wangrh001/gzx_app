@@ -23,5 +23,10 @@ public class OrderDocTypeServiceImpl implements OrderDocTypeService {
         return orderDocTypeRepository.findAll();
     }
 
+    @Override
+    public OrderDocType getOrderDocTypeByName(String docName) {
+        return orderDocTypeRepository.findOneByName(docName);
+    }
+
 
 }

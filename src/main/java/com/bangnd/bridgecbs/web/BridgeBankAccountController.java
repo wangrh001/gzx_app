@@ -34,26 +34,26 @@ public class BridgeBankAccountController {
     }
 
     @RequestMapping("/bridgecbs/bankAccount/add")
-    public String addBankAccount(BankAccount bankAccount,Long orderId,Long newLoanId,int type){
+    public String addBankAccount(BankAccount bankAccount, Long orderId, Long newLoanId, int type) {
         bankAccount.setType(type);
-        bankAccountService.save(bankAccount,orderId,newLoanId);
+        bankAccountService.save(bankAccount, orderId, newLoanId);
         return "redirect:/bridgecbs/bridgeOrder/toModify?id=" + orderId;
     }
 
     @RequestMapping("/bridgecbs/bankAccount/toModify")
-    public String toModify(Model model,Long id){
+    public String toModify(Model model, Long id) {
         try {
             BankAccount bankAccount = bankAccountService.getBankAccountById(id);
             model.addAttribute("bankAccount", bankAccount);
             model.addAttribute("bankIds", bridgeOrderAcceptionBankCodeService.getAll());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "/bridgecbs/bankAccountEdit";
     }
 
     @RequestMapping("/bridgecbs/bankAccount/modify")
-    public String modify(BankAccount bankAccount){
+    public String modify(BankAccount bankAccount) {
         BankAccount bankAccount1 = bankAccountService.getBankAccountById(bankAccount.getId());
         bankAccount1.setAccountCertiCode(bankAccount.getAccountCertiCode());
         bankAccount1.setAccountCode(bankAccount.getAccountCode());
@@ -66,7 +66,7 @@ public class BridgeBankAccountController {
     }
 
     @RequestMapping("/bridgecbs/bankAccount/delete")
-    public String delete(Long id){
+    public String delete(Long id) {
         BankAccount bankAccount = bankAccountService.getBankAccountById(id);
         bankAccount.setState(100);
         bankAccountService.merge(bankAccount);

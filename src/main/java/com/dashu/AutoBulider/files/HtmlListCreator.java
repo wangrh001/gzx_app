@@ -79,6 +79,9 @@ public class HtmlListCreator {
                 htmlInputCode.append("<form class=\"form-horizontal\" th:action=\"@{/" + sys + "/" + entityName + "}\" th:object=\"${" + entityName + "SearchForm}\" method=\"post\">");
             } else if ("add".equals(toDo)) {
                 htmlInputCode.append("<form class=\"form-horizontal\" th:action=\"@{/" + sys + "/" + entityName + "/" + toDo + "}\" th:object=\"${" + entityName + "}\" method=\"post\">");
+            }else if ("modify".equals(toDo)) {
+                htmlInputCode.append("<form class=\"form-horizontal\" th:action=\"@{/" + sys + "/" + entityName + "/" + toDo + "}\" th:object=\"${" + entityName + "}\" method=\"post\">");
+                htmlInputCode.append("<input type=\"hidden\" th:field=\"*{id}\"/>");
             }
 
             htmlInputCode.append("<table>");

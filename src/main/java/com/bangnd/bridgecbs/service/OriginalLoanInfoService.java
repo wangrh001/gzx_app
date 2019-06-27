@@ -10,10 +10,11 @@ public interface OriginalLoanInfoService {
 
     public OriginalLoanInfo getOneById(Long id);
 
-    public void save(OriginalLoanInfo originalLoanInfo,Long orderId);
+    public void save(OriginalLoanInfo originalLoanInfo, Long orderId);
 
     public void merge(OriginalLoanInfo originalLoanInfo);
 
     public BigDecimal getTotalLoanAmount(Long id);
+
     public BigDecimal getTotalCaptialInterest(Long id);
 }

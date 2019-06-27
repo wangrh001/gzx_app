@@ -13,16 +13,19 @@ public interface ResourceRepository extends JpaRepository<Resource, Long>, JpaSp
 
     List<Resource> findByStateNot(@Param(value = "status") int status);
 
-    @Query("select r from Resource  r where r.parentId = :parentId and r.state = 1")
+    @Query("select r from Resource  r where r.parentId = :parentId and r.state <> 100")
     public List<Resource> findAllByParentId(@Param(value = "parentId") long parentId);
 
-    @Query("select r from Resource  r where r.grade = :gradeId and r.state = 1")
+    @Query("select r from Resource  r where r.grade = :gradeId and r.state <> 100")
     public List<Resource> finAllByGrade(@Param(value="gradeId") int gradeId);
 
-    @Query("select r from Resource  r where r.type = :type and r.state = 1")
+    @Query("select r from Resource  r where r.type = :type and r.state <> 100")
     public List<Resource> findAllByType(@Param(value="type") int type);
 
-    @Query("select r from Resource  r where r.busiType = :busiType and r.state = 1")
+    @Query("select r from Resource  r where r.busiType = :busiType and r.state <> 100")
     public List<Resource> findAllByBusiType(@Param(value="busiType") int busiType);
+
+    @Query("select r from Resource  r where r.grade =1 and r.state <> 100 and r.id <> -1")
+    public List<Resource> findAllByGrade();
 
 }

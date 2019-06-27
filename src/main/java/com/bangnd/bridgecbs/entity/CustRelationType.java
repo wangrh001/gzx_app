@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="cfg_bridge_cust_relation_type")
+@Table(name = "cfg_bridge_cust_relation_type")
 public class CustRelationType {
     @Id
     private int id;

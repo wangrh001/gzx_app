@@ -84,6 +84,15 @@
         </dependency>
 
         <dependency>
+            <groupId>com.lowagie</groupId>
+            <artifactId>openapi</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${project.basedir}/src/main/resources/lib/com-lowagie210.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>

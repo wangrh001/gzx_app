@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface CustRelationTypeService {
     public List<CustRelationType> getAll();
+
     public CustRelationType getCustTypeById(int id);
 }

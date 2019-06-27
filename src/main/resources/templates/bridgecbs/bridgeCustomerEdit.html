@@ -13,42 +13,43 @@
     <script th:inline="javascript">
         function submitCustomer() {
             /*<![CDATA[*/
-            if(customer_form.custType.value==1){
+            if (customer_form.custType.value == 1) {
                 alert('关系人类型：必须选择一个，谢谢！')
                 customer_form.custType.focus()
                 return false
             }
-            if(customer_form.name.value==''){
+            if (customer_form.name.value == '') {
                 alert('姓名：不能为空，请填写！')
                 customer_form.name.focus()
                 return false
             }
-            if(customer_form.certiType.value==1){
+            if (customer_form.certiType.value == 1) {
                 alert('证件类型：必须选择一个，谢谢！')
                 customer_form.certiType.focus()
                 return false
             }
-            if(customer_form.certiCode.value==''){
+            if (customer_form.certiCode.value == '') {
                 alert('证件号码：不能为空，请填写！')
                 customer_form.certiCode.focus()
                 return false
             }
-            if(customer_form.phone.value==''){
+            if (customer_form.phone.value == '') {
                 alert('联系电话：不能为空，请填写！')
                 customer_form.phone.focus()
                 return false
             }
             var form = document.getElementById("customer_form")
-            form.action="/bridgecbs/customer/modify"
+            form.action = "/bridgecbs/customer/modify"
             form.submit()
             /*]]>*/
         }
     </script>
 </head>
 <body>
-<form class="form-horizontal" method="post" id="customer_form" th:action="@{/bridgecbs/customer/modify}" th:object="${customer}">
+<form class="form-horizontal" method="post" id="customer_form" th:action="@{/bridgecbs/customer/modify}"
+      th:object="${customer}">
     <input type="hidden" th:field="*{id}"/>
-    <table  id="customer">
+    <table id="customer">
         <tr>
             <td><b style='color:red; float:left; height:20px'>*</b>关系人类型</td>
             <td><select th:field="*{custType}" th:remove="all-but-first">

@@ -9,7 +9,7 @@ import java.util.List;
 public interface ResourceService {
     public Page<Resource> getResourceList(Integer pageNum, int size, ResourceSearchForm resourceSearchForm);
 
-    public void save(Resource resource);
+    public Resource save(Resource resource);
 
     public Resource getResourceById(long id);
 
@@ -26,4 +26,6 @@ public interface ResourceService {
     public List<Resource> getAllButtonRes();
 
     public List<Resource> getAllByBusiType(int busiType);
+
+    public List<Resource> getAllFirstLevelMenu();
 }

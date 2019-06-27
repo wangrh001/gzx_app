@@ -18,10 +18,10 @@ public class BankAccountServiceImpl implements BankAccountService {
     private BridgeOrderAcceptionBankCodeService bridgeOrderAcceptionBankCodeService;
 
     @Override
-    public void save(BankAccount bankAccount, Long orderId,Long newLoanId) {
+    public void save(BankAccount bankAccount, Long orderId, Long newLoanId) {
         bankAccount.setBankIdName(bridgeOrderAcceptionBankCodeService.getBridgeOrderAcceptionBankCodeById(bankAccount.getBankId()).getName());
         bankAccount.setOrderId(orderId);
-        if(newLoanId!=null && !"".equals(newLoanId)){
+        if (newLoanId != null && !"".equals(newLoanId)) {
             bankAccount.setNewLoanId(newLoanId);
         }
         bankAccount.setState(1);
@@ -32,7 +32,7 @@ public class BankAccountServiceImpl implements BankAccountService {
 
     @Override
     public List<BankAccount> getAllByOrderIdAndType(Long orderId, int type) {
-        return bankAccountRepository.findAllByOrderIdAndType(orderId,type);
+        return bankAccountRepository.findAllByOrderIdAndType(orderId, type);
     }
 
     @Override

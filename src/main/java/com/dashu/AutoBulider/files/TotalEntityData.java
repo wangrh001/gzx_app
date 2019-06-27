@@ -1,5 +1,10 @@
 package com.dashu.AutoBulider.files;
 
+import com.dashu.AutoBulider.entity.DataModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class TotalEntityData {
     public static void main(String[] args) {
 
@@ -2440,5 +2445,412 @@ public class TotalEntityData {
 //        dataModel4.setIfShowColumn(0);
 //        dataModel4.setIfModifyable(1);
 //        dataModels.add(dataModel4);
+
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("bridgecbs");
+//        dataModel.setTableNames("cardController");
+//
+//        dataModel.setColumnNameCh("卡属性");
+//        dataModel.setColumnNameEn("cardAttribute");
+//        dataModel.setColumnType(1);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(1);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel1 = new DataModel();
+//        dataModel1.setColumnNameCh("账户类型");
+//        dataModel1.setColumnNameEn("accountType");
+//        dataModel1.setColumnType(1);
+//        dataModel1.setIfBusinessDate(0);
+//        dataModel1.setIfScatter(1);
+//        dataModel1.setIfSearchColumn(1);
+//        dataModel1.setIfShowColumn(1);
+//        dataModel1.setIfModifyable(1);
+//        dataModels.add(dataModel1);
+//
+//        DataModel dataModel5 = new DataModel();
+//        dataModel5.setColumnNameCh("户名");
+//        dataModel5.setColumnNameEn("accountName");
+//        dataModel5.setColumnType(3);
+//        dataModel5.setIfBusinessDate(0);
+//        dataModel5.setIfScatter(0);
+//        dataModel5.setIfSearchColumn(1);
+//        dataModel5.setIfShowColumn(1);
+//        dataModel5.setIfModifyable(1);
+//        dataModels.add(dataModel5);
+//
+//        DataModel dataModel2 = new DataModel();
+//        dataModel2.setColumnNameCh("开户行");
+//        dataModel2.setColumnNameEn("accountBank");
+//        dataModel2.setColumnType(3);
+//        dataModel2.setIfBusinessDate(0);
+//        dataModel2.setIfScatter(0);
+//        dataModel2.setIfSearchColumn(0);
+//        dataModel2.setIfShowColumn(0);
+//        dataModel2.setIfModifyable(1);
+//        dataModels.add(dataModel2);
+//
+//        DataModel dataModel3 = new DataModel();
+//        dataModel3.setColumnNameCh("银行卡号");
+//        dataModel3.setColumnNameEn("accountNO");
+//        dataModel3.setColumnType(3);
+//        dataModel3.setIfBusinessDate(0);
+//        dataModel3.setIfScatter(0);
+//        dataModel3.setIfSearchColumn(0);
+//        dataModel3.setIfShowColumn(0);
+//        dataModel3.setIfModifyable(1);
+//        dataModels.add(dataModel3);
+//
+//        DataModel dataModel4 = new DataModel();
+//        dataModel4.setColumnNameCh("核实人");
+//        dataModel4.setColumnNameEn("verifierName");
+//        dataModel4.setColumnType(3);
+//        dataModel4.setIfBusinessDate(0);
+//        dataModel4.setIfScatter(0);
+//        dataModel4.setIfSearchColumn(0);
+//        dataModel4.setIfShowColumn(0);
+//        dataModel4.setIfModifyable(1);
+//        dataModels.add(dataModel4);
+//
+//        DataModel dataModel6 = new DataModel();
+//        dataModel6.setColumnNameCh("测试转账");
+//        dataModel6.setColumnNameEn("ifTestTrans");
+//        dataModel6.setColumnType(1);
+//        dataModel6.setIfBusinessDate(0);
+//        dataModel6.setIfScatter(1);
+//        dataModel6.setIfSearchColumn(0);
+//        dataModel6.setIfShowColumn(0);
+//        dataModel6.setIfModifyable(1);
+//        dataModels.add(dataModel6);
+//
+//        DataModel dataModel7 = new DataModel();
+//        dataModel7.setColumnNameCh("核实日期");
+//        dataModel7.setColumnNameEn("verifyDate");
+//        dataModel7.setColumnType(4);
+//        dataModel7.setIfBusinessDate(0);
+//        dataModel7.setIfScatter(0);
+//        dataModel7.setIfSearchColumn(0);
+//        dataModel7.setIfShowColumn(0);
+//        dataModel7.setIfModifyable(1);
+//        dataModels.add(dataModel7);
+//
+//        DataModel dataModel8 = new DataModel();
+//        dataModel8.setColumnNameCh("是否修改网银密钥");
+//        dataModel8.setColumnNameEn("ifModifyNetKey");
+//        dataModel8.setColumnType(1);
+//        dataModel8.setIfBusinessDate(0);
+//        dataModel8.setIfScatter(0);
+//        dataModel8.setIfSearchColumn(0);
+//        dataModel8.setIfShowColumn(0);
+//        dataModel8.setIfModifyable(1);
+//        dataModels.add(dataModel8);
+//
+//        DataModel dataModel9 = new DataModel();
+//        dataModel9.setColumnNameCh("备注");
+//        dataModel9.setColumnNameEn("remarkDesc");
+//        dataModel9.setColumnType(3);
+//        dataModel9.setIfBusinessDate(0);
+//        dataModel9.setIfScatter(0);
+//        dataModel9.setIfSearchColumn(0);
+//        dataModel9.setIfShowColumn(0);
+//        dataModel9.setIfModifyable(1);
+//        dataModels.add(dataModel9);
+//
+//        DataModel dataModel10 = new DataModel();
+//        dataModel10.setColumnNameCh("是否卡交密码");
+//        dataModel10.setColumnNameEn("ifModifyCardKey");
+//        dataModel10.setColumnType(1);
+//        dataModel10.setIfBusinessDate(0);
+//        dataModel10.setIfScatter(0);
+//        dataModel10.setIfSearchColumn(0);
+//        dataModel10.setIfShowColumn(0);
+//        dataModel10.setIfModifyable(1);
+//        dataModels.add(dataModel10);
+//
+//        DataModel dataModel11 = new DataModel();
+//        dataModel11.setColumnNameCh("是否取消手机银行");
+//        dataModel11.setColumnNameEn("ifCanclePhoneBank");
+//        dataModel11.setColumnType(1);
+//        dataModel11.setIfBusinessDate(0);
+//        dataModel11.setIfScatter(0);
+//        dataModel11.setIfSearchColumn(0);
+//        dataModel11.setIfShowColumn(0);
+//        dataModel11.setIfModifyable(1);
+//        dataModels.add(dataModel11);
+//
+//        DataModel dataModel12 = new DataModel();
+//        dataModel12.setColumnNameCh("是否取消短信提醒");
+//        dataModel12.setColumnNameEn("ifCancleSmsRemind");
+//        dataModel12.setColumnType(1);
+//        dataModel12.setIfBusinessDate(0);
+//        dataModel12.setIfScatter(0);
+//        dataModel12.setIfSearchColumn(0);
+//        dataModel12.setIfShowColumn(0);
+//        dataModel12.setIfModifyable(1);
+//        dataModels.add(dataModel12);
+//
+//        DataModel dataModel13 = new DataModel();
+//        dataModel13.setColumnNameCh("单笔限额");
+//        dataModel13.setColumnNameEn("onceLimitAmount");
+//        dataModel13.setColumnType(5);
+//        dataModel13.setIfBusinessDate(0);
+//        dataModel13.setIfScatter(0);
+//        dataModel13.setIfSearchColumn(0);
+//        dataModel13.setIfShowColumn(0);
+//        dataModel13.setIfModifyable(1);
+//        dataModels.add(dataModel13);
+//
+//        DataModel dataModel15 = new DataModel();
+//        dataModel15.setColumnNameCh("当天限额");
+//        dataModel15.setColumnNameEn("todayLimitAmount");
+//        dataModel15.setColumnType(5);
+//        dataModel15.setIfBusinessDate(0);
+//        dataModel15.setIfScatter(0);
+//        dataModel15.setIfSearchColumn(0);
+//        dataModel15.setIfShowColumn(0);
+//        dataModel15.setIfModifyable(1);
+//        dataModels.add(dataModel15);
+//
+//        DataModel dataModel14 = new DataModel();
+//        dataModel14.setColumnNameCh("是否公转私");
+//        dataModel14.setColumnNameEn("ifPublicToPrivate");
+//        dataModel14.setColumnType(1);
+//        dataModel14.setIfBusinessDate(0);
+//        dataModel14.setIfScatter(0);
+//        dataModel14.setIfSearchColumn(0);
+//        dataModel14.setIfShowColumn(0);
+//        dataModel14.setIfModifyable(1);
+//        dataModels.add(dataModel14);
+//
+//        DataModel dataModel16 = new DataModel();
+//        dataModel16.setColumnNameCh("U盾数量");
+//        dataModel16.setColumnNameEn("UShieldNum");
+//        dataModel16.setColumnType(1);
+//        dataModel16.setIfBusinessDate(0);
+//        dataModel16.setIfScatter(0);
+//        dataModel16.setIfSearchColumn(0);
+//        dataModel16.setIfShowColumn(0);
+//        dataModel16.setIfModifyable(1);
+//        dataModels.add(dataModel16);
+//
+//        DataModel dataModel17 = new DataModel();
+//        dataModel17.setColumnNameCh("控制状态");
+//        dataModel17.setColumnNameEn("controllState");
+//        dataModel17.setColumnType(1);
+//        dataModel17.setIfBusinessDate(0);
+//        dataModel17.setIfScatter(1);
+//        dataModel17.setIfSearchColumn(0);
+//        dataModel17.setIfShowColumn(1);
+//        dataModel17.setIfModifyable(1);
+//        dataModels.add(dataModel17);
+//
+//        List<DataModel> dataModels = new ArrayList<DataModel>();
+//        DataModel dataModel = new DataModel();
+//        dataModel.setSysName("util");
+//        dataModel.setTableNames("attribute");
+//        dataModel.setColumnNameCh("中文名");
+//        dataModel.setColumnNameEn("chName");
+//        dataModel.setColumnType(3);
+//        dataModel.setIfBusinessDate(0);
+//        dataModel.setIfScatter(0);
+//        dataModel.setIfSearchColumn(1);
+//        dataModel.setIfShowColumn(1);
+//        dataModel.setIfModifyable(1);
+//        dataModels.add(dataModel);
+//
+//        DataModel dataModel4 = new DataModel();
+//        dataModel4.setColumnNameCh("英文名");
+//        dataModel4.setColumnNameEn("enName");
+//        dataModel4.setColumnType(3);
+//        dataModel4.setIfBusinessDate(0);
+//        dataModel4.setIfScatter(0);
+//        dataModel4.setIfSearchColumn(1);
+//        dataModel4.setIfShowColumn(1);
+//        dataModel4.setIfModifyable(1);
+//        dataModels.add(dataModel4);
+//
+//        DataModel dataModel6 = new DataModel();
+//        dataModel6.setColumnNameCh("数据类型");
+//        dataModel6.setColumnNameEn("dataType");
+//        dataModel6.setColumnType(1);
+//        dataModel6.setIfBusinessDate(0);
+//        dataModel6.setIfScatter(1);
+//        dataModel6.setIfSearchColumn(0);
+//        dataModel6.setIfShowColumn(0);
+//        dataModel6.setIfModifyable(1);
+//        dataModels.add(dataModel6);
+//
+//        DataModel dataModel15 = new DataModel();
+//        dataModel15.setColumnNameCh("是否离散值");
+//        dataModel15.setColumnNameEn("ifScatter");
+//        dataModel15.setColumnType(1);
+//        dataModel15.setIfBusinessDate(0);
+//        dataModel15.setIfScatter(0);
+//        dataModel15.setIfSearchColumn(0);
+//        dataModel15.setIfShowColumn(0);
+//        dataModel15.setIfModifyable(1);
+//        dataModels.add(dataModel15);
+//
+//        DataModel dataModel14 = new DataModel();
+//        dataModel14.setColumnNameCh("是否要创建离散对象");
+//        dataModel14.setColumnNameEn("ifCreateScatter");
+//        dataModel14.setColumnType(1);
+//        dataModel14.setIfBusinessDate(0);
+//        dataModel14.setIfScatter(0);
+//        dataModel14.setIfSearchColumn(0);
+//        dataModel14.setIfShowColumn(0);
+//        dataModel14.setIfModifyable(1);
+//        dataModels.add(dataModel14);
+//
+//        DataModel dataModel16 = new DataModel();
+//        dataModel16.setColumnNameCh("外键对象");
+//        dataModel16.setColumnNameEn("foreignObject");
+//        dataModel16.setColumnType(3);
+//        dataModel16.setIfBusinessDate(0);
+//        dataModel16.setIfScatter(0);
+//        dataModel16.setIfSearchColumn(0);
+//        dataModel16.setIfShowColumn(0);
+//        dataModel16.setIfModifyable(1);
+//        dataModels.add(dataModel16);
+//
+//        DataModel dataModel17 = new DataModel();
+//        dataModel17.setColumnNameCh("属于哪个实体");
+//        dataModel17.setColumnNameEn("whoObject");
+//        dataModel17.setColumnType(3);
+//        dataModel17.setIfBusinessDate(0);
+//        dataModel17.setIfScatter(0);
+//        dataModel17.setIfSearchColumn(1);
+//        dataModel17.setIfShowColumn(1);
+//        dataModel17.setIfModifyable(1);
+//        dataModels.add(dataModel17);
+//
+//        DataModel dataModel7 = new DataModel();
+//        dataModel7.setColumnNameCh("是否要查询");
+//        dataModel7.setColumnNameEn("ifSearch");
+//        dataModel7.setColumnType(1);
+//        dataModel7.setIfBusinessDate(0);
+//        dataModel7.setIfScatter(0);
+//        dataModel7.setIfSearchColumn(0);
+//        dataModel7.setIfShowColumn(0);
+//        dataModel7.setIfModifyable(1);
+//        dataModels.add(dataModel7);
+//
+//        DataModel dataModel8 = new DataModel();
+//        dataModel8.setColumnNameCh("是否要显示");
+//        dataModel8.setColumnNameEn("ifShow");
+//        dataModel8.setColumnType(1);
+//        dataModel8.setIfBusinessDate(0);
+//        dataModel8.setIfScatter(0);
+//        dataModel8.setIfSearchColumn(0);
+//        dataModel8.setIfShowColumn(0);
+//        dataModel8.setIfModifyable(1);
+//        dataModels.add(dataModel8);
+//
+//        DataModel dataModel9 = new DataModel();
+//        dataModel9.setColumnNameCh("是否可以修改");
+//        dataModel9.setColumnNameEn("ifModify");
+//        dataModel9.setColumnType(1);
+//        dataModel9.setIfBusinessDate(0);
+//        dataModel9.setIfScatter(0);
+//        dataModel9.setIfSearchColumn(0);
+//        dataModel9.setIfShowColumn(0);
+//        dataModel9.setIfModifyable(1);
+//        dataModels.add(dataModel9);
+//
+//        DataModel dataModel10 = new DataModel();
+//        dataModel10.setColumnNameCh("是否是业务日期");
+//        dataModel10.setColumnNameEn("ifModifyCardKey");
+//        dataModel10.setColumnType(1);
+//        dataModel10.setIfBusinessDate(0);
+//        dataModel10.setIfScatter(0);
+//        dataModel10.setIfSearchColumn(0);
+//        dataModel10.setIfShowColumn(0);
+//        dataModel10.setIfModifyable(1);
+//        dataModels.add(dataModel10);
+//
+//        DataModel dataModel11 = new DataModel();
+//        dataModel11.setColumnNameCh("长度");
+//        dataModel11.setColumnNameEn("length");
+//        dataModel11.setColumnType(1);
+//        dataModel11.setIfBusinessDate(0);
+//        dataModel11.setIfScatter(0);
+//        dataModel11.setIfSearchColumn(0);
+//        dataModel11.setIfShowColumn(0);
+//        dataModel11.setIfModifyable(1);
+//        dataModels.add(dataModel11);
+//
+//        DataModel dataModel12 = new DataModel();
+//        dataModel12.setColumnNameCh("是否必录");
+//        dataModel12.setColumnNameEn("ifNeed");
+//        dataModel12.setColumnType(1);
+//        dataModel12.setIfBusinessDate(0);
+//        dataModel12.setIfScatter(0);
+//        dataModel12.setIfSearchColumn(0);
+//        dataModel12.setIfShowColumn(0);
+//        dataModel12.setIfModifyable(1);
+//        dataModels.add(dataModel12);
+//
+//        DataModel dataModel13 = new DataModel();
+//        dataModel13.setColumnNameCh("是否多选");
+//        dataModel13.setColumnNameEn("ifMoreSelect");
+//        dataModel13.setColumnType(1);
+//        dataModel13.setIfBusinessDate(0);
+//        dataModel13.setIfScatter(0);
+//        dataModel13.setIfSearchColumn(0);
+//        dataModel13.setIfShowColumn(0);
+//        dataModel13.setIfModifyable(1);
+//        dataModels.add(dataModel13);
+
+        List<DataModel> dataModels = new ArrayList<DataModel>();
+        DataModel dataModel = new DataModel();
+        dataModel.setSysName("util");
+        dataModel.setTableNames("entitys");
+
+        dataModel.setColumnNameCh("实体名");
+        dataModel.setColumnNameEn("name");
+        dataModel.setColumnType(3);
+        dataModel.setIfBusinessDate(0);
+        dataModel.setIfScatter(0);
+        dataModel.setIfSearchColumn(1);
+        dataModel.setIfShowColumn(1);
+        dataModel.setIfModifyable(1);
+        dataModels.add(dataModel);
+
+        DataModel dataModel1 = new DataModel();
+        dataModel1.setColumnNameCh("上级菜单");
+        dataModel1.setColumnNameEn("parentMenu");
+        dataModel1.setColumnType(3);
+        dataModel1.setIfBusinessDate(0);
+        dataModel1.setIfScatter(1);
+        dataModel1.setIfSearchColumn(0);
+        dataModel1.setIfShowColumn(0);
+        dataModel1.setIfModifyable(1);
+        dataModels.add(dataModel1);
+
+        DataModel dataModel5 = new DataModel();
+        dataModel5.setColumnNameCh("是否需要页面");
+        dataModel5.setColumnNameEn("ifNeedPage");
+        dataModel5.setColumnType(1);
+        dataModel5.setIfBusinessDate(0);
+        dataModel5.setIfScatter(0);
+        dataModel5.setIfSearchColumn(0);
+        dataModel5.setIfShowColumn(0);
+        dataModel5.setIfModifyable(1);
+        dataModels.add(dataModel5);
+
+        DataModel dataModel2 = new DataModel();
+        dataModel2.setColumnNameCh("系统名称");
+        dataModel2.setColumnNameEn("sysName");
+        dataModel2.setColumnType(3);
+        dataModel2.setIfBusinessDate(0);
+        dataModel2.setIfScatter(0);
+        dataModel2.setIfSearchColumn(0);
+        dataModel2.setIfShowColumn(1);
+        dataModel2.setIfModifyable(1);
+        dataModels.add(dataModel2);
     }
 }

@@ -25,64 +25,65 @@ public class ReportController {
     ReportService reportService;
 
     @RequestMapping("/mis/showBusiReport")
-    public String showBusiReport(Model model,Integer periodId) throws Exception {
-        System.out.println("periodId="+periodId);
+    public String showBusiReport(Model model, Integer periodId) throws Exception {
+        System.out.println("periodId=" + periodId);
         String startDate = DateUtil.getStartDateByPeriodType(periodId);
         String endDate = DateUtil.getEndDateByPeriodType(periodId);
 
-        ReportDate reportDate = reportService.getBusiReportDate(startDate,endDate);
+        ReportDate reportDate = reportService.getBusiReportDate(startDate, endDate);
         String seriesJson = reportService.getSeriesJson(reportDate);
         String xJson = reportService.getXJson(reportDate);
         String yJson = reportService.getYJson(reportDate);
         List<Period> periods = periodService.getAll();
         Period period = new Period();
 
-        model.addAttribute("periodId",xJson);
-        model.addAttribute("seriesJson",seriesJson);
-        model.addAttribute("xJson",xJson);
-        model.addAttribute("yJson",yJson);
-        model.addAttribute("period",period);
-        model.addAttribute("periods",periods);
+        model.addAttribute("periodId", xJson);
+        model.addAttribute("seriesJson", seriesJson);
+        model.addAttribute("xJson", xJson);
+        model.addAttribute("yJson", yJson);
+        model.addAttribute("period", period);
+        model.addAttribute("periods", periods);
         return "/mis/businessReport";
     }
 
     @RequestMapping("/mis/showFinReport")
-    public String showFinReport(Model model,Integer periodId) throws Exception {
+    public String showFinReport(Model model, Integer periodId) throws Exception {
         String startDate = DateUtil.getStartDateByPeriodType(periodId);
         String endDate = DateUtil.getEndDateByPeriodType(periodId);
 
-        ReportDate reportDateBalance = reportService.getFinBalanceReportDate(startDate,endDate);
+        ReportDate reportDateBalance = reportService.getFinBalanceReportDate(startDate, endDate);
         String seriesJsonBalance = reportService.getSeriesJson(reportDateBalance);
         String xJson = reportService.getXJson(reportDateBalance);
         String yJsonBalance = reportService.getYJson(reportDateBalance);
 
-        model.addAttribute("xJson",xJson);
-        model.addAttribute("seriesJsonBalance",seriesJsonBalance);
-        model.addAttribute("yJsonBalance",yJsonBalance);
+        model.addAttribute("xJson", xJson);
+        model.addAttribute("seriesJsonBalance", seriesJsonBalance);
+        model.addAttribute("yJsonBalance", yJsonBalance);
         List<Period> periods = periodService.getAll();
         Period period = new Period();
-        model.addAttribute("period",period);
-        model.addAttribute("periods",periods);
+        model.addAttribute("period", period);
+        model.addAttribute("periods", periods);
         return "/mis/financeReport";
     }
+
     @RequestMapping("/mis/cashFlowReport")
-    public String cashFlowReport(Model model,Integer periodId) throws Exception {
+    public String cashFlowReport(Model model, Integer periodId) throws Exception {
         String startDate = DateUtil.getStartDateByPeriodType(periodId);
         String endDate = DateUtil.getEndDateByPeriodType(periodId);
 
-        ReportDate reportDateCashFlow = reportService.getFinCashFlowReportDate(startDate,endDate);
+        ReportDate reportDateCashFlow = reportService.getFinCashFlowReportDate(startDate, endDate);
         String seriesJsonCashFlow = reportService.getSeriesJson(reportDateCashFlow);
         String xJson = reportService.getXJson(reportDateCashFlow);
         String yJsonCashFlow = reportService.getYJson(reportDateCashFlow);
 
-        model.addAttribute("seriesJsonCashFlow",seriesJsonCashFlow);
-        model.addAttribute("yJsonCashFlow",yJsonCashFlow);
+        model.addAttribute("seriesJsonCashFlow", seriesJsonCashFlow);
+        model.addAttribute("yJsonCashFlow", yJsonCashFlow);
 
         List<Period> periods = periodService.getAll();
         Period period = new Period();
-        model.addAttribute("xJson",xJson);
-        model.addAttribute("period",period);
-        model.addAttribute("periods",periods);
+        model.addAttribute("xJson", xJson);
+        model.addAttribute("period", period);
+        model.addAttribute("periods", periods);
         return "/mis/cashFlowReport";
     }
 }

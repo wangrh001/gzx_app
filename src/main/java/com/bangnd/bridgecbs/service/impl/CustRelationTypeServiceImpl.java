@@ -12,6 +12,7 @@ import java.util.List;
 public class CustRelationTypeServiceImpl implements CustRelationTypeService {
     @Autowired
     private CustRelationTypeRepository custRelationTypeRespository;
+
     @Override
     public List<CustRelationType> getAll() {
         return custRelationTypeRespository.findAll();

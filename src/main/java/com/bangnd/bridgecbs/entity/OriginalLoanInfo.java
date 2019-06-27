@@ -88,6 +88,16 @@ public class OriginalLoanInfo {
 
     //关联物业？
 
+    //添加原贷款过账卡信息
+    @Column
+    private String passCardAccountName;
+    @Column
+    private int passCardBankId;
+    @Column
+    private String passCardBankIdName;
+    @Column
+    private String passCardAccountCode;
+
     @Column
     private int state;
     @Column
@@ -305,5 +315,37 @@ public class OriginalLoanInfo {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
+    }
+
+    public String getPassCardAccountName() {
+        return passCardAccountName;
+    }
+
+    public void setPassCardAccountName(String passCardAccountName) {
+        this.passCardAccountName = passCardAccountName;
+    }
+
+    public int getPassCardBankId() {
+        return passCardBankId;
+    }
+
+    public void setPassCardBankId(int passCardBankId) {
+        this.passCardBankId = passCardBankId;
+    }
+
+    public String getPassCardAccountCode() {
+        return passCardAccountCode;
+    }
+
+    public void setPassCardAccountCode(String passCardAccountCode) {
+        this.passCardAccountCode = passCardAccountCode;
+    }
+
+    public String getPassCardBankIdName() {
+        return passCardBankIdName;
+    }
+
+    public void setPassCardBankIdName(String passCardBankIdName) {
+        this.passCardBankIdName = passCardBankIdName;
     }
 }

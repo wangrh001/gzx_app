@@ -32,6 +32,7 @@ public class BridgeOriginalLoanContrller {
     private BridgeOrderService bridgeOrderService;
     @Resource
     private FormatInfoService formatInfoService;
+
     /**
      * form表单提交 Date类型数据绑定
      *
@@ -45,8 +46,9 @@ public class BridgeOriginalLoanContrller {
     }
 
     @RequestMapping("/bridgecbs/originalLoan/add")
-    public String addOriginalLoan(OriginalLoanInfo originalLoanInfo,Long orderId){
-        originalLoanInfoService.save(originalLoanInfo,orderId);
+    public String addOriginalLoan(OriginalLoanInfo originalLoanInfo, Long orderId) {
+        originalLoanInfo.setPassCardBankIdName(bridgeOrderAcceptionBankCodeService.getBridgeOrderAcceptionBankCodeById(originalLoanInfo.getPassCardBankId()).getName());
+        originalLoanInfoService.save(originalLoanInfo, orderId);
         BridgeOrder bridgeOrder = bridgeOrderService.getBridgeOrderById(orderId);
         bridgeOrder.setOriginalLoadAmount(originalLoanInfoService.getTotalLoanAmount(orderId));
         bridgeOrder.setOriginalCaptialInterest(originalLoanInfoService.getTotalCaptialInterest(orderId));
@@ -56,11 +58,11 @@ public class BridgeOriginalLoanContrller {
     }
 
     @RequestMapping("/bridgecbs/originalLoan/toModify")
-    public String toModify(Model model,Long id){
-        try{
+    public String toModify(Model model, Long id) {
+        try {
             OriginalLoanInfo originalLoanInfo = originalLoanInfoService.getOneById(id);
-            model.addAttribute("originalLoanInfo",originalLoanInfo);
-            model.addAttribute("foreclosureTypes",originalLoanForeclosureTypeService.getAll());
+            model.addAttribute("originalLoanInfo", originalLoanInfo);
+            model.addAttribute("foreclosureTypes", originalLoanForeclosureTypeService.getAll());
             //原贷款类型
             model.addAttribute("types", originalLoanTypeService.getAll());
             //原贷款方类型
@@ -68,14 +70,14 @@ public class BridgeOriginalLoanContrller {
             //原贷款方机构
             model.addAttribute("organCodes", bridgeOrderAcceptionBankCodeService.getAll());
             model.addAttribute("bankCodes", bridgeOrderAcceptionBankCodeService.getAll());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "/bridgecbs/originalLoanEdit";
     }
 
     @RequestMapping("/bridgecbs/originalLoan/modify")
-    public String modify(OriginalLoanInfo originalLoanInfo){
+    public String modify(OriginalLoanInfo originalLoanInfo) {
         OriginalLoanInfo originalLoanInfo1 = originalLoanInfoService.getOneById(originalLoanInfo.getId());
         originalLoanInfo1.setOrganType(originalLoanInfo.getOrganType());
         originalLoanInfo1.setOrganCode(originalLoanInfo.getOrganCode());
@@ -92,6 +94,12 @@ public class BridgeOriginalLoanContrller {
         originalLoanInfo1.setContactPhone(originalLoanInfo.getContactPhone());
         originalLoanInfo1.setForeclosureType(originalLoanInfo.getForeclosureType());
         originalLoanInfo1.setUpdateTime(new Date());
+
+        originalLoanInfo1.setPassCardBankId(originalLoanInfo.getPassCardBankId());
+        originalLoanInfo1.setPassCardAccountCode(originalLoanInfo.getPassCardAccountCode());
+        originalLoanInfo1.setPassCardAccountName(originalLoanInfo.getPassCardAccountName());
+        originalLoanInfo1.setPassCardBankIdName(bridgeOrderAcceptionBankCodeService.getBridgeOrderAcceptionBankCodeById(originalLoanInfo.getPassCardBankId()).getName());
+
         originalLoanInfoService.merge(originalLoanInfo1);
         BridgeOrder bridgeOrder = bridgeOrderService.getBridgeOrderById(originalLoanInfo1.getOrderId());
         bridgeOrder.setOriginalLoadAmount(originalLoanInfoService.getTotalLoanAmount(originalLoanInfo1.getOrderId()));
@@ -101,7 +109,7 @@ public class BridgeOriginalLoanContrller {
     }
 
     @RequestMapping("/bridgecbs/originalLoan/delete")
-    public String modify(Long id){
+    public String modify(Long id) {
         OriginalLoanInfo originalLoanInfo = originalLoanInfoService.getOneById(id);
         originalLoanInfo.setState(100);
         originalLoanInfoService.merge(originalLoanInfo);

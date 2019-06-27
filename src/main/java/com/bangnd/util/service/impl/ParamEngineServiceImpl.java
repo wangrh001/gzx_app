@@ -63,10 +63,10 @@ public class ParamEngineServiceImpl implements ParamEngineService {
     }
 
     @Override
-    public String getReminderMethodName(String param){
-        if(param!=null && param.contains("Days") &&(param.contains("Add")||param.contains("Minus"))){
+    public String getReminderMethodName(String param) {
+        if (param != null && param.contains("Days") && (param.contains("Add") || param.contains("Minus"))) {
             return "getKeyTime";
-        }else {
+        } else {
             return "get" + (new StringBuilder()).append(Character.toUpperCase(param.charAt(0))).append(param.substring(1)).toString();
         }
     }
@@ -322,98 +322,103 @@ public class ParamEngineServiceImpl implements ParamEngineService {
 
     /**
      * 获取机构的款项
+     *
      * @param orderId
      * @return
      */
-    public long getOrganAmount(long orderId){
+    public long getOrganAmount(long orderId) {
         FormatInfoObject formatInfoObject = formatInfoObjService.getFormatInfoObjByOrderId(orderId);
-        if(formatInfoObject==null){
+        if (formatInfoObject == null) {
             return 0;
-        }else {
+        } else {
             return formatInfoObject.getOrganAmount().longValue();
         }
     }
-    public long getPlanOrganAmount(long orderId){
-        BridgeOrder bridgeOrder =  bridgeOrderService.getBridgeOrderById(orderId);
-        if(bridgeOrder==null){
+
+    public long getPlanOrganAmount(long orderId) {
+        BridgeOrder bridgeOrder = bridgeOrderService.getBridgeOrderById(orderId);
+        if (bridgeOrder == null) {
             return 0;
-        }else {
-            if(bridgeOrder.getPlanOrganAmount()==null){
+        } else {
+            if (bridgeOrder.getPlanOrganAmount() == null) {
                 return 0;
             }
             return bridgeOrder.getPlanOrganAmount().longValue();
         }
     }
-    public long getRealOrganAmount(long orderId){
-        BridgeOrder bridgeOrder =  bridgeOrderService.getBridgeOrderById(orderId);
-        if(bridgeOrder==null){
+
+    public long getRealOrganAmount(long orderId) {
+        BridgeOrder bridgeOrder = bridgeOrderService.getBridgeOrderById(orderId);
+        if (bridgeOrder == null) {
             return 0;
-        }else {
-            if(bridgeOrder.getOrganAmount()==null){
+        } else {
+            if (bridgeOrder.getOrganAmount() == null) {
                 return 0;
             }
             return bridgeOrder.getOrganAmount().longValue();
         }
     }
+
     /**
      * 下面这些都是提醒逻辑条件的参数
+     *
      * @param
      * @param orderId
      * @return
      */
-    public String getKeyTiming(String keyTime,String earlier,long orderId) throws Exception {
+    public String getKeyTiming(String keyTime, String earlier, long orderId) throws Exception {
         FormatInfoObject formatInfoObject = formatInfoObjService.getFormatInfoObjByOrderId(orderId);
-        if(formatInfoObject==null){
+        if (formatInfoObject == null) {
             return null;
         }
         Method getMethod = formatInfoObject.getClass().getMethod("get" + Character.toUpperCase(keyTime.charAt(0)) + keyTime.substring(1));
-        Date keyTiming=(Date)getMethod.invoke(formatInfoObject);
-        if(keyTiming!=null && !"".equals(keyTiming)){
+        Date keyTiming = (Date) getMethod.invoke(formatInfoObject);
+        if (keyTiming != null && !"".equals(keyTiming)) {
             Calendar calendar = Calendar.getInstance();
-            System.out.println("keyTiming="+keyTiming);
+            System.out.println("keyTiming=" + keyTiming);
             calendar.setTime(keyTiming);
-            calendar.add(Calendar.DATE,Long.valueOf(earlier).intValue());
+            calendar.add(Calendar.DATE, Long.valueOf(earlier).intValue());
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS");
             return sdf.format(calendar.getTime());
         }
         return null;
     }
 
-    public String getUnzipDocExpectedReceiveDateMinus3Days(long reminderId,long orderId){
+    public String getUnzipDocExpectedReceiveDateMinus3Days(long reminderId, long orderId) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS");
         FormatInfoObject formatInfoObject = formatInfoObjService.getFormatInfoObjByOrderId(orderId);
-        if(formatInfoObject!=null && formatInfoObject.getUnzipDocExpectedReceiveDate()!=null){
+        if (formatInfoObject != null && formatInfoObject.getUnzipDocExpectedReceiveDate() != null) {
             Calendar c = Calendar.getInstance();
             c.setTime(formatInfoObject.getUnzipDocExpectedReceiveDate());
-            c.add(Calendar.DATE,-3);
+            c.add(Calendar.DATE, -3);
             return sdf.format(c.getTime());
         }
         return null;
     }
 
-    public String getLastReminderPlus1Day(long reminderId,long orderId){
+    public String getLastReminderPlus1Day(long reminderId, long orderId) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS");
-        ReminderLog reminderLog = reminderLogService.getLastReminderLogByOrderIdAndReminderId(reminderId,orderId);
+        ReminderLog reminderLog = reminderLogService.getLastReminderLogByOrderIdAndReminderId(reminderId, orderId);
         Calendar c = Calendar.getInstance();
-        if(reminderLog!=null){
+        if (reminderLog != null) {
             c.setTime(reminderLog.getCreateTime());
-            c.add(Calendar.DATE,1);
+            c.add(Calendar.DATE, 1);
             return sdf.format(c.getTime());
-        }else {
+        } else {
             //即：如果是第一次，log表中没有记录，就设置一个10年
             c.setTime(new Date());
-            c.add(Calendar.YEAR,-10);
+            c.add(Calendar.YEAR, -10);
             return sdf.format(c.getTime());
         }
 
     }
 
-    public long getOrderState(long reminderId,long orderId){
+    public long getOrderState(long reminderId, long orderId) {
         Order order = orderService.findOrderById(orderId);
         return order.getOrderState();
     }
 
-    public String getSysdate(long reminderId,long orderId){
+    public String getSysdate(long reminderId, long orderId) {
         Date sysdate = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SS");
         return sdf.format(sysdate);
@@ -421,14 +426,15 @@ public class ParamEngineServiceImpl implements ParamEngineService {
 
     /**
      * 下面这些都是发送内容的参数
+     *
      * @param
      */
 
-    public String getReceiverName(String name,String orderId){
+    public String getReceiverName(String name, String orderId) {
         return name;
     }
 
-    public String getOrderId(String name,String orderId){
+    public String getOrderId(String name, String orderId) {
         return orderId;
     }
 

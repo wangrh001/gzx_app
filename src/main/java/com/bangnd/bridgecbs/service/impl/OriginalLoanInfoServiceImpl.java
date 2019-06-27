@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
 @Service
 public class OriginalLoanInfoServiceImpl implements OriginalLoanInfoService {
     @Autowired
@@ -36,7 +37,7 @@ public class OriginalLoanInfoServiceImpl implements OriginalLoanInfoService {
     }
 
     @Override
-    public void save(OriginalLoanInfo originalLoanInfo,Long orderId) {
+    public void save(OriginalLoanInfo originalLoanInfo, Long orderId) {
         originalLoanInfo.setTypeName(originalLoanTypeService.getOneById(originalLoanInfo.getType()).getName());
         originalLoanInfo.setOrganTypeName(originalLoanOrganTypeService.getOneById(originalLoanInfo.getOrganType()).getName());
         originalLoanInfo.setOrganCodeName(bridgeOrderAcceptionBankCodeService.getBridgeOrderAcceptionBankCodeById(originalLoanInfo.getBankCode()).getName());
@@ -55,10 +56,10 @@ public class OriginalLoanInfoServiceImpl implements OriginalLoanInfoService {
     @Override
     public BigDecimal getTotalLoanAmount(Long id) {
         BigDecimal totalLoanAmount = new BigDecimal(0);
-        List<OriginalLoanInfo> originalLoanInfos= originalLoanInfoRepository.findAllByOrderId(id);
-        if(originalLoanInfos !=null && originalLoanInfos.size()>0){
-            for(OriginalLoanInfo originalLoanInfo:originalLoanInfos){
-                if(originalLoanInfo.getAmount()!=null){
+        List<OriginalLoanInfo> originalLoanInfos = originalLoanInfoRepository.findAllByOrderId(id);
+        if (originalLoanInfos != null && originalLoanInfos.size() > 0) {
+            for (OriginalLoanInfo originalLoanInfo : originalLoanInfos) {
+                if (originalLoanInfo.getAmount() != null) {
                     totalLoanAmount = totalLoanAmount.add(originalLoanInfo.getAmount());
                 }
             }
@@ -69,10 +70,10 @@ public class OriginalLoanInfoServiceImpl implements OriginalLoanInfoService {
     @Override
     public BigDecimal getTotalCaptialInterest(Long id) {
         BigDecimal totalCaptialInterest = new BigDecimal(0);
-        List<OriginalLoanInfo> originalLoanInfos= originalLoanInfoRepository.findAllByOrderId(id);
-        if(originalLoanInfos !=null && originalLoanInfos.size()>0){
-            for(OriginalLoanInfo originalLoanInfo:originalLoanInfos){
-                if(originalLoanInfo.getCapitalInterest()!=null){
+        List<OriginalLoanInfo> originalLoanInfos = originalLoanInfoRepository.findAllByOrderId(id);
+        if (originalLoanInfos != null && originalLoanInfos.size() > 0) {
+            for (OriginalLoanInfo originalLoanInfo : originalLoanInfos) {
+                if (originalLoanInfo.getCapitalInterest() != null) {
                     totalCaptialInterest = totalCaptialInterest.add(originalLoanInfo.getCapitalInterest());
                 }
             }

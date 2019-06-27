@@ -7,4 +7,5 @@ import java.util.List;
 public interface OrderDocTypeService {
     public OrderDocType getOrderDocTypeById(int id);
     public List<OrderDocType> getAll();
+    public OrderDocType getOrderDocTypeByName(String docName);
 }

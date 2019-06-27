@@ -84,9 +84,9 @@ public class RuleEngineServiceImpl implements RuleEngineService {
             }
         }
         Long result = (Long) expression.execute(env);
-        if(result==1){
+        if (result == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
 

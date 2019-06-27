@@ -37,26 +37,26 @@ public class BridgeCustomerController {
     }
 
     @RequestMapping("/bridgecbs/customer/add")
-    public String addCustomer(BridgeCustomer customer, Long orderId, Long mortgageId){
-        customerService.save(customer,orderId,mortgageId);
+    public String addCustomer(BridgeCustomer customer, Long orderId, Long mortgageId) {
+        customerService.save(customer, orderId, mortgageId);
         return "redirect:/bridgecbs/bridgeOrder/toModify?id=" + orderId;
     }
 
     @RequestMapping("bridgecbs/customer/toModify")
-    public String toModify(Model model, Long id){
-        try{
+    public String toModify(Model model, Long id) {
+        try {
             BridgeCustomer bridgeCustomer = customerService.getCustomerById(id);
-            model.addAttribute("customer",bridgeCustomer);
+            model.addAttribute("customer", bridgeCustomer);
             model.addAttribute("certiTypes", bridgeOrderCertiTypeService.getAll());
             model.addAttribute("custRelationTypes", custRelationTypeService.getAll());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "/bridgecbs/bridgeCustomerEdit";
     }
 
     @RequestMapping("bridgecbs/customer/modify")
-    public String modify(BridgeCustomer bridgeCustomer){
+    public String modify(BridgeCustomer bridgeCustomer) {
         BridgeCustomer bridgeCustomer1 = customerService.getCustomerById(bridgeCustomer.getId());
         bridgeCustomer1.setName(bridgeCustomer.getName());
         bridgeCustomer1.setCertiType(bridgeCustomer.getCertiType());
@@ -67,8 +67,9 @@ public class BridgeCustomerController {
         customerService.merge(bridgeCustomer1);
         return "redirect:/bridgecbs/bridgeOrder/toModify?id=" + bridgeCustomer1.getOrderId();
     }
+
     @RequestMapping("bridgecbs/customer/delete")
-    public String delete(Long id){
+    public String delete(Long id) {
         BridgeCustomer bridgeCustomer = customerService.getCustomerById(id);
         bridgeCustomer.setState(100);
         customerService.merge(bridgeCustomer);

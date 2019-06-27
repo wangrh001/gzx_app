@@ -17,10 +17,9 @@ public class ShowListVOCreator {
      * @param dataModelList
      * @return
      */
-    public String create(List<DataModel> dataModelList, String company, String sys) {
+    public String create(List<DataModel> dataModelList, String company, String sys,String entityName) {
         StringBuffer voCode = new StringBuffer();
         if (dataModelList != null) {
-            String entityName = dataModelList.get(0).getTableNames();
             String UpEntityName = Character.toUpperCase(entityName.charAt(0)) + entityName.substring(1);
             voCode.append("package com." + company + "." + sys + ".vo;\n");
             voCode.append("import javax.persistence.*;\n");
@@ -81,6 +80,6 @@ public class ShowListVOCreator {
         dataModel1.setIfModifyable(1);
         dataModels.add(dataModel1);
         ShowListVOCreator showListVOCreator = new ShowListVOCreator();
-        System.out.println(showListVOCreator.create(dataModels, "dashu", "test"));
+        System.out.println(showListVOCreator.create(dataModels, "dashu", "test","test"));
     }
 }

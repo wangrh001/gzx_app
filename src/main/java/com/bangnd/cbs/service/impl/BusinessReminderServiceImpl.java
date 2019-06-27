@@ -16,6 +16,8 @@ import com.bangnd.util.cfg.ConstantCfg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BusinessReminderServiceImpl implements BusinessReminderService {
     @Autowired
@@ -28,6 +30,7 @@ public class BusinessReminderServiceImpl implements BusinessReminderService {
     ResourceService resourceService;
     @Autowired
     DingDingGWService dingDingGWService;
+
 
     @Override
     public void remindNextOperator(long userId,int buttonId,OrderPool orderPool,String actionName,String loanName) throws Exception {
@@ -50,7 +53,7 @@ public class BusinessReminderServiceImpl implements BusinessReminderService {
     }
 
     @Override
-    public void informRelativePerson(int buttonId, BridgeOrder oldBridgeOrder) throws Exception {
+    public void informRelativePerson(int buttonId, BridgeOrder oldBridgeOrder,String logDesc) throws Exception {
         //初审不通过，需要把对外原因通知销售；
         if(buttonId==ConstantCfg.BUTTON_ID_125){
             Agent agent = agentService.getAgentById(oldBridgeOrder.getSalerId());
@@ -58,11 +61,20 @@ public class BusinessReminderServiceImpl implements BusinessReminderService {
             ctx=agent.getName()+"：您好！您提交的"+oldBridgeOrder.getLoanName()+"的垫资过桥业务申请，由于"+oldBridgeOrder.getFirstTrialNoCause()+"原因，没有审批通过，非常抱歉！";
             dingDingGWService.sendMessage(agent.getDdUserName(),ctx);
         }
+        //初审通过，提醒资金分配岗位(如果该岗位多个人，只通知第一个)
+        if(buttonId==ConstantCfg.BUTTON_ID_125){
+            List<Employee> employees = employeeService.getEmployeeByPositionId(ConstantCfg.POSITION_CAPITAL_18);
+            if(employees!=null && employees.size()>0){
+                String ctx = "";
+                ctx=employees.get(0).getName()+"：您好！"+oldBridgeOrder.getLoanName()+"的垫资过桥业务申请，已经初审通过，申请金额为"+oldBridgeOrder.getLastAmount()+"。预计用款时间为:"+oldBridgeOrder.getDemandDate()+"，请您提前准备！";
+                dingDingGWService.sendMessage(employees.get(0).getDdUserName(),ctx);
+            }
+        }
         //下户需要通知下户人员；
         if(buttonId==ConstantCfg.BUTTON_ID_130){
             Employee employee = employeeService.getEmployeeById(oldBridgeOrder.getDownEmpId());
             String ctx = "";
-            ctx=oldBridgeOrder.getDownEmpName()+"：您好！请你尽快对"+oldBridgeOrder.getLoanName()+"的业务进行下户。";
+            ctx=oldBridgeOrder.getDownEmpName()+"：您好！请你尽快对"+oldBridgeOrder.getLoanName()+"的业务进行下户。下户注意事项："+logDesc;
             dingDingGWService.sendMessage(employee.getDdUserName(),ctx);
         }
         //终审不通过，需要把对外原因通知销售

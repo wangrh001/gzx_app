@@ -13,48 +13,48 @@
     <script th:inline="javascript">
         function submitMortgage() {
             /*<![CDATA[*/
-            if(mortgage_form.propertyType.value==1){
+            if (mortgage_form.propertyType.value == 1) {
                 alert('物业业务类型：必须选择一个，谢谢！')
                 mortgage_form.propertyType.focus()
                 return false
             }
-            if(mortgage_form.propertyName.value==''){
+            if (mortgage_form.propertyName.value == '') {
                 alert('物业名称：不能为空，请填写，谢谢！')
                 mortgage_form.propertyName.focus()
                 return false
             }
-            if(mortgage_form.square.value==''){
+            if (mortgage_form.square.value == '') {
                 alert('面积：不能为空，请填写，谢谢！')
                 mortgage_form.square.focus()
                 return false
             }
-            if(mortgage_form.propertyNO.value==''){
+            if (mortgage_form.propertyNO.value == '') {
                 alert('房产证号：不能为空，请填写，谢谢！')
                 mortgage_form.propertyNO.focus()
                 return false
             }
-            if(mortgage_form.estateArea.value==''){
+            if (mortgage_form.estateArea.value == '') {
                 alert('物业所在地：不能为空，请填写，谢谢！')
                 mortgage_form.estateArea.focus()
                 return false
             }
-            if(mortgage_form.propertyUse.value==''){
+            if (mortgage_form.propertyUse.value == '') {
                 alert('用途：不能为空，请填写，谢谢！')
                 mortgage_form.propertyUse.focus()
                 return false
             }
-            if(mortgage_form.estimatePrice.value==''){
+            if (mortgage_form.estimatePrice.value == '') {
                 alert('评估价：不能为空，请填写，谢谢！')
                 mortgage_form.estimatePrice.focus()
                 return false
             }
-            if(mortgage_form.percent.value==''){
+            if (mortgage_form.canLoanPercent.value == '') {
                 alert('可贷比例：不能为空，请填写，谢谢！')
-                mortgage_form.percent.focus()
+                mortgage_form.canLoanPercent.focus()
                 return false
             }
             var form = document.getElementById("mortgage_form")
-            form.action="/bridgecbs/mortgage/add?modify"
+            form.action = "/bridgecbs/mortgage/add?modify"
             form.submit()
             /*]]>*/
         }
@@ -63,26 +63,29 @@
             var borrower = document.getElementById("property")
             borrower.style.display = borrower.style.display == 'none' ? "block" : "none"
         }
+
         function submitProperty() {
             /*<![CDATA[*/
             var orderId = document.getElementById("orderId").value
             var mortgageId = document.getElementById("mortgageId").value
             var form = document.getElementById("property_form")
-            form.action="/bridgecbs/customer/add?orderId="+orderId+"&mortgageId="+mortgageId
+            form.action = "/bridgecbs/customer/add?orderId=" + orderId + "&mortgageId=" + mortgageId
             form.submit()
             /*]]>*/
         }
+
         function calcCanLoanAmount(percent) {
             var estimatePrice = document.getElementById("estimatePrice").value
-            document.getElementById("canLoanAmount").value=estimatePrice*percent/100
+            document.getElementById("canLoanAmount").value = estimatePrice * percent / 100
         }
     </script>
 
 
 </head>
 <body>
-<form class="form-horizontal" method="post" id="mortgage_form" th:action="@{/bridgecbs/mortgage/modify}" th:object="${mortgage}" >
-    <table  id="mortgage">
+<form class="form-horizontal" method="post" id="mortgage_form" th:action="@{/bridgecbs/mortgage/modify}"
+      th:object="${mortgage}">
+    <table id="mortgage">
         <input type="hidden" th:field="*{mortgageId}"/>
         <input type="hidden" th:field="*{orderId}"/>
         <tr>
@@ -125,7 +128,7 @@
                 </option>
             </select></td>
             <td><b style='color:red; float:left; height:20px'>*</b>可贷比例(%):</td>
-            <td><input th:field="*{percent}" onchange="calcCanLoanAmount(this.value)" class="form-control"/></td>
+            <td><input th:field="*{canLoanPercent}" onchange="calcCanLoanAmount(this.value)" class="form-control"/></td>
         </tr>
         <tr>
             <td><b style='color:red; float:left; height:20px'>*</b>物业所在地:</td>
@@ -136,7 +139,9 @@
         <tr>
             <td><input type="button" value="保存" onclick="submitMortgage()" class="btn btn-info"/></td>
         </tr>
-        <tr><td><input type="button" value="添加产权人" onclick="showPropertyPage()" class="btn btn-info"/></td></tr>
+        <tr>
+            <td><input type="button" value="添加产权人" onclick="showPropertyPage()" class="btn btn-info"/></td>
+        </tr>
     </table>
 </form>
 

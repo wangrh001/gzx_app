@@ -1,39 +1,36 @@
 package com.dashu.AutoBulider.files;
 
+import com.dashu.AutoBulider.config.ConstantCfg;
 import com.dashu.AutoBulider.entity.DataModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.StringBuffer;
-
-import com.dashu.AutoBulider.config.ConstantCfg;
 
 public class EntityCreator {
-    public String create(List<DataModel> dataModels, String company, String sys) {
+    public String create(List<DataModel> dataModels, String company, String sys,String entityName) {
         StringBuffer javaCode = new StringBuffer();
-        if (dataModels != null && dataModels.size() > 0) {
-            String entityName = dataModels.get(0).getTableNames();
-            String UpEntityName = Character.toUpperCase(entityName.charAt(0)) + entityName.substring(1);
-            javaCode.append("package com." + company + "." + sys + ".entity;");
-            javaCode.append("import javax.persistence.*;");
-            javaCode.append("import java.math.BigDecimal;");
-            javaCode.append("import java.util.Date;");
-            javaCode.append("@Entity");
-            javaCode.append("@Table(name=\"t_" + sys + "_" + entityName + "\")");
-            javaCode.append("public class " + UpEntityName + "{");
-            javaCode.append("@Id");
-            javaCode.append("@GeneratedValue ");
-            javaCode.append("private long id;");
-            javaCode.append("public long getId() { return id; }");
-            javaCode.append("public void setId(long id) { this.id = id; }");
+        String UpEntityName = Character.toUpperCase(entityName.charAt(0)) + entityName.substring(1);
+        javaCode.append("package com." + company + "." + sys + ".entity;");
+        javaCode.append("import javax.persistence.*;");
+        javaCode.append("import java.math.BigDecimal;");
+        javaCode.append("import java.util.Date;");
+        javaCode.append("@Entity");
+        javaCode.append("@Table(name=\"t_" + sys + "_" + entityName + "\")");
+        javaCode.append("public class " + UpEntityName + "{");
+        javaCode.append("@Id");
+        javaCode.append("@GeneratedValue ");
+        javaCode.append("private long id;");
+        javaCode.append("public long getId() { return id; }");
+        javaCode.append("public void setId(long id) { this.id = id; }");
 
+        if (dataModels != null && dataModels.size() > 0) {
             //添加业务字段
             javaCode.append(createBusinessColumn(dataModels));
-            //添加业务表基础字段
-            javaCode.append(createBasisColumn());
-            //添加类结束括号
-            javaCode.append("}");
         }
+        //添加业务表基础字段
+        javaCode.append(createBasisColumn());
+        //添加类结束括号
+        javaCode.append("}");
         return javaCode.toString();
     }
 
@@ -175,6 +172,6 @@ public class EntityCreator {
 
 
         EntityCreator entityCreator = new EntityCreator();
-        entityCreator.create(dataModels, "dashu", "test");
+        System.out.println(entityCreator.create(dataModels, "dashu", "test","test"));
     }
 }

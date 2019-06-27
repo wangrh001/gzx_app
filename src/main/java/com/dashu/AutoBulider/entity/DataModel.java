@@ -58,6 +58,20 @@ public class DataModel {
     private int ifModifyable;
 
     @Column
+    private int ifCreateScatter;
+    @Column
+    private String foreignObject;
+    @Column
+    private String whoObject;
+
+    @Column
+    private int length;
+    @Column
+    private int ifNeed;
+    @Column
+    private int ifMoreSelect;
+
+    @Column
     private int state;
 
     @Column
@@ -214,5 +228,53 @@ public class DataModel {
 
     public void setIfBusinessDate(int ifBusinessDate) {
         this.ifBusinessDate = ifBusinessDate;
+    }
+
+    public int getIfCreateScatter() {
+        return ifCreateScatter;
+    }
+
+    public void setIfCreateScatter(int ifCreateScatter) {
+        this.ifCreateScatter = ifCreateScatter;
+    }
+
+    public String getForeignObject() {
+        return foreignObject;
+    }
+
+    public void setForeignObject(String foreignObject) {
+        this.foreignObject = foreignObject;
+    }
+
+    public String getWhoObject() {
+        return whoObject;
+    }
+
+    public void setWhoObject(String whoObject) {
+        this.whoObject = whoObject;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
+
+    public int getIfNeed() {
+        return ifNeed;
+    }
+
+    public void setIfNeed(int ifNeed) {
+        this.ifNeed = ifNeed;
+    }
+
+    public int getIfMoreSelect() {
+        return ifMoreSelect;
+    }
+
+    public void setIfMoreSelect(int ifMoreSelect) {
+        this.ifMoreSelect = ifMoreSelect;
     }
 }

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>customerList</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/daterangepicker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/table.css}"/>
+    <script type="text/javascript" th:src="@{/css/date.js}"/>
+    <script type="text/javascript" th:src="@{/css/daterangepicker.js}"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"/>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"/>
+</head>
+<body class="container">
+<br/>
+<h4>新增</h4>
+<div>
+    <form class="form-horizontal" th:action="@{/bridgecbs/cardController/modify}" th:object="${cardController}"
+          method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <input type="hidden" th:field="*{orderId}"/>
+        <table>
+            <tr>
+                <td>卡属性</td>
+                <td><select th:field="*{cardAttribute}" th:remove="all-but-first">
+                    <option th:each="cardAttribute : ${cardAttributes}"
+                            th:value="${cardAttribute.id}" th:text="${cardAttribute.name}">Credit card
+                    </option>
+                </select></td>
+                <td>账户类型</td>
+                <td><select th:field="*{accountType}" th:remove="all-but-first">
+                    <option th:each="accountType : ${accountTypes}"
+                            th:value="${accountType.id}" th:text="${accountType.name}">Credit card
+                    </option>
+                </select></td>
+                <td>户名</td>
+                <td><input th:field="*{accountName}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>开户行</td>
+                <td><input th:field="*{accountBank}" value="" class="form-control"/></td>
+                <td>银行卡号</td>
+                <td><input th:field="*{accountNO}" value="" class="form-control"/></td>
+                <td>核实人</td>
+                <td><input th:field="*{verifierName}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>测试转账</td>
+                <td><select th:field="*{ifTestTrans}" th:remove="all-but-first">
+                    <option th:each="yesOrNo : ${yesOrNos}"
+                            th:value="${yesOrNo.id}" th:text="${yesOrNo.name}">Credit card
+                    </option>
+                </select></td>
+                <td>核实日期</td>
+                <td><input th:value="*{verifyDate ne null} ? *{#dates.format(verifyDate,'yyyy-MM-dd')}" id="verifyDate" name="verifyDate" class="form-control"/></td>
+                <td>是否修改网银密钥</td>
+                <td><select th:field="*{ifModifyNetKey}" th:remove="all-but-first">
+                    <option th:each="yesOrNo : ${yesOrNos}"
+                            th:value="${yesOrNo.id}" th:text="${yesOrNo.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>备注</td>
+                <td><input th:field="*{remarkDesc}" value="" class="form-control"/></td>
+                <td>是否卡交密码</td>
+                <td><select th:field="*{ifModifyCardKey}" th:remove="all-but-first">
+                    <option th:each="yesOrNo : ${yesOrNos}"
+                            th:value="${yesOrNo.id}" th:text="${yesOrNo.name}">Credit card
+                    </option>
+                </select></td>
+                <td>是否取消手机银行</td>
+                <td><select th:field="*{ifCanclePhoneBank}" th:remove="all-but-first">
+                    <option th:each="yesOrNo : ${yesOrNos}"
+                            th:value="${yesOrNo.id}" th:text="${yesOrNo.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td>是否取消短信提醒</td>
+                <td><select th:field="*{ifCancleSmsRemind}" th:remove="all-but-first">
+                    <option th:each="yesOrNo : ${yesOrNos}"
+                            th:value="${yesOrNo.id}" th:text="${yesOrNo.name}">Credit card
+                    </option>
+                </select></td>
+                <td>单笔限额</td>
+                <td><input th:field="*{onceLimitAmount}" value="" class="form-control"/></td>
+                <td>当天限额</td>
+                <td><input th:field="*{todayLimitAmount}" value="" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>是否公转私</td>
+                <td><select th:field="*{ifPublicToPrivate}" th:remove="all-but-first">
+                    <option th:each="yesOrNo : ${yesOrNos}"
+                            th:value="${yesOrNo.id}" th:text="${yesOrNo.name}">Credit card
+                    </option>
+                </select></td>
+                <td>U盾数量</td>
+                <td><input th:field="*{UShieldNum}" value="" class="form-control"/></td>
+                <td>控制状态</td>
+                <td><select th:field="*{controllState}" th:remove="all-but-first">
+                    <option th:each="controllState : ${controllStates}"
+                            th:value="${controllState.id}" th:text="${controllState.name}">Credit card
+                    </option>
+                </select></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="保存" class="btn btn-info"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="form-group">
+</div>
+</body>
+</html>

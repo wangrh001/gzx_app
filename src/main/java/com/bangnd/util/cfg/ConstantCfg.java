@@ -7,9 +7,11 @@ public class ConstantCfg {
     public static final long CUSTOMER_IDENTITY_TYPE_3 = 3;
     public static final int ORDER_PRODUCT_STATE_DELETE = 100;
     public static final String ORDER_DOC_FIXED_PATH = "uploadfile/raw/byOrder/";
+    public static final String ORDER_DOC_BASE_PATH = "/Users/wrh/Documents/wrh/work/gzx_app/";
 
     public static final int ACTION_ALLOCATION_HANDLER = 57;
 
+    public static final int STANDARD_BUSI = 3;
     public static final int DOC_TYPE_1 = 1;
     public static final int DOC_TYPE_2 = 2;
     public static final int DOC_TYPE_3 = 3;
@@ -112,6 +114,8 @@ public class ConstantCfg {
 
     //风控专员岗
     public final static int POSITION_RISK_7 = 7;
+    //资金分配岗
+    public final static int POSITION_CAPITAL_18 = 18;
 
     public final static int DAY = 1;
     public final static int THREEDAY = 2;
@@ -131,7 +135,7 @@ public class ConstantCfg {
     public final static int FEE_TYPE_LAWFEE = 9;
     public final static int FEE_TYPE_OUTAMOUNT = 21;
     public final static int FEE_TYPE_INAMOUNT = 26;
-    public final static int FEE_TYPE_REAL_INAMOUNT= 28;
+    public final static int FEE_TYPE_REAL_INAMOUNT = 28;
     public final static int FEE_TYPE_COMMISSION = 6;
 
     //业务员提成

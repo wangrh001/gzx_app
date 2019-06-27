@@ -58,10 +58,10 @@ public class Mortgage {
     private long orderProductId;
     //抵押物类型：1/房；2/车；3/保单；
     @Column
-    private int mortgageType=0;
+    private int mortgageType = 0;
     //抵押物所在区域
     @Column
-    private int estateArea=0;
+    private int estateArea = 0;
     @Column
     private BigDecimal estatePrice;
     //1、住宅；2、别墅；3、经济适用房；4、商住两用；5、纯商业；6、纯商业实际为居住；
@@ -78,7 +78,7 @@ public class Mortgage {
 
     //抵押物和抵押人关系：1、所有；2、实际控制
     @Column
-    private int belongType=0;
+    private int belongType = 0;
     @Column
     private int mortgageCount = 0;
 
